@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXVORA UNBAN — Appeal Form</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:#05020a;color:#fff;font-family:Arial,sans-serif;padding:22px 14px}
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 10% 0%,#40006a77,transparent 36%),radial-gradient(circle at 90% 100%,#31004466,transparent 35%),#05020a}
+.wrap{width:min(100%,680px);margin:auto}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 22px;border-bottom:1px solid #a65cff33}
+.brand{font-size:17px;font-weight:900;letter-spacing:2px;color:#d7b0ff}
+.back{color:#cba1ff;text-decoration:none;font-size:12px}
+.card{margin-top:24px;padding:26px 22px;border:1px solid #a65cff55;border-radius:22px;background:#10091bdd;box-shadow:0 0 35px #842aff18}
+.eyebrow{font-size:10px;letter-spacing:3px;color:#bb8df0}
+h1{font-size:clamp(24px,6vw,35px);margin:12px 0;background:linear-gradient(90deg,#fff,#c68aff);background-clip:text;color:transparent}
+.intro{font-size:13px;color:#b7a7c7;line-height:1.7;margin-bottom:24px}
+label{display:block;font-size:12px;color:#dfc9f5;margin:17px 0 8px}
+input,select{width:100%;height:48px;padding:0 13px;border:1px solid #8b52ac66;border-radius:11px;background:#09050f;color:white;outline:none;font-size:14px}
+input:focus,select:focus{border-color:#bc6cff;box-shadow:0 0 15px #922dff22}
+input[type=file]{height:auto;padding:13px;font-size:12px}
+.hint{font-size:11px;color:#92829f;margin-top:7px;line-height:1.6}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.policy{display:flex;align-items:flex-start;gap:10px;margin-top:22px;padding:14px;border:1px solid #8b52ac55;border-radius:12px;background:#ffffff05}
+.policy input{width:17px;height:17px;flex:0 0 auto;margin-top:2px;accent-color:#a443ff}
+.policy label{margin:0;font-size:11px;line-height:1.7;color:#c6b8d1}
+button{width:100%;height:52px;margin-top:20px;border:1px solid #c38bff77;border-radius:12px;background:linear-gradient(110deg,#7000e8,#a52aff);color:white;font-size:12px;font-weight:800;letter-spacing:2px;cursor:pointer;box-shadow:0 0 20px #8b2bff22}
+#message{margin-top:14px;min-height:18px;font-size:12px;color:#e0baff;line-height:1.6}
+.disclaimer{font-size:11px;color:#93859e;line-height:1.7;margin-top:20px}
+@media(max-width:480px){.row{grid-template-columns:1fr}.card{padding:22px 16px}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<main class="wrap">
+<header>
+  <div class="brand">NEXVORA UNBAN</div>
+  <a class="back" href="dashboard.html">← DASHBOARD</a>
+</header>
+
+<section class="card">
+  <div class="eyebrow">ACCOUNT APPEAL</div>
+  <h1>ACCOUNT UNBAN GARENA REQUEST</h1>
+  <p class="intro">Enter accurate account information to prepare your appeal request. Do not provide your password, login codes or access tokens.</p>
+
+  <form id="appealForm">
+    <label for="uid">Player UID *</label>
+    <input id="uid" name="player_uid" inputmode="numeric" maxlength="30" required placeholder="Enter your Player UID">
+
+    <div class="row">
+      <div>
+        <label for="level">ID Level *</label>
+        <input id="level" name="id_level" required maxlength="20" placeholder="Account level">
+      </div>
+      <div>
+        <label for="region">Region *</label>
+        <select id="region" name="region" required>
+          <option value="">Select region</option>
+          <option>India</option><option>Bangladesh</option><option>Pakistan</option>
+          <option>Indonesia</option><option>Brazil</option><option>Middle East</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="gameName">Game Name *</label>
+    <input id="gameName" name="game_name" required maxlength="60" placeholder="Enter in-game name">
+
+    <div class="row">
+      <div>
+        <label for="device">Device *</label>
+        <select id="device" name="device" required>
+          <option value="">Select device</option>
+          <option>Android</option><option>iOS</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="banType">Ban Type *</label>
+        <select id="banType" name="ban_type" required>
+          <option value="">Select ban type</option>
+          <option value="permanent">Permanent Ban</option>
+          <option value="temporary">Temporary Ban</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="banDate">Ban Date (if known)</label>
+    <input id="banDate" name="ban_date" type="date">
+
+    <label for="screenshot">Ban Screenshot (optional)</label>
+    <input id="screenshot" name="ban_screenshot" type="file" accept="image/png,image/jpeg,image/webp">
+    <p class="hint">Choose a clear screenshot showing the ban notice. Do not upload unrelated personal documents.</p>
+
+    <div class="policy">
+      <input id="acceptPolicy" type="checkbox" required>
+      <label for="acceptPolicy">I confirm that these details are accurate. I understand this is an independent, unofficial appeal-request service, not affiliated with or endorsed by Garena, and that submitting a request does not guarantee an unban. I am not requesting an illegal bypass.</label>
+    </div>
+
+    <button type="submit">PROCEED</button>
+    <div id="message" role="status"></div>
+  </form>
+
+  <p class="disclaimer">This form is currently a front-end preview. Your information will not be saved or submitted until the secure backend is connected.</p>
+</section>
+</main>
+
+<script>
+document.getElementById("appealForm").addEventListener("submit",function(event){
+  event.preventDefault();
+  const file=document.getElementById("screenshot").files[0];
+  if(file && file.size > 5*1024*1024){
+    document.getElementById("message").textContent="Screenshot must be 5 MB or smaller.";
+    return;
+  }
+  document.getElementById("message").textContent=
+    "Form layout checked. Secure submission and payment flow will be connected next.";
+});
+</script>
+</body>
+  </html>
