@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXVORA UNBAN — License Payment</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:#05020a;color:#fff;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
+.bg{position:fixed;inset:0;background:radial-gradient(circle at 50% 20%,#31075d 0,transparent 42%),radial-gradient(circle at 90% 90%,#31002d 0,transparent 30%),#05020a;z-index:-1}
+.grid{position:fixed;inset:0;background-image:linear-gradient(#8d35ff0b 1px,transparent 1px),linear-gradient(90deg,#8d35ff0b 1px,transparent 1px);background-size:35px 35px;mask-image:linear-gradient(transparent,#000,transparent);z-index:-1}
+.card{width:min(100%,430px);padding:28px 23px;border:1px solid #a75bff66;border-radius:25px;background:#10091bdc;box-shadow:0 0 45px #8b2bff22,inset 0 0 25px #a020ff08;text-align:center;backdrop-filter:blur(15px);animation:appear .7s ease}
+@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.brand{font-size:13px;letter-spacing:4px;color:#d6aaff;font-weight:bold}
+h1{font-size:30px;letter-spacing:2px;margin:10px 0;background:linear-gradient(90deg,#fff,#c17bff,#fff);background-clip:text;color:transparent}
+.sub{font-size:12px;color:#b9a9c9;line-height:1.6;margin-bottom:20px}
+.amount{font-size:42px;font-weight:900;margin:12px 0 18px;text-shadow:0 0 25px #a83dff55}
+.amount small{font-size:13px;color:#c6b5d5;font-weight:400}
+.qrbox{width:215px;min-height:215px;margin:0 auto 15px;background:#fff;border-radius:16px;padding:12px;display:flex;align-items:center;justify-content:center}
+.qrbox img{width:100%;height:auto;display:block}
+.qr-placeholder{color:#3a214d;font-size:12px;line-height:1.6}
+.upi{background:#08040d;border:1px solid #7540a366;padding:13px;border-radius:12px;margin:14px 0 10px}
+.label{font-size:10px;letter-spacing:2px;color:#9f8bad;margin-bottom:7px}
+.upi-value{font-size:14px;font-weight:bold;overflow-wrap:anywhere}
+button{width:100%;min-height:49px;border-radius:12px;margin-top:11px;border:1px solid #b77aff88;font-weight:bold;letter-spacing:1px;font-size:12px;color:white;cursor:pointer;transition:.2s}
+button:active{transform:scale(.98)}
+.primary{background:linear-gradient(110deg,#7000e8,#a82cff);box-shadow:0 0 22px #8c2aff33}
+.secondary{background:#ffffff08}
+.note{font-size:11px;color:#a99bb5;line-height:1.6;margin-top:15px}
+#message{font-size:12px;min-height:18px;margin-top:12px;color:#e1b9ff}
+@media(max-width:360px){.card{padding:23px 16px}.qrbox{width:190px;min-height:190px}}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="grid"></div>
+<main class="card">
+  <div class="brand">NEXVORA</div>
+  <h1>LICENSE ACCESS</h1>
+  <p class="sub">Complete the ₹99 license payment to request your access key.</p>
+
+  <div class="amount">₹99 <small>INR</small></div>
+
+  <div class="qrbox" id="qrbox">
+    <div class="qr-placeholder">QR CODE<br>Generating payment QR…</div>
+  </div>
+
+  <div class="upi">
+    <div class="label">PAYMENT UPI ID</div>
+    <div class="upi-value" id="upi">jinwoo40054@kphdfc</div>
+  </div>
+
+  <button class="secondary" onclick="copyUpi()">COPY UPI ID</button>
+  <button class="primary" onclick="payViaUpi()">PAY VIA UPI APP</button>
+  <button class="secondary" onclick="goBack()">BACK</button>
+  <button class="primary" onclick="continueToBot()">CONTINUE</button>
+
+  <div id="message"></div>
+  <p class="note">Pay exactly ₹99. Keep your transaction reference for manual verification. Payment is not automatically confirmed by this page.</p>
+</main>
+
+<script>
+const UPI_ID = "jinwoo40054@kphdfc";
+const AMOUNT = "99";
+const PAYEE = "NEXVORA UNBAN";
+
+function paymentLink(){
+  const p = new URLSearchParams({
+    pa: UPI_ID,
+    pn: PAYEE,
+    am: AMOUNT,
+    cu: "INR",
+    tn: "NEXVORA UNBAN License"
+  });
+  return "upi://pay?" + p.toString();
+}
+
+function showQr(){
+  const link = paymentLink();
+  const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=" + encodeURIComponent(link);
+  const box = document.getElementById("qrbox");
+  const img = document.createElement("img");
+  img.alt = "UPI payment QR for ₹99";
+  img.src = qrUrl;
+  img.onerror = () => {
+    box.innerHTML = '<div class="qr-placeholder">QR could not load.<br>Use PAY VIA UPI APP instead.</div>';
+  };
+  box.replaceChildren(img);
+}
+
+function payViaUpi(){
+  window.location.href = paymentLink();
+}
+
+async function copyUpi(){
+  const msg = document.getElementById("message");
+  try{
+    await navigator.clipboard.writeText(UPI_ID);
+    msg.textContent = "UPI ID copied.";
+  }catch(e){
+    msg.textContent = "UPI ID: " + UPI_ID;
+  }
+}
+
+function goBack(){
+  window.location.href = "license.html";
+}
+
+function continueToBot(){
+  // Replace with your real Telegram bot link after the bot is created.
+  document.getElementById("message").textContent =
+    "Telegram bot will be connected after it is configured. Save your payment reference.";
+}
+
+showQr();
+</script>
+</body>
+    </html>
