@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXVORA UNBAN — My Form</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:#05020a;color:#fff;font-family:Arial,sans-serif;padding:20px;display:grid;place-items:center}
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 15% 10%,#43007188,transparent 35%),radial-gradient(circle at 85% 90%,#31004466,transparent 35%),#05020a}
+.card{width:min(100%,460px);padding:30px 23px;border:1px solid #a65cff55;border-radius:22px;background:#10091bdd;box-shadow:0 0 40px #842aff20;text-align:center}
+.brand{font-size:12px;letter-spacing:4px;color:#d6b0ff;font-weight:bold}
+h1{font-size:32px;margin:15px 0;background:linear-gradient(90deg,#fff,#c68aff);background-clip:text;color:transparent}
+p{font-size:13px;line-height:1.7;color:#b9a9c9}
+input{width:100%;height:52px;margin-top:24px;padding:0 14px;border:1px solid #8b52ac66;border-radius:11px;background:#09050f;color:#fff;outline:none;text-align:center;font-size:14px}
+input:focus{border-color:#bc6cff;box-shadow:0 0 15px #922dff22}
+button{width:100%;height:50px;margin-top:13px;border:1px solid #c38bff77;border-radius:12px;background:linear-gradient(110deg,#7000e8,#a52aff);color:#fff;font-size:12px;font-weight:bold;letter-spacing:2px;cursor:pointer}
+.back{display:block;margin-top:22px;color:#cba1ff;text-decoration:none;font-size:12px}
+#message{margin-top:17px;font-size:12px;color:#e0baff;line-height:1.7;overflow-wrap:anywhere}
+.note{margin-top:20px;font-size:11px;color:#8e809b}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<main class="card">
+  <div class="brand">NEXVORA UNBAN</div>
+  <h1>MY FORM</h1>
+  <p>Enter your order ID to look up your appeal request.</p>
+
+  <form id="lookupForm">
+    <input id="orderId" maxlength="80" required placeholder="ENTER ORDER ID" autocomplete="off">
+    <button type="submit">CHECK STATUS</button>
+  </form>
+
+  <div id="message" role="status"></div>
+  <p class="note">Live request status and the 14-day timer will appear after secure database lookup is connected. This page does not invent a status.</p>
+  <a class="back" href="dashboard.html">← BACK TO DASHBOARD</a>
+</main>
+
+<script>
+document.getElementById("lookupForm").addEventListener("submit",function(event){
+  event.preventDefault();
+  const id=document.getElementById("orderId").value.trim();
+  const message=document.getElementById("message");
+  if(!id){
+    message.textContent="Please enter your order ID.";
+    return;
+  }
+  message.textContent="Live status lookup is not connected yet. Your request has not been checked.";
+});
+</script>
+</body>
+</html>
