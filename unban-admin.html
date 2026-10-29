@@ -115,98 +115,311 @@ input:focus{border-color:#c17aff;box-shadow:0 0 15px #922dff22}
   </main>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/*
-  This is a UI preview only.
-  Supabase Auth and admin-role checks must be connected before use.
-  Do not replace this with a client-side email/password comparison.
-*/
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
+const SUPABASE_URL = "https://sitgwrnvxaugresvlvfl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ";
 
-loginForm.addEventListener("submit", function(event) {
-  event.preventDefault();
-  loginMessage.textContent =
-    "Authentication is not connected yet. Please wait for the secure Supabase setup.";
-});
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
-document.getElementById("logoutButton").addEventListener("click", function() {
-  document.getElementById("adminApp").classList.add("hidden");
-  document.getElementById("loginView").classList.remove("hidden");
-  document.getElementById("password").value = "";
-  loginMessage.textContent = "You have returned to the login screen.";
-});
+const $ = id => document.getElementById(id);
 
-const sections = {
-  overview: {
-    title: "Dashboard",
-    html: `
-      <p>Welcome to the NEXVORA UNBAN control center.</p>
-      <div class="cards">
-        <div class="stat"><span>License Keys</span><strong>—</strong></div>
-        <div class="stat"><span>Appeal Requests</span><strong>—</strong></div>
-        <div class="stat"><span>Payments Pending</span><strong>—</strong></div>
-      </div>
-      <div class="panel"><h3>System status</h3>
-        <p>Live database statistics will appear after secure authentication and data access are connected.</p>
-      </div>`
-  },
-  licenses: {
-    title: "License Keys",
-    html: `
-      <div class="panel"><h3>License management</h3>
-        <p>Review generated keys, activation status, revocation and customer payment review.</p>
-        <p class="field-note">No keys are displayed until the authenticated database connection is implemented.</p>
-      </div>`
-  },
-  forms: {
-    title: "Unban Forms",
-    html: `
-      <div class="panel"><h3>Appeal requests</h3>
-        <p>View submitted requests, request status, created time and notes.</p>
-        <p class="field-note">Customer records will be loaded only after admin authorization is verified.</p>
-      </div>`
-  },
-  payments: {
-    title: "Payments",
-    html: `
-      <div class="panel"><h3>Payment verification</h3>
-        <p>Review payment references and screenshots. Confirm payments manually against your payment account before approving.</p>
-        <p class="field-note">No payment is considered verified by this preview page.</p>
-      </div>`
-  },
-  telegram: {
-    title: "Telegram",
-    html: `
-      <div class="panel"><h3>Bot connection</h3>
-        <p>Telegram membership checks, bot updates and private admin notifications will be configured on the server side.</p>
-        <p class="field-note">Never put a Telegram bot token in this HTML file.</p>
-      </div>`
-  },
-  settings: {
-    title: "Settings",
-    html: `
-      <div class="panel"><h3>Website settings</h3>
-        <p>Support handle, UPI ID, prices and policy text are stored in Supabase.</p>
-        <p class="field-note">Settings editing will be enabled after secure admin access is connected.</p>
-      </div>`
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[ch]);
+}
+
+function message(text, isError = true) {
+  $("loginMessage").textContent = text;
+  $("loginMessage").style.color = isError ? "#ffb4df" : "#b5ffcf";
+}
+
+function showLogin() {
+  $("adminApp").classList.add("hidden");
+  $("loginView").classList.remove("hidden");
+}
+
+function showAdmin() {
+  $("loginView").classList.add("hidden");
+  $("adminApp").classList.remove("hidden");
+}
+
+async function verifyAdmin(user) {
+  if (!user || !user.email) return false;
+
+  const { data, error } = await db
+    .from("admin_allowlist")
+    .select("email")
+    .eq("email", user.email)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(
+      "Admin permission check failed. Check Supabase RLS policies."
+    );
   }
+
+  return Boolean(data);
+}
+
+async function loadOverview() {
+  const [keys, forms, pending] = await Promise.all([
+    db.from("license_keys")
+      .select("id", { count: "exact", head: true }),
+
+    db.from("unban_forms")
+      .select("id", { count: "exact", head: true }),
+
+    db.from("unban_forms")
+      .select("id", { count: "exact", head: true })
+      .not("payment_utr", "is", null)
+      .is("payment_verified_at", null)
+  ]);
+
+  for (const result of [keys, forms, pending]) {
+    if (result.error) throw result.error;
+  }
+
+  $("sectionContent").innerHTML = `
+    <p>Welcome to the NEXVORA UNBAN control center.</p>
+    <div class="cards">
+      <div class="stat">
+        <span>License Keys</span>
+        <strong>${keys.count ?? 0}</strong>
+      </div>
+      <div class="stat">
+        <span>Unban Forms</span>
+        <strong>${forms.count ?? 0}</strong>
+      </div>
+      <div class="stat">
+        <span>Payments Awaiting Verification</span>
+        <strong>${pending.count ?? 0}</strong>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Connection status</h3>
+      <p>Supabase connected. Admin authentication verified.</p>
+    </div>`;
+}
+
+async function loadLicenses() {
+  const { data, error } = await db
+    .from("license_keys")
+    .select("id,key_prefix,status,customer_email,created_at,expires_at")
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (error) throw error;
+
+  $("sectionContent").innerHTML = `
+    <div class="panel">
+      <h3>License Keys</h3>
+      <p>Recent records. Full license secrets are never displayed.</p>
+      ${data.length ? data.map(item => `
+        <div class="list">
+          <strong>${escapeHTML(item.key_prefix || "Key")}</strong><br>
+          Status: ${escapeHTML(item.status)}<br>
+          Customer: ${escapeHTML(item.customer_email || "Not assigned")}<br>
+          Created: ${escapeHTML(item.created_at || "—")}
+        </div>`).join("") : '<p>No license records found.</p>'}
+    </div>`;
+}
+
+async function loadForms(paymentOnly = false) {
+  let query = db
+    .from("unban_forms")
+    .select("id,order_id,player_uid,game_name,status,full_name,payment_utr,payment_verified_at,created_at,notes")
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (paymentOnly) {
+    query = query
+      .not("payment_utr", "is", null)
+      .is("payment_verified_at", null);
+  }
+
+  const { data, error } = await query;
+  if (error) throw error;
+
+  $("sectionContent").innerHTML = `
+    <div class="panel">
+      <h3>${paymentOnly ? "Payments Awaiting Review" : "Unban Forms"}</h3>
+      <p>Review submitted records in the database.</p>
+      ${data.length ? data.map(item => `
+        <div class="list">
+          <strong>Order: ${escapeHTML(item.order_id || item.id)}</strong><br>
+          Player UID: ${escapeHTML(item.player_uid)}<br>
+          Game name: ${escapeHTML(item.game_name)}<br>
+          Customer: ${escapeHTML(item.full_name || "—")}<br>
+          Status: ${escapeHTML(item.status)}<br>
+          UTR: ${escapeHTML(item.payment_utr || "Not submitted")}<br>
+          Created: ${escapeHTML(item.created_at || "—")}
+        </div>`).join("") : '<p>No matching records found.</p>'}
+    </div>`;
+}
+
+async function loadSettings() {
+  const { data, error } = await db
+    .from("site_settings")
+    .select("key,value,updated_at")
+    .order("key");
+
+  if (error) throw error;
+
+  $("sectionContent").innerHTML = `
+    <div class="panel">
+      <h3>Site Settings</h3>
+      <p>Current settings saved in Supabase. Editing is not enabled yet.</p>
+      ${data.length ? data.map(item => `
+        <div class="list">
+          <strong>${escapeHTML(item.key)}</strong><br>
+          ${escapeHTML(JSON.stringify(item.value))}<br>
+          Updated: ${escapeHTML(item.updated_at || "—")}
+        </div>`).join("") : "<p>No settings found.</p>"}
+    </div>`;
+}
+
+async function loadTelegram() {
+  const { data, error } = await db
+    .from("telegram_events")
+    .select("id,event_type,telegram_user_id,created_at")
+    .order("created_at", { ascending: false })
+    .limit(30);
+
+  if (error) throw error;
+
+  $("sectionContent").innerHTML = `
+    <div class="panel">
+      <h3>Telegram Events</h3>
+      <p>Recent events already recorded in the database.</p>
+      ${data.length ? data.map(item => `
+        <div class="list">
+          Event: ${escapeHTML(item.event_type)}<br>
+          Telegram user: ${escapeHTML(item.telegram_user_id || "—")}<br>
+          Date: ${escapeHTML(item.created_at || "—")}
+        </div>`).join("") : "<p>No Telegram events recorded yet.</p>"}
+    </div>`;
+}
+
+const sectionLoaders = {
+  overview: loadOverview,
+  licenses: loadLicenses,
+  forms: () => loadForms(false),
+  payments: () => loadForms(true),
+  settings: loadSettings,
+  telegram: loadTelegram
 };
 
-function renderSection(key) {
-  const section = sections[key] || sections.overview;
-  document.getElementById("sectionTitle").textContent = section.title;
-  document.getElementById("sectionContent").innerHTML = section.html;
+const sectionNames = {
+  overview: "Dashboard",
+  licenses: "License Keys",
+  forms: "Unban Forms",
+  payments: "Payments",
+  settings: "Settings",
+  telegram: "Telegram"
+};
+
+async function renderSection(key) {
+  $("sectionTitle").textContent = sectionNames[key] || "Dashboard";
+  $("sectionContent").innerHTML =
+    '<div class="panel"><p>Loading secure database records...</p></div>';
+
   document.querySelectorAll(".nav").forEach(button => {
     button.classList.toggle("active", button.dataset.section === key);
   });
+
+  try {
+    await sectionLoaders[key || "overview"]();
+  } catch (error) {
+    $("sectionContent").innerHTML = `
+      <div class="panel">
+        <h3>Could not load this section</h3>
+        <p>${escapeHTML(error.message || "Database request failed.")}</p>
+      </div>`;
+  }
 }
 
-document.querySelectorAll(".nav").forEach(button => {
-  button.addEventListener("click", () => renderSection(button.dataset.section));
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const button = $("loginButton");
+  button.disabled = true;
+  button.textContent = "VERIFYING...";
+  message("Signing in securely...", false);
+
+  try {
+    const email = $("email").value.trim();
+    const password = $("password").value;
+
+    const { data, error } = await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    const allowed = await verifyAdmin(data.user);
+
+    if (!allowed) {
+      await db.auth.signOut();
+      throw new Error("This account is not on the admin allowlist.");
+    }
+
+    showAdmin();
+    await renderSection("overview");
+  } catch (error) {
+    message(error.message || "Login failed. Check your credentials.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "SECURE LOGIN";
+  }
 });
 
-renderSection("overview");
+document.querySelectorAll(".nav").forEach(button => {
+  button.addEventListener("click", () => {
+    renderSection(button.dataset.section);
+  });
+});
+
+$("logoutButton").addEventListener("click", async () => {
+  await db.auth.signOut();
+  showLogin();
+  $("password").value = "";
+  message("You have signed out.", false);
+});
+
+async function restoreSession() {
+  try {
+    const { data, error } = await db.auth.getSession();
+    if (error) throw error;
+
+    if (data.session) {
+      const allowed = await verifyAdmin(data.session.user);
+
+      if (allowed) {
+        showAdmin();
+        await renderSection("overview");
+      } else {
+        await db.auth.signOut();
+        showLogin();
+      }
+    }
+  } catch (error) {
+    showLogin();
+    message(error.message || "Could not restore session.");
+  }
+}
+
+restoreSession();
 </script>
+
 </body>
 </html>
