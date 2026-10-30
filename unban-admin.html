@@ -1506,7 +1506,6 @@ async function verifyAdmin(user){
   const allowedEmails = [
 
     "jinwoosung40054@gmail.com",
-    "virexabusiness143@gmail.com"
 
   ];
 
@@ -1687,24 +1686,12 @@ function showAccessScreen(){
 
 /* ================= ENTER CONTROL PANEL ================= */
 
-$("accessPanelButton").addEventListener(
-  "click",
-  async()=>{
+$("accessPanelButton").addEventListener("click", async () => {
+  $("accessScreen").classList.add("hidden");
+  $("adminApp").classList.remove("hidden");
 
-    $("accessScreen")
-      .classList
-      .add("hidden");
-
-    $("adminApp")
-      .classList
-      .remove("hidden");
-
-    await render(
-      "dashboard"
-    );
-
-  }
-);
+  await render("dashboard");
+});
 
 
 /* ================= LOGOUT ================= */
