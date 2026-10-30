@@ -314,7 +314,7 @@ async function verifyKey(){
     return;
   }
 
-  if(!/^NX-[A-Z]{4}-UN$/.test(key)){
+  if(!/^NX-[A-Z0-9]{4}-UN$/.test(key)){
     status.textContent="Format must be NX-XXXX-UN.";
     status.classList.add("error");
     input.focus();
