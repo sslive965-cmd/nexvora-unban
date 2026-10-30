@@ -1,80 +1,627 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#020006">
 <title>NEXVORA UNBAN — Dashboard</title>
+
 <script>
 if(sessionStorage.getItem("nexvora_license_access")!=="verified"){
   window.location.replace("license.html");
 }
 </script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:#05020a;color:#fff;font-family:Arial,sans-serif;padding:22px}
-.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 10% 10%,#40006a88,transparent 35%),radial-gradient(circle at 90% 90%,#30004466,transparent 35%),#05020a}
-.wrap{max-width:900px;margin:auto}
-header{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 0 24px;border-bottom:1px solid #a65cff35}
-.brand{font-weight:900;letter-spacing:2px;font-size:20px;background:linear-gradient(90deg,#fff,#c47cff);background-clip:text;color:transparent}
-.support{color:#d9b5ff;text-decoration:none;font-size:12px;border:1px solid #a65cff66;border-radius:10px;padding:10px 12px}
-.hero{padding:35px 0 28px}
-.eyebrow{font-size:11px;letter-spacing:4px;color:#ba8be9}
-h1{font-size:clamp(30px,7vw,48px);margin:12px 0;background:linear-gradient(90deg,#fff,#c68aff,#8f40ff);background-clip:text;color:transparent}
-p{color:#b9a9c9;line-height:1.7;font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.tile{display:block;text-decoration:none;color:white;text-align:left;padding:25px 20px;min-height:170px;border-radius:20px;border:1px solid #a65cff44;background:linear-gradient(145deg,#1b0c2bd9,#0b0612e8);box-shadow:0 10px 35px #0005;transition:.25s}
-.tile:hover{transform:translateY(-4px);border-color:#c17cffaa;box-shadow:0 0 25px #842aff22}
-.symbol{font-size:28px;margin-bottom:18px}
-.tile h2{font-size:17px;margin-bottom:9px;letter-spacing:1px}
-.tile p{font-size:12px}
-.info{margin-top:18px;width:100%;padding:17px;border-radius:15px;background:#a52cff1a;border:1px solid #a65cff55;color:#e4caff;font-weight:bold;letter-spacing:2px;cursor:pointer}
-.disclaimer{margin:24px 0 10px;font-size:11px;color:#84768f}
-@media(max-width:520px){body{padding:16px}.grid{gap:11px}.tile{padding:20px 14px;min-height:155px}.tile h2{font-size:14px}header{align-items:flex-start}.brand{font-size:17px}}
+
+html,body{
+  min-height:100%;
+  width:100%;
+  overflow-x:hidden;
+  background:#020006;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{position:relative;padding:22px}
+
+/* ANIMATED BACKGROUND */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(125,0,255,.22),transparent 32%),
+    radial-gradient(circle at 8% 18%,rgba(0,210,255,.09),transparent 25%),
+    radial-gradient(circle at 92% 82%,rgba(255,0,180,.10),transparent 25%),
+    #020006;
+}
+
+.bg:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center,transparent 20%,rgba(0,0,0,.15) 60%,rgba(0,0,0,.75));
+}
+
+.grid-bg{
+  position:absolute;
+  width:200%;
+  height:180%;
+  left:-50%;
+  top:42%;
+  background-image:
+    linear-gradient(rgba(146,42,255,.10) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(146,42,255,.10) 1px,transparent 1px);
+  background-size:45px 45px;
+  transform:perspective(520px) rotateX(65deg);
+  animation:gridMove 10s linear infinite;
+}
+
+@keyframes gridMove{
+  from{transform:perspective(520px) rotateX(65deg) translateY(0)}
+  to{transform:perspective(520px) rotateX(65deg) translateY(45px)}
+}
+
+.orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(85px);
+  opacity:.4;
+}
+
+.orb1{
+  width:270px;height:270px;
+  left:-100px;top:8%;
+  background:#7300ff;
+  animation:orb1 8s ease-in-out infinite alternate;
+}
+
+.orb2{
+  width:290px;height:290px;
+  right:-100px;bottom:-20px;
+  background:#ff008c;
+  animation:orb2 9s ease-in-out infinite alternate;
+}
+
+.orb3{
+  width:190px;height:190px;
+  right:18%;top:-90px;
+  background:#00c8ff;
+  animation:orb3 7s ease-in-out infinite alternate;
+}
+
+@keyframes orb1{to{transform:translate(65px,40px) scale(1.18)}}
+@keyframes orb2{to{transform:translate(-55px,-45px) scale(1.15)}}
+@keyframes orb3{to{transform:translate(-35px,70px) scale(1.2)}}
+
+/* PARTICLES */
+.particles{position:absolute;inset:0}
+.particle{
+  position:absolute;
+  width:2px;height:2px;
+  border-radius:50%;
+  background:#dcbcff;
+  box-shadow:0 0 7px #a53dff,0 0 15px #8d21ff;
+  animation:particle linear infinite;
+}
+
+@keyframes particle{
+  0%{transform:translateY(110vh);opacity:0}
+  15%{opacity:1}
+  85%{opacity:.8}
+  100%{transform:translateY(-10vh);opacity:0}
+}
+
+/* MAIN */
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:950px;
+  margin:auto;
+  animation:pageIn 1s ease;
+}
+
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* HEADER */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:12px 0 20px;
+  border-bottom:1px solid rgba(166,92,255,.3);
+}
+
+.brand{
+  font-size:21px;
+  font-weight:1000;
+  letter-spacing:3px;
+  background:linear-gradient(110deg,#fff,#d9b4ff,#8c25ff,#fff);
+  background-size:250% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 0 12px rgba(154,54,255,.65));
+  animation:shine 5s linear infinite;
+}
+
+@keyframes shine{to{background-position:250% center}}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.icon-btn{
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  border:1px solid rgba(190,120,255,.5);
+  background:rgba(100,0,190,.16);
+  color:#e4c5ff;
+  font-size:20px;
+  cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 0 18px rgba(130,0,255,.17);
+  transition:.25s;
+}
+
+.icon-btn:hover{
+  transform:translateY(-3px);
+  border-color:#d7a6ff;
+  box-shadow:0 0 24px rgba(157,45,255,.55);
+}
+
+/* HERO */
+.hero{
+  padding:42px 0 30px;
+}
+
+.eyebrow{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#bd8bff;
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:4px;
+  text-transform:uppercase;
+}
+
+.live-dot{
+  width:7px;height:7px;
+  border-radius:50%;
+  background:#b14dff;
+  box-shadow:0 0 12px #b14dff;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  50%{opacity:.35;transform:scale(.6)}
+}
+
+h1{
+  margin:15px 0 12px;
+  font-size:clamp(30px,7vw,52px);
+  line-height:1.08;
+  font-weight:1000;
+  background:linear-gradient(110deg,#fff,#d9b4ff,#8c25ff,#fff);
+  background-size:250% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 0 16px rgba(140,35,255,.35));
+  animation:shine 5s linear infinite;
+}
+
+.hero p{
+  max-width:570px;
+  color:#ad9abf;
+  font-size:13px;
+  line-height:1.8;
+}
+
+/* MAIN CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  perspective:1000px;
+}
+
+.tile{
+  position:relative;
+  display:block;
+  min-height:185px;
+  overflow:hidden;
+  padding:25px 21px;
+  border-radius:19px;
+  border:1px solid rgba(176,105,255,.42);
+  background:
+    linear-gradient(145deg,rgba(47,15,75,.78),rgba(8,3,17,.92));
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.4),
+    inset 0 0 25px rgba(145,35,255,.07),
+    0 0 20px rgba(125,0,255,.10);
+  text-decoration:none;
+  color:white;
+  transition:transform .35s,border-color .35s,box-shadow .35s;
+  transform-style:preserve-3d;
+}
+
+.tile:before{
+  content:"";
+  position:absolute;
+  top:0;left:-120%;
+  width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);
+  transform:skewX(-22deg);
+  transition:left .7s;
+}
+
+.tile:hover:before{left:150%}
+
+.tile:hover{
+  transform:translateY(-7px) rotateX(2deg);
+  border-color:rgba(208,155,255,.9);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.5),
+    0 0 30px rgba(135,35,255,.32),
+    inset 0 0 30px rgba(145,35,255,.12);
+}
+
+.symbol{
+  position:relative;
+  z-index:1;
+  width:48px;height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:20px;
+  border-radius:14px;
+  background:linear-gradient(145deg,rgba(133,35,255,.35),rgba(35,0,70,.55));
+  border:1px solid rgba(198,139,255,.5);
+  color:#e3c5ff;
+  font-size:25px;
+  text-shadow:0 0 15px #a43dff;
+  box-shadow:0 0 20px rgba(139,35,255,.22);
+}
+
+.tile h2{
+  position:relative;
+  z-index:1;
+  font-size:17px;
+  margin-bottom:9px;
+  letter-spacing:2px;
+}
+
+.tile p{
+  position:relative;
+  z-index:1;
+  color:#b5a2c8;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.arrow{
+  position:absolute;
+  right:20px;
+  bottom:20px;
+  color:#c78bff;
+  font-size:20px;
+  text-shadow:0 0 12px #8d21ff;
+}
+
+/* FOOTER */
+.disclaimer{
+  margin:28px 0 10px;
+  padding-top:18px;
+  border-top:1px solid rgba(166,92,255,.18);
+  color:#71627e;
+  font-size:9px;
+  line-height:1.8;
+  letter-spacing:2px;
+  text-align:center;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(12px);
+}
+
+.modal.open{display:flex}
+
+.modal-box{
+  width:min(100%,510px);
+  max-height:85vh;
+  overflow-y:auto;
+  position:relative;
+  padding:27px 23px;
+  border-radius:20px;
+  border:1px solid rgba(191,110,255,.65);
+  background:
+    radial-gradient(circle at top right,rgba(125,0,255,.22),transparent 45%),
+    linear-gradient(145deg,#170923,#07030e);
+  box-shadow:0 0 45px rgba(128,0,255,.28),inset 0 0 25px rgba(139,0,255,.07);
+  animation:modalIn .3s ease;
+}
+
+@keyframes modalIn{
+  from{opacity:0;transform:translateY(20px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.modal-head h2{
+  color:#e4c5ff;
+  font-size:18px;
+  letter-spacing:2px;
+}
+
+.close-btn{
+  width:34px;height:34px;
+  border:1px solid #a65cff55;
+  border-radius:10px;
+  background:#6c16a522;
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.rules-list{
+  display:grid;
+  gap:13px;
+}
+
+.rule{
+  padding:13px;
+  border:1px solid rgba(166,92,255,.2);
+  border-radius:12px;
+  background:rgba(255,255,255,.025);
+  color:#c6b5d5;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.rule strong{
+  display:block;
+  color:#d9b4ff;
+  margin-bottom:4px;
+  font-size:12px;
+}
+
+.modal-note{
+  margin-top:17px;
+  color:#8d7c9c;
+  font-size:10px;
+  line-height:1.7;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  body{padding:16px}
+  .brand{font-size:16px;letter-spacing:2px}
+  .icon-btn{width:37px;height:37px}
+  .hero{padding:35px 0 25px}
+  .eyebrow{font-size:9px;letter-spacing:3px}
+  .hero p{font-size:12px}
+  .grid{gap:11px}
+  .tile{min-height:165px;padding:19px 14px;border-radius:16px}
+  .symbol{width:42px;height:42px;font-size:22px;margin-bottom:17px}
+  .tile h2{font-size:13px;letter-spacing:1px}
+  .tile p{font-size:11px}
+  .arrow{right:13px;bottom:13px}
+  .disclaimer{font-size:8px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+  }
+}
 </style>
 </head>
+
 <body>
-<div class="bg"></div>
+
+<div class="bg">
+  <div class="grid-bg"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="particles" id="particles"></div>
+</div>
+
 <main class="wrap">
+
 <header>
   <div class="brand">NEXVORA UNBAN</div>
-  <a class="support" href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">SUPPORT @NEXVORA_X ↗</a>
+
+  <div class="header-actions">
+    <button class="icon-btn" type="button"
+      onclick="openInfo()" aria-label="Rules and policy"
+      title="Rules and policy">ⓘ</button>
+
+    <a class="icon-btn"
+      href="https://t.me/NEXVORA_X"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Telegram support"
+      title="Telegram support">➤</a>
+  </div>
 </header>
 
 <section class="hero">
-  <div class="eyebrow">CUSTOMER CONTROL PANEL</div>
+  <div class="eyebrow">
+    <span class="live-dot"></span>
+    CUSTOMER CONTROL PANEL
+  </div>
+
   <h1>Welcome to your platform.</h1>
-  <p>Manage your account appeal request and check its current status from one place.</p>
+
+  <p>
+    Manage your account appeal request and check
+    its current status from one place.
+  </p>
 </section>
 
 <section class="grid">
+
   <a class="tile" href="unban-form.html">
     <div class="symbol">✦</div>
     <h2>UNBAN FORM</h2>
     <p>Prepare an account appeal request with your details.</p>
+    <span class="arrow">↗</span>
   </a>
+
   <a class="tile" href="my-form.html">
     <div class="symbol">⌁</div>
     <h2>MY FORM</h2>
     <p>Look up an existing request using its order ID.</p>
+    <span class="arrow">↗</span>
   </a>
-</section>
 
-<button class="info" onclick="showInfo()">ⓘ &nbsp; INFO &nbsp; / &nbsp; RULES</button>
-<p id="infoText" style="display:none;margin-top:15px">
-  This is an independent, unofficial appeal-request service and is not affiliated with Garena. Submitting a request does not guarantee that an account will be unbanned. Provide accurate details only. Never share your password or account access token.
-</p>
+</section>
 
 <div class="disclaimer">
   INDEPENDENT APPEAL REQUEST SERVICE · NO UNBAN GUARANTEE
 </div>
+
 </main>
 
+<!-- RULES MODAL -->
+<div class="modal" id="infoModal" onclick="outsideClose(event)">
+  <section class="modal-box" role="dialog"
+    aria-modal="true" aria-labelledby="rulesTitle">
+
+    <div class="modal-head">
+      <h2 id="rulesTitle">ⓘ RULES & POLICY</h2>
+      <button class="close-btn" type="button"
+        onclick="closeInfo()" aria-label="Close">×</button>
+    </div>
+
+    <div class="rules-list">
+
+      <div class="rule">
+        <strong>01. Independent Service</strong>
+        NEXVORA UNBAN is an independent, unofficial appeal-request service.
+        It is not affiliated with or endorsed by Garena.
+      </div>
+
+      <div class="rule">
+        <strong>02. No Unban Guarantee</strong>
+        Submitting an appeal does not guarantee that an account will be
+        unbanned. The final decision belongs to the game publisher.
+      </div>
+
+      <div class="rule">
+        <strong>03. Accurate Information</strong>
+        Submit accurate account details and genuine supporting information.
+        Incorrect or misleading details may affect your request.
+      </div>
+
+      <div class="rule">
+        <strong>04. Account Security</strong>
+        Never share your password, OTP, recovery codes or account access
+        token with anyone, including support.
+      </div>
+
+      <div class="rule">
+        <strong>05. Payment & Review</strong>
+        Any applicable service fee is for the independent request service,
+        not a guarantee of account recovery or an official Garena action.
+      </div>
+
+      <div class="rule">
+        <strong>06. Final Decision</strong>
+        Account restrictions can only be reviewed or changed by the
+        relevant game publisher through its official processes.
+      </div>
+
+    </div>
+
+    <p class="modal-note">
+      By using this platform, you acknowledge these service limitations
+      and agree to provide truthful information.
+    </p>
+
+  </section>
+</div>
+
 <script>
-function showInfo(){
-  const el=document.getElementById("infoText");
-  el.style.display=el.style.display==="none"?"block":"none";
+/* PARTICLES */
+const particleBox=document.getElementById("particles");
+const particleCount=window.innerWidth<600?35:60;
+
+for(let i=0;i<particleCount;i++){
+  const particle=document.createElement("span");
+  particle.className="particle";
+  particle.style.left=Math.random()*100+"%";
+  particle.style.animationDuration=(5+Math.random()*9)+"s";
+  particle.style.animationDelay=(Math.random()*8)+"s";
+
+  const size=(1+Math.random()*2)+"px";
+  particle.style.width=size;
+  particle.style.height=size;
+
+  particleBox.appendChild(particle);
 }
+
+/* RULES MODAL */
+const infoModal=document.getElementById("infoModal");
+
+function openInfo(){
+  infoModal.classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function closeInfo(){
+  infoModal.classList.remove("open");
+  document.body.style.overflow="";
+}
+
+function outsideClose(event){
+  if(event.target===infoModal){
+    closeInfo();
+  }
+}
+
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){
+    closeInfo();
+  }
+});
 </script>
+
 </body>
-</html>
+      </html>
