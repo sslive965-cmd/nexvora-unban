@@ -3,119 +3,727 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#05020a">
-<title>NEXVORA UNBAN — Appeal Form</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#05020b">
+<title>NEXVORA UNBAN — Appeal Portal</title>
 
 <script>
-if(sessionStorage.getItem("nexvora_license_access")!=="verified"){
+if (sessionStorage.getItem("nexvora_license_access") !== "verified") {
   window.location.replace("license.html");
 }
 </script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100%;background:#05020a;color:#fff;font-family:Arial,sans-serif}
-body{min-height:100vh;overflow-x:hidden;padding:22px 16px 55px}
-.bg{position:fixed;inset:0;z-index:-5;background:radial-gradient(circle at 10% 5%,#50008b55,transparent 35%),radial-gradient(circle at 90% 90%,#7100a544,transparent 35%),#05020a}
-.grid{position:fixed;width:200%;height:180%;left:-50%;top:40%;z-index:-4;pointer-events:none;background-image:linear-gradient(#a34cff12 1px,transparent 1px),linear-gradient(90deg,#a34cff12 1px,transparent 1px);background-size:45px 45px;transform:perspective(520px) rotateX(65deg);animation:gridMove 10s linear infinite}
-@keyframes gridMove{to{transform:perspective(520px) rotateX(65deg) translateY(45px)}}
-.orb{position:fixed;z-index:-3;border-radius:50%;filter:blur(90px);opacity:.32;pointer-events:none}
-.orb.one{width:280px;height:280px;left:-110px;top:8%;background:#7200ff;animation:floatOne 8s ease-in-out infinite alternate}
-.orb.two{width:300px;height:300px;right:-110px;bottom:-30px;background:#bd00ff;animation:floatTwo 9s ease-in-out infinite alternate}
-@keyframes floatOne{to{transform:translate(65px,40px) scale(1.17)}}
-@keyframes floatTwo{to{transform:translate(-55px,-45px) scale(1.15)}}
-.particles{position:fixed;inset:0;z-index:-2;pointer-events:none}
-.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#dcbcff;box-shadow:0 0 7px #a53dff,0 0 16px #8d21ff;animation:particleFloat linear infinite}
-@keyframes particleFloat{0%{transform:translateY(110vh);opacity:0}15%{opacity:1}85%{opacity:.8}100%{transform:translateY(-10vh);opacity:0}}
-.wrap{width:min(100%,680px);margin:auto;animation:pageIn .9s ease both}
-@keyframes pageIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0 22px;border-bottom:1px solid #a65cff44}
-.brand{font-size:17px;font-weight:900;letter-spacing:2px;background:linear-gradient(90deg,#fff,#c47cff);background-clip:text;color:transparent}
-.back{color:#d9b5ff;text-decoration:none;font-size:11px;letter-spacing:1px;border:1px solid #a65cff66;border-radius:10px;padding:10px 12px}
-.heading{padding:38px 0 20px;text-align:center}
-.eyebrow{font-size:10px;letter-spacing:5px;color:#bd8af0}
-h1{font-size:clamp(25px,6vw,39px);margin:13px 0;letter-spacing:1px;background:linear-gradient(110deg,#fff,#d9b4ff,#8c25ff,#fff);background-size:300% auto;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px #8d21ff66);animation:titleShine 5s linear infinite}
-@keyframes titleShine{to{background-position:300% center}}
-.intro{max-width:540px;margin:auto;font-size:12px;color:#b7a7c7;line-height:1.8}
-.form-section{margin-top:22px;padding:10px 0}
-.section-title{color:#d9b5ff;font-size:11px;letter-spacing:3px;padding-bottom:13px;border-bottom:1px solid #a65cff35;margin-bottom:17px}
-label{display:block;font-size:11px;color:#dfc9f5;margin:18px 0 8px;letter-spacing:.5px}
-input,select{width:100%;height:49px;padding:0 14px;border:1px solid #8b52ac66;border-radius:11px;background:#10091b99;color:#fff;outline:none;font-size:13px;transition:.25s}
-input:focus,select:focus{border-color:#bc6cff;box-shadow:0 0 18px #922dff35;background:#170b25}
-input::placeholder{color:#746580}
-select option{background:#10091b;color:#fff}
-input[type=file]{height:auto;min-height:49px;padding:13px;font-size:11px}
-input[type=date]{color-scheme:dark}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.hint{font-size:10px;color:#92829f;margin-top:8px;line-height:1.7}
-.policy{display:flex;align-items:flex-start;gap:11px;margin-top:25px;padding:15px;border:1px solid #8b52ac55;border-radius:12px;background:#ffffff05}
-.policy input{width:17px;height:17px;flex:0 0 auto;margin-top:2px;accent-color:#a443ff}
-.policy label{margin:0;font-size:10px;line-height:1.8;color:#c6b8d1}
-button{width:100%;height:54px;margin-top:22px;border:1px solid #c38bff77;border-radius:12px;background:linear-gradient(110deg,#7000e8,#a52aff);color:white;font-size:11px;font-weight:900;letter-spacing:3px;cursor:pointer;box-shadow:0 0 22px #8b2bff35;transition:.25s}
-button:hover{transform:translateY(-3px);box-shadow:0 0 30px #922dff66}
-button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-#message{margin-top:15px;min-height:20px;font-size:11px;color:#e0baff;line-height:1.7;text-align:center;overflow-wrap:anywhere}
-#message.success{color:#9dffca}
-#message.error{color:#ff9cba}
-.disclaimer{font-size:10px;color:#93859e;line-height:1.8;margin-top:23px;text-align:center}
-.stage{margin-top:25px;padding:24px;border:1px solid #a65cff66;border-radius:18px;background:linear-gradient(145deg,#160b25ed,#090511ed);box-shadow:0 0 35px #8b2bff28;animation:pageIn .55s ease both}
-.stage h2{text-align:center;color:#dfb7ff;font-size:21px;margin-bottom:9px;letter-spacing:1px}
-.stage-sub{text-align:center;color:#a997b9;font-size:11px;line-height:1.8;margin-bottom:20px}
-.review-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #a65cff28;font-size:12px}
-.review-row span:first-child{color:#a997b9}
-.review-row span:last-child{color:#f0e2ff;text-align:right;overflow-wrap:anywhere}
-.spinner{width:54px;height:54px;border:4px solid #53336c;border-top-color:#d58aff;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.confirm-box{padding:17px;border:1px solid #a65cff44;border-radius:13px;background:#ffffff06;margin-top:12px}
-.confirm-label{font-size:10px;color:#a997b9;letter-spacing:2px}
-.confirm-value{font-size:19px;font-weight:800;color:#fff;margin-top:8px;overflow-wrap:anywhere}
-@media(max-width:480px){
- body{padding:15px 14px 40px}
- .row{grid-template-columns:1fr;gap:0}
- .heading{padding-top:30px}
- header{align-items:center}
- .brand{font-size:15px}
- .stage{padding:19px}
+:root {
+  --bg: #05020b;
+  --panel: rgba(17, 9, 31, .78);
+  --purple: #a855f7;
+  --violet: #7c3aed;
+  --pink: #e879f9;
+  --cyan: #67e8f9;
+  --text: #f8f3ff;
+  --muted: #a99bbd;
+  --line: rgba(192, 132, 252, .23);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 18px 14px 55px;
+  color: var(--text);
+  background: var(--bg);
+  font-family: Arial, Helvetica, sans-serif;
+  perspective: 1200px;
+}
+
+/* BACKGROUND DEPTH */
+#universe {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 0%, #42106c 0%, transparent 45%),
+    radial-gradient(ellipse at 0% 70%, #210b48 0%, transparent 42%),
+    radial-gradient(ellipse at 100% 85%, #300c50 0%, transparent 42%),
+    #05020b;
+}
+
+.ambient {
+  position: absolute;
+  width: 390px;
+  height: 390px;
+  border-radius: 50%;
+  filter: blur(95px);
+  opacity: .34;
+  animation: ambientMove 12s ease-in-out infinite alternate;
+}
+
+.ambient.a {
+  background: #8b2cff;
+  top: -170px;
+  left: -120px;
+}
+
+.ambient.b {
+  background: #d946ef;
+  right: -170px;
+  bottom: -140px;
+  animation-delay: -5s;
+}
+
+.ambient.c {
+  width: 230px;
+  height: 230px;
+  background: #4338ca;
+  top: 45%;
+  left: 45%;
+  opacity: .2;
+  animation-delay: -8s;
+}
+
+@keyframes ambientMove {
+  to {
+    transform: translate3d(80px, 65px, 100px) scale(1.25);
+  }
+}
+
+/* 3D GRID */
+.grid-floor {
+  position: absolute;
+  left: -60%;
+  bottom: -32%;
+  width: 220%;
+  height: 85%;
+  opacity: .38;
+  background-image:
+    linear-gradient(rgba(168,85,247,.19) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,85,247,.19) 1px, transparent 1px);
+  background-size: 48px 48px;
+  transform: perspective(420px) rotateX(62deg);
+  transform-origin: center top;
+  animation: gridTravel 12s linear infinite;
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 85%, transparent);
+}
+
+@keyframes gridTravel {
+  to {
+    background-position: 0 96px;
+  }
+}
+
+/* PARTICLES */
+#particles {
+  position: absolute;
+  inset: 0;
+}
+
+.particle {
+  position: absolute;
+  bottom: -15px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #e9c5ff;
+  box-shadow: 0 0 8px #c084fc, 0 0 20px #9333ea;
+  animation: particleRise linear infinite;
+}
+
+@keyframes particleRise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(.5);
+    opacity: 0;
+  }
+  15% { opacity: .9; }
+  80% { opacity: .7; }
+  100% {
+    transform: translate3d(35px, -110vh, 80px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* PAGE */
+.page {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  animation: pageEnter 1s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(35px) rotateX(5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+/* HEADER */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(13, 7, 24, .65);
+  backdrop-filter: blur(18px);
+  box-shadow:
+    0 12px 35px #0008,
+    inset 0 1px 0 #ffffff12;
+}
+
+.brand {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: #fff;
+  text-shadow: 0 0 15px #c084fc;
+}
+
+.brand span {
+  color: #d8a4ff;
+}
+
+.back {
+  text-decoration: none;
+  color: #e9d5ff;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 10px 13px;
+  border: 1px solid #b56aff66;
+  border-radius: 10px;
+  background: #8b2cff18;
+  transition: .3s;
+}
+
+.back:hover {
+  background: #9333ea44;
+  box-shadow: 0 0 18px #9333ea66;
+  transform: translateY(-2px);
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 42px 12px 24px;
+  position: relative;
+}
+
+.hero-mark {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 23px;
+  border: 1px solid #d8b4fe77;
+  background: linear-gradient(145deg, #6d28d9, #170827 65%);
+  box-shadow:
+    0 0 20px #9333ea88,
+    0 0 55px #7e22ce55,
+    inset 0 2px 8px #ffffff55,
+    inset 0 -12px 22px #0008;
+  transform: rotateX(12deg) rotateY(-12deg);
+  animation: markFloat 4s ease-in-out infinite;
+}
+
+.hero-mark span {
+  font-size: 31px;
+  font-weight: 900;
+  text-shadow: 0 0 18px #fff;
+}
+
+@keyframes markFloat {
+  50% {
+    transform: translateY(-9px) rotateX(-5deg) rotateY(12deg);
+  }
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: #d8a4ff;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 14px 0 12px;
+  font-size: clamp(29px, 7vw, 47px);
+  font-weight: 1000;
+  letter-spacing: 2px;
+  background: linear-gradient(100deg, #fff, #d8a4ff, #a855f7, #fff);
+  background-size: 250% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 16px #9333ea77);
+  animation: titleGlow 5s linear infinite;
+}
+
+@keyframes titleGlow {
+  to { background-position: 250% center; }
+}
+
+.intro {
+  max-width: 520px;
+  margin: auto;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+/* FORM SURFACE */
+.form-shell {
+  position: relative;
+  margin-top: 18px;
+  padding: 25px;
+  border-radius: 23px;
+  border: 1px solid #b56aff55;
+  background:
+    linear-gradient(145deg, rgba(38,17,62,.88), rgba(9,5,17,.94) 55%, rgba(31,12,50,.9));
+  backdrop-filter: blur(22px);
+  box-shadow:
+    0 25px 65px #0009,
+    0 0 35px #8b2cff20,
+    inset 0 1px 0 #ffffff18,
+    inset 0 -1px 0 #a855f733;
+  transform-style: preserve-3d;
+  animation: shellHover 7s ease-in-out infinite;
+}
+
+@keyframes shellHover {
+  0%, 100% {
+    transform: translateY(0) rotateX(.3deg);
+  }
+  50% {
+    transform: translateY(-5px) rotateX(-.3deg);
+  }
+}
+
+.form-shell::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, #d8b4fe, transparent 28%, #9333ea 55%, transparent 80%, #e879f9);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: .75;
+}
+
+.section {
+  position: relative;
+  margin-bottom: 25px;
+  transform: translateZ(14px);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-bottom: 14px;
+  margin-bottom: 17px;
+  border-bottom: 1px solid #b56aff33;
+  color: #e4c5ff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+}
+
+.section-number {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  color: white;
+  background: linear-gradient(145deg, #a855f7, #581c87);
+  box-shadow: 0 4px 15px #9333ea66, inset 0 1px 3px #ffffff66;
+}
+
+/* INPUTS */
+.field {
+  margin: 17px 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #e8d5fa;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+input, select {
+  width: 100%;
+  height: 50px;
+  padding: 0 14px;
+  border: 1px solid #9b65c955;
+  border-radius: 12px;
+  outline: none;
+  color: white;
+  background: linear-gradient(120deg, #10091c, #1a0d2a);
+  font-size: 13px;
+  box-shadow:
+    inset 0 3px 9px #0007,
+    0 4px 12px #0003;
+  transition: border .25s, box-shadow .25s, transform .25s, background .25s;
+}
+
+input::placeholder {
+  color: #857394;
+}
+
+input:focus, select:focus {
+  border-color: #d8a4ff;
+  background: #1c0d2e;
+  box-shadow:
+    0 0 0 3px #a855f722,
+    0 0 23px #9333ea55,
+    inset 0 2px 8px #0007;
+  transform: translateY(-2px);
+}
+
+select option {
+  color: white;
+  background: #12091e;
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+
+input[type="file"] {
+  height: auto;
+  min-height: 50px;
+  padding: 12px;
+  font-size: 11px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.hint {
+  margin-top: 8px;
+  color: #9e8bad;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+/* POLICY */
+.policy {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 15px;
+  border: 1px solid #a855f744;
+  border-radius: 13px;
+  background: linear-gradient(120deg, #8b2cff12, #ffffff05);
+  box-shadow: inset 0 1px 0 #ffffff0b;
+}
+
+.policy input {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  margin-top: 2px;
+  accent-color: #a855f7;
+}
+
+.policy label {
+  margin: 0;
+  color: #c9bad8;
+  font-size: 10px;
+  line-height: 1.8;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* BUTTON */
+button {
+  position: relative;
+  width: 100%;
+  min-height: 55px;
+  margin-top: 21px;
+  overflow: hidden;
+  border: 1px solid #e9d5ff88;
+  border-radius: 13px;
+  color: #fff;
+  background: linear-gradient(110deg, #581c87, #9333ea 48%, #c026d3);
+  font-size: 11px;
+  font-weight: 1000;
+  letter-spacing: 3px;
+  cursor: pointer;
+  box-shadow:
+    0 9px 22px #7e22ce44,
+    0 0 24px #a855f744,
+    inset 0 1px 2px #ffffff88,
+    inset 0 -5px 10px #3b0764aa;
+  transition: transform .25s, box-shadow .25s, filter .25s;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -70%;
+  width: 45%;
+  height: 220%;
+  transform: rotate(25deg);
+  background: linear-gradient(90deg, transparent, #ffffff66, transparent);
+  transition: left .65s;
+}
+
+button:hover::before {
+  left: 130%;
+}
+
+button:hover {
+  transform: translateY(-4px) scale(1.008);
+  filter: brightness(1.15);
+  box-shadow:
+    0 14px 30px #7e22ce66,
+    0 0 35px #c084fc88,
+    inset 0 1px 2px #ffffffaa;
+}
+
+button:active {
+  transform: translateY(1px) scale(.99);
+}
+
+button:disabled {
+  opacity: .38;
+  cursor: not-allowed;
+  filter: grayscale(.35);
+  transform: none;
+  box-shadow: none;
+}
+
+button:disabled::before {
+  display: none;
+}
+
+#message {
+  min-height: 20px;
+  margin-top: 13px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  color: #e9c5ff;
+}
+
+#message.success { color: #86efac; }
+#message.error { color: #fda4af; }
+
+.disclaimer {
+  padding: 20px 8px;
+  text-align: center;
+  color: #857695;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+/* REVIEW / CONFIRMATION STAGES */
+.stage {
+  position: relative;
+  margin-top: 22px;
+  padding: 25px;
+  border: 1px solid #c084fc66;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #24103aee, #090511f5);
+  box-shadow:
+    0 20px 55px #0009,
+    0 0 35px #9333ea33,
+    inset 0 1px 0 #ffffff20;
+  animation: stageIn .65s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes stageIn {
+  from {
+    opacity: 0;
+    transform: perspective(800px) translateY(25px) rotateX(8deg) scale(.97);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) translateY(0) rotateX(0) scale(1);
+  }
+}
+
+.stage h2 {
+  margin-bottom: 10px;
+  text-align: center;
+  color: #edccff;
+  font-size: 21px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 16px #a855f766;
+}
+
+.stage-sub {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #b7a7c7;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid #a855f72c;
+  font-size: 11px;
+}
+
+.review-row span:first-child {
+  color: #a99bbd;
+}
+
+.review-row span:last-child {
+  max-width: 60%;
+  color: #f5eaff;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.spinner {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 20px;
+  border: 4px solid #4c2870;
+  border-top-color: #e9c5ff;
+  border-right-color: #a855f7;
+  border-radius: 50%;
+  box-shadow: 0 0 22px #9333ea55;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.confirm-box {
+  margin-top: 13px;
+  padding: 17px;
+  border: 1px solid #b56aff55;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #8b2cff18, #ffffff05);
+  box-shadow: inset 0 1px 0 #ffffff10, 0 8px 22px #0004;
+  transform: translateZ(12px);
+}
+
+.confirm-label {
+  color: #ad93c3;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.confirm-value {
+  margin-top: 9px;
+  color: white;
+  font-size: 19px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+  text-shadow: 0 0 13px #a855f766;
+}
+
+/* MOBILE */
+@media(max-width:520px) {
+  body { padding: 12px 11px 40px; }
+  .form-shell { padding: 19px 15px; }
+  .row { grid-template-columns: 1fr; gap: 0; }
+  .hero { padding-top: 32px; }
+  .stage { padding: 19px 15px; }
+  .brand { font-size: 13px; letter-spacing: 1.5px; }
+  .back { font-size: 9px; padding: 9px 10px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
 }
 </style>
 </head>
 
 <body>
-<div class="bg"></div>
-<div class="grid"></div>
-<div class="orb one"></div>
-<div class="orb two"></div>
-<div class="particles" id="particles"></div>
 
-<main class="wrap">
-<header>
-  <div class="brand">NEXVORA UNBAN</div>
+<div id="universe" aria-hidden="true">
+  <div class="ambient a"></div>
+  <div class="ambient b"></div>
+  <div class="ambient c"></div>
+  <div class="grid-floor"></div>
+  <div id="particles"></div>
+</div>
+
+<main class="page">
+
+<header class="topbar">
+  <div class="brand">NEXVORA <span>UNBAN</span></div>
   <a class="back" href="dashboard.html">← DASHBOARD</a>
 </header>
 
-<section class="heading">
-  <div class="eyebrow">ACCOUNT APPEAL SYSTEM</div>
+<section class="hero">
+  <div class="hero-mark"><span>NX</span></div>
+  <div class="eyebrow">SECURE ACCOUNT APPEAL PORTAL</div>
   <h1>UNBAN REQUEST</h1>
   <p class="intro">
-    Enter accurate account information to prepare your appeal request.
-    Never provide your password, login codes or access tokens.
+    Submit accurate account details to prepare your appeal request.
+    This is an independent service and does not guarantee an unban.
+    Never share your password, login codes or access tokens.
   </p>
 </section>
 
-<form id="appealForm">
-  <div class="form-section">
-    <div class="section-title">01 / ACCOUNT INFORMATION</div>
+<form id="appealForm" class="form-shell">
 
-    <label for="uid">PLAYER UID *</label>
-    <input id="uid" name="player_uid" inputmode="numeric" maxlength="30" required placeholder="Enter your Player UID">
+  <section class="section">
+    <div class="section-title">
+      <span class="section-number">01</span>
+      ACCOUNT INFORMATION
+    </div>
+
+    <div class="field">
+      <label for="uid">PLAYER UID *</label>
+      <input id="uid" name="player_uid" inputmode="numeric"
+        maxlength="30" required placeholder="Enter your Player UID">
+    </div>
 
     <div class="row">
-      <div>
+      <div class="field">
         <label for="level">ID LEVEL *</label>
-        <input id="level" name="id_level" required maxlength="20" placeholder="Account level">
+        <input id="level" name="id_level" required maxlength="20"
+          placeholder="Account level">
       </div>
-      <div>
+
+      <div class="field">
         <label for="region">REGION *</label>
         <select id="region" name="region" required>
           <option value="">Select region</option>
@@ -130,15 +738,21 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
       </div>
     </div>
 
-    <label for="gameName">GAME NAME *</label>
-    <input id="gameName" name="game_name" required maxlength="60" placeholder="Enter in-game name">
-  </div>
+    <div class="field">
+      <label for="gameName">GAME NAME *</label>
+      <input id="gameName" name="game_name" required maxlength="60"
+        placeholder="Enter your in-game name">
+    </div>
+  </section>
 
-  <div class="form-section">
-    <div class="section-title">02 / BAN INFORMATION</div>
+  <section class="section">
+    <div class="section-title">
+      <span class="section-number">02</span>
+      BAN INFORMATION
+    </div>
 
     <div class="row">
-      <div>
+      <div class="field">
         <label for="device">DEVICE *</label>
         <select id="device" name="device" required>
           <option value="">Select device</option>
@@ -147,7 +761,8 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
           <option>Other</option>
         </select>
       </div>
-      <div>
+
+      <div class="field">
         <label for="banType">BAN TYPE *</label>
         <select id="banType" name="ban_type" required>
           <option value="">Select ban type</option>
@@ -157,28 +772,35 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
       </div>
     </div>
 
-    <label for="banDate">BAN DATE (IF KNOWN)</label>
-    <input id="banDate" name="ban_date" type="date">
+    <div class="field">
+      <label for="banDate">BAN DATE (IF KNOWN)</label>
+      <input id="banDate" name="ban_date" type="date">
+    </div>
 
-    <label for="screenshot">BAN SCREENSHOT (OPTIONAL)</label>
-    <input id="screenshot" name="ban_screenshot" type="file" accept="image/png,image/jpeg,image/webp">
-
-    <p class="hint">Upload a clear screenshot showing the ban notice. Maximum file size: 5 MB.</p>
-  </div>
+    <div class="field">
+      <label for="screenshot">BAN SCREENSHOT (OPTIONAL)</label>
+      <input id="screenshot" name="ban_screenshot" type="file"
+        accept="image/png,image/jpeg,image/webp">
+      <p class="hint">
+        PNG, JPG or WEBP · Maximum 5 MB.
+        Screenshot is checked in this browser; it is not uploaded by this page.
+      </p>
+    </div>
+  </section>
 
   <div class="policy">
     <input id="acceptPolicy" type="checkbox" required>
     <label for="acceptPolicy">
-      I confirm that these details are accurate. I understand
-      this is an independent, unofficial appeal-request service,
-      not affiliated with or endorsed by Garena, and submitting
-      a request does not guarantee an unban. I am not requesting
-      an illegal bypass.
+      I confirm that these details are accurate. I understand this is
+      an independent, unofficial appeal-request service, not affiliated
+      with or endorsed by Garena. Submitting a request does not guarantee
+      an unban. I am not requesting an illegal bypass.
     </label>
   </div>
 
   <button type="submit" id="submitBtn" disabled>PROCEED</button>
   <div id="message" role="status" aria-live="polite"></div>
+
 </form>
 
 <p class="disclaimer">
@@ -187,56 +809,64 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
 </p>
 
 <section id="stage" class="stage" hidden aria-live="polite"></section>
-</main>
-  
+
+
 <script>
-/* NEXVORA UNBAN — FORM FLOW */
+/* ==========================================
+   NEXVORA UNBAN — FORM ENGINE
+   ========================================== */
 
 const particleBox = document.getElementById("particles");
-const particleCount = window.innerWidth < 600 ? 35 : 60;
+const particleCount = window.innerWidth < 600 ? 35 : 65;
 
 for (let i = 0; i < particleCount; i++) {
-  const p = document.createElement("span");
-  p.className = "particle";
-  p.style.left = Math.random() * 100 + "%";
-  p.style.animationDuration = (5 + Math.random() * 9) + "s";
-  p.style.animationDelay = (Math.random() * 8) + "s";
+  const particle = document.createElement("span");
+  particle.className = "particle";
+  particle.style.left = Math.random() * 100 + "%";
+  particle.style.animationDuration = (6 + Math.random() * 10) + "s";
+  particle.style.animationDelay = (Math.random() * 10) + "s";
 
   const size = (1 + Math.random() * 2) + "px";
-  p.style.width = size;
-  p.style.height = size;
+  particle.style.width = size;
+  particle.style.height = size;
 
-  particleBox.appendChild(p);
+  particleBox.appendChild(particle);
 }
 
-const API = "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow";
+const API =
+  "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow";
 
 const form = document.getElementById("appealForm");
 const submitBtn = document.getElementById("submitBtn");
 const message = document.getElementById("message");
 const stage = document.getElementById("stage");
+const hero = document.querySelector(".hero");
+const disclaimer = document.querySelector(".disclaimer");
 
-const requiredFields = [...form.querySelectorAll("[required]")];
+const requiredFields = [
+  ...form.querySelectorAll("[required]")
+];
 
-/* PROCEED tabhi enable hoga jab saare required fields valid hon */
 function refreshProceed() {
-  const allValid = requiredFields.every(el => {
-    if (el.type === "checkbox") return el.checked;
-    return el.checkValidity() && String(el.value).trim() !== "";
+  const valid = requiredFields.every(field => {
+    if (field.type === "checkbox") return field.checked;
+
+    return field.checkValidity() &&
+      String(field.value).trim() !== "";
   });
 
-  submitBtn.disabled = !allValid;
+  submitBtn.disabled = !valid;
 }
 
-requiredFields.forEach(el => {
-  el.addEventListener("input", refreshProceed);
-  el.addEventListener("change", refreshProceed);
+requiredFields.forEach(field => {
+  field.addEventListener("input", refreshProceed);
+  field.addEventListener("change", refreshProceed);
 });
 
 function showStage() {
   form.hidden = true;
-  document.querySelector(".heading").hidden = true;
-  document.querySelector(".disclaimer").hidden = true;
+  hero.hidden = true;
+  disclaimer.hidden = true;
   stage.hidden = false;
 
   window.scrollTo({
@@ -245,39 +875,57 @@ function showStage() {
   });
 }
 
+function createElement(tag, className, text) {
+  const element = document.createElement(tag);
+
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+
+  return element;
+}
+
+function showLoading(title, subtitle) {
+  stage.replaceChildren();
+
+  stage.appendChild(
+    createElement("div", "spinner")
+  );
+
+  stage.appendChild(
+    createElement("h2", "", title)
+  );
+
+  stage.appendChild(
+    createElement("p", "stage-sub", subtitle)
+  );
+}
+
 function addRow(label, value) {
-  const row = document.createElement("div");
-  row.className = "review-row";
-
-  const left = document.createElement("span");
-  const right = document.createElement("span");
-
-  left.textContent = label;
-  right.textContent = value || "Not provided";
+  const row = createElement("div", "review-row");
+  const left = createElement("span", "", label);
+  const right = createElement("span", "", value || "Not provided");
 
   row.append(left, right);
   stage.appendChild(row);
 }
 
-function addStageButton(label, handler) {
-  const button = document.createElement("button");
+function addButton(label, callback) {
+  const button = createElement("button", "", label);
   button.type = "button";
-  button.textContent = label;
-  button.addEventListener("click", handler);
-
+  button.addEventListener("click", callback);
   stage.appendChild(button);
   return button;
 }
 
-function showLoading(title, subtitle) {
-  stage.innerHTML = `
-    <div class="spinner"></div>
-    <h2>${title}</h2>
-    <p class="stage-sub">${subtitle}</p>
-  `;
+function showError(text) {
+  message.className = "error";
+  message.textContent = text;
 }
 
-/* Form submission */
+/* ==========================================
+   SUBMIT FORM — CREATE REQUEST
+   ========================================== */
+
 form.addEventListener("submit", async function(event) {
   event.preventDefault();
 
@@ -286,18 +934,23 @@ form.addEventListener("submit", async function(event) {
 
   if (!form.reportValidity() || submitBtn.disabled) return;
 
-  const file = document.getElementById("screenshot").files[0];
+  const screenshot =
+    document.getElementById("screenshot").files[0];
 
-  if (file) {
-    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
-      message.className = "error";
-      message.textContent = "Please select a PNG, JPG or WEBP image.";
+  if (screenshot) {
+    const allowedTypes = [
+      "image/png",
+      "image/jpeg",
+      "image/webp"
+    ];
+
+    if (!allowedTypes.includes(screenshot.type)) {
+      showError("Please select a PNG, JPG or WEBP screenshot.");
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      message.className = "error";
-      message.textContent = "Screenshot must be 5 MB or smaller.";
+    if (screenshot.size > 5 * 1024 * 1024) {
+      showError("Screenshot must be 5 MB or smaller.");
       return;
     }
   }
@@ -315,7 +968,9 @@ form.addEventListener("submit", async function(event) {
 
   submitBtn.disabled = true;
   submitBtn.textContent = "PREPARING REQUEST...";
-  message.textContent = "Please wait while your appeal details are prepared.";
+
+  message.textContent =
+    "Preparing your appeal request. Please wait.";
 
   try {
     const response = await fetch(API, {
@@ -332,145 +987,161 @@ form.addEventListener("submit", async function(event) {
     const data = await response.json();
 
     if (!response.ok || !data.success || !data.request_id) {
-      throw new Error(data.error || "Could not create your appeal request.");
+      throw new Error(
+        data.error || "Could not create your request."
+      );
     }
 
-    sessionStorage.setItem("nexvora_unban_request_id", data.request_id);
-    sessionStorage.removeItem("nexvora_unban_payment_submitted");
-    sessionStorage.removeItem("nexvora_unban_order_id");
-    sessionStorage.setItem("nexvora_unban_review_data", JSON.stringify(appeal));
+    sessionStorage.setItem(
+      "nexvora_unban_request_id",
+      data.request_id
+    );
+
+    sessionStorage.removeItem(
+      "nexvora_unban_payment_submitted"
+    );
+
+    sessionStorage.removeItem(
+      "nexvora_unban_order_id"
+    );
+
+    sessionStorage.setItem(
+      "nexvora_unban_review_data",
+      JSON.stringify(appeal)
+    );
 
     showStage();
+
     showLoading(
-      "PREPARING YOUR REQUEST",
-      "Your details are being arranged for review."
+      "REQUEST CREATED",
+      "Your account details are being prepared for review."
     );
 
     setTimeout(() => {
-      stage.innerHTML = `
-        <h2>REVIEW YOUR DETAILS</h2>
-        <p class="stage-sub">
-          Check every detail carefully before continuing.
-        </p>
-      `;
-
-      addRow("PLAYER UID", appeal.player_uid);
-      addRow("ID LEVEL", appeal.id_level);
-      addRow("REGION", appeal.region);
-      addRow("GAME NAME", appeal.game_name);
-      addRow("DEVICE", appeal.device);
-      addRow(
-        "BAN TYPE",
-        appeal.ban_type === "permanent"
-          ? "Permanent Ban"
-          : "Temporary Ban"
-      );
-      addRow("BAN DATE", appeal.ban_date || "Not provided");
-      addRow("SCREENSHOT", file ? file.name : "Not attached");
-
-      const note = document.createElement("p");
-      note.className = "hint";
-      note.style.marginTop = "18px";
-      note.textContent =
-        "Please confirm the Player UID and Game Name on the next screen.";
-
-      stage.appendChild(note);
-
-      addStageButton("CONTINUE TO PAYMENT", showAccountConfirm);
-
-    }, 1100);
+      showReview(appeal, screenshot);
+    }, 1300);
 
   } catch (error) {
-    message.className = "error";
-    message.textContent =
-      error.message || "Network error. Please try again.";
+    showError(
+      error.message || "Network error. Please try again."
+    );
 
-    submitBtn.disabled = false;
     submitBtn.textContent = "PROCEED";
     refreshProceed();
   }
 });
 
-/* UID aur Game Name confirmation screen */
+/* ==========================================
+   ANIMATED REVIEW SCREEN
+   ========================================== */
+
+function showReview(appeal, screenshot) {
+  stage.replaceChildren();
+
+  stage.appendChild(
+    createElement("h2", "", "REVIEW YOUR DETAILS")
+  );
+
+  stage.appendChild(
+    createElement(
+      "p",
+      "stage-sub",
+      "Please carefully verify the information below."
+    )
+  );
+
+  addRow("PLAYER UID", appeal.player_uid);
+  addRow("ID LEVEL", appeal.id_level);
+  addRow("REGION", appeal.region);
+  addRow("GAME NAME", appeal.game_name);
+  addRow("DEVICE", appeal.device);
+
+  addRow(
+    "BAN TYPE",
+    appeal.ban_type === "permanent"
+      ? "Permanent Ban"
+      : "Temporary Ban"
+  );
+
+  addRow("BAN DATE", appeal.ban_date || "Not provided");
+
+  addRow(
+    "SCREENSHOT",
+    screenshot ? screenshot.name : "Not attached"
+  );
+
+  stage.appendChild(
+    createElement(
+      "p",
+      "hint",
+      "Next, confirm your Player UID and Game Name before opening the payment page."
+    )
+  );
+
+  addButton("CONTINUE TO PAYMENT", showAccountConfirm);
+}
+
+/* ==========================================
+   ACCOUNT CONFIRMATION
+   ========================================== */
+
 function showAccountConfirm() {
   const appeal = JSON.parse(
     sessionStorage.getItem("nexvora_unban_review_data") || "{}"
   );
 
-  stage.innerHTML = `
-    <h2>CONFIRM YOUR GAME ACCOUNT</h2>
-    <p class="stage-sub">
-      Make sure these details belong to the account you want to appeal.
-    </p>
-  `;
+  stage.replaceChildren();
 
-  const uidBox = document.createElement("div");
-  uidBox.className = "confirm-box";
-  uidBox.innerHTML = `
-    <div class="confirm-label">PLAYER UID</div>
-    <div class="confirm-value"></div>
-  `;
-  uidBox.querySelector(".confirm-value").textContent =
-    appeal.player_uid || "—";
+  stage.appendChild(
+    createElement(
+      "h2",
+      "",
+      "CONFIRM YOUR GAME ACCOUNT"
+    )
+  );
 
-  stage.appendChild(uidBox);
+  stage.appendChild(
+    createElement(
+      "p",
+      "stage-sub",
+      "Check that these details belong to the correct game account."
+    )
+  );
 
-  const nameBox = document.createElement("div");
-  nameBox.className = "confirm-box";
-  nameBox.innerHTML = `
-    <div class="confirm-label">GAME NAME</div>
-    <div class="confirm-value"></div>
-  `;
-  nameBox.querySelector(".confirm-value").textContent =
-    appeal.game_name || "—";
+  const uidBox = createElement("div", "confirm-box");
+  uidBox.appendChild(
+    createElement("div", "confirm-label", "PLAYER UID")
+  );
+  uidBox.appendChild(
+    createElement("div", "confirm-value", appeal.player_uid || "—")
+  );
 
-  stage.appendChild(nameBox);
+  const nameBox = createElement("div", "confirm-box");
+  nameBox.appendChild(
+    createElement("div", "confirm-label", "GAME NAME")
+  );
+  nameBox.appendChild(
+    createElement("div", "confirm-value", appeal.game_name || "—")
+  );
 
-  const note = document.createElement("p");
-  note.className = "hint";
-  note.style.marginTop = "16px";
-  note.textContent =
-    "The next page contains the ₹399 payment options.";
+  stage.append(uidBox, nameBox);
 
-  stage.appendChild(note);
+  stage.appendChild(
+    createElement(
+      "p",
+      "hint",
+      "The next page contains the ₹399 payment options."
+    )
+  );
 
-  addStageButton("SHOW PAYMENT PAGE", function() {
+  addButton("SHOW PAYMENT PAGE", function() {
     window.location.href = "unban-payment.html";
   });
 }
 
-/* Initial button state */
+/* Initial state */
 refreshProceed();
-</script>
-</body>
-</html>
-
-<script>
-/* FINAL SAFETY CHECK */
-
-(function () {
-  const form = document.getElementById("appealForm");
-  const stage = document.getElementById("stage");
-  const button = document.getElementById("submitBtn");
-
-  if (!form || !stage || !button) {
-    console.error("NEXVORA form setup incomplete.");
-    return;
-  }
-
-  // Prevent accidental double submission.
-  form.addEventListener("submit", function () {
-    if (button.dataset.submitting === "true") return;
-    button.dataset.submitting = "true";
-  }, true);
-
-  // Restore button state if browser returns to this page.
-  window.addEventListener("pageshow", function () {
-    if (!form.hidden) {
-      button.dataset.submitting = "false";
-    }
-  });
-})();
-</script>
+      </script>
+</main>
 </body>
 </html>
