@@ -1687,12 +1687,16 @@ function showAccessScreen(){
 /* ================= ENTER CONTROL PANEL ================= */
 
 $("accessPanelButton").addEventListener("click", async () => {
+
   $("accessScreen").classList.add("hidden");
+  $("accessScreen").style.display = "none";
+
   $("adminApp").classList.remove("hidden");
+  $("adminApp").style.display = "block";
 
   await render("dashboard");
-});
 
+});
 
 /* ================= LOGOUT ================= */
 
