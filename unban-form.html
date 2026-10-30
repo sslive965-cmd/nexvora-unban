@@ -169,6 +169,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none}
 </p>
 </main>
 
+
 <script>
 const particleBox=document.getElementById("particles");
 const particleCount=window.innerWidth<600?35:60;
@@ -185,17 +186,49 @@ for(let i=0;i<particleCount;i++){
   particleBox.appendChild(p);
 }
 
+const API="https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow";
 const form=document.getElementById("appealForm");
 const submitBtn=document.getElementById("submitBtn");
 const message=document.getElementById("message");
 
+const reviewStyle=document.createElement("style");
+reviewStyle.textContent=`
+.review-panel{margin-top:25px;padding:22px;border:1px solid #a65cff66;border-radius:16px;background:#10091bdd;box-shadow:0 0 30px #8b2bff25}
+.review-panel h2{text-align:center;color:#dfb7ff;font-size:21px;margin-bottom:8px}
+.review-sub{text-align:center;color:#a997b9;font-size:11px;margin-bottom:20px}
+.review-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #a65cff28;font-size:12px}
+.review-row span:first-child{color:#a997b9}
+.review-row span:last-child{color:#f0e2ff;text-align:right;overflow-wrap:anywhere}
+.review-loading{text-align:center;padding:55px 15px;color:#d9b5ff}
+.review-spinner{width:55px;height:55px;border:4px solid #53336c;border-top-color:#d58aff;border-radius:50%;animation:reviewSpin 1s linear infinite;margin:0 auto 22px}
+@keyframes reviewSpin{to{transform:rotate(360deg)}}
+.review-panel .continue-btn{margin-top:22px}
+`;
+document.head.appendChild(reviewStyle);
+
+const review=document.createElement("section");
+review.id="reviewPanel";
+review.className="review-panel";
+review.style.display="none";
+form.insertAdjacentElement("afterend",review);
+
+function addReviewRow(label,value){
+  const row=document.createElement("div");
+  row.className="review-row";
+  const left=document.createElement("span");
+  const right=document.createElement("span");
+  left.textContent=label;
+  right.textContent=value||"Not provided";
+  row.append(left,right);
+  review.appendChild(row);
+}
+
 form.addEventListener("submit",async function(event){
   event.preventDefault();
-
   message.className="";
   message.textContent="";
 
-  if(!form.reportValidity()) return;
+  if(!form.reportValidity())return;
 
   const file=document.getElementById("screenshot").files[0];
 
@@ -212,39 +245,95 @@ form.addEventListener("submit",async function(event){
     }
   }
 
-  const formData=new FormData(form);
-  formData.set("policy_accepted","true");
+  const appeal={
+    player_uid:document.getElementById("uid").value.trim(),
+    id_level:document.getElementById("level").value.trim(),
+    region:document.getElementById("region").value,
+    game_name:document.getElementById("gameName").value.trim(),
+    device:document.getElementById("device").value,
+    ban_type:document.getElementById("banType").value,
+    ban_date:document.getElementById("banDate").value||null,
+    policy_accepted:true
+  };
 
   submitBtn.disabled=true;
-  submitBtn.textContent="SUBMITTING...";
-  message.textContent="Submitting your appeal request securely...";
+  submitBtn.textContent="PREPARING REQUEST...";
+  message.textContent="Please wait while your appeal details are prepared.";
 
   try{
-    const response=await fetch(
-      "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/submit-unban-appeal",
-      {
-        method:"POST",
-        body:formData
-      }
-    );
+    const response=await fetch(API,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        action:"create",
+        form:appeal
+      })
+    });
 
-    const result=await response.json();
+    const data=await response.json();
 
-    if(!response.ok || !result.success){
-      throw new Error(result.error || "Submission failed. Please try again.");
+    if(!response.ok||!data.success||!data.request_id){
+      throw new Error(data.error||"Could not create your appeal request.");
     }
 
-    message.className="success";
-    message.innerHTML=
-      "✓ REQUEST SUBMITTED SUCCESSFULLY<br><br>"+
-      "YOUR ORDER ID: <strong>"+result.order_id+"</strong><br><br>"+
-      "Save this Order ID. You will need it to check your request status.";
+    sessionStorage.setItem("nexvora_unban_request_id",data.request_id);
+    sessionStorage.removeItem("nexvora_unban_payment_submitted");
+    sessionStorage.removeItem("nexvora_unban_order_id");
+    sessionStorage.setItem("nexvora_unban_review_data",JSON.stringify(appeal));
 
-    form.reset();
-    submitBtn.textContent="REQUEST SUBMITTED";
+    form.style.display="none";
+    document.querySelector(".heading").style.display="none";
+    message.style.display="none";
+
+    review.style.display="block";
+    review.innerHTML=`
+      <div class="review-loading">
+        <div class="review-spinner"></div>
+        <h2>PREPARING YOUR REQUEST</h2>
+        <p class="review-sub">Please wait...</p>
+      </div>
+    `;
+
+    setTimeout(()=>{
+      review.innerHTML="";
+      const title=document.createElement("h2");
+      title.textContent="REVIEW YOUR DETAILS";
+      review.appendChild(title);
+
+      const subtitle=document.createElement("p");
+      subtitle.className="review-sub";
+      subtitle.textContent="Please check all information before continuing.";
+      review.appendChild(subtitle);
+
+      addReviewRow("PLAYER UID",appeal.player_uid);
+      addReviewRow("ID LEVEL",appeal.id_level);
+      addReviewRow("REGION",appeal.region);
+      addReviewRow("GAME NAME",appeal.game_name);
+      addReviewRow("DEVICE",appeal.device);
+      addReviewRow("BAN TYPE",appeal.ban_type==="permanent"?"Permanent Ban":"Temporary Ban");
+      addReviewRow("BAN DATE",appeal.ban_date||"Not provided");
+      addReviewRow("SCREENSHOT",file?file.name:"Not attached");
+
+      const note=document.createElement("p");
+      note.className="hint";
+      note.style.marginTop="18px";
+      note.textContent="After checking your details, continue to the ₹399 payment page.";
+      review.appendChild(note);
+
+      const continueBtn=document.createElement("button");
+      continueBtn.className="continue-btn";
+      continueBtn.textContent="CONTINUE TO PAYMENT";
+      continueBtn.onclick=()=>{
+        location.href="unban-payment.html";
+      };
+      review.appendChild(continueBtn);
+
+    },1300);
+
   }catch(error){
+    message.style.display="block";
     message.className="error";
-    message.textContent=error.message || "Network error. Please try again.";
+    message.textContent=error.message||"Network error. Please try again.";
     submitBtn.disabled=false;
     submitBtn.textContent="SUBMIT APPEAL REQUEST";
   }
