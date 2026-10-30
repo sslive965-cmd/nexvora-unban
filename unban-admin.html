@@ -4601,22 +4601,96 @@ function date(value){
 
   try{
 
-    return new Date(value)
-      .toLocaleString(
-        "en-IN",
-        {
-          dateStyle:"medium",
-          timeStyle:"short"
-        }
-      );
+    return new Date(value).toLocaleString(
+      "en-IN",
+      {
+        dateStyle:"medium",
+        timeStyle:"short"
+      }
+    );
 
-  }
-
-  catch(error){
+  }catch(error){
 
     return String(value);
 
   }
+
+}
+
+
+/* ================= FORCE LOGIN SCREEN ================= */
+
+function showLoginScreen(){
+
+  const welcome =
+    $("welcomeScreen");
+
+  const login =
+    $("loginScreen");
+
+  const access =
+    $("accessScreen");
+
+  const app =
+    $("adminApp");
+
+
+  if(welcome){
+
+    welcome.style.display =
+      "none";
+
+  }
+
+
+  if(access){
+
+    access.style.display =
+      "none";
+
+  }
+
+
+  if(app){
+
+    app.style.display =
+      "none";
+
+  }
+
+
+  if(login){
+
+    login.style.display =
+      "flex";
+
+    login.style.visibility =
+      "visible";
+
+    login.style.opacity =
+      "1";
+
+  }
+
+}
+
+
+/* ================= ENTER ADMIN BUTTON ================= */
+
+const enterButton =
+  $("enterAdminButton");
+
+
+if(enterButton){
+
+  enterButton.onclick =
+    function(event){
+
+      event.preventDefault();
+
+      showLoginScreen();
+
+    };
 
 }
 
@@ -4631,27 +4705,22 @@ async function restoreAdminSession(){
       await db.auth.getSession();
 
 
+    if(result.error){
+
+      showLoginScreen();
+
+      return;
+
+    }
+
+
     const session =
       result.data?.session;
 
 
     if(!session){
 
-      $("welcomeScreen")
-        .style.display =
-        "flex";
-
-      $("loginScreen")
-        .style.display =
-        "none";
-
-      $("accessScreen")
-        .style.display =
-        "none";
-
-      $("adminApp")
-        .style.display =
-        "none";
+      showLoginScreen();
 
       return;
 
@@ -4668,21 +4737,7 @@ async function restoreAdminSession(){
 
       await db.auth.signOut();
 
-      $("welcomeScreen")
-        .style.display =
-        "flex";
-
-      $("loginScreen")
-        .style.display =
-        "none";
-
-      $("accessScreen")
-        .style.display =
-        "none";
-
-      $("adminApp")
-        .style.display =
-        "none";
+      showLoginScreen();
 
       return;
 
@@ -4706,14 +4761,14 @@ async function restoreAdminSession(){
       "none";
 
 
-  }
-
-  catch(error){
+  }catch(error){
 
     console.error(
       "Session restore error:",
       error
     );
+
+    showLoginScreen();
 
   }
 
@@ -4723,7 +4778,7 @@ async function restoreAdminSession(){
 /* ================= AUTH STATE LISTENER ================= */
 
 db.auth.onAuthStateChange(
-  async (
+  async(
     event,
     session
   )=>{
@@ -4733,21 +4788,7 @@ db.auth.onAuthStateChange(
       "SIGNED_OUT"
     ){
 
-      $("welcomeScreen")
-        .style.display =
-        "flex";
-
-      $("loginScreen")
-        .style.display =
-        "none";
-
-      $("accessScreen")
-        .style.display =
-        "none";
-
-      $("adminApp")
-        .style.display =
-        "none";
+      showLoginScreen();
 
       return;
 
@@ -4802,6 +4843,28 @@ db.auth.onAuthStateChange(
 window.addEventListener(
   "DOMContentLoaded",
   async()=>{
+
+    /*
+      First make sure every screen
+      has a known visibility state.
+    */
+
+    $("welcomeScreen")
+      .style.display =
+      "flex";
+
+    $("loginScreen")
+      .style.display =
+      "none";
+
+    $("accessScreen")
+      .style.display =
+      "none";
+
+    $("adminApp")
+      .style.display =
+      "none";
+
 
     await restoreAdminSession();
 
