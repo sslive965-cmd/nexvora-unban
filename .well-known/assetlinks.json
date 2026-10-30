@@ -1,0 +1,15 @@
+
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.nexvora_unban.twa",
+      "sha256_cert_fingerprints": [
+        "87:74:53:AF:CC:D5:34:C8:25:31:1D:A9:56:ED:8E:03:DC:86:21:7F:65:CA:7E:B2:DD:BB:2E:50:7D:EF:3C:71"
+      ]
+    }
+  }
+]
