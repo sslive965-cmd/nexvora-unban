@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,190 +9,60 @@
 
 <style>
 *{box-sizing:border-box}
-:root{
-  --purple:#8b2be2;
-  --pink:#ff008c;
-  --cyan:#00c8ff;
-  --text:#fff;
-  --muted:#b9a9ca;
-}
+:root{--purple:#8b2be2;--pink:#ff008c;--cyan:#00c8ff;--text:#fff;--muted:#b9a9ca}
 html{scroll-behavior:smooth}
-body{
-  margin:0;min-height:100vh;overflow-x:hidden;
-  font-family:Arial,sans-serif;color:var(--text);
-  background:#020006;
-}
-.bg{
-  position:fixed;inset:0;z-index:-5;
-  background:
-    radial-gradient(ellipse at 50% 45%,#190b30 0%,#080311 55%,#020006 100%);
-}
-.grid-bg{
-  position:fixed;inset:-45%;z-index:-4;
-  background-image:
-    linear-gradient(#8b2be21c 1px,transparent 1px),
-    linear-gradient(90deg,#8b2be21c 1px,transparent 1px);
-  background-size:55px 55px;
-  transform:perspective(520px) rotateX(65deg);
-  transform-origin:center;
-  animation:gridMove 10s linear infinite;
-  opacity:.48;
-}
-@keyframes gridMove{
-  from{background-position:0 0}
-  to{background-position:0 110px}
-}
-.orb{
-  position:fixed;width:280px;height:280px;border-radius:50%;
-  filter:blur(95px);opacity:.28;z-index:-3;pointer-events:none;
-}
+body{margin:0;min-height:100vh;overflow-x:hidden;font-family:Arial,sans-serif;color:var(--text);background:#020006}
+.bg{position:fixed;inset:0;z-index:-5;background:radial-gradient(ellipse at 50% 45%,#190b30 0%,#080311 55%,#020006 100%)}
+.grid-bg{position:fixed;inset:-45%;z-index:-4;background-image:linear-gradient(#8b2be21c 1px,transparent 1px),linear-gradient(90deg,#8b2be21c 1px,transparent 1px);background-size:55px 55px;transform:perspective(520px) rotateX(65deg);transform-origin:center;animation:gridMove 10s linear infinite;opacity:.48}
+@keyframes gridMove{from{background-position:0 0}to{background-position:0 110px}}
+.orb{position:fixed;width:280px;height:280px;border-radius:50%;filter:blur(95px);opacity:.28;z-index:-3;pointer-events:none}
 .orb1{background:#7300ff;top:10%;left:15%;animation:orbMove1 12s ease-in-out infinite alternate}
 .orb2{background:#ff008c;bottom:5%;right:8%;animation:orbMove2 14s ease-in-out infinite alternate}
 .orb3{background:#00c8ff;top:35%;right:20%;animation:orbMove3 11s ease-in-out infinite alternate}
 @keyframes orbMove1{to{transform:translate(100px,80px) scale(1.2)}}
 @keyframes orbMove2{to{transform:translate(-100px,-80px) scale(1.25)}}
 @keyframes orbMove3{to{transform:translate(-80px,100px) scale(.8)}}
-.particles{
-  position:fixed;inset:0;overflow:hidden;z-index:-2;
-  pointer-events:none;
-}
-.particle{
-  position:absolute;bottom:-15px;width:3px;height:3px;
-  background:#c58aff;border-radius:50%;
-  box-shadow:0 0 9px #a64cff,0 0 18px #8b2be2;
-  animation:particleRise linear infinite;
-}
-@keyframes particleRise{
-  0%{transform:translateY(0) scale(.5);opacity:0}
-  15%{opacity:1}
-  85%{opacity:.8}
-  100%{transform:translateY(-110vh) scale(1.3);opacity:0}
-}
+.particles{position:fixed;inset:0;overflow:hidden;z-index:-2;pointer-events:none}
+.particle{position:absolute;bottom:-15px;width:3px;height:3px;background:#c58aff;border-radius:50%;box-shadow:0 0 9px #a64cff,0 0 18px #8b2be2;animation:particleRise linear infinite}
+@keyframes particleRise{0%{transform:translateY(0) scale(.5);opacity:0}15%{opacity:1}85%{opacity:.8}100%{transform:translateY(-110vh) scale(1.3);opacity:0}}
 button,input{font:inherit}
-button{
-  border:1px solid #a34cff;
-  border-radius:7px;padding:15px 20px;
-  width:100%;margin-top:14px;
-  background:linear-gradient(100deg,#6716b8,#a32be8,#7d22d0);
-  color:white;font-weight:800;letter-spacing:1px;
-  cursor:pointer;transition:.25s;
-  box-shadow:0 0 18px #8b2be244;
-}
-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 25px #a34cff88;
-}
+button{border:1px solid #a34cff;border-radius:7px;padding:15px 20px;width:100%;margin-top:14px;background:linear-gradient(100deg,#6716b8,#a32be8,#7d22d0);color:white;font-weight:800;letter-spacing:1px;cursor:pointer;transition:.25s;box-shadow:0 0 18px #8b2be244}
+button:hover{transform:translateY(-2px);box-shadow:0 0 25px #a34cff88}
 button:disabled{opacity:.45;cursor:not-allowed;transform:none}
-button.secondary{
-  background:transparent;border-color:#75409c;
-  box-shadow:none;color:#d8baff;
-}
-input{
-  width:100%;padding:15px 12px;margin-top:9px;
-  color:white;background:#080311;
-  border:1px solid #67418b;border-radius:5px;
-  outline:none;
-}
+button.secondary{background:transparent;border-color:#75409c;box-shadow:none;color:#d8baff}
+input{width:100%;padding:15px 12px;margin-top:9px;color:white;background:#080311;border:1px solid #67418b;border-radius:5px;outline:none}
 input:focus{border-color:#b65cff;box-shadow:0 0 13px #8b2be255}
 label{display:block;margin-top:22px;color:#d8c2ef;font-size:13px;letter-spacing:.5px}
 .hidden{display:none!important}
-.topbar{
-  width:min(1100px,92%);margin:auto;
-  padding:23px 0;display:flex;
-  align-items:center;justify-content:space-between;
-  border-bottom:1px solid #ffffff20;
-}
-.brand{
-  font-size:22px;font-weight:900;letter-spacing:3px;
-  background:linear-gradient(90deg,#fff,#d4a4ff,#8c35ff);
-  background-clip:text;-webkit-background-clip:text;
-  color:transparent;text-shadow:0 0 22px #9b43ff44;
-}
-.back-link{
-  color:#d8baff;text-decoration:none;font-size:12px;
-  letter-spacing:1px;border:1px solid #75409c;
-  padding:10px 14px;border-radius:5px;
-}
+.topbar{width:min(1100px,92%);margin:auto;padding:23px 0;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff20}
+.brand{font-size:22px;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,#fff,#d4a4ff,#8c35ff);background-clip:text;-webkit-background-clip:text;color:transparent;text-shadow:0 0 22px #9b43ff44}
+.back-link{color:#d8baff;text-decoration:none;font-size:12px;letter-spacing:1px;border:1px solid #75409c;padding:10px 14px;border-radius:5px}
 main{width:min(760px,90%);margin:55px auto 70px}
 .heading{text-align:center;margin-bottom:38px}
-.eyebrow{
-  color:#bb77ff;font-size:11px;letter-spacing:4px;
-  font-weight:bold;
-}
-h1{
-  font-size:clamp(27px,6vw,43px);
-  letter-spacing:2px;margin:13px 0;
-  background:linear-gradient(90deg,#fff,#d5a2ff,#a34cff);
-  background-clip:text;-webkit-background-clip:text;color:transparent;
-}
+.eyebrow{color:#bb77ff;font-size:11px;letter-spacing:4px;font-weight:bold}
+h1{font-size:clamp(27px,6vw,43px);letter-spacing:2px;margin:13px 0;background:linear-gradient(90deg,#fff,#d5a2ff,#a34cff);background-clip:text;-webkit-background-clip:text;color:transparent}
 .subtitle{color:var(--muted);font-size:13px;line-height:1.8}
-.section{
-  padding:28px 0;border-top:1px solid #ffffff20;
-  animation:sectionIn .55s ease both;
-}
-@keyframes sectionIn{
-  from{opacity:0;transform:translateY(16px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.amount{
-  text-align:center;font-size:clamp(42px,10vw,62px);
-  font-weight:900;letter-spacing:2px;
-  color:#e1baff;text-shadow:0 0 25px #9d43ff88;
-  margin:10px 0 20px;
-}
-.qr{
-  background:#fff;padding:13px;width:210px;height:210px;
-  display:flex;align-items:center;justify-content:center;
-  margin:25px auto;border-radius:5px;
-  box-shadow:0 0 30px #a34cff55;
-}
+.amount{text-align:center;font-size:clamp(42px,10vw,62px);font-weight:900;letter-spacing:2px;color:#e1baff;text-shadow:0 0 25px #9d43ff88;margin:10px 0 20px}
+.qr{background:#fff;padding:13px;width:210px;height:210px;display:flex;align-items:center;justify-content:center;margin:25px auto;border-radius:5px;box-shadow:0 0 30px #a34cff55}
 .qr img{max-width:100%;max-height:100%}
-.upi{
-  text-align:center;color:#d9baff;
-  font-size:13px;overflow-wrap:anywhere;
-}
-.stage-title{
-  color:#d9aaff;text-align:center;
-  font-size:21px;letter-spacing:2px;
-}
-.note{
-  color:#a99ab9;font-size:12px;
-  text-align:center;line-height:1.8;margin-top:20px;
-}
+.upi{text-align:center;color:#d9baff;font-size:13px;overflow-wrap:anywhere}
+.section{padding:28px 0;border-top:1px solid #ffffff20;animation:sectionIn .55s ease both}
+@keyframes sectionIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.stage-title{color:#d9aaff;text-align:center;font-size:21px;letter-spacing:2px}
+.note{color:#a99ab9;font-size:12px;text-align:center;line-height:1.8;margin-top:20px}
 .error{color:#ff719e;font-size:13px;text-align:center;margin-top:14px}
 .success{color:#c8a0ff;text-align:center;line-height:1.8}
-.loading-line{
-  width:100%;height:3px;margin:28px 0;
-  background:#241432;overflow:hidden;
-}
-.loading-line:after{
-  content:"";display:block;width:35%;height:100%;
-  background:#c06bff;box-shadow:0 0 15px #a34cff;
-  animation:loading 1.3s ease-in-out infinite;
-}
-@keyframes loading{
-  from{transform:translateX(-110%)}
-  to{transform:translateX(310%)}
-}
-.order{
-  color:#e4b5ff;font-size:clamp(19px,5vw,27px);
-  font-weight:bold;text-align:center;
-  overflow-wrap:anywhere;margin:25px 0;
-  text-shadow:0 0 15px #9b43ff66;
-}
-.footer-note{
-  text-align:center;color:#786b88;
-  font-size:11px;margin-top:40px;line-height:1.8;
-}
-@media(max-width:600px){
-  main{margin-top:38px}
-  .topbar{padding:18px 0}
-  .brand{font-size:18px}
-  .section{padding:23px 0}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
-}
+.loading-line{width:100%;height:3px;margin:28px 0;background:#241432;overflow:hidden}
+.loading-line:after{content:"";display:block;width:35%;height:100%;background:#c06bff;box-shadow:0 0 15px #a34cff;animation:loading 1.3s ease-in-out infinite}
+@keyframes loading{from{transform:translateX(-110%)}to{transform:translateX(310%)}}
+.order{color:#e4b5ff;font-size:clamp(19px,5vw,27px);font-weight:bold;text-align:center;overflow-wrap:anywhere;margin:25px 0;text-shadow:0 0 15px #9b43ff66}
+.timer-label{text-align:center;color:#bd8cff;font-size:12px;letter-spacing:3px;margin-top:35px}
+.timer{font-size:clamp(30px,8vw,48px);font-weight:900;letter-spacing:2px;text-align:center;color:#e5c5ff;text-shadow:0 0 20px #9b43ff99;margin:16px 0}
+.timer-sub{text-align:center;color:#a99ab9;font-size:12px;line-height:1.8}
+.timer-controls{max-width:240px;margin:18px auto}
+.footer-note{text-align:center;color:#786b88;font-size:11px;margin-top:40px;line-height:1.8}
+@media(max-width:600px){main{margin-top:38px}.topbar{padding:18px 0}.brand{font-size:18px}.section{padding:23px 0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
 </style>
 </head>
 
@@ -223,15 +94,15 @@ h1{
     <p class="upi">UPI ID: <b>jinwoo40054@kphdfc</b></p>
     <button id="upiButton">PAY VIA UPI APP</button>
     <button class="secondary" id="doneButton">PAYMENT DONE</button>
-    <p class="note">Pay exactly ₹399. After payment, tap PAYMENT DONE and submit your UTR for manual verification.</p>
+    <p class="note">Pay exactly ₹399. After payment, submit your UTR for manual verification.</p>
   </section>
 
   <section id="utrSection" class="section hidden">
     <h2 class="stage-title">PAYMENT DETAILS</h2>
     <label for="fullName">YOUR FULL NAME</label>
-    <input id="fullName" type="text" placeholder="Enter your full name" maxlength="100" autocomplete="name">
+    <input id="fullName" type="text" maxlength="100" placeholder="Enter your full name">
     <label for="utr">UPI TRANSACTION REFERENCE (UTR)</label>
-    <input id="utr" type="text" placeholder="Enter your UTR number" maxlength="50" autocomplete="off">
+    <input id="utr" type="text" maxlength="50" placeholder="Enter your UTR number">
     <button id="verifyButton">SUBMIT FOR VERIFICATION</button>
     <p id="error" class="error"></p>
   </section>
@@ -239,32 +110,45 @@ h1{
   <section id="processing" class="section hidden">
     <h2 class="stage-title">PAYMENT UNDER REVIEW</h2>
     <div class="loading-line"></div>
-    <p class="subtitle" style="text-align:center">Your payment details have been submitted. Please wait while an admin reviews your payment.</p>
+    <p class="subtitle" style="text-align:center">Your payment details have been submitted. Please wait for admin verification.</p>
   </section>
 
   <section id="verified" class="section hidden">
     <h2 class="stage-title">PAYMENT SUCCESSFUL</h2>
-    <p class="success">Your payment has been verified. Your unban request has not yet been submitted.</p>
-    <p class="subtitle" style="text-align:center">Amount paid: ₹399</p>
-    <div id="verifiedName" class="success"></div>
-    <div id="verifiedUtr" class="subtitle" style="text-align:center"></div>
+    <div class="amount">₹399</div>
+    <p class="success">Your payment has been verified.</p>
+    <p id="verifiedName" class="success"></p>
+    <p id="verifiedUtr" class="subtitle" style="text-align:center"></p>
     <button id="submitAppealButton">SUBMIT UNBAN REQUEST</button>
   </section>
 
   <section id="finalizing" class="section hidden">
-    <h2 class="stage-title">FINALIZING YOUR REQUEST</h2>
+    <h2 class="stage-title">SUBMITTING YOUR REQUEST</h2>
     <div class="loading-line"></div>
-    <p class="subtitle" style="text-align:center">Please wait while your request is being submitted.</p>
+    <p class="subtitle" style="text-align:center">Please wait while your request is being finalized.</p>
   </section>
 
   <section id="result" class="section hidden">
-    <h2 class="stage-title">REQUEST SUBMITTED</h2>
-    <p class="subtitle" style="text-align:center">Your final Order ID</p>
+    <h2 class="stage-title">UNBAN REQUEST SUBMITTED</h2>
+    <p class="subtitle" style="text-align:center">YOUR FINAL ORDER ID</p>
     <div class="order" id="orderId"></div>
     <button id="copyButton">COPY ORDER ID</button>
-    <button class="secondary" onclick="location.href='my-form.html'">TRACK MY FORM</button>
-    <button class="secondary" onclick="location.href='dashboard.html'">DONE</button>
-    <p class="note">Your 14-day review countdown starts from this submission time. Keep your Order ID safe.</p>
+
+    <p class="note">
+      Keep this Order ID safe. You can enter it in MY FORM to check your request status.
+      The 14-day countdown starts from the moment you submit your unban request.
+    </p>
+
+    <div class="timer-label">TIME REMAINING</div>
+    <div class="timer" id="countdown">14d 00:00:00</div>
+    <p class="timer-sub" id="timerMessage">Your review countdown is active.</p>
+
+    <div class="timer-controls">
+      <button class="secondary" id="soundButton">TICK SOUND: ON</button>
+    </div>
+
+    <button id="doneButtonFinal">DONE</button>
+    <p class="note">DONE returns you to your dashboard. The countdown is saved on the server and continues even when you leave this page.</p>
   </section>
 
   <p class="footer-note">NEXVORA X · PAYMENT VERIFICATION IS MANUAL · SUPPORT: @NEXVORA_X</p>
@@ -274,16 +158,18 @@ h1{
 <script>
 const API = "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow";
 const UPI = "upi://pay?pa=jinwoo40054@kphdfc&pn=NEXVORA%20UNBAN&am=399&cu=INR&tn=NEXVORA%20UNBAN%20APPEAL";
-
 const requestId = sessionStorage.getItem("nexvora_unban_request_id");
 
-const sections = [
-  "payment", "utrSection", "processing",
-  "verified", "finalizing", "result"
-];
+const sections = ["payment","utrSection","processing","verified","finalizing","result"];
 
 let polling = false;
 let pollTimer = null;
+let countdownInterval = null;
+let soundEnabled = true;
+let audioContext = null;
+let lastTickSecond = null;
+let serverDeadline = null;
+let currentStatus = null;
 
 const el = id => document.getElementById(id);
 
@@ -292,10 +178,6 @@ function showOnly(id) {
     el(sectionId).classList.toggle("hidden", sectionId !== id);
   });
   el(id).scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function showError(text) {
-  el("error").textContent = text;
 }
 
 function createParticles() {
@@ -308,16 +190,15 @@ function createParticles() {
     particle.style.left = Math.random() * 100 + "%";
     particle.style.animationDuration = (7 + Math.random() * 12) + "s";
     particle.style.animationDelay = (Math.random() * 12) + "s";
-    particle.style.opacity = Math.random();
     container.appendChild(particle);
   }
 }
 
 async function apiCall(payload) {
   const response = await fetch(API, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify(payload)
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
   });
 
   const data = await response.json().catch(() => ({}));
@@ -329,35 +210,146 @@ async function apiCall(payload) {
   return data;
 }
 
+function setError(text) {
+  el("error").textContent = text;
+}
+
+function stopPolling() {
+  polling = false;
+  if (pollTimer) clearTimeout(pollTimer);
+}
+
+function stopCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  countdownInterval = null;
+}
+
+function formatRemaining(ms) {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${days}d ${String(hours).padStart(2,"0")}:${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+}
+
+function playTick() {
+  if (!soundEnabled) return;
+
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+
+    if (!audioContext) audioContext = new AudioCtx();
+
+    if (audioContext.state === "suspended") {
+      audioContext.resume().catch(() => {});
+    }
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = 1150;
+    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.045, audioContext.currentTime + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.055);
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.06);
+  } catch (error) {
+    console.warn("Tick sound unavailable:", error);
+  }
+}
+
+function startCountdown(submittedAt) {
+  stopCountdown();
+
+  const startTime = new Date(submittedAt).getTime();
+
+  if (!Number.isFinite(startTime)) {
+    el("countdown").textContent = "TIME UNAVAILABLE";
+    el("timerMessage").textContent =
+      "The server did not return a valid submission timestamp. Please contact support.";
+    return;
+  }
+
+  serverDeadline = startTime + (14 * 24 * 60 * 60 * 1000);
+  lastTickSecond = null;
+
+  function update() {
+    const remaining = serverDeadline - Date.now();
+
+    if (remaining <= 0) {
+      el("countdown").textContent = "0d 00:00:00";
+      el("timerMessage").textContent =
+        "The 14-day review countdown has ended. Please check your request status.";
+      stopCountdown();
+      return;
+    }
+
+    el("countdown").textContent = formatRemaining(remaining);
+
+    const currentSecond = Math.floor(remaining / 1000);
+
+    if (lastTickSecond !== currentSecond) {
+      lastTickSecond = currentSecond;
+      playTick();
+    }
+  }
+
+  update();
+  countdownInterval = setInterval(update, 250);
+}
+
+function showFinalOrder(data) {
+  const orderId = data.order_id;
+  const submittedAt = data.submitted_at;
+
+  if (!orderId) {
+    throw new Error("Final Order ID was not returned by the server.");
+  }
+
+  if (!submittedAt) {
+    throw new Error("Server submission timestamp is missing. Please contact support.");
+  }
+
+  sessionStorage.setItem("nexvora_unban_order_id", orderId);
+  sessionStorage.setItem("nexvora_unban_submitted_at", submittedAt);
+  sessionStorage.removeItem("nexvora_unban_payment_submitted");
+  sessionStorage.removeItem("nexvora_unban_payment_verified");
+
+  el("orderId").textContent = orderId;
+  showOnly("result");
+  startCountdown(submittedAt);
+}
+
 function showVerified(data) {
   showOnly("verified");
 
   el("verifiedName").textContent =
-    "Name: " + (data.full_name || "Not available");
+    "FULL NAME: " + (data.full_name || "Not available");
 
   el("verifiedUtr").textContent =
     "UTR: " + (data.payment_utr || "Not available");
 
-  sessionStorage.setItem("nexvora_unban_payment_verified", "yes");
-}
-
-function showFinalOrder(orderId) {
-  showOnly("result");
-  el("orderId").textContent = orderId;
-  sessionStorage.setItem("nexvora_unban_order_id", orderId);
-  sessionStorage.removeItem("nexvora_unban_payment_submitted");
-  sessionStorage.removeItem("nexvora_unban_payment_verified");
+  sessionStorage.setItem("nexvora_unban_payment_verified","yes");
 }
 
 async function checkStatus() {
   const data = await apiCall({
-    action: "status",
-    request_id: requestId
+    action:"status",
+    request_id:requestId
   });
 
-  if (data.verified && data.order_id) {
-    // Older or already-finalized request.
-    showFinalOrder(data.order_id);
+  currentStatus = data.status;
+
+  if (data.order_id && data.submitted_at) {
+    showFinalOrder(data);
     return "finalized";
   }
 
@@ -366,12 +358,9 @@ async function checkStatus() {
     return "verified";
   }
 
-  if (
-    data.status === "rejected" ||
-    data.status === "payment_rejected"
-  ) {
+  if (data.status === "rejected" || data.status === "payment_rejected") {
     showOnly("utrSection");
-    showError("Payment was not approved. Please contact support.");
+    setError("Payment was rejected. Please contact support.");
     return "rejected";
   }
 
@@ -380,8 +369,8 @@ async function checkStatus() {
 
 async function pollStatus() {
   if (polling) return;
-  polling = true;
 
+  polling = true;
   showOnly("processing");
 
   while (polling) {
@@ -397,29 +386,43 @@ async function pollStatus() {
     }
 
     await new Promise(resolve => {
-      pollTimer = setTimeout(resolve, 5000);
+      pollTimer = setTimeout(resolve,5000);
     });
   }
 }
 
-function stopPolling() {
-  polling = false;
-  if (pollTimer) clearTimeout(pollTimer);
-}
-
-async function initialize() {
-  createParticles();
-
+async function loadExistingState() {
   if (!requestId) {
     alert("Your appeal session was not found. Please submit the form again.");
     location.replace("unban-form.html");
     return;
   }
 
-  const oldOrder = sessionStorage.getItem("nexvora_unban_order_id");
+  const savedOrder = sessionStorage.getItem("nexvora_unban_order_id");
+  const savedTime = sessionStorage.getItem("nexvora_unban_submitted_at");
 
-  if (oldOrder) {
-    showFinalOrder(oldOrder);
+  if (savedOrder && savedTime) {
+    showFinalOrder({
+      order_id:savedOrder,
+      submitted_at:savedTime
+    });
+    return;
+  }
+
+  const data = await apiCall({
+    action:"status",
+    request_id:requestId
+  });
+
+  currentStatus = data.status;
+
+  if (data.order_id && data.submitted_at) {
+    showFinalOrder(data);
+    return;
+  }
+
+  if (data.verified) {
+    showVerified(data);
     return;
   }
 
@@ -428,27 +431,18 @@ async function initialize() {
     return;
   }
 
-  try {
-    const state = await checkStatus();
-
-    if (state === "pending") {
-      showOnly("payment");
-    }
-  } catch (error) {
-    console.error(error);
-    showOnly("payment");
-  }
+  showOnly("payment");
 
   new QRCode(el("qrcode"), {
-    text: UPI,
-    width: 180,
-    height: 180,
-    correctLevel: QRCode.CorrectLevel.H
+    text:UPI,
+    width:180,
+    height:180,
+    correctLevel:QRCode.CorrectLevel.H
   });
 }
 
 el("upiButton").addEventListener("click", () => {
-  window.location.href = UPI;
+  location.href = UPI;
 });
 
 el("doneButton").addEventListener("click", () => {
@@ -460,29 +454,29 @@ el("verifyButton").addEventListener("click", async () => {
   const utr = el("utr").value.trim();
 
   if (!fullName || !utr) {
-    showError("Please enter your full name and UTR.");
+    setError("Please enter your full name and UTR.");
     return;
   }
 
   const btn = el("verifyButton");
   btn.disabled = true;
   btn.textContent = "SUBMITTING...";
-  showError("");
+  setError("");
 
   try {
     await apiCall({
-      action: "submit_payment",
-      request_id: requestId,
-      full_name: fullName,
-      utr: utr
+      action:"submit_payment",
+      request_id:requestId,
+      full_name:fullName,
+      utr:utr
     });
 
-    sessionStorage.setItem("nexvora_unban_payment_submitted", "yes");
+    sessionStorage.setItem("nexvora_unban_payment_submitted","yes");
     sessionStorage.removeItem("nexvora_unban_payment_verified");
 
     await pollStatus();
   } catch (error) {
-    showError(error.message || "Could not submit payment details.");
+    setError(error.message || "Could not submit payment details.");
     btn.disabled = false;
     btn.textContent = "SUBMIT FOR VERIFICATION";
   }
@@ -493,33 +487,33 @@ el("submitAppealButton").addEventListener("click", async () => {
   btn.disabled = true;
   btn.textContent = "SUBMITTING...";
 
-  stopPolling();
   showOnly("finalizing");
 
   try {
     const data = await apiCall({
-      action: "finalize",
-      request_id: requestId
+      action:"finalize",
+      request_id:requestId
     });
 
-    if (!data.order_id) {
-      throw new Error("Final Order ID was not returned.");
-    }
-
-    showFinalOrder(data.order_id);
+    showFinalOrder(data);
   } catch (error) {
-    console.error("Finalize error:", error);
+    console.error("Finalization error:",error);
 
     showOnly("verified");
     btn.disabled = false;
     btn.textContent = "SUBMIT UNBAN REQUEST";
 
-    const errorMessage = document.createElement("p");
-    errorMessage.className = "error";
-    errorMessage.textContent =
-      error.message || "Could not submit your appeal. Please try again.";
+    let errorText = el("finalizeError");
 
-    el("verified").appendChild(errorMessage);
+    if (!errorText) {
+      errorText = document.createElement("p");
+      errorText.id = "finalizeError";
+      errorText.className = "error";
+      el("verified").appendChild(errorText);
+    }
+
+    errorText.textContent =
+      error.message || "Could not submit your request. Please try again.";
   }
 });
 
@@ -530,13 +524,52 @@ el("copyButton").addEventListener("click", async () => {
     await navigator.clipboard.writeText(orderId);
     el("copyButton").textContent = "COPIED!";
   } catch (error) {
-    window.prompt("Copy your Order ID:", orderId);
+    window.prompt("Copy your Order ID:",orderId);
   }
 });
 
-window.addEventListener("beforeunload", stopPolling);
+el("soundButton").addEventListener("click", async () => {
+  soundEnabled = !soundEnabled;
+  el("soundButton").textContent =
+    soundEnabled ? "TICK SOUND: ON" : "TICK SOUND: OFF";
 
-initialize();
-  </script>
+  if (soundEnabled) {
+    playTick();
+  }
+});
+
+el("doneButtonFinal").addEventListener("click", () => {
+  stopCountdown();
+  stopPolling();
+  location.href = "dashboard.html";
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && serverDeadline && !el("result").classList.contains("hidden")) {
+    const remaining = serverDeadline - Date.now();
+
+    if (remaining <= 0) {
+      el("countdown").textContent = "0d 00:00:00";
+      el("timerMessage").textContent = "The 14-day review countdown has ended.";
+      stopCountdown();
+    } else {
+      el("countdown").textContent = formatRemaining(remaining);
+    }
+  }
+});
+
+window.addEventListener("beforeunload", () => {
+  stopCountdown();
+  stopPolling();
+});
+
+createParticles();
+
+loadExistingState().catch(error => {
+  console.error("Payment page initialization error:",error);
+  showOnly("payment");
+  setError(error.message || "Could not load payment details. Refresh and try again.");
+});
+    </script>
 </body>
 </html>
