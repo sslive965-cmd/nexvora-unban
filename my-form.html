@@ -1,53 +1,369 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#05020a">
 <title>NEXVORA UNBAN — My Form</title>
+
+<script>
+if(sessionStorage.getItem("nexvora_license_access")!=="verified"){
+  window.location.replace("license.html");
+}
+</script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:#05020a;color:#fff;font-family:Arial,sans-serif;padding:20px;display:grid;place-items:center}
-.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 15% 10%,#43007188,transparent 35%),radial-gradient(circle at 85% 90%,#31004466,transparent 35%),#05020a}
-.card{width:min(100%,460px);padding:30px 23px;border:1px solid #a65cff55;border-radius:22px;background:#10091bdd;box-shadow:0 0 40px #842aff20;text-align:center}
-.brand{font-size:12px;letter-spacing:4px;color:#d6b0ff;font-weight:bold}
-h1{font-size:32px;margin:15px 0;background:linear-gradient(90deg,#fff,#c68aff);background-clip:text;color:transparent}
-p{font-size:13px;line-height:1.7;color:#b9a9c9}
-input{width:100%;height:52px;margin-top:24px;padding:0 14px;border:1px solid #8b52ac66;border-radius:11px;background:#09050f;color:#fff;outline:none;text-align:center;font-size:14px}
-input:focus{border-color:#bc6cff;box-shadow:0 0 15px #922dff22}
-button{width:100%;height:50px;margin-top:13px;border:1px solid #c38bff77;border-radius:12px;background:linear-gradient(110deg,#7000e8,#a52aff);color:#fff;font-size:12px;font-weight:bold;letter-spacing:2px;cursor:pointer}
-.back{display:block;margin-top:22px;color:#cba1ff;text-decoration:none;font-size:12px}
-#message{margin-top:17px;font-size:12px;color:#e0baff;line-height:1.7;overflow-wrap:anywhere}
-.note{margin-top:20px;font-size:11px;color:#8e809b}
+
+html,body{
+  min-height:100%;
+  background:#05020a;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  padding:22px 16px 50px;
+}
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+  background:
+    radial-gradient(circle at 10% 10%,#50008b55,transparent 35%),
+    radial-gradient(circle at 90% 90%,#7100a544,transparent 35%),
+    #05020a;
+}
+
+.grid{
+  position:fixed;
+  width:200%;
+  height:180%;
+  left:-50%;
+  top:40%;
+  z-index:-4;
+  pointer-events:none;
+  background-image:
+    linear-gradient(#a34cff12 1px,transparent 1px),
+    linear-gradient(90deg,#a34cff12 1px,transparent 1px);
+  background-size:45px 45px;
+  transform:perspective(520px) rotateX(65deg);
+  animation:gridMove 10s linear infinite;
+}
+
+@keyframes gridMove{
+  to{transform:perspective(520px) rotateX(65deg) translateY(45px)}
+}
+
+.orb{
+  position:fixed;
+  z-index:-3;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.32;
+  pointer-events:none;
+}
+
+.orb.one{
+  width:280px;height:280px;
+  left:-110px;top:8%;
+  background:#7200ff;
+  animation:floatOne 8s ease-in-out infinite alternate;
+}
+
+.orb.two{
+  width:300px;height:300px;
+  right:-110px;bottom:-30px;
+  background:#bd00ff;
+  animation:floatTwo 9s ease-in-out infinite alternate;
+}
+
+@keyframes floatOne{
+  to{transform:translate(65px,40px) scale(1.17)}
+}
+
+@keyframes floatTwo{
+  to{transform:translate(-55px,-45px) scale(1.15)}
+}
+
+.particles{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+}
+
+.particle{
+  position:absolute;
+  width:2px;height:2px;
+  border-radius:50%;
+  background:#dcbcff;
+  box-shadow:0 0 7px #a53dff,0 0 16px #8d21ff;
+  animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+  0%{transform:translateY(110vh);opacity:0}
+  15%{opacity:1}
+  85%{opacity:.8}
+  100%{transform:translateY(-10vh);opacity:0}
+}
+
+.wrap{
+  width:min(100%,620px);
+  margin:auto;
+  animation:pageIn .9s ease both;
+}
+
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0 22px;
+  border-bottom:1px solid #a65cff44;
+}
+
+.brand{
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:2px;
+  background:linear-gradient(90deg,#fff,#c47cff);
+  background-clip:text;
+  color:transparent;
+}
+
+.back{
+  color:#d9b5ff;
+  text-decoration:none;
+  font-size:11px;
+  letter-spacing:1px;
+  border:1px solid #a65cff66;
+  border-radius:10px;
+  padding:10px 12px;
+}
+
+.heading{
+  padding:55px 0 25px;
+  text-align:center;
+}
+
+.eyebrow{
+  font-size:10px;
+  letter-spacing:5px;
+  color:#bd8af0;
+}
+
+h1{
+  font-size:clamp(34px,9vw,55px);
+  margin:14px 0;
+  letter-spacing:3px;
+  background:linear-gradient(110deg,#fff,#d9b4ff,#8c25ff,#fff);
+  background-size:300% auto;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 0 14px #8d21ff66);
+  animation:titleShine 5s linear infinite;
+}
+
+@keyframes titleShine{
+  to{background-position:300% center}
+}
+
+.intro{
+  max-width:470px;
+  margin:auto;
+  font-size:13px;
+  color:#b7a7c7;
+  line-height:1.8;
+}
+
+.divider{
+  width:130px;
+  height:1px;
+  margin:27px auto;
+  background:linear-gradient(90deg,transparent,#b044ff,#fff,#b044ff,transparent);
+  box-shadow:0 0 12px #a22dff;
+}
+
+.form-area{
+  margin-top:28px;
+}
+
+.label{
+  display:block;
+  margin-bottom:12px;
+  color:#d9b5ff;
+  font-size:10px;
+  letter-spacing:3px;
+  text-align:left;
+}
+
+input{
+  width:100%;
+  height:55px;
+  padding:0 16px;
+  border:1px solid #8b52ac88;
+  border-radius:12px;
+  background:#10091bcc;
+  color:#fff;
+  outline:none;
+  font-size:13px;
+  letter-spacing:1px;
+  text-align:center;
+  transition:.25s;
+}
+
+input:focus{
+  border-color:#bc6cff;
+  box-shadow:0 0 18px #922dff35;
+  background:#170b25;
+}
+
+input::placeholder{color:#746580}
+
+button{
+  width:100%;
+  min-height:54px;
+  margin-top:14px;
+  border:1px solid #c38bff77;
+  border-radius:12px;
+  background:linear-gradient(110deg,#7000e8,#a52aff);
+  color:white;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:3px;
+  cursor:pointer;
+  box-shadow:0 0 22px #8b2bff35;
+  transition:.25s;
+}
+
+button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 30px #922dff66;
+}
+
+#message{
+  min-height:25px;
+  margin-top:20px;
+  font-size:12px;
+  color:#e0baff;
+  line-height:1.7;
+  text-align:center;
+  overflow-wrap:anywhere;
+}
+
+.note{
+  margin-top:30px;
+  color:#8e809b;
+  font-size:10px;
+  line-height:1.8;
+  text-align:center;
+}
+
+@media(max-width:480px){
+  body{padding:15px 14px 40px}
+  .brand{font-size:15px}
+  .heading{padding-top:42px}
+}
 </style>
 </head>
+
 <body>
+
 <div class="bg"></div>
-<main class="card">
+<div class="grid"></div>
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="particles" id="particles"></div>
+
+<main class="wrap">
+
+<header>
   <div class="brand">NEXVORA UNBAN</div>
+  <a class="back" href="dashboard.html">← DASHBOARD</a>
+</header>
+
+<section class="heading">
+  <div class="eyebrow">CUSTOMER REQUEST TRACKER</div>
   <h1>MY FORM</h1>
-  <p>Enter your order ID to look up your appeal request.</p>
+  <p class="intro">
+    Track your submitted appeal request using your unique Order ID.
+    Your actual request status will be shown after database lookup is connected.
+  </p>
+  <div class="divider"></div>
+</section>
+
+<section class="form-area">
 
   <form id="lookupForm">
-    <input id="orderId" maxlength="80" required placeholder="ENTER ORDER ID" autocomplete="off">
-    <button type="submit">CHECK STATUS</button>
+    <label class="label" for="orderId">ENTER YOUR ORDER ID</label>
+
+    <input
+      id="orderId"
+      name="order_id"
+      maxlength="80"
+      required
+      placeholder="ENTER ORDER ID"
+      autocomplete="off"
+    >
+
+    <button type="submit" id="checkBtn">
+      CHECK REQUEST STATUS
+    </button>
   </form>
 
   <div id="message" role="status"></div>
-  <p class="note">Live request status and the 14-day timer will appear after secure database lookup is connected. This page does not invent a status.</p>
-  <a class="back" href="dashboard.html">← BACK TO DASHBOARD</a>
+
+</section>
+
+<p class="note">
+  REQUEST TRACKING SYSTEM · STATUS WILL ONLY BE DISPLAYED
+  AFTER A SUCCESSFUL DATABASE LOOKUP.
+</p>
+
 </main>
 
 <script>
+const particleBox=document.getElementById("particles");
+const particleCount=window.innerWidth<600?35:60;
+
+for(let i=0;i<particleCount;i++){
+  const p=document.createElement("span");
+  p.className="particle";
+  p.style.left=Math.random()*100+"%";
+  p.style.animationDuration=(5+Math.random()*9)+"s";
+  p.style.animationDelay=(Math.random()*8)+"s";
+  const size=(1+Math.random()*2)+"px";
+  p.style.width=size;
+  p.style.height=size;
+  particleBox.appendChild(p);
+}
+
 document.getElementById("lookupForm").addEventListener("submit",function(event){
   event.preventDefault();
+
   const id=document.getElementById("orderId").value.trim();
   const message=document.getElementById("message");
+
   if(!id){
-    message.textContent="Please enter your order ID.";
+    message.textContent="Please enter your Order ID.";
     return;
   }
-  message.textContent="Live status lookup is not connected yet. Your request has not been checked.";
+
+  message.textContent=
+    "Live status lookup is not connected yet. Your request has not been checked.";
 });
 </script>
+
 </body>
 </html>
