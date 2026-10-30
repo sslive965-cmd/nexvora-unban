@@ -1,30 +1,988 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NEXVORA UNBAN — Admin Panel</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;background:#07030c;color:#f7efff;font-family:Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.bg{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 20% 0%,#51008055,transparent 42%),radial-gradient(ellipse at 100% 100%,#34004444,transparent 40%)}.brand{font-weight:900;letter-spacing:2px;color:#e0b7ff}.login-wrap{position:relative;min-height:100vh;display:grid;place-items:center;padding:20px}.login-card{width:min(100%,420px);padding:30px 24px;border:1px solid #a65cff66;border-radius:22px;background:#10091bed;box-shadow:0 0 45px #922bff20}.eyebrow{font-size:10px;letter-spacing:3px;color:#bf8df3;margin-top:22px}h1{font-size:29px;margin:12px 0}p{font-size:13px;color:#b7a6c7;line-height:1.7}label{display:block;margin:16px 0 8px;font-size:12px;color:#ddc5f4}input,select,textarea{width:100%;padding:12px 13px;border:1px solid #8050a866;border-radius:10px;background:#08040e;color:white;outline:none}input,select{height:46px}textarea{min-height:100px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:#c17aff}.btn{border:1px solid #c18aff66;border-radius:10px;min-height:42px;padding:0 15px;background:#ffffff08;color:#fff;font-size:11px;font-weight:bold;letter-spacing:.8px}.btn:hover{background:#ffffff14}.btn.primary{background:linear-gradient(110deg,#7000e8,#a52aff)}.btn.success{border-color:#48e0a055;background:#48e0a01a}.btn.danger{border-color:#ff557755;background:#ff55771a}.btn.full{width:100%;margin-top:18px}.message{margin-top:14px;min-height:18px;color:#ffb4df;font-size:12px}.warning{margin-top:18px;padding:12px;border:1px solid #a65cff33;border-radius:10px;font-size:11px;color:#ad9aba;line-height:1.6}.app{position:relative;min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}.sidebar{padding:23px 15px;border-right:1px solid #a65cff2d;background:#0b0611}.sidebar .brand{padding:0 8px 25px;line-height:1.7}.nav{width:100%;display:block;text-align:left;padding:12px;margin:4px 0;border:1px solid transparent;border-radius:10px;background:transparent;color:#bba9cc;font-size:12px}.nav.active,.nav:hover{background:#a42dff18;border-color:#a65cff44;color:white}.side-note{font-size:10px;color:#7f708d;line-height:1.7;padding:20px 8px}.main{min-width:0;padding:24px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid #a65cff2d;padding-bottom:18px}.top h2{font-size:20px}.pill{font-size:10px;border:1px solid #9f5bd655;border-radius:20px;padding:8px 10px;color:#d9b4ff}.content{padding-top:25px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:22px 0}.stat{padding:18px;border:1px solid #a65cff35;border-radius:14px;background:#150b20}.stat span{font-size:11px;color:#b7a6c7}.stat strong{display:block;font-size:22px;margin-top:12px}.panel{padding:20px;border:1px solid #a65cff35;border-radius:15px;background:#10091bd9;margin-bottom:15px}.panel h3{font-size:15px;margin-bottom:10px}.panel p{font-size:12px}.row,.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.row .btn{flex:1;min-width:120px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.list{padding:14px 0;border-bottom:1px solid #a65cff22;font-size:12px;color:#b9a8c9;line-height:1.8}.badge{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid #a65cff55;font-size:10px;margin:2px}.badge.active,.badge.verified,.badge.completed{color:#b5ffcf;border-color:#48e0a055;background:#48e0a01a}.badge.rejected{color:#ffb4b4;border-color:#ff557755;background:#ff55771a}.badge.pending{color:#ffd89a;border-color:#ffb84d55;background:#ffb84d1a}.empty{padding:22px 0;color:#9e8cac;font-size:12px}.key-box{margin-top:14px;padding:15px;border:1px dashed #c17aff66;border-radius:12px;background:#08040e}.key-value{font-family:monospace;font-size:17px;letter-spacing:1px;color:#f2d8ff;word-break:break-all}.small,.field-note{font-size:11px;color:#9e8cac}.toast{position:fixed;right:18px;bottom:18px;z-index:20;max-width:360px;padding:13px 15px;border-radius:11px;background:#160c20;border:1px solid #a65cff66;box-shadow:0 10px 35px #0008;font-size:12px}.modal{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:18px;background:#0009}.modal-card{width:min(100%,560px);max-height:90vh;overflow:auto;padding:22px;border:1px solid #a65cff55;border-radius:18px;background:#10091b}@media(max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid #a65cff2d;padding:14px}.sidebar .brand{padding:0 4px 12px}.navs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.nav{margin:0}.side-note{display:none}.main{padding:17px}.cards,.grid2{grid-template-columns:1fr}}
-</style></head><body><div class="bg"></div>
-<section id="loginView" class="login-wrap"><form class="login-card" id="loginForm"><div class="brand">NEXVORA UNBAN</div><div class="eyebrow">RESTRICTED CONTROL CENTER</div><h1>Admin Login</h1><p>Sign in with your authorized administrator account.</p><label>Admin Email</label><input id="email" type="email" autocomplete="username" required placeholder="Enter admin email"><label>Password</label><input id="password" type="password" autocomplete="current-password" required placeholder="Enter password"><button class="btn primary full" id="loginButton">SECURE LOGIN</button><div class="message" id="loginMessage"></div><div class="warning">Admin access is restricted to the allowlisted Supabase account. Never share this password.</div></form></section>
-<section id="adminApp" class="app hidden"><aside class="sidebar"><div class="brand">NEXVORA<br>ADMIN</div><div class="navs"><button class="nav active" data-section="overview">◈ &nbsp; Dashboard</button><button class="nav" data-section="licenses">⌘ &nbsp; License Keys</button><button class="nav" data-section="forms">▤ &nbsp; Unban Forms</button><button class="nav" data-section="payments">₹ &nbsp; Payments</button><button class="nav" data-section="telegram">↗ &nbsp; Telegram</button><button class="nav" data-section="settings">⚙ &nbsp; Settings</button></div><p class="side-note">ADMIN ACCESS ONLY<br>Never share your login details.</p><button class="btn full" id="logoutButton">LOG OUT</button></aside><main class="main"><header class="top"><h2 id="sectionTitle">Dashboard</h2><span class="pill">SECURE ADMIN CONTROL</span></header><div class="content" id="sectionContent"></div></main></section>
-<div id="modalRoot"></div><div id="toastRoot"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
-const SUPABASE_URL="https://sitgwrnvxaugresvlvfl.supabase.co",SUPABASE_KEY="sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ",db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY),$=id=>document.getElementById(id);let currentSection="overview";
-const names={overview:"Dashboard",licenses:"License Keys",forms:"Unban Forms",payments:"Payments",telegram:"Telegram",settings:"Settings"};
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}function toast(t){$('toastRoot').innerHTML='<div class="toast">'+esc(t)+'</div>';setTimeout(()=>$('toastRoot').innerHTML='',3200)}function msg(t,e=true){$('loginMessage').textContent=t;$('loginMessage').style.color=e?'#ffb4df':'#b5ffcf'}function date(v){if(!v)return'—';const d=new Date(v);return isNaN(d)?String(v):d.toLocaleString()}function badge(s){s=String(s||'unknown');let c=['active','verified','completed','approved','processing'].includes(s)?'verified':['revoked','rejected','declined','cancelled'].includes(s)?'rejected':'pending';return '<span class="badge '+c+'">'+esc(s)+'</span>'}async function user(){return(await db.auth.getUser()).data.user||null}async function hash(t){const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return Array.from(new Uint8Array(d)).map(x=>x.toString(16).padStart(2,'0')).join('')}function rnd(n){const s='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',a=new Uint32Array(n);crypto.getRandomValues(a);return Array.from(a,x=>s[x%s.length]).join('')}
-async function verify(u){if(!u?.email)return false;const r=await db.from('admin_allowlist').select('email').eq('email',u.email).maybeSingle();if(r.error)throw r.error;return!!r.data}function showAdmin(){$('loginView').classList.add('hidden');$('adminApp').classList.remove('hidden')}function showLogin(){$('adminApp').classList.add('hidden');$('loginView').classList.remove('hidden')}
-async function overview(){const [a,b,c,d]=await Promise.all([db.from('license_keys').select('id',{count:'exact',head:true}),db.from('unban_forms').select('id',{count:'exact',head:true}),db.from('unban_forms').select('id',{count:'exact',head:true}).not('payment_utr','is',null).is('payment_verified_at',null),db.from('telegram_events').select('id',{count:'exact',head:true})]);[a,b,c,d].forEach(r=>{if(r.error)throw r.error});$('sectionContent').innerHTML='<p>Welcome to the NEXVORA UNBAN control center.</p><div class="cards"><div class="stat"><span>License Keys</span><strong>'+(a.count??0)+'</strong></div><div class="stat"><span>Unban Forms</span><strong>'+(b.count??0)+'</strong></div><div class="stat"><span>Pending Payments</span><strong>'+(c.count??0)+'</strong></div><div class="stat"><span>Telegram Events</span><strong>'+(d.count??0)+'</strong></div></div><div class="panel"><h3>System Status</h3><p>Supabase connection is active. Admin authentication is verified.</p></div><div class="panel"><h3>Service Notice</h3><p>This is an independent appeal-request assistance service, not an official Garena panel. No unban result is guaranteed.</p></div>'}
-async function licenses(){const r=await db.from('license_keys').select('id,key_prefix,status,customer_email,created_at,expires_at,approved_at,notes').order('created_at',{ascending:false}).limit(100);if(r.error)throw r.error;$('sectionContent').innerHTML='<div class="panel"><div class="top"><h3>License Keys</h3><button class="btn primary" onclick="genModal()">＋ GENERATE KEY</button></div><p>Generated license secrets are shown once. Database stores only a SHA-256 hash.</p><div class="actions"><button class="btn" onclick="licenses()">↻ REFRESH</button></div>'+(r.data.length?r.data.map(x=>'<div class="list"><strong>'+esc(x.key_prefix||'License')+'</strong> '+badge(x.status)+'<br>Customer: '+esc(x.customer_email||'Not assigned')+'<br>Created: '+esc(date(x.created_at))+'<br>Expires: '+esc(date(x.expires_at))+(x.notes?'<br>Notes: '+esc(x.notes):'')+'<div class="actions">'+(x.status==='active'?'<button class="btn danger" onclick="revoke(\''+x.id+'\')">REVOKE</button>':'')+'<button class="btn danger" onclick="delKey(\''+x.id+'\')">DELETE</button></div></div>').join(''):'<div class="empty">No license records found.</div>')+'</div>'}
-function genModal(){$('modalRoot').innerHTML='<div class="modal"><div class="modal-card"><h3>Generate License Key</h3><p>Optional customer email assignment.</p><label>Customer Email</label><input id="genEmail" type="email" placeholder="customer@example.com"><div class="actions"><button class="btn primary" onclick="generate()">GENERATE</button><button class="btn" onclick="$(\'modalRoot\').innerHTML=\'\'">CANCEL</button></div></div></div>'}
-async function generate(){try{const key='NX-'+rnd(4)+'-'+rnd(2),r=await db.from('license_keys').insert({key_hash:await hash(key),key_prefix:key,status:'active',customer_email:$('genEmail').value.trim().toLowerCase()||null,approved_by:(await user())?.id||null,approved_at:new Date().toISOString()});if(r.error)throw r.error;$('modalRoot').innerHTML='<div class="modal"><div class="modal-card"><h3>License Generated</h3><p>Copy this key now. The full key is not stored in plaintext.</p><div class="key-box"><div class="key-value">'+esc(key)+'</div></div><div class="actions"><button class="btn primary" onclick="copyKey('+JSON.stringify(key)+')">COPY KEY</button><button class="btn" onclick="$(\'modalRoot\').innerHTML=\'\'">DONE</button></div></div></div>';toast('License generated');licenses()}catch(e){toast('Generate failed: '+e.message)}}
-async function copyKey(k){try{await navigator.clipboard.writeText(k);toast('Copied')}catch(e){toast('Copy failed; copy manually')}}async function revoke(id){if(!confirm('Revoke this license?'))return;const r=await db.from('license_keys').update({status:'revoked'}).eq('id',id);if(r.error)return toast(r.error.message);toast('License revoked');licenses()}async function delKey(id){if(!confirm('Delete this license permanently?'))return;const r=await db.from('license_keys').delete().eq('id',id);if(r.error)return toast(r.error.message);toast('License deleted');licenses()}
-async function forms(paymentOnly=false){let q=db.from('unban_forms').select('*').order('created_at',{ascending:false}).limit(100);if(paymentOnly)q=q.not('payment_utr','is',null).is('payment_verified_at',null);const r=await q;if(r.error)throw r.error;$('sectionContent').innerHTML='<div class="panel"><div class="top"><h3>'+(paymentOnly?'Payments Awaiting Review':'Unban Forms')+'</h3><button class="btn" onclick="forms('+paymentOnly+')">↻ REFRESH</button></div><p>Review submitted records and update status.</p>'+(r.data.length?r.data.map(x=>'<div class="list"><strong>Order: '+esc(x.order_id||x.id)+'</strong> '+badge(x.status)+'<br>UID: '+esc(x.player_uid)+'<br>ID Level: '+esc(x.id_level)+'<br>Game: '+esc(x.game_name)+'<br>Region: '+esc(x.region)+' &nbsp; Device: '+esc(x.device)+'<br>Ban: '+esc(x.ban_type)+' &nbsp; Date: '+esc(x.ban_date)+'<br>Customer: '+esc(x.full_name||'—')+'<br>UTR: '+esc(x.payment_utr||'Not submitted')+'<br>Submitted: '+esc(date(x.submitted_at||x.created_at))+'<div class="actions"><button class="btn primary" onclick="openForm(\''+x.id+'\')">VIEW / UPDATE</button></div></div>').join(''):'<div class="empty">No matching records found.</div>')+'</div>'}
-async function openForm(id){const r=await db.from('unban_forms').select('*').eq('id',id).maybeSingle();if(r.error||!r.data)return toast(r.error?.message||'Form not found');const x=r.data;$('modalRoot').innerHTML='<div class="modal"><div class="modal-card"><h3>Unban Form — '+esc(x.order_id||x.id)+'</h3><div class="grid2"><div><label>Player UID</label><input disabled value="'+esc(x.player_uid)+'"></div><div><label>ID Level</label><input disabled value="'+esc(x.id_level)+'"></div><div><label>Game</label><input disabled value="'+esc(x.game_name)+'"></div><div><label>Region</label><input disabled value="'+esc(x.region)+'"></div><div><label>Device</label><input disabled value="'+esc(x.device)+'"></div><div><label>Ban Type</label><input disabled value="'+esc(x.ban_type)+'"></div></div><label>Status</label><select id="formStatus">'+['submitted','payment_pending','payment_verified','processing','completed','rejected'].map(s=>'<option value="'+s+'" '+(x.status===s?'selected':'')+'>'+s+'</option>').join('')+'</select><label>Admin Notes</label><textarea id="formNotes">'+esc(x.notes||'')+'</textarea><p class="field-note">UTR: '+esc(x.payment_utr||'Not submitted')+'</p><div class="actions"><button class="btn primary" onclick="saveForm(\''+id+'\')">SAVE</button><button class="btn" onclick="$(\'modalRoot\').innerHTML=\'\'">CLOSE</button></div></div></div>'}
-async function saveForm(id){const st=$('formStatus').value,vals={status:st,notes:$('formNotes').value.trim()||null,updated_at:new Date().toISOString()};if(st==='payment_verified'){vals.payment_verified_by=(await user())?.id||null;vals.payment_verified_at=new Date().toISOString()}const r=await db.from('unban_forms').update(vals).eq('id',id);if(r.error)return toast(r.error.message);$('modalRoot').innerHTML='';toast('Form updated');render(currentSection)}
-async function telegram(){const r=await db.from('telegram_events').select('*').order('created_at',{ascending:false}).limit(50);if(r.error)throw r.error;$('sectionContent').innerHTML='<div class="panel"><h3>Telegram Integration</h3><p><strong>Bot status:</strong> Not connected yet.</p><p style="margin-top:8px">The Telegram bot has not been created/configured yet. This section is intentionally ready for the later integration.</p><div class="warning">Never put a Telegram bot token in this client-side HTML.</div></div><div class="panel"><h3>Recorded Events</h3>'+(r.data.length?r.data.map(x=>'<div class="list"><strong>'+esc(x.event_type)+'</strong><br>User: '+esc(x.telegram_user_id||'—')+'<br>Created: '+esc(date(x.created_at))+'</div>').join(''):'<div class="empty">No Telegram events recorded yet.</div>')+'</div>'}
-async function settings(){const r=await db.from('site_settings').select('key,value,updated_at').order('key');if(r.error)throw r.error;const m={};(r.data||[]).forEach(x=>m[x.key]=x.value);$('sectionContent').innerHTML='<div class="panel"><h3>Site Settings</h3><p>Edit values and save them directly to Supabase.</p><div class="grid2"><div><label>License Price</label><input id="sLic" type="number" min="0" value="'+esc(m.license_price_inr??99)+'"></div><div><label>Request Price</label><input id="sReq" type="number" min="0" value="'+esc(m.request_price_inr??399)+'"></div><div><label>UPI ID</label><input id="sUpi" value="'+esc(m.payment_upi_id??'')+'"></div><div><label>Support Username</label><input id="sSup" value="'+esc(m.support_username??'')+'"></div></div><label>Service Disclaimer</label><textarea id="sDis">'+esc(m.service_disclaimer??'')+'</textarea><div class="actions"><button class="btn primary" onclick="saveSettings()">SAVE SETTINGS</button></div></div>'}
-async function saveSettings(){try{const uid=(await user())?.id||null,vals=[['license_price_inr',Number($('sLic').value)||0],['request_price_inr',Number($('sReq').value)||0],['payment_upi_id',$('sUpi').value.trim()],['support_username',$('sSup').value.trim()],['service_disclaimer',$('sDis').value.trim()]];for(const [key,value] of vals){const r=await db.from('site_settings').upsert({key,value,updated_by:uid,updated_at:new Date().toISOString()},{onConflict:'key'});if(r.error)throw r.error}toast('Settings saved');settings()}catch(e){toast('Save failed: '+e.message)}}
-const loaders={overview,licenses,forms:()=>forms(false),payments:()=>forms(true),telegram,settings};async function render(k){currentSection=k||'overview';$('sectionTitle').textContent=names[currentSection];document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.section===currentSection));$('sectionContent').innerHTML='<div class="panel"><p>Loading...</p></div>';try{await loaders[currentSection]()}catch(e){$('sectionContent').innerHTML='<div class="panel"><h3>Could not load section</h3><p>'+esc(e.message)+'</p><button class="btn" onclick="render(\''+currentSection+'\')">RETRY</button></div>'}}
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginButton').disabled=true;msg('Signing in...',false);try{const r=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(r.error)throw r.error;if(!await verify(r.data.user)){await db.auth.signOut();throw new Error('This account is not authorized for the admin panel.')}showAdmin();await render('overview')}catch(e){msg(e.message||'Login failed')}finally{$('loginButton').disabled=false}});document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>render(b.dataset.section)));$('logoutButton').addEventListener('click',async()=>{await db.auth.signOut();showLogin();$('password').value='';msg('Logged out',false)});db.auth.getSession().then(async r=>{if(r.data.session&&await verify(r.data.session.user)){showAdmin();render('overview')}});
-</script></body></html>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:#07030c;color:#f7efff;font-family:Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.bg{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 20% 0%,#51008055,transparent 42%),radial-gradient(ellipse at 100% 100%,#34004444,transparent 40%)}
+.brand{font-weight:900;letter-spacing:2px;color:#e0b7ff}
+.login-wrap{position:relative;min-height:100vh;display:grid;place-items:center;padding:20px}
+.login-card{width:min(100%,420px);padding:30px 24px;border:1px solid #a65cff66;border-radius:22px;background:#10091bed;box-shadow:0 0 45px #922bff20}
+.eyebrow{font-size:10px;letter-spacing:3px;color:#bf8df3;margin-top:22px}
+h1{font-size:29px;margin:12px 0}
+p{font-size:13px;color:#b7a6c7;line-height:1.7}
+label{display:block;margin:16px 0 8px;font-size:12px;color:#ddc5f4}
+input,select,textarea{width:100%;padding:12px 13px;border:1px solid #8050a866;border-radius:10px;background:#08040e;color:white;outline:none}
+input,select{height:46px}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:#c17aff}
+.btn{border:1px solid #c18aff66;border-radius:10px;min-height:42px;padding:0 15px;background:#ffffff08;color:#fff;font-size:11px;font-weight:bold;letter-spacing:.8px}
+.btn:hover{background:#ffffff14}
+.btn.primary{background:linear-gradient(110deg,#7000e8,#a52aff)}
+.btn.success{border-color:#48e0a055;background:#48e0a01a}
+.btn.danger{border-color:#ff557755;background:#ff55771a}
+.btn.full{width:100%;margin-top:18px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.message{margin-top:14px;min-height:18px;color:#ffb4df;font-size:12px}
+.warning{margin-top:18px;padding:12px;border:1px solid #a65cff33;border-radius:10px;font-size:11px;color:#ad9aba;line-height:1.6}
+.app{position:relative;min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}
+.sidebar{padding:23px 15px;border-right:1px solid #a65cff2d;background:#0b0611}
+.sidebar .brand{padding:0 8px 25px;line-height:1.7}
+.nav{width:100%;display:block;text-align:left;padding:12px;margin:4px 0;border:1px solid transparent;border-radius:10px;background:transparent;color:#bba9cc;font-size:12px}
+.nav.active,.nav:hover{background:#a42dff18;border-color:#a65cff44;color:white}
+.side-note{font-size:10px;color:#7f708d;line-height:1.7;padding:20px 8px}
+.main{min-width:0;padding:24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid #a65cff2d;padding-bottom:18px}
+.top h2{font-size:20px}
+.pill{font-size:10px;border:1px solid #9f5bd655;border-radius:20px;padding:8px 10px;color:#d9b4ff}
+.content{padding-top:25px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:22px 0}
+.stat{padding:18px;border:1px solid #a65cff35;border-radius:14px;background:#150b20}
+.stat span{font-size:11px;color:#b7a6c7}
+.stat strong{display:block;font-size:22px;margin-top:12px}
+.panel{padding:20px;border:1px solid #a65cff35;border-radius:15px;background:#10091bd9;margin-bottom:15px}
+.panel h3{font-size:15px;margin-bottom:10px}
+.panel p{font-size:12px}
+.row,.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.row .btn{flex:1;min-width:120px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.list{padding:14px 0;border-bottom:1px solid #a65cff22;font-size:12px;color:#b9a8c9;line-height:1.8;overflow-wrap:anywhere}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid #a65cff55;font-size:10px;margin:2px}
+.badge.active,.badge.verified,.badge.completed{color:#b5ffcf;border-color:#48e0a055;background:#48e0a01a}
+.badge.rejected,.badge.revoked,.badge.declined{color:#ffb4b4;border-color:#ff557755;background:#ff55771a}
+.badge.pending,.badge.payment_pending,.badge.awaiting_payment{color:#ffd89a;border-color:#ffb84d55;background:#ffb84d1a}
+.empty{padding:22px 0;color:#9e8cac;font-size:12px}
+.key-box{margin-top:14px;padding:15px;border:1px dashed #c17aff66;border-radius:12px;background:#08040e}
+.key-value{font-family:monospace;font-size:17px;letter-spacing:1px;color:#f2d8ff;word-break:break-all}
+.small,.field-note{font-size:11px;color:#9e8cac}
+.toast{position:fixed;right:18px;bottom:18px;z-index:20;max-width:360px;padding:13px 15px;border-radius:11px;background:#160c20;border:1px solid #a65cff66;box-shadow:0 10px 35px #0008;font-size:12px}
+.modal{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:18px;background:#0009}
+.modal-card{width:min(100%,560px);max-height:90vh;overflow:auto;padding:22px;border:1px solid #a65cff55;border-radius:18px;background:#10091b}
+.modal-card h3{margin-bottom:12px}
+.code-line{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.code-line .key-value{flex:1;min-width:180px}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){
+.app{grid-template-columns:1fr}
+.sidebar{border-right:0;border-bottom:1px solid #a65cff2d;padding:14px}
+.sidebar .brand{padding:0 4px 12px}
+.navs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+.nav{margin:0}
+.side-note{display:none}
+.main{padding:17px}
+.cards,.grid2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<section id="loginView" class="login-wrap">
+<form class="login-card" id="loginForm">
+<div class="brand">NEXVORA UNBAN</div>
+<div class="eyebrow">RESTRICTED CONTROL CENTER</div>
+<h1>Admin Login</h1>
+<p>Sign in with your authorized administrator account.</p>
+<label>Admin Email</label>
+<input id="email" type="email" autocomplete="username" required placeholder="Enter admin email">
+<label>Password</label>
+<input id="password" type="password" autocomplete="current-password" required placeholder="Enter password">
+<button class="btn primary full" id="loginButton">SECURE LOGIN</button>
+<div class="message" id="loginMessage"></div>
+<div class="warning">Admin access is restricted to the allowlisted Supabase account. Never share this password.</div>
+</form>
+</section>
+
+<section id="adminApp" class="app hidden">
+<aside class="sidebar">
+<div class="brand">NEXVORA<br>ADMIN</div>
+<div class="navs">
+<button class="nav active" data-section="overview">◈ &nbsp; Dashboard</button>
+<button class="nav" data-section="licenses">⌘ &nbsp; License Keys</button>
+<button class="nav" data-section="forms">▤ &nbsp; Unban Forms</button>
+<button class="nav" data-section="payments">₹ &nbsp; Payments</button>
+<button class="nav" data-section="telegram">↗ &nbsp; Telegram</button>
+<button class="nav" data-section="settings">⚙ &nbsp; Settings</button>
+</div>
+<p class="side-note">ADMIN ACCESS ONLY<br>Never share your login details.</p>
+<button class="btn full" id="logoutButton">LOG OUT</button>
+</aside>
+
+<main class="main">
+<header class="top">
+<h2 id="sectionTitle">Dashboard</h2>
+<span class="pill">SECURE ADMIN CONTROL</span>
+</header>
+<div class="content" id="sectionContent"></div>
+</main>
+</section>
+
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://sitgwrnvxaugresvlvfl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ";
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentUser = null;
+let currentSection = "dashboard";
+
+const $ = (id) => document.getElementById(id);
+
+function toast(message, type = "success") {
+  const root = $("toastRoot");
+  if (!root) return alert(message);
+
+  root.innerHTML = "";
+  const item = document.createElement("div");
+  item.className = "toast " + type;
+  item.textContent = message;
+  root.appendChild(item);
+
+  setTimeout(() => item.remove(), 3500);
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
+
+function formatDate(value) {
+  if (!value) return "—";
+  return new Date(value).toLocaleString("en-IN");
+}
+
+function makeButton(label, action, className = "") {
+  return `<button class="${className}" onclick="${action}">${label}</button>`;
+}
+
+async function getCount(table, filters = []) {
+  let query = db.from(table).select("*", { count: "exact", head: true });
+  filters.forEach(([column, value]) => query = query.eq(column, value));
+  const { count, error } = await query;
+  if (error) throw error;
+  return count || 0;
+}
+
+async function loadDashboard() {
+  const content = $("content");
+  content.innerHTML = `<div class="loading">Loading dashboard...</div>`;
+
+  try {
+    const [licenses, forms, pending, events] = await Promise.all([
+      getCount("license_keys"),
+      getCount("unban_forms"),
+      getCount("unban_forms", [["status", "payment_pending"]]),
+      getCount("telegram_events")
+    ]);
+
+    content.innerHTML = `
+      <div class="page-heading">
+        <h1>Dashboard</h1>
+        <p>Welcome to NEXVORA UNBAN Admin Panel.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span>Total License Keys</span>
+          <strong>${licenses}</strong>
+        </div>
+        <div class="stat-card">
+          <span>Total Unban Forms</span>
+          <strong>${forms}</strong>
+        </div>
+        <div class="stat-card">
+          <span>Payments Awaiting Review</span>
+          <strong>${pending}</strong>
+        </div>
+        <div class="stat-card">
+          <span>Telegram Events</span>
+          <strong>${events}</strong>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Quick Overview</h2>
+        <p>Use the sidebar to manage license keys, review unban forms, verify payments and update site settings.</p>
+        <button class="primary-btn" onclick="showSection('licenses')">Manage License Keys</button>
+      </div>
+    `;
+  } catch (error) {
+    content.innerHTML = `<div class="error-box">Dashboard error: ${escapeHTML(error.message)}</div>`;
+  }
+}
+
+/* LICENSE KEY GENERATION */
+
+function randomPart(length) {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const bytes = crypto.getRandomValues(new Uint8Array(length));
+  return Array.from(bytes, byte => chars[byte % chars.length]).join("");
+}
+
+function generateLicenseCode() {
+  return "NX-" + randomPart(4) + "-" + randomPart(4) + "-" + randomPart(4);
+}
+
+async function hashLicense(code) {
+  const data = new TextEncoder().encode(code);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(digest))
+    .map(byte => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function createLicense() {
+  const button = $("generateLicenseBtn");
+  if (button) button.disabled = true;
+
+  try {
+    const code = generateLicenseCode();
+    const hash = await hashLicense(code);
+
+    const { error } = await db.from("license_keys").insert({
+      key_hash: hash,
+      key_prefix: code,
+      status: "active",
+      notes: "Generated from admin panel"
+    });
+
+    if (error) throw error;
+
+    $("generatedLicense").innerHTML = `
+      <div class="generated-code">
+        <strong>${escapeHTML(code)}</strong>
+        <button onclick="copyText('${code}')">Copy</button>
+      </div>
+    `;
+
+    toast("License key generated successfully.");
+    await loadLicenses();
+  } catch (error) {
+    toast("License generation failed: " + error.message, "error");
+  } finally {
+    if (button) button.disabled = false;
+  }
+}
+
+async function copyText(value) {
+  try {
+    await navigator.clipboard.writeText(value);
+    toast("Copied successfully.");
+  } catch {
+    const field = document.createElement("textarea");
+    field.value = value;
+    document.body.appendChild(field);
+    field.select();
+    document.execCommand("copy");
+    field.remove();
+    toast("Copied successfully.");
+  }
+}
+
+async function loadLicenses() {
+  const content = $("content");
+  content.innerHTML = `<div class="loading">Loading license keys...</div>`;
+
+  try {
+    let allRows = [];
+    let start = 0;
+    const pageSize = 500;
+
+    while (true) {
+      const { data, error } = await db
+        .from("license_keys")
+        .select("id,key_prefix,status,customer_email,payment_utr,created_at,expires_at")
+        .order("created_at", { ascending: false })
+        .range(start, start + pageSize - 1);
+
+      if (error) throw error;
+
+      allRows = allRows.concat(data || []);
+      if (!data || data.length < pageSize) break;
+      start += pageSize;
+    }
+
+    const rows = allRows.map(item => `
+      <tr>
+        <td><code>${escapeHTML(item.key_prefix || "Unavailable")}</code></td>
+        <td><span class="status-badge ${escapeHTML(item.status)}">${escapeHTML(item.status)}</span></td>
+        <td>${escapeHTML(item.customer_email || "—")}</td>
+        <td>${formatDate(item.created_at)}</td>
+        <td class="action-cell">
+          <button onclick="copyText('${escapeHTML(item.key_prefix || "")}')">Copy</button>
+          <button onclick="revokeLicense('${item.id}')">Revoke</button>
+          <button class="danger-btn" onclick="deleteLicense('${item.id}')">Delete</button>
+        </td>
+      </tr>
+    `).join("");
+
+    content.innerHTML = `
+      <div class="page-heading">
+        <h1>License Keys</h1>
+        <p>Generate and manage all license codes.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Generate New License</h2>
+        <button id="generateLicenseBtn" class="primary-btn" onclick="createLicense()">+ Generate License Key</button>
+        <div id="generatedLicense"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>All License Keys (${allRows.length})</h2>
+          <button onclick="loadLicenses()">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>License Code</th>
+                <th>Status</th>
+                <th>Customer</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows || `<tr><td colspan="5">No license records found.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    content.innerHTML = `<div class="error-box">License loading error: ${escapeHTML(error.message)}</div>`;
+  }
+}
+
+async function revokeLicense(id) {
+  if (!confirm("Are you sure you want to revoke this license?")) return;
+
+  try {
+    const { error } = await db
+      .from("license_keys")
+      .update({ status: "revoked" })
+      .eq("id", id);
+
+    if (error) throw error;
+
+    toast("License revoked.");
+    await loadLicenses();
+  } catch (error) {
+    toast("Revoke failed: " + error.message, "error");
+  }
+}
+
+async function deleteLicense(id) {
+  if (!confirm("Permanently delete this license record?")) return;
+
+  try {
+    const { error } = await db
+      .from("license_keys")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    toast("License deleted.");
+    await loadLicenses();
+  } catch (error) {
+    toast("Delete failed: " + error.message, "error");
+  }
+}
+
+<script>
+async function loadUnbanForms() {
+  const content = $("content");
+  content.innerHTML = `<div class="loading">Loading unban forms...</div>`;
+
+  try {
+    const { data, error } = await db
+      .from("unban_forms")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(500);
+
+    if (error) throw error;
+
+    const rows = (data || []).map(form => `
+      <tr>
+        <td>${escapeHTML(form.order_id)}</td>
+        <td>${escapeHTML(form.player_uid)}</td>
+        <td>${escapeHTML(form.game_name)}</td>
+        <td>${escapeHTML(form.region)}</td>
+        <td><span class="status-badge ${escapeHTML(form.status)}">${escapeHTML(form.status)}</span></td>
+        <td>${formatDate(form.created_at)}</td>
+        <td><button onclick="viewUnbanForm('${form.id}')">View</button></td>
+      </tr>
+    `).join("");
+
+    content.innerHTML = `
+      <div class="page-heading">
+        <h1>Unban Forms</h1>
+        <p>Review submitted customer forms.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h2>All Forms (${(data || []).length})</h2>
+          <button onclick="loadUnbanForms()">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Player UID</th>
+                <th>Game Name</th>
+                <th>Region</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows || `<tr><td colspan="7">No matching records found.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    content.innerHTML = `<div class="error-box">Forms error: ${escapeHTML(error.message)}</div>`;
+  }
+}
+
+async function viewUnbanForm(id) {
+  try {
+    const { data, error } = await db
+      .from("unban_forms")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw error;
+
+    const details = [
+      ["Request ID", data.order_id],
+      ["Player UID", data.player_uid],
+      ["ID Level", data.id_level],
+      ["Game Name", data.game_name],
+      ["Region", data.region],
+      ["Device", data.device],
+      ["Ban Type", data.ban_type],
+      ["Ban Date", data.ban_date],
+      ["Full Name", data.full_name],
+      ["Payment UTR", data.payment_utr],
+      ["Status", data.status],
+      ["Created", formatDate(data.created_at)]
+    ];
+
+    $("modalRoot").innerHTML = `
+      <div class="modal-backdrop" onclick="if(event.target===this)closeModal()">
+        <div class="modal">
+          <div class="modal-header">
+            <h2>Unban Form Details</h2>
+            <button onclick="closeModal()">×</button>
+          </div>
+          <div class="detail-list">
+            ${details.map(([label, value]) => `
+              <div class="detail-row">
+                <span>${escapeHTML(label)}</span>
+                <strong>${escapeHTML(value || "—")}</strong>
+              </div>
+            `).join("")}
+          </div>
+          <button class="secondary-btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    toast("Unable to load form: " + error.message, "error");
+  }
+}
+
+function closeModal() {
+  $("modalRoot").innerHTML = "";
+}
+
+/* PAYMENT REVIEW */
+
+async function loadPayments() {
+  const content = $("content");
+  content.innerHTML = `<div class="loading">Loading pending payments...</div>`;
+
+  try {
+    const { data, error } = await db
+      .from("unban_forms")
+      .select("*")
+      .eq("status", "payment_pending")
+      .order("updated_at", { ascending: false });
+
+    if (error) throw error;
+
+    const rows = (data || []).map(payment => `
+      <tr>
+        <td>${escapeHTML(payment.player_uid)}</td>
+        <td>${escapeHTML(payment.full_name || "—")}</td>
+        <td>${escapeHTML(payment.payment_utr || "—")}</td>
+        <td>${escapeHTML(payment.region)}</td>
+        <td>${formatDate(payment.updated_at)}</td>
+        <td><button class="primary-btn" onclick="reviewPayment('${payment.id}')">Review</button></td>
+      </tr>
+    `).join("");
+
+    content.innerHTML = `
+      <div class="page-heading">
+        <h1>Payments Awaiting Review</h1>
+        <p>Manually verify customer payment details.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Pending Payments (${(data || []).length})</h2>
+          <button onclick="loadPayments()">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Player UID</th>
+                <th>Full Name</th>
+                <th>UTR</th>
+                <th>Region</th>
+                <th>Submitted</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows || `<tr><td colspan="6">No matching records found.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    content.innerHTML = `<div class="error-box">Payment loading error: ${escapeHTML(error.message)}</div>`;
+  }
+}
+
+async function reviewPayment(id) {
+  try {
+    const { data, error } = await db
+      .from("unban_forms")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw error;
+
+    $("modalRoot").innerHTML = `
+      <div class="modal-backdrop" onclick="if(event.target===this)closeModal()">
+        <div class="modal">
+          <div class="modal-header">
+            <h2>Review Payment</h2>
+            <button onclick="closeModal()">×</button>
+          </div>
+
+          <div class="detail-list">
+            <div class="detail-row"><span>Player UID</span><strong>${escapeHTML(data.player_uid)}</strong></div>
+            <div class="detail-row"><span>Full Name</span><strong>${escapeHTML(data.full_name || "—")}</strong></div>
+            <div class="detail-row"><span>UTR</span><strong>${escapeHTML(data.payment_utr || "—")}</strong></div>
+            <div class="detail-row"><span>Amount</span><strong>₹399</strong></div>
+            <div class="detail-row"><span>Current Status</span><strong>${escapeHTML(data.status)}</strong></div>
+          </div>
+
+          <p class="warning-text">Verify the payment in your UPI/bank account before approving. A UTR alone is not proof of payment.</p>
+
+          <div class="modal-actions">
+            <button class="primary-btn" onclick="approvePayment('${data.id}')">Verify Payment</button>
+            <button class="danger-btn" onclick="rejectPayment('${data.id}')">Reject</button>
+          </div>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    toast("Unable to open payment: " + error.message, "error");
+  }
+}
+
+function makeFinalOrderId() {
+  const bytes = crypto.getRandomValues(new Uint8Array(6));
+  return "NXU-" + Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+
+async function approvePayment(id) {
+  if (!confirm("Have you independently confirmed ₹399 was received?")) return;
+
+  try {
+    const { data: form, error: readError } = await db
+      .from("unban_forms")
+      .select("id,order_id,status")
+      .eq("id", id)
+      .single();
+
+    if (readError) throw readError;
+
+    if (form.status !== "payment_pending") {
+      throw new Error("This payment is no longer pending review.");
+    }
+
+    const finalOrderId = !form.order_id || form.order_id.startsWith("PENDING-")
+      ? makeFinalOrderId()
+      : form.order_id;
+
+    const { data, error } = await db
+      .from("unban_forms")
+      .update({
+        order_id: finalOrderId,
+        status: "payment_verified",
+        payment_verified_by: currentUser.id,
+        payment_verified_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", id)
+      .eq("status", "payment_pending")
+      .select("id,order_id,status")
+      .maybeSingle();
+
+    if (error) throw error;
+    if (!data) throw new Error("No record updated. Check admin permissions or refresh the page.");
+
+    closeModal();
+    toast("Payment verified. Order ID: " + data.order_id);
+    await loadPayments();
+  } catch (error) {
+    toast("Verification failed: " + error.message, "error");
+  }
+}
+
+async function rejectPayment(id) {
+  if (!confirm("Reject this payment submission?")) return;
+
+  try {
+    const { data, error } = await db
+      .from("unban_forms")
+      .update({
+        status: "rejected",
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", id)
+      .eq("status", "payment_pending")
+      .select("id")
+      .maybeSingle();
+
+    if (error) throw error;
+    if (!data) throw new Error("No record updated. Check admin permissions or refresh.");
+
+    closeModal();
+    toast("Payment rejected.");
+    await loadPayments();
+  } catch (error) {
+    toast("Reject failed: " + error.message, "error");
+  }
+}
+
+async function loadTelegram() {
+  const content = $("content");
+  content.innerHTML = `<div class="loading">Loading Telegram events...</div>`;
+
+  try {
+    const { data, error } = await db
+      .from("telegram_events")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(200);
+
+    if (error) throw error;
+
+    const rows = (data || []).map(event => `
+      <tr>
+        <td>${escapeHTML(event.telegram_user_id || "—")}</td>
+        <td>${escapeHTML(event.event_type || "—")}</td>
+        <td>${formatDate(event.created_at)}</td>
+        <td><button onclick="viewTelegramEvent('${event.id}')">View</button></td>
+      </tr>
+    `).join("");
+
+    content.innerHTML = `
+      <div class="page-heading">
+        <h1>Telegram Events</h1>
+        <p>Recent events already recorded in the database.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Recent Events (${(data || []).length})</h2>
+          <button onclick="loadTelegram()">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Telegram User ID</th><th>Event</th><th>Date</th><th>Action</th></tr></thead>
+            <tbody>${rows || `<tr><td colspan="4">No Telegram events recorded yet.</td></tr>`}</tbody>
+          </table>
+        </div>
+        <p class="muted">Payment notifications to your private Telegram channel still require the bot to be added as an administrator and the channel ID to be configured.</p>
+      </div>
+    `;
+  } catch (error) {
+    content.innerHTML = `<div class="error-box">Telegram error: ${escapeHTML(error.message)}</div>`;
+  }
+}
+
+async function viewTelegramEvent(id) {
+  try {
+    const { data, error } = await db
+      .from("telegram_events")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw error;
+
+    $("modalRoot").innerHTML = `
+      <div class="modal-backdrop" onclick="if(event.target===this)closeModal()">
+        <div class="modal">
+          <div class="modal-header">
+            <h2>Telegram Event</h2>
+            <button onclick="closeModal()">×</button>
+          </div>
+          <div class="detail-list">
+            <div class="detail-row"><span>Event</span><strong>${escapeHTML(data.event_type)}</strong></div>
+            <div class="detail-row"><span>User ID</span><strong>${escapeHTML(data.telegram_user_id)}</strong></div>
+            <div class="detail-row"><span>Date</span><strong>${formatDate(data.created_at)}</strong></div>
+          </div>
+          <pre class="json-view">${escapeHTML(JSON.stringify(data.payload || {}, null, 2))}</pre>
+          <button class="secondary-btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    toast("Unable to open event: " + error.message, "error");
+  }
+}
+
+/* SITE SETTINGS */
+
+async function loadSettings() {
+  const content = $("content");
+  content.innerHTML = `<div class="loading">Loading settings...</div>`;
+
+  try {
+    const { data, error } = await db
+      .from("site_settings")
+      .select("key,value,updated_at")
+      .order("key");
+
+    if (error) throw error;
+
+    const settings = {};
+    (data || []).forEach(row => settings[row.key] = row.value);
+
+    const price = settings.license_price_inr ?? 99;
+    const upi = settings.upi_id ?? "jinwoo40054@kphdfc";
+    const support = settings.support_username ?? "@NEXVORA_X";
+    const channel = settings.telegram_channel ?? "https://t.me/+CDLeQTcwWGszNDBl";
+
+    content.innerHTML = `
+      <div class="page-heading">
+        <h1>Site Settings</h1>
+        <p>Update the values used by your website.</p>
+      </div>
+      <div class="panel">
+        <form id="settingsForm">
+          <label>License Price (INR)</label>
+          <input id="settingPrice" type="number" min="1" value="${escapeHTML(price)}" required>
+
+          <label>UPI ID</label>
+          <input id="settingUpi" value="${escapeHTML(upi)}" required>
+
+          <label>Support Username</label>
+          <input id="settingSupport" value="${escapeHTML(support)}" required>
+
+          <label>Telegram Channel URL</label>
+          <input id="settingChannel" type="url" value="${escapeHTML(channel)}" required>
+
+          <button class="primary-btn" type="submit">Save Settings</button>
+        </form>
+      </div>
+    `;
+
+    $("settingsForm").addEventListener("submit", saveSettings);
+  } catch (error) {
+    content.innerHTML = `<div class="error-box">Settings error: ${escapeHTML(error.message)}</div>`;
+  }
+}
+
+async function saveSettings(event) {
+  event.preventDefault();
+
+  const entries = [
+    ["license_price_inr", Number($("settingPrice").value)],
+    ["upi_id", $("settingUpi").value.trim()],
+    ["support_username", $("settingSupport").value.trim()],
+    ["telegram_channel", $("settingChannel").value.trim()]
+  ];
+
+  if (!Number.isFinite(entries[0][1]) || entries[0][1] <= 0) {
+    toast("Enter a valid license price.", "error");
+    return;
+  }
+
+  try {
+    for (const [key, value] of entries) {
+      const { error } = await db.from("site_settings").upsert({
+        key,
+        value: JSON.stringify(value),
+        updated_by: currentUser.id,
+        updated_at: new Date().toISOString()
+      }, { onConflict: "key" });
+
+      if (error) throw error;
+    }
+
+    toast("Settings saved successfully.");
+    await loadSettings();
+  } catch (error) {
+    toast("Settings save failed: " + error.message, "error");
+  }
+}
+
+/* NAVIGATION */
+
+async function showSection(section) {
+  currentSection = section;
+
+  document.querySelectorAll("[data-section]").forEach(item => {
+    item.classList.toggle("active", item.dataset.section === section);
+  });
+
+  const loaders = {
+    dashboard: loadDashboard,
+    licenses: loadLicenses,
+    forms: loadUnbanForms,
+    payments: loadPayments,
+    telegram: loadTelegram,
+    settings: loadSettings
+  };
+
+  if (!loaders[section]) {
+    toast("Unknown section.", "error");
+    return;
+  }
+
+  await loaders[section]();
+}
+
+/* LOGIN + SESSION */
+
+async function checkAdminAccess(user) {
+  const { data, error } = await db
+    .from("admin_allowlist")
+    .select("email")
+    .eq("email", (user.email || "").toLowerCase())
+    .maybeSingle();
+
+  if (error) throw error;
+  if (!data) throw new Error("This account is not authorized as an admin.");
+
+  currentUser = user;
+}
+
+async function showAdminApp() {
+  $("loginView").classList.add("hidden");
+  $("adminApp").classList.remove("hidden");
+  await showSection("dashboard");
+}
+
+async function loginAdmin(event) {
+  event.preventDefault();
+
+  const email = $("loginEmail").value.trim().toLowerCase();
+  const password = $("loginPassword").value;
+
+  const button = $("loginButton");
+  if (button) button.disabled = true;
+
+  try {
+    const { data, error } = await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    await checkAdminAccess(data.user);
+    await showAdminApp();
+    toast("Admin login successful.");
+  } catch (error) {
+    await db.auth.signOut();
+    currentUser = null;
+    toast(error.message || "Login failed.", "error");
+  } finally {
+    if (button) button.disabled = false;
+  }
+}
+
+async function logoutAdmin() {
+  await db.auth.signOut();
+  currentUser = null;
+  $("adminApp").classList.add("hidden");
+  $("loginView").classList.remove("hidden");
+  toast("Logged out.");
+}
+
+async function initializeAdmin() {
+  try {
+    const { data, error } = await db.auth.getSession();
+    if (error) throw error;
+
+    const user = data.session?.user;
+    if (user) {
+      await checkAdminAccess(user);
+      await showAdminApp();
+    } else {
+      $("adminApp").classList.add("hidden");
+      $("loginView").classList.remove("hidden");
+    }
+  } catch (error) {
+    await db.auth.signOut();
+    currentUser = null;
+    $("adminApp").classList.add("hidden");
+    $("loginView").classList.remove("hidden");
+    toast(error.message || "Please log in again.", "error");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = $("loginForm");
+  if (loginForm) loginForm.addEventListener("submit", loginAdmin);
+
+  document.querySelectorAll("[data-section]").forEach(item => {
+    item.addEventListener("click", () => showSection(item.dataset.section));
+  });
+
+  const logoutButton = $("logoutButton");
+  if (logoutButton) logoutButton.addEventListener("click", logoutAdmin);
+
+  initializeAdmin();
+});
+</script>
+</body>
+</html>
+
+  
+    
