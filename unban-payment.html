@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXVORA | Unban Payment</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#fff;background:radial-gradient(circle at top,#32105c,#10051d 55%,#05020b);padding:22px}
+.wrap{max-width:480px;margin:25px auto;background:#160d24;border:1px solid #8739c9;border-radius:20px;padding:25px;box-shadow:0 0 35px #8c2be455}
+h1{text-align:center;color:#d9a4ff;letter-spacing:2px;font-size:25px}
+.sub{text-align:center;color:#bba9ca;font-size:13px}
+.amount{text-align:center;font-size:38px;font-weight:bold;color:#e8c5ff;margin:22px 0}
+.qr{background:#fff;padding:14px;border-radius:12px;width:max-content;margin:20px auto;min-width:190px;min-height:190px;display:flex;align-items:center;justify-content:center}
+.qr img{max-width:100%}
+.upi{text-align:center;color:#d7b9ef;font-size:14px;word-break:break-all}
+button{width:100%;border:0;border-radius:10px;padding:14px;margin-top:13px;font-weight:bold;font-size:15px;cursor:pointer;background:linear-gradient(90deg,#8b2be2,#c04bff);color:white}
+.secondary{background:#342044;border:1px solid #8d50bd}
+input{width:100%;padding:14px;border-radius:9px;border:1px solid #7845a0;background:#0d0715;color:#fff;margin-top:8px;outline:none}
+label{display:block;margin-top:17px;color:#e1c8f4;font-size:14px}
+.hidden{display:none}
+.note{color:#bba9ca;font-size:12px;text-align:center;line-height:1.6;margin-top:18px}
+.error{color:#ff7777;text-align:center;font-size:13px;margin-top:12px}
+.spinner{width:62px;height:62px;border:5px solid #53336c;border-top-color:#d58aff;border-radius:50%;animation:spin 1s linear infinite;margin:30px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+#processing{text-align:center;padding:20px 0}
+#processing h2{color:#dda5ff}
+#result{text-align:center;padding:20px 0}
+.order{font-size:21px;font-weight:bold;color:#e4b5ff;word-break:break-all;margin:20px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>NEXVORA X</h1>
+  <p class="sub">UNBAN APPEAL PAYMENT</p>
+
+  <section id="payment">
+    <div class="amount">₹399</div>
+    <p class="sub">Scan QR code using any UPI app</p>
+    <div class="qr" id="qrcode"></div>
+    <p class="upi">UPI ID: <b>jinwoo40054@kphdfc</b></p>
+    <button id="upiButton">PAY VIA UPI APP</button>
+    <button class="secondary" id="doneButton">DONE</button>
+    <p class="note">Pay exactly ₹399. After completing payment, tap DONE and submit your UTR for verification.</p>
+  </section>
+
+  <section id="utrSection" class="hidden">
+    <h2 style="text-align:center;color:#dda5ff">Payment Details</h2>
+    <label>Your Full Name</label>
+    <input id="fullName" type="text" placeholder="Enter your full name" maxlength="100">
+    <label>UTR</label>
+    <input id="utr" type="text" placeholder="Enter your UTR number" maxlength="50">
+    <button id="verifyButton">VERIFY</button>
+    <p id="error" class="error"></p>
+  </section>
+
+  <section id="processing" class="hidden">
+    <div class="spinner"></div>
+    <h2>PROCESSING</h2>
+    <p class="sub">Please keep this page open.</p>
+  </section>
+
+  <section id="result" class="hidden">
+    <h2 style="color:#c99aff">VERIFICATION COMPLETE</h2>
+    <p class="sub">Your Order ID</p>
+    <div class="order" id="orderId"></div>
+    <button id="copyButton">COPY ORDER ID</button>
+    <button class="secondary" onclick="location.href='my-form.html'">MY FORM</button>
+  </section>
+</div>
+
+<script>
+const API = "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow";
+const UPI = "upi://pay?pa=jinwoo40054@kphdfc&pn=NEXVORA%20UNBAN&am=399&cu=INR&tn=NEXVORA%20UNBAN%20APPEAL";
+const requestId = sessionStorage.getItem("nexvora_unban_request_id");
+
+const payment = document.getElementById("payment");
+const utrSection = document.getElementById("utrSection");
+const processing = document.getElementById("processing");
+const result = document.getElementById("result");
+const errorBox = document.getElementById("error");
+
+if (!requestId) {
+  alert("Your appeal session was not found. Please submit the form again.");
+  location.replace("unban-form.html");
+} else {
+  new QRCode(document.getElementById("qrcode"), {
+    text: UPI,
+    width: 180,
+    height: 180,
+    correctLevel: QRCode.CorrectLevel.H
+  });
+}
+
+document.getElementById("upiButton").onclick = () => {
+  location.href = UPI;
+};
+
+document.getElementById("doneButton").onclick = () => {
+  payment.classList.add("hidden");
+  utrSection.classList.remove("hidden");
+};
+
+document.getElementById("verifyButton").onclick = async () => {
+  const fullName = document.getElementById("fullName").value.trim();
+  const utr = document.getElementById("utr").value.trim();
+
+  if (!fullName || !utr) {
+    errorBox.textContent = "Please enter your full name and UTR.";
+    return;
+  }
+
+  const btn = document.getElementById("verifyButton");
+  btn.disabled = true;
+  btn.textContent = "SUBMITTING...";
+  errorBox.textContent = "";
+
+  try {
+    const response = await fetch(API, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        action: "submit_payment",
+        request_id: requestId,
+        full_name: fullName,
+        utr: utr
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Submission failed");
+    }
+
+    sessionStorage.setItem("nexvora_unban_payment_submitted", "yes");
+    utrSection.classList.add("hidden");
+    processing.classList.remove("hidden");
+    pollStatus();
+  } catch (e) {
+    errorBox.textContent = e.message || "Something went wrong. Please try again.";
+    btn.disabled = false;
+    btn.textContent = "VERIFY";
+  }
+};
+
+let polling = false;
+
+async function pollStatus() {
+  if (polling) return;
+  polling = true;
+
+  while (true) {
+    try {
+      const response = await fetch(API, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+          action: "status",
+          request_id: requestId
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.verified && data.order_id) {
+        processing.classList.add("hidden");
+        result.classList.remove("hidden");
+        document.getElementById("orderId").textContent = data.order_id;
+        sessionStorage.setItem("nexvora_unban_order_id", data.order_id);
+        return;
+      }
+    } catch (e) {
+      // Keep the processing screen active if the network is temporarily unavailable.
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 5000));
+  }
+}
+
+document.getElementById("copyButton").onclick = async () => {
+  const id = document.getElementById("orderId").textContent;
+  try {
+    await navigator.clipboard.writeText(id);
+    document.getElementById("copyButton").textContent = "COPIED!";
+  } catch (e) {
+    window.prompt("Copy your Order ID:", id);
+  }
+};
+
+if (sessionStorage.getItem("nexvora_unban_payment_submitted") === "yes" && requestId) {
+  payment.classList.add("hidden");
+  utrSection.classList.add("hidden");
+  processing.classList.remove("hidden");
+  pollStatus();
+}
+</script>
+</body>
+</html>
