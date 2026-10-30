@@ -2,116 +2,1242 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#020006">
+
 <title>NEXVORA UNBAN — License Payment</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:#05020a;color:#fff;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
-.bg{position:fixed;inset:0;background:radial-gradient(circle at 50% 20%,#31075d 0,transparent 42%),radial-gradient(circle at 90% 90%,#31002d 0,transparent 30%),#05020a;z-index:-1}
-.grid{position:fixed;inset:0;background-image:linear-gradient(#8d35ff0b 1px,transparent 1px),linear-gradient(90deg,#8d35ff0b 1px,transparent 1px);background-size:35px 35px;mask-image:linear-gradient(transparent,#000,transparent);z-index:-1}
-.card{width:min(100%,430px);padding:28px 23px;border:1px solid #a75bff66;border-radius:25px;background:#10091bdc;box-shadow:0 0 45px #8b2bff22,inset 0 0 25px #a020ff08;text-align:center;backdrop-filter:blur(15px);animation:appear .7s ease}
-@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.brand{font-size:13px;letter-spacing:4px;color:#d6aaff;font-weight:bold}
-h1{font-size:30px;letter-spacing:2px;margin:10px 0;background:linear-gradient(90deg,#fff,#c17bff,#fff);background-clip:text;color:transparent}
-.sub{font-size:12px;color:#b9a9c9;line-height:1.6;margin-bottom:20px}
-.amount{font-size:42px;font-weight:900;margin:12px 0 18px;text-shadow:0 0 25px #a83dff55}
-.amount small{font-size:13px;color:#c6b5d5;font-weight:400}
-.qrbox{width:215px;min-height:215px;margin:0 auto 15px;background:#fff;border-radius:16px;padding:12px;display:flex;align-items:center;justify-content:center}
-.qrbox img{width:100%;height:auto;display:block}
-.qr-placeholder{color:#3a214d;font-size:12px;line-height:1.6}
-.upi{background:#08040d;border:1px solid #7540a366;padding:13px;border-radius:12px;margin:14px 0 10px}
-.label{font-size:10px;letter-spacing:2px;color:#9f8bad;margin-bottom:7px}
-.upi-value{font-size:14px;font-weight:bold;overflow-wrap:anywhere}
-button{width:100%;min-height:49px;border-radius:12px;margin-top:11px;border:1px solid #b77aff88;font-weight:bold;letter-spacing:1px;font-size:12px;color:white;cursor:pointer;transition:.2s}
-button:active{transform:scale(.98)}
-.primary{background:linear-gradient(110deg,#7000e8,#a82cff);box-shadow:0 0 22px #8c2aff33}
-.secondary{background:#ffffff08}
-.note{font-size:11px;color:#a99bb5;line-height:1.6;margin-top:15px}
-#message{font-size:12px;min-height:18px;margin-top:12px;color:#e1b9ff}
-@media(max-width:360px){.card{padding:23px 16px}.qrbox{width:190px;min-height:190px}}
-</style>
-</head>
-<body>
-<div class="bg"></div><div class="grid"></div>
-<main class="card">
-  <div class="brand">NEXVORA</div>
-  <h1>LICENSE ACCESS</h1>
-  <p class="sub">Complete the ₹99 license payment to request your access key.</p>
-
-  <div class="amount">₹99 <small>INR</small></div>
-
-  <div class="qrbox" id="qrbox">
-    <div class="qr-placeholder">QR CODE<br>Generating payment QR…</div>
-  </div>
-
-  <div class="upi">
-    <div class="label">PAYMENT UPI ID</div>
-    <div class="upi-value" id="upi">jinwoo40054@kphdfc</div>
-  </div>
-
-  <button class="secondary" onclick="copyUpi()">COPY UPI ID</button>
-  <button class="primary" onclick="payViaUpi()">PAY VIA UPI APP</button>
-  <button class="secondary" onclick="goBack()">BACK</button>
-  <button class="primary" onclick="continueToBot()">CONTINUE</button>
-
-  <div id="message"></div>
-  <p class="note">Pay exactly ₹99. Keep your transaction reference for manual verification. Payment is not automatically confirmed by this page.</p>
-</main>
-
-<script>
-const UPI_ID = "jinwoo40054@kphdfc";
-const AMOUNT = "99";
-const PAYEE = "NEXVORA UNBAN";
-
-function paymentLink(){
-  const p = new URLSearchParams({
-    pa: UPI_ID,
-    pn: PAYEE,
-    am: AMOUNT,
-    cu: "INR",
-    tn: "NEXVORA UNBAN License"
-  });
-  return "upi://pay?" + p.toString();
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-function showQr(){
-  const link = paymentLink();
-  const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=" + encodeURIComponent(link);
-  const box = document.getElementById("qrbox");
-  const img = document.createElement("img");
-  img.alt = "UPI payment QR for ₹99";
-  img.src = qrUrl;
-  img.onerror = () => {
-    box.innerHTML = '<div class="qr-placeholder">QR could not load.<br>Use PAY VIA UPI APP instead.</div>';
-  };
-  box.replaceChildren(img);
+html,body{
+  width:100%;
+  min-height:100%;
+  background:#020006;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-function payViaUpi(){
-  window.location.href = paymentLink();
+body{
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
-async function copyUpi(){
-  const msg = document.getElementById("message");
-  try{
-    await navigator.clipboard.writeText(UPI_ID);
-    msg.textContent = "UPI ID copied.";
-  }catch(e){
-    msg.textContent = "UPI ID: " + UPI_ID;
+/* ================= BACKGROUND ================= */
+
+.bg{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  z-index:-5;
+
+  background:
+    radial-gradient(
+      circle at 50% 38%,
+      rgba(125,0,255,.25),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 5% 85%,
+      rgba(0,200,255,.08),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 95% 85%,
+      rgba(255,0,170,.10),
+      transparent 26%
+    ),
+    #020006;
+}
+
+.bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 10%,
+      rgba(0,0,0,.18) 55%,
+      rgba(0,0,0,.78) 100%
+    );
+}
+
+.grid{
+  position:fixed;
+  width:200%;
+  height:180%;
+  left:-50%;
+  top:40%;
+
+  background-image:
+    linear-gradient(
+      rgba(145,40,255,.10) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(145,40,255,.10) 1px,
+      transparent 1px
+    );
+
+  background-size:45px 45px;
+
+  transform:
+    perspective(520px)
+    rotateX(65deg);
+
+  animation:gridMove 10s linear infinite;
+
+  z-index:-4;
+}
+
+@keyframes gridMove{
+  from{
+    transform:
+      perspective(520px)
+      rotateX(65deg)
+      translateY(0);
+  }
+
+  to{
+    transform:
+      perspective(520px)
+      rotateX(65deg)
+      translateY(45px);
   }
 }
 
-function goBack(){
-  window.location.href = "license.html";
+/* ================= ORBS ================= */
+
+.orb{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.38;
+  z-index:-3;
 }
+
+.orb.one{
+  width:280px;
+  height:280px;
+  left:-110px;
+  top:8%;
+  background:#7200ff;
+
+  animation:
+    floatOne 8s ease-in-out infinite alternate;
+}
+
+.orb.two{
+  width:300px;
+  height:300px;
+  right:-110px;
+  bottom:-30px;
+  background:#ff008c;
+
+  animation:
+    floatTwo 9s ease-in-out infinite alternate;
+}
+
+.orb.three{
+  width:190px;
+  height:190px;
+  right:18%;
+  top:-90px;
+  background:#00c8ff;
+
+  animation:
+    floatThree 7s ease-in-out infinite alternate;
+}
+
+@keyframes floatOne{
+  to{
+    transform:
+      translate(65px,40px)
+      scale(1.17);
+  }
+}
+
+@keyframes floatTwo{
+  to{
+    transform:
+      translate(-55px,-45px)
+      scale(1.15);
+  }
+}
+
+@keyframes floatThree{
+  to{
+    transform:
+      translate(-30px,70px)
+      scale(1.2);
+  }
+}
+
+/* ================= PARTICLES ================= */
+
+.particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-2;
+}
+
+.particle{
+  position:absolute;
+  width:2px;
+  height:2px;
+  border-radius:50%;
+
+  background:#dcbcff;
+
+  box-shadow:
+    0 0 7px #a53dff,
+    0 0 16px #8d21ff;
+
+  animation:
+    particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+  0%{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+
+  15%{
+    opacity:1;
+  }
+
+  85%{
+    opacity:.8;
+  }
+
+  100%{
+    transform:translateY(-10vh);
+    opacity:0;
+  }
+}
+
+/* ================= PAGE ================= */
+
+.page{
+  width:100%;
+  min-height:100vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+
+  padding:
+    45px 18px 55px;
+
+  animation:
+    pageIn 1s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes pageIn{
+  from{
+    opacity:0;
+    transform:
+      translateY(25px)
+      scale(.97);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+.content{
+  width:min(100%,560px);
+  text-align:center;
+}
+
+/* ================= TOP STATUS ================= */
+
+.system{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:8px;
+
+  margin-bottom:22px;
+
+  color:#9f91a9;
+
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:4px;
+
+  text-transform:uppercase;
+}
+
+.system-dot{
+  width:6px;
+  height:6px;
+
+  border-radius:50%;
+
+  background:#b14dff;
+
+  box-shadow:
+    0 0 12px #b14dff;
+
+  animation:
+    pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  50%{
+    opacity:.35;
+    transform:scale(.6);
+  }
+}
+
+/* ================= TITLE ================= */
+
+.small-title{
+  color:#bfa9ce;
+
+  font-size:11px;
+  font-weight:700;
+
+  letter-spacing:6px;
+
+  text-transform:uppercase;
+
+  margin-bottom:10px;
+}
+
+.title{
+  font-size:clamp(36px,10vw,58px);
+
+  line-height:.95;
+
+  font-weight:1000;
+
+  letter-spacing:4px;
+
+  background:
+    linear-gradient(
+      115deg,
+      #fff,
+      #d9b4ff,
+      #8c25ff,
+      #fff,
+      #b744ff,
+      #fff
+    );
+
+  background-size:350% auto;
+
+  -webkit-background-clip:text;
+  background-clip:text;
+
+  color:transparent;
+
+  filter:
+    drop-shadow(
+      0 0 9px
+      rgba(154,54,255,.85)
+    )
+    drop-shadow(
+      0 0 30px
+      rgba(113,0,255,.40)
+    );
+
+  animation:
+    titleShine 5s linear infinite;
+}
+
+@keyframes titleShine{
+  to{
+    background-position:
+      350% center;
+  }
+}
+
+.subtitle{
+  margin-top:18px;
+
+  color:#a99bae;
+
+  font-size:10px;
+
+  letter-spacing:2px;
+
+  line-height:1.7;
+
+  text-transform:uppercase;
+}
+
+/* ================= AMOUNT ================= */
+
+.amount{
+  margin-top:25px;
+
+  font-size:48px;
+  line-height:1;
+
+  font-weight:1000;
+
+  letter-spacing:1px;
+
+  text-shadow:
+    0 0 20px
+    rgba(167,55,255,.55);
+}
+
+.amount span{
+  font-size:12px;
+
+  color:#a899b2;
+
+  font-weight:400;
+
+  letter-spacing:2px;
+}
+
+/* ================= DIVIDER ================= */
+
+.divider{
+  width:150px;
+  height:1px;
+
+  margin:25px auto 28px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #9d3dff,
+      #e4c4ff,
+      #9d3dff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 16px #8f28ff;
+}
+
+/* =================================================
+   QR BRANDING
+================================================= */
+
+.qr-section{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* MAIN QR BRAND */
+
+.qr-brand{
+  position:relative;
+
+  margin-bottom:17px;
+
+  font-size:
+    clamp(22px,7vw,34px);
+
+  font-weight:1000;
+
+  letter-spacing:5px;
+
+  text-transform:uppercase;
+
+  background:
+    linear-gradient(
+      110deg,
+      #ffffff,
+      #dcb9ff,
+      #9b31ff,
+      #ffffff,
+      #b94cff,
+      #ffffff
+    );
+
+  background-size:300% auto;
+
+  -webkit-background-clip:text;
+  background-clip:text;
+
+  color:transparent;
+
+  filter:
+    drop-shadow(
+      0 0 7px
+      rgba(159,48,255,.9)
+    )
+    drop-shadow(
+      0 0 24px
+      rgba(129,0,255,.45)
+    );
+
+  animation:
+    qrBrandShine 4s linear infinite,
+    qrBrandPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes qrBrandShine{
+  to{
+    background-position:
+      300% center;
+  }
+}
+
+@keyframes qrBrandPulse{
+  from{
+    transform:scale(1);
+  }
+
+  to{
+    transform:scale(1.025);
+  }
+}
+
+/* small glowing line below brand */
+
+.qr-brand-line{
+  width:115px;
+  height:2px;
+
+  margin-top:-9px;
+  margin-bottom:18px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #b044ff,
+      #fff,
+      #b044ff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 12px #a22dff;
+}
+
+/* ================= QR BOX ================= */
+
+.qr-box{
+  width:230px;
+  height:230px;
+
+  padding:12px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#fff;
+
+  border-radius:18px;
+
+  box-shadow:
+    0 0 0 1px
+      rgba(192,118,255,.45),
+    0 0 30px
+      rgba(132,28,255,.35),
+    0 0 75px
+      rgba(113,0,255,.16);
+
+  position:relative;
+}
+
+.qr-box::before{
+  content:"";
+
+  position:absolute;
+  inset:-5px;
+
+  border-radius:21px;
+
+  border:1px solid
+    rgba(168,73,255,.35);
+
+  pointer-events:none;
+
+  animation:
+    qrGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes qrGlow{
+  from{
+    opacity:.35;
+  }
+
+  to{
+    opacity:1;
+    box-shadow:
+      0 0 20px
+      rgba(155,55,255,.25);
+  }
+}
+
+.qr-box img{
+  width:100%;
+  height:100%;
+
+  display:block;
+
+  object-fit:contain;
+}
+
+.qr-placeholder{
+  color:#3b234b;
+  font-size:11px;
+  line-height:1.6;
+}
+
+/* ================= SCAN TEXT ================= */
+
+.scan-text{
+  margin-top:17px;
+
+  color:#9e91a7;
+
+  font-size:9px;
+
+  letter-spacing:3px;
+
+  text-transform:uppercase;
+}
+
+.scan-dot{
+  display:inline-block;
+
+  width:5px;
+  height:5px;
+
+  margin-right:6px;
+
+  border-radius:50%;
+
+  background:#a83cff;
+
+  box-shadow:
+    0 0 8px #a83cff;
+
+  animation:
+    pulse 1.2s infinite;
+}
+
+/* ================= UPI ================= */
+
+.upi{
+  width:min(100%,430px);
+
+  margin:25px auto 0;
+
+  padding:15px;
+
+  border-top:1px solid
+    rgba(168,83,255,.22);
+
+  border-bottom:1px solid
+    rgba(168,83,255,.22);
+
+  background:
+    rgba(10,3,18,.35);
+}
+
+.label{
+  color:#81768b;
+
+  font-size:8px;
+
+  letter-spacing:3px;
+
+  margin-bottom:8px;
+
+  text-transform:uppercase;
+}
+
+.upi-value{
+  color:#e6d9ed;
+
+  font-size:14px;
+
+  font-weight:800;
+
+  letter-spacing:.5px;
+
+  overflow-wrap:anywhere;
+
+  text-shadow:
+    0 0 10px
+    rgba(187,112,255,.2);
+}
+
+/* ================= BUTTONS ================= */
+
+button{
+  width:min(100%,430px);
+
+  min-height:54px;
+
+  border-radius:15px;
+
+  cursor:pointer;
+
+  color:#fff;
+
+  font-size:11px;
+
+  font-weight:900;
+
+  letter-spacing:3px;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    opacity .25s ease;
+}
+
+.copy{
+  margin-top:15px;
+
+  border:1px solid
+    rgba(184,105,255,.35);
+
+  background:
+    rgba(255,255,255,.025);
+}
+
+.pay{
+  position:relative;
+
+  overflow:hidden;
+
+  margin-top:11px;
+
+  border:1px solid
+    rgba(221,170,255,.7);
+
+  background:
+    linear-gradient(
+      110deg,
+      #7100ff,
+      #a900ff
+    );
+
+  box-shadow:
+    0 0 22px
+    rgba(139,35,255,.45);
+}
+
+.pay::before{
+  content:"";
+
+  position:absolute;
+
+  width:55%;
+  height:100%;
+
+  left:-100%;
+  top:0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.4),
+      transparent
+    );
+
+  transform:
+    skewX(-22deg);
+
+  animation:
+    scan 3s infinite;
+}
+
+.pay span{
+  position:relative;
+  z-index:2;
+}
+
+.continue{
+  margin-top:11px;
+
+  border:1px solid
+    rgba(184,105,255,.35);
+
+  background:
+    rgba(126,0,255,.12);
+}
+
+.back{
+  width:auto;
+
+  min-height:auto;
+
+  margin-top:21px;
+
+  padding:8px 14px;
+
+  border:0;
+
+  background:transparent;
+
+  color:#64596c;
+
+  font-size:9px;
+
+  letter-spacing:3px;
+}
+
+button:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 0 28px
+    rgba(157,45,255,.45);
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+/* ================= MESSAGE ================= */
+
+.message{
+  min-height:20px;
+
+  margin-top:16px;
+
+  color:#c6a9d9;
+
+  font-size:11px;
+
+  letter-spacing:.5px;
+}
+
+.message.success{
+  color:#baffdf;
+}
+
+.message.error{
+  color:#ff9ed8;
+}
+
+/* ================= NOTE ================= */
+
+.note{
+  max-width:430px;
+
+  margin:16px auto 0;
+
+  color:#665c6d;
+
+  font-size:9px;
+
+  line-height:1.7;
+
+  letter-spacing:.4px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:500px){
+
+  .page{
+    padding:
+      30px 15px 45px;
+  }
+
+  .system{
+    margin-bottom:18px;
+  }
+
+  .amount{
+    font-size:43px;
+  }
+
+  .qr-brand{
+    letter-spacing:4px;
+  }
+
+  .qr-box{
+    width:215px;
+    height:215px;
+  }
+
+  button{
+    min-height:52px;
+  }
+}
+
+@media(max-height:700px){
+
+  .page{
+    padding-top:25px;
+  }
+
+  .content{
+    transform:scale(.92);
+    transform-origin:top center;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+
+<div class="bg"></div>
+<div class="grid"></div>
+
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="orb three"></div>
+
+<div class="particles" id="particles"></div>
+
+
+<!-- PAYMENT PAGE -->
+
+<main class="page">
+
+  <section class="content">
+
+    <div class="system">
+      <span class="system-dot"></span>
+      SECURE PAYMENT SYSTEM
+    </div>
+
+    <div class="small-title">
+      LICENSE ACCESS
+    </div>
+
+    <div class="title">
+      NEXVORA
+    </div>
+
+    <div class="subtitle">
+      Complete the license payment to request
+      your NEXVORA UNBAN access key.
+    </div>
+
+    <div class="amount">
+      ₹99 <span>INR</span>
+    </div>
+
+    <div class="divider"></div>
+
+
+    <!-- QR -->
+
+    <div class="qr-section">
+
+      <div class="qr-brand">
+        NEXVORA UNBAN
+      </div>
+
+      <div class="qr-brand-line"></div>
+
+      <div class="qr-box" id="qrbox">
+
+        <div class="qr-placeholder">
+          GENERATING<br>
+          PAYMENT QR...
+        </div>
+
+      </div>
+
+      <div class="scan-text">
+        <span class="scan-dot"></span>
+        SCAN TO PAY ₹99
+      </div>
+
+    </div>
+
+
+    <!-- UPI -->
+
+    <div class="upi">
+
+      <div class="label">
+        PAYMENT UPI ID
+      </div>
+
+      <div
+        class="upi-value"
+        id="upi"
+      >
+        jinwoo40054@kphdfc
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <button
+      class="copy"
+      onclick="copyUpi()"
+    >
+      COPY UPI ID
+    </button>
+
+    <button
+      class="pay"
+      onclick="payViaUpi()"
+    >
+      <span>PAY VIA UPI APP</span>
+    </button>
+
+    <button
+      class="continue"
+      onclick="continueToBot()"
+    >
+      CONTINUE
+    </button>
+
+
+    <div
+      class="message"
+      id="message"
+    ></div>
+
+
+    <button
+      class="back"
+      onclick="goBack()"
+    >
+      ← BACK
+    </button>
+
+
+    <p class="note">
+      Pay exactly ₹99. Keep your transaction reference
+      for manual verification. Payment is not automatically
+      confirmed by this page.
+    </p>
+
+  </section>
+
+</main>
+
+
+<script>
+
+/* ================= SETTINGS ================= */
+
+const UPI_ID =
+  "jinwoo40054@kphdfc";
+
+const AMOUNT =
+  "99";
+
+const PAYEE =
+  "NEXVORA UNBAN";
+
+
+/* ================= PARTICLES ================= */
+
+const particleBox =
+  document.getElementById("particles");
+
+const particleCount =
+  window.innerWidth < 600
+    ? 35
+    : 60;
+
+for(let i=0;i<particleCount;i++){
+
+  const p =
+    document.createElement("span");
+
+  p.className =
+    "particle";
+
+  p.style.left =
+    Math.random()*100+"%";
+
+  p.style.animationDuration =
+    (5+Math.random()*9)+"s";
+
+  p.style.animationDelay =
+    (Math.random()*8)+"s";
+
+  const size =
+    (1+Math.random()*2)+"px";
+
+  p.style.width=size;
+  p.style.height=size;
+
+  particleBox.appendChild(p);
+}
+
+
+/* ================= UPI LINK ================= */
+
+function paymentLink(){
+
+  const params =
+    new URLSearchParams({
+
+      pa:UPI_ID,
+
+      pn:PAYEE,
+
+      am:AMOUNT,
+
+      cu:"INR",
+
+      tn:"NEXVORA UNBAN License"
+
+    });
+
+  return "upi://pay?" +
+    params.toString();
+}
+
+
+/* ================= QR ================= */
+
+function showQr(){
+
+  const link =
+    paymentLink();
+
+  const qrUrl =
+    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
+    +
+    encodeURIComponent(link);
+
+  const box =
+    document.getElementById("qrbox");
+
+  const img =
+    document.createElement("img");
+
+  img.alt =
+    "NEXVORA UNBAN ₹99 UPI Payment QR";
+
+  img.src =
+    qrUrl;
+
+  img.onload=()=>{
+
+    box.replaceChildren(img);
+
+  };
+
+  img.onerror=()=>{
+
+    box.innerHTML =
+      `
+      <div class="qr-placeholder">
+        QR COULD NOT LOAD
+        <br><br>
+        USE PAY VIA UPI APP
+      </div>
+      `;
+
+  };
+
+  box.replaceChildren(img);
+}
+
+
+/* ================= PAY ================= */
+
+function payViaUpi(){
+
+  window.location.href =
+    paymentLink();
+
+}
+
+
+/* ================= COPY ================= */
+
+async function copyUpi(){
+
+  const message =
+    document.getElementById("message");
+
+  try{
+
+    await navigator.clipboard
+      .writeText(UPI_ID);
+
+    message.textContent =
+      "UPI ID copied successfully.";
+
+    message.className =
+      "message success";
+
+  }catch(error){
+
+    message.textContent =
+      "UPI ID: " + UPI_ID;
+
+    message.className =
+      "message";
+
+  }
+
+}
+
+
+/* ================= CONTINUE ================= */
 
 function continueToBot(){
-  // Replace with your real Telegram bot link after the bot is created.
-  document.getElementById("message").textContent =
-    "Telegram bot will be connected after it is configured. Save your payment reference.";
+
+  const message =
+    document.getElementById("message");
+
+  /*
+    Telegram bot connection will be added
+    after the real bot is created.
+  */
+
+  message.textContent =
+    "Payment reference saved? Telegram verification will be connected next.";
+
+  message.className =
+    "message";
+
 }
 
+
+/* ================= BACK ================= */
+
+function goBack(){
+
+  window.location.href =
+    "license.html";
+
+}
+
+
+/* ================= START ================= */
+
 showQr();
+
 </script>
+
 </body>
-    </html>
+</html>
