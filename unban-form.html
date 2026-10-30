@@ -54,12 +54,30 @@ input[type=date]{color-scheme:dark}
 .policy label{margin:0;font-size:10px;line-height:1.8;color:#c6b8d1}
 button{width:100%;height:54px;margin-top:22px;border:1px solid #c38bff77;border-radius:12px;background:linear-gradient(110deg,#7000e8,#a52aff);color:white;font-size:11px;font-weight:900;letter-spacing:3px;cursor:pointer;box-shadow:0 0 22px #8b2bff35;transition:.25s}
 button:hover{transform:translateY(-3px);box-shadow:0 0 30px #922dff66}
-button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
 #message{margin-top:15px;min-height:20px;font-size:11px;color:#e0baff;line-height:1.7;text-align:center;overflow-wrap:anywhere}
 #message.success{color:#9dffca}
 #message.error{color:#ff9cba}
 .disclaimer{font-size:10px;color:#93859e;line-height:1.8;margin-top:23px;text-align:center}
-@media(max-width:480px){body{padding:15px 14px 40px}.row{grid-template-columns:1fr;gap:0}.heading{padding-top:30px}header{align-items:center}.brand{font-size:15px}}
+.stage{margin-top:25px;padding:24px;border:1px solid #a65cff66;border-radius:18px;background:linear-gradient(145deg,#160b25ed,#090511ed);box-shadow:0 0 35px #8b2bff28;animation:pageIn .55s ease both}
+.stage h2{text-align:center;color:#dfb7ff;font-size:21px;margin-bottom:9px;letter-spacing:1px}
+.stage-sub{text-align:center;color:#a997b9;font-size:11px;line-height:1.8;margin-bottom:20px}
+.review-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #a65cff28;font-size:12px}
+.review-row span:first-child{color:#a997b9}
+.review-row span:last-child{color:#f0e2ff;text-align:right;overflow-wrap:anywhere}
+.spinner{width:54px;height:54px;border:4px solid #53336c;border-top-color:#d58aff;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.confirm-box{padding:17px;border:1px solid #a65cff44;border-radius:13px;background:#ffffff06;margin-top:12px}
+.confirm-label{font-size:10px;color:#a997b9;letter-spacing:2px}
+.confirm-value{font-size:19px;font-weight:800;color:#fff;margin-top:8px;overflow-wrap:anywhere}
+@media(max-width:480px){
+ body{padding:15px 14px 40px}
+ .row{grid-template-columns:1fr;gap:0}
+ .heading{padding-top:30px}
+ header{align-items:center}
+ .brand{font-size:15px}
+ .stage{padding:19px}
+}
 </style>
 </head>
 
@@ -159,7 +177,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none}
     </label>
   </div>
 
-  <button type="submit" id="submitBtn">SUBMIT APPEAL REQUEST</button>
+  <button type="submit" id="submitBtn" disabled>PROCEED</button>
   <div id="message" role="status" aria-live="polite"></div>
 </form>
 
@@ -167,177 +185,292 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none}
   INDEPENDENT APPEAL REQUEST SERVICE · NO UNBAN GUARANTEE.
   Never share your password or account access token.
 </p>
+
+<section id="stage" class="stage" hidden aria-live="polite"></section>
 </main>
-
-
+  
 <script>
-const particleBox=document.getElementById("particles");
-const particleCount=window.innerWidth<600?35:60;
+/* NEXVORA UNBAN — FORM FLOW */
 
-for(let i=0;i<particleCount;i++){
-  const p=document.createElement("span");
-  p.className="particle";
-  p.style.left=Math.random()*100+"%";
-  p.style.animationDuration=(5+Math.random()*9)+"s";
-  p.style.animationDelay=(Math.random()*8)+"s";
-  const size=(1+Math.random()*2)+"px";
-  p.style.width=size;
-  p.style.height=size;
+const particleBox = document.getElementById("particles");
+const particleCount = window.innerWidth < 600 ? 35 : 60;
+
+for (let i = 0; i < particleCount; i++) {
+  const p = document.createElement("span");
+  p.className = "particle";
+  p.style.left = Math.random() * 100 + "%";
+  p.style.animationDuration = (5 + Math.random() * 9) + "s";
+  p.style.animationDelay = (Math.random() * 8) + "s";
+
+  const size = (1 + Math.random() * 2) + "px";
+  p.style.width = size;
+  p.style.height = size;
+
   particleBox.appendChild(p);
 }
 
-const API="https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow";
-const form=document.getElementById("appealForm");
-const submitBtn=document.getElementById("submitBtn");
-const message=document.getElementById("message");
+const API = "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow";
 
-const reviewStyle=document.createElement("style");
-reviewStyle.textContent=`
-.review-panel{margin-top:25px;padding:22px;border:1px solid #a65cff66;border-radius:16px;background:#10091bdd;box-shadow:0 0 30px #8b2bff25}
-.review-panel h2{text-align:center;color:#dfb7ff;font-size:21px;margin-bottom:8px}
-.review-sub{text-align:center;color:#a997b9;font-size:11px;margin-bottom:20px}
-.review-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #a65cff28;font-size:12px}
-.review-row span:first-child{color:#a997b9}
-.review-row span:last-child{color:#f0e2ff;text-align:right;overflow-wrap:anywhere}
-.review-loading{text-align:center;padding:55px 15px;color:#d9b5ff}
-.review-spinner{width:55px;height:55px;border:4px solid #53336c;border-top-color:#d58aff;border-radius:50%;animation:reviewSpin 1s linear infinite;margin:0 auto 22px}
-@keyframes reviewSpin{to{transform:rotate(360deg)}}
-.review-panel .continue-btn{margin-top:22px}
-`;
-document.head.appendChild(reviewStyle);
+const form = document.getElementById("appealForm");
+const submitBtn = document.getElementById("submitBtn");
+const message = document.getElementById("message");
+const stage = document.getElementById("stage");
 
-const review=document.createElement("section");
-review.id="reviewPanel";
-review.className="review-panel";
-review.style.display="none";
-form.insertAdjacentElement("afterend",review);
+const requiredFields = [...form.querySelectorAll("[required]")];
 
-function addReviewRow(label,value){
-  const row=document.createElement("div");
-  row.className="review-row";
-  const left=document.createElement("span");
-  const right=document.createElement("span");
-  left.textContent=label;
-  right.textContent=value||"Not provided";
-  row.append(left,right);
-  review.appendChild(row);
+/* PROCEED tabhi enable hoga jab saare required fields valid hon */
+function refreshProceed() {
+  const allValid = requiredFields.every(el => {
+    if (el.type === "checkbox") return el.checked;
+    return el.checkValidity() && String(el.value).trim() !== "";
+  });
+
+  submitBtn.disabled = !allValid;
 }
 
-form.addEventListener("submit",async function(event){
+requiredFields.forEach(el => {
+  el.addEventListener("input", refreshProceed);
+  el.addEventListener("change", refreshProceed);
+});
+
+function showStage() {
+  form.hidden = true;
+  document.querySelector(".heading").hidden = true;
+  document.querySelector(".disclaimer").hidden = true;
+  stage.hidden = false;
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function addRow(label, value) {
+  const row = document.createElement("div");
+  row.className = "review-row";
+
+  const left = document.createElement("span");
+  const right = document.createElement("span");
+
+  left.textContent = label;
+  right.textContent = value || "Not provided";
+
+  row.append(left, right);
+  stage.appendChild(row);
+}
+
+function addStageButton(label, handler) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = label;
+  button.addEventListener("click", handler);
+
+  stage.appendChild(button);
+  return button;
+}
+
+function showLoading(title, subtitle) {
+  stage.innerHTML = `
+    <div class="spinner"></div>
+    <h2>${title}</h2>
+    <p class="stage-sub">${subtitle}</p>
+  `;
+}
+
+/* Form submission */
+form.addEventListener("submit", async function(event) {
   event.preventDefault();
-  message.className="";
-  message.textContent="";
 
-  if(!form.reportValidity())return;
+  message.className = "";
+  message.textContent = "";
 
-  const file=document.getElementById("screenshot").files[0];
+  if (!form.reportValidity() || submitBtn.disabled) return;
 
-  if(file){
-    if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
-      message.className="error";
-      message.textContent="Please select a PNG, JPG or WEBP image.";
+  const file = document.getElementById("screenshot").files[0];
+
+  if (file) {
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+      message.className = "error";
+      message.textContent = "Please select a PNG, JPG or WEBP image.";
       return;
     }
-    if(file.size>5*1024*1024){
-      message.className="error";
-      message.textContent="Screenshot must be 5 MB or smaller.";
+
+    if (file.size > 5 * 1024 * 1024) {
+      message.className = "error";
+      message.textContent = "Screenshot must be 5 MB or smaller.";
       return;
     }
   }
 
-  const appeal={
-    player_uid:document.getElementById("uid").value.trim(),
-    id_level:document.getElementById("level").value.trim(),
-    region:document.getElementById("region").value,
-    game_name:document.getElementById("gameName").value.trim(),
-    device:document.getElementById("device").value,
-    ban_type:document.getElementById("banType").value,
-    ban_date:document.getElementById("banDate").value||null,
-    policy_accepted:true
+  const appeal = {
+    player_uid: document.getElementById("uid").value.trim(),
+    id_level: document.getElementById("level").value.trim(),
+    region: document.getElementById("region").value,
+    game_name: document.getElementById("gameName").value.trim(),
+    device: document.getElementById("device").value,
+    ban_type: document.getElementById("banType").value,
+    ban_date: document.getElementById("banDate").value || null,
+    policy_accepted: true
   };
 
-  submitBtn.disabled=true;
-  submitBtn.textContent="PREPARING REQUEST...";
-  message.textContent="Please wait while your appeal details are prepared.";
+  submitBtn.disabled = true;
+  submitBtn.textContent = "PREPARING REQUEST...";
+  message.textContent = "Please wait while your appeal details are prepared.";
 
-  try{
-    const response=await fetch(API,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        action:"create",
-        form:appeal
+  try {
+    const response = await fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        action: "create",
+        form: appeal
       })
     });
 
-    const data=await response.json();
+    const data = await response.json();
 
-    if(!response.ok||!data.success||!data.request_id){
-      throw new Error(data.error||"Could not create your appeal request.");
+    if (!response.ok || !data.success || !data.request_id) {
+      throw new Error(data.error || "Could not create your appeal request.");
     }
 
-    sessionStorage.setItem("nexvora_unban_request_id",data.request_id);
+    sessionStorage.setItem("nexvora_unban_request_id", data.request_id);
     sessionStorage.removeItem("nexvora_unban_payment_submitted");
     sessionStorage.removeItem("nexvora_unban_order_id");
-    sessionStorage.setItem("nexvora_unban_review_data",JSON.stringify(appeal));
+    sessionStorage.setItem("nexvora_unban_review_data", JSON.stringify(appeal));
 
-    form.style.display="none";
-    document.querySelector(".heading").style.display="none";
-    message.style.display="none";
+    showStage();
+    showLoading(
+      "PREPARING YOUR REQUEST",
+      "Your details are being arranged for review."
+    );
 
-    review.style.display="block";
-    review.innerHTML=`
-      <div class="review-loading">
-        <div class="review-spinner"></div>
-        <h2>PREPARING YOUR REQUEST</h2>
-        <p class="review-sub">Please wait...</p>
-      </div>
-    `;
+    setTimeout(() => {
+      stage.innerHTML = `
+        <h2>REVIEW YOUR DETAILS</h2>
+        <p class="stage-sub">
+          Check every detail carefully before continuing.
+        </p>
+      `;
 
-    setTimeout(()=>{
-      review.innerHTML="";
-      const title=document.createElement("h2");
-      title.textContent="REVIEW YOUR DETAILS";
-      review.appendChild(title);
+      addRow("PLAYER UID", appeal.player_uid);
+      addRow("ID LEVEL", appeal.id_level);
+      addRow("REGION", appeal.region);
+      addRow("GAME NAME", appeal.game_name);
+      addRow("DEVICE", appeal.device);
+      addRow(
+        "BAN TYPE",
+        appeal.ban_type === "permanent"
+          ? "Permanent Ban"
+          : "Temporary Ban"
+      );
+      addRow("BAN DATE", appeal.ban_date || "Not provided");
+      addRow("SCREENSHOT", file ? file.name : "Not attached");
 
-      const subtitle=document.createElement("p");
-      subtitle.className="review-sub";
-      subtitle.textContent="Please check all information before continuing.";
-      review.appendChild(subtitle);
+      const note = document.createElement("p");
+      note.className = "hint";
+      note.style.marginTop = "18px";
+      note.textContent =
+        "Please confirm the Player UID and Game Name on the next screen.";
 
-      addReviewRow("PLAYER UID",appeal.player_uid);
-      addReviewRow("ID LEVEL",appeal.id_level);
-      addReviewRow("REGION",appeal.region);
-      addReviewRow("GAME NAME",appeal.game_name);
-      addReviewRow("DEVICE",appeal.device);
-      addReviewRow("BAN TYPE",appeal.ban_type==="permanent"?"Permanent Ban":"Temporary Ban");
-      addReviewRow("BAN DATE",appeal.ban_date||"Not provided");
-      addReviewRow("SCREENSHOT",file?file.name:"Not attached");
+      stage.appendChild(note);
 
-      const note=document.createElement("p");
-      note.className="hint";
-      note.style.marginTop="18px";
-      note.textContent="After checking your details, continue to the ₹399 payment page.";
-      review.appendChild(note);
+      addStageButton("CONTINUE TO PAYMENT", showAccountConfirm);
 
-      const continueBtn=document.createElement("button");
-      continueBtn.className="continue-btn";
-      continueBtn.textContent="CONTINUE TO PAYMENT";
-      continueBtn.onclick=()=>{
-        location.href="unban-payment.html";
-      };
-      review.appendChild(continueBtn);
+    }, 1100);
 
-    },1300);
+  } catch (error) {
+    message.className = "error";
+    message.textContent =
+      error.message || "Network error. Please try again.";
 
-  }catch(error){
-    message.style.display="block";
-    message.className="error";
-    message.textContent=error.message||"Network error. Please try again.";
-    submitBtn.disabled=false;
-    submitBtn.textContent="SUBMIT APPEAL REQUEST";
+    submitBtn.disabled = false;
+    submitBtn.textContent = "PROCEED";
+    refreshProceed();
   }
 });
+
+/* UID aur Game Name confirmation screen */
+function showAccountConfirm() {
+  const appeal = JSON.parse(
+    sessionStorage.getItem("nexvora_unban_review_data") || "{}"
+  );
+
+  stage.innerHTML = `
+    <h2>CONFIRM YOUR GAME ACCOUNT</h2>
+    <p class="stage-sub">
+      Make sure these details belong to the account you want to appeal.
+    </p>
+  `;
+
+  const uidBox = document.createElement("div");
+  uidBox.className = "confirm-box";
+  uidBox.innerHTML = `
+    <div class="confirm-label">PLAYER UID</div>
+    <div class="confirm-value"></div>
+  `;
+  uidBox.querySelector(".confirm-value").textContent =
+    appeal.player_uid || "—";
+
+  stage.appendChild(uidBox);
+
+  const nameBox = document.createElement("div");
+  nameBox.className = "confirm-box";
+  nameBox.innerHTML = `
+    <div class="confirm-label">GAME NAME</div>
+    <div class="confirm-value"></div>
+  `;
+  nameBox.querySelector(".confirm-value").textContent =
+    appeal.game_name || "—";
+
+  stage.appendChild(nameBox);
+
+  const note = document.createElement("p");
+  note.className = "hint";
+  note.style.marginTop = "16px";
+  note.textContent =
+    "The next page contains the ₹399 payment options.";
+
+  stage.appendChild(note);
+
+  addStageButton("SHOW PAYMENT PAGE", function() {
+    window.location.href = "unban-payment.html";
+  });
+}
+
+/* Initial button state */
+refreshProceed();
+</script>
+</body>
+</html>
+
+<script>
+/* FINAL SAFETY CHECK */
+
+(function () {
+  const form = document.getElementById("appealForm");
+  const stage = document.getElementById("stage");
+  const button = document.getElementById("submitBtn");
+
+  if (!form || !stage || !button) {
+    console.error("NEXVORA form setup incomplete.");
+    return;
+  }
+
+  // Prevent accidental double submission.
+  form.addEventListener("submit", function () {
+    if (button.dataset.submitting === "true") return;
+    button.dataset.submitting = "true";
+  }, true);
+
+  // Restore button state if browser returns to this page.
+  window.addEventListener("pageshow", function () {
+    if (!form.hidden) {
+      button.dataset.submitting = "false";
+    }
+  });
+})();
 </script>
 </body>
 </html>
