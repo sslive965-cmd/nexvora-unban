@@ -98,6 +98,15 @@ h1{font-size:clamp(27px,6vw,43px);letter-spacing:2px;margin:13px 0;background:li
  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
 </style>
+
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<meta name="application-name" content="NEXVORA UNBAN">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020006">
 </head>
 
 <body>
@@ -325,6 +334,16 @@ $("newLookup").addEventListener("click",()=>{
 });
 
 window.addEventListener("beforeunload",stopTimer);
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("/service-worker.js").catch(function (error) {
+      console.warn("NEXVORA UNBAN app setup:", error);
+    });
+  });
+}
 </script>
 </body>
 </html>

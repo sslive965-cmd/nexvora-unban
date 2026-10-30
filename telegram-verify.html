@@ -16,6 +16,15 @@
 .upload{margin-top:24px;border-top:1px solid rgba(255,255,255,.07);padding-top:24px}label{display:block;font-size:10px;color:#a69bad;letter-spacing:1.5px;margin-bottom:8px}input[type=text]{width:100%;height:48px;border:1px solid rgba(168,104,255,.25);border-radius:11px;background:#08050e;color:#fff;padding:0 14px;outline:none}.file{border:1px dashed rgba(168,104,255,.38);border-radius:12px;padding:18px;text-align:center;color:#9f94aa;font-size:11px;cursor:pointer;background:rgba(119,44,255,.025)}.file input{display:none}.file strong{display:block;color:#e6dcf0;margin-bottom:5px}.actions{display:flex;gap:10px;margin-top:18px}.primary,.back{flex:1;height:48px;border-radius:11px;cursor:pointer;font-size:10px;font-weight:900;letter-spacing:1.5px}.primary{border:1px solid #914dff;background:linear-gradient(110deg,#5517c9,#8c31ff);color:#fff;box-shadow:0 0 25px rgba(119,38,255,.25)}.back{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);color:#bcb1c7}.note{margin-top:16px;text-align:center;font-size:10px;line-height:1.6;color:#716878}.notice{display:none;margin-top:15px;border:1px solid rgba(255,185,74,.22);background:rgba(255,170,50,.05);padding:12px;border-radius:10px;color:#d8c8a8;font-size:11px;line-height:1.5;text-align:center}footer{margin-top:30px;text-align:center;color:#514858;font-size:9px;letter-spacing:1px}
 @media(max-width:560px){.panel{padding:16px}.item{align-items:flex-start}.join{padding:8px 9px}.actions{flex-direction:column}.top{margin-bottom:28px}}
 </style>
+
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<meta name="application-name" content="NEXVORA UNBAN">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020006">
 </head>
 <body>
 <div id="bg"><div class="grid"></div><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
@@ -50,6 +59,16 @@ function fileSelected(){const f=document.getElementById('shot').files[0];if(!f)r
 function showNotice(msg){const n=document.getElementById('notice');n.style.display='block';n.textContent=msg}
 function submitVerification(){const utr=document.getElementById('utr').value.trim();const shot=document.getElementById('shot').files[0];if(joined.size<6){showNotice('Please join all 5 required channels and the group first. Telegram bot membership verification will be enabled after bot integration.');return}if(!utr){showNotice('Please enter your payment UTR / transaction reference.');return}if(!shot){showNotice('Please select your payment screenshot.');return}showNotice('Your details are ready. Automatic Telegram membership verification and secure submission will be connected when the NEXVORA bot is added.')}
 function goBack(){window.location.href='payment-license.html'}updateCount();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("/service-worker.js").catch(function (error) {
+      console.warn("NEXVORA UNBAN app setup:", error);
+    });
+  });
+}
 </script>
 </body>
 </html>
