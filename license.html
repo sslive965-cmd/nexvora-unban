@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,801 +6,205 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#020006">
 <title>NEXVORA UNBAN — License Access</title>
-
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#020006;
-  font-family:Arial,Helvetica,sans-serif;
-  color:#fff;
-}
-
-body{
-  position:relative;
-}
-
-/* ================= BACKGROUND ================= */
-
-.bg{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 42%,rgba(125,0,255,.23),transparent 31%),
-    radial-gradient(circle at 7% 15%,rgba(0,210,255,.09),transparent 24%),
-    radial-gradient(circle at 93% 82%,rgba(255,0,180,.10),transparent 25%),
-    #020006;
-}
-
-.bg::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at center,
-      transparent 15%,
-      rgba(0,0,0,.10) 55%,
-      rgba(0,0,0,.78) 100%);
-  pointer-events:none;
-}
-
-.grid{
-  position:absolute;
-  width:200%;
-  height:180%;
-  left:-50%;
-  top:42%;
-  background-image:
-    linear-gradient(rgba(146,42,255,.10) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(146,42,255,.10) 1px,transparent 1px);
-  background-size:45px 45px;
-  transform:perspective(520px) rotateX(65deg);
-  animation:gridMove 10s linear infinite;
-}
-
-@keyframes gridMove{
-  from{
-    transform:perspective(520px) rotateX(65deg) translateY(0);
-  }
-  to{
-    transform:perspective(520px) rotateX(65deg) translateY(45px);
-  }
-}
-
-.orb{
-  position:absolute;
-  border-radius:50%;
-  filter:blur(85px);
-  opacity:.40;
-}
-
-.orb1{
-  width:270px;
-  height:270px;
-  left:-100px;
-  top:8%;
-  background:#7300ff;
-  animation:orb1 8s ease-in-out infinite alternate;
-}
-
-.orb2{
-  width:290px;
-  height:290px;
-  right:-100px;
-  bottom:-20px;
-  background:#ff008c;
-  animation:orb2 9s ease-in-out infinite alternate;
-}
-
-.orb3{
-  width:190px;
-  height:190px;
-  right:18%;
-  top:-90px;
-  background:#00c8ff;
-  animation:orb3 7s ease-in-out infinite alternate;
-}
-
-@keyframes orb1{
-  to{transform:translate(65px,40px) scale(1.18);}
-}
-
-@keyframes orb2{
-  to{transform:translate(-55px,-45px) scale(1.15);}
-}
-
-@keyframes orb3{
-  to{transform:translate(-35px,70px) scale(1.2);}
-}
-
-/* ================= PARTICLES ================= */
-
-.particles{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-
-.particle{
-  position:absolute;
-  width:2px;
-  height:2px;
-  border-radius:50%;
-  background:#dcbcff;
-  box-shadow:
-    0 0 7px #a53dff,
-    0 0 15px #8d21ff;
-  animation:particle linear infinite;
-}
-
-@keyframes particle{
-  0%{
-    transform:translateY(110vh);
-    opacity:0;
-  }
-  15%{opacity:1;}
-  85%{opacity:.8;}
-  100%{
-    transform:translateY(-10vh);
-    opacity:0;
-  }
-}
-
-/* ================= SCREEN ================= */
-
-.screen{
-  position:fixed;
-  inset:0;
-  z-index:5;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  transition:
-    opacity .75s ease,
-    transform .75s ease;
-}
-
-.content{
-  width:min(92%,600px);
-  padding:25px;
-  animation:pageIn 1s cubic-bezier(.2,.8,.2,1);
-}
-
-@keyframes pageIn{
-  from{
-    opacity:0;
-    transform:translateY(25px) scale(.96);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-/* ================= BRAND ================= */
-
-.system{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  margin-bottom:22px;
-  color:#a997b8;
-  font-size:9px;
-  font-weight:bold;
-  letter-spacing:4px;
-  text-transform:uppercase;
-}
-
-.dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#b14dff;
-  box-shadow:0 0 12px #b14dff;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  50%{
-    opacity:.35;
-    transform:scale(.6);
-  }
-}
-
-.brand{
-  font-size:clamp(12px,2vw,15px);
-  letter-spacing:7px;
-  color:#bfa9ce;
-  text-transform:uppercase;
-  margin-bottom:8px;
-}
-
-.title{
-  font-size:clamp(45px,12vw,78px);
-  line-height:.9;
-  font-weight:1000;
-  letter-spacing:5px;
-
-  background:
-    linear-gradient(
-      115deg,
-      #fff,
-      #d9b4ff,
-      #8c25ff,
-      #fff,
-      #b744ff,
-      #fff
-    );
-
-  background-size:350% auto;
-
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-
-  filter:
-    drop-shadow(0 0 9px rgba(154,54,255,.85))
-    drop-shadow(0 0 30px rgba(113,0,255,.40));
-
-  animation:
-    titleShine 5s linear infinite,
-    titleAppear 1s ease;
-}
-
-@keyframes titleShine{
-  to{
-    background-position:350% center;
-  }
-}
-
-@keyframes titleAppear{
-  from{
-    opacity:0;
-    transform:scale(.75);
-    filter:blur(12px);
-  }
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-}
-
-.description{
-  margin:23px auto 27px;
-  max-width:470px;
-  color:#a99bae;
-  font-size:11px;
-  line-height:1.8;
-  letter-spacing:2px;
-  text-transform:uppercase;
-}
-
-/* ================= INPUT ================= */
-
-.input-area{
-  position:relative;
-  width:min(100%,470px);
-  margin:0 auto 16px;
-}
-
-.input-area::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:17px;
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(167,64,255,.6),
-      transparent
-    );
-  filter:blur(8px);
-  opacity:.35;
-  pointer-events:none;
-}
-
-input{
-  position:relative;
-  z-index:2;
-  width:100%;
-  height:60px;
-  padding:0 20px;
-
-  border:1px solid rgba(191,110,255,.42);
-  border-radius:16px;
-
-  outline:none;
-
-  background:
-    rgba(3,0,9,.68);
-
-  color:#fff;
-
-  text-align:center;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:3px;
-
-  box-shadow:
-    0 0 20px rgba(122,0,255,.12),
-    inset 0 0 20px rgba(139,0,255,.04);
-
-  transition:.3s ease;
-}
-
-input::placeholder{
-  color:#665b70;
-  letter-spacing:2px;
-}
-
-input:focus{
-  border-color:#b64dff;
-
-  box-shadow:
-    0 0 25px rgba(161,50,255,.30),
-    0 0 55px rgba(115,0,255,.10),
-    inset 0 0 20px rgba(161,50,255,.06);
-}
-
-/* ================= BUTTONS ================= */
-
-button{
-  width:min(100%,470px);
-  height:57px;
-  border-radius:16px;
-  cursor:pointer;
-
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:4px;
-
-  color:white;
-
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease,
-    opacity .25s ease;
-}
-
-.verify{
-  position:relative;
-  overflow:hidden;
-
-  border:1px solid rgba(221,170,255,.7);
-
-  background:
-    linear-gradient(
-      135deg,
-      #7100ff,
-      #a900ff
-    );
-
-  box-shadow:
-    0 0 20px rgba(139,35,255,.48),
-    0 0 50px rgba(111,0,255,.12);
-
-  margin-bottom:12px;
-}
-
-.verify::before{
-  content:"";
-  position:absolute;
-  width:55%;
-  height:100%;
-  left:-100%;
-  top:0;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.40),
-      transparent
-    );
-
-  transform:skewX(-22deg);
-
-  animation:scan 3s infinite;
-}
-
-@keyframes scan{
-  0%,25%{left:-100%;}
-  65%,100%{left:160%;}
-}
-
-.verify span{
-  position:relative;
-  z-index:2;
-}
-
-.get-key{
-  border:1px solid rgba(184,105,255,.35);
-  background:
-    rgba(255,255,255,.025);
-
-  box-shadow:
-    0 0 15px rgba(121,0,255,.08);
-}
-
-button:hover{
-  transform:translateY(-3px);
-
-  box-shadow:
-    0 0 30px rgba(157,45,255,.55),
-    0 0 60px rgba(121,0,255,.16);
-}
-
-button:active{
-  transform:scale(.97);
-}
-
-button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-  transform:none;
-}
-
-/* ================= STATUS ================= */
-
-.status{
-  min-height:20px;
-  margin-top:19px;
-  color:#a995b6;
-  font-size:11px;
-  letter-spacing:1px;
-}
-
-.status.success{
-  color:#b9ffdf;
-  text-shadow:0 0 12px rgba(91,255,185,.35);
-}
-
-.status.error{
-  color:#ff9fda;
-  text-shadow:0 0 12px rgba(255,70,175,.25);
-}
-
-.status.loading{
-  color:#d0a9ff;
-}
-
-/* ================= BACK ================= */
-
-.back{
-  width:auto;
-  height:auto;
-  margin-top:21px;
-  padding:8px 14px;
-
-  border:0;
-  background:transparent;
-
-  color:#655a6d;
-  font-size:9px;
-  letter-spacing:3px;
-}
-
-.back:hover{
-  color:#c995ff;
-  box-shadow:none;
-  transform:none;
-}
-
-/* ================= EXIT ================= */
-
-.screen.exit{
-  opacity:0;
-  transform:scale(1.08);
-  pointer-events:none;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:600px){
-
-  .content{
-    padding:18px;
-  }
-
-  .system{
-    letter-spacing:3px;
-  }
-
-  .brand{
-    letter-spacing:5px;
-  }
-
-  .title{
-    letter-spacing:3px;
-  }
-
-  .description{
-    font-size:9px;
-    letter-spacing:1.5px;
-  }
-
-  input{
-    height:56px;
-    font-size:12px;
-  }
-
-  button{
-    height:54px;
-  }
-}
-
-@media(max-height:650px){
-
-  .content{
-    transform:scale(.88);
-  }
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;min-height:100%;overflow-x:hidden;background:#020006;font-family:Arial,Helvetica,sans-serif;color:#fff}
+body{position:relative;min-height:100vh}
+.bg{position:fixed;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 42%,rgba(125,0,255,.23),transparent 31%),radial-gradient(circle at 7% 15%,rgba(0,210,255,.09),transparent 24%),radial-gradient(circle at 93% 82%,rgba(255,0,180,.10),transparent 25%),#020006}
+.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at center,transparent 15%,rgba(0,0,0,.10) 55%,rgba(0,0,0,.78) 100%);pointer-events:none}
+.grid{position:absolute;width:200%;height:180%;left:-50%;top:42%;background-image:linear-gradient(rgba(146,42,255,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(146,42,255,.10) 1px,transparent 1px);background-size:45px 45px;transform:perspective(520px) rotateX(65deg);animation:gridMove 10s linear infinite}
+@keyframes gridMove{from{transform:perspective(520px) rotateX(65deg) translateY(0)}to{transform:perspective(520px) rotateX(65deg) translateY(45px)}}
+.orb{position:absolute;border-radius:50%;filter:blur(85px);opacity:.40}
+.orb1{width:270px;height:270px;left:-100px;top:8%;background:#7300ff;animation:orb1 8s ease-in-out infinite alternate}
+.orb2{width:290px;height:290px;right:-100px;bottom:-20px;background:#ff008c;animation:orb2 9s ease-in-out infinite alternate}
+.orb3{width:190px;height:190px;right:18%;top:-90px;background:#00c8ff;animation:orb3 7s ease-in-out infinite alternate}
+@keyframes orb1{to{transform:translate(65px,40px) scale(1.18)}}
+@keyframes orb2{to{transform:translate(-55px,-45px) scale(1.15)}}
+@keyframes orb3{to{transform:translate(-35px,70px) scale(1.2)}}
+.particles{position:absolute;inset:0;pointer-events:none}
+.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#dcbcff;box-shadow:0 0 7px #a53dff,0 0 15px #8d21ff;animation:particle linear infinite}
+@keyframes particle{0%{transform:translateY(110vh);opacity:0}15%{opacity:1}85%{opacity:.8}100%{transform:translateY(-10vh);opacity:0}}
+.screen{position:relative;z-index:5;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px 0;transition:opacity .75s ease,transform .75s ease}
+.content{width:min(92%,600px);padding:25px;animation:pageIn 1s cubic-bezier(.2,.8,.2,1)}
+@keyframes pageIn{from{opacity:0;transform:translateY(25px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.system{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:22px;color:#a997b8;font-size:9px;font-weight:bold;letter-spacing:4px;text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:#b14dff;box-shadow:0 0 12px #b14dff;animation:pulse 1.5s infinite}
+@keyframes pulse{50%{opacity:.35;transform:scale(.6)}}
+.brand{font-size:clamp(12px,2vw,15px);letter-spacing:7px;color:#bfa9ce;text-transform:uppercase;margin-bottom:8px}
+.title{font-size:clamp(45px,12vw,78px);line-height:.9;font-weight:1000;letter-spacing:5px;background:linear-gradient(115deg,#fff,#d9b4ff,#8c25ff,#fff,#b744ff,#fff);background-size:350% auto;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 9px rgba(154,54,255,.85)) drop-shadow(0 0 30px rgba(113,0,255,.40));animation:titleShine 5s linear infinite,titleAppear 1s ease}
+@keyframes titleShine{to{background-position:350% center}}
+@keyframes titleAppear{from{opacity:0;transform:scale(.75);filter:blur(12px)}to{opacity:1;transform:scale(1)}}
+.description{margin:23px auto 27px;max-width:470px;color:#a99bae;font-size:11px;line-height:1.8;letter-spacing:2px;text-transform:uppercase}
+.input-area{position:relative;width:min(100%,470px);margin:0 auto 16px}
+.input-area::before{content:"";position:absolute;inset:-2px;border-radius:17px;background:linear-gradient(90deg,transparent,rgba(167,64,255,.6),transparent);filter:blur(8px);opacity:.35;pointer-events:none}
+input{position:relative;z-index:2;width:100%;height:60px;padding:0 15px;border:1px solid rgba(191,110,255,.42);border-radius:16px;outline:none;background:rgba(3,0,9,.88);color:#fff;text-align:center;font-size:16px;font-weight:700;letter-spacing:3px;box-shadow:0 0 20px rgba(122,0,255,.12),inset 0 0 20px rgba(139,0,255,.04);transition:.3s ease;text-transform:uppercase}
+input::placeholder{color:#665b70;letter-spacing:2px;font-size:12px}
+input:focus{border-color:#b64dff;box-shadow:0 0 25px rgba(161,50,255,.30),0 0 55px rgba(115,0,255,.10),inset 0 0 20px rgba(161,50,255,.06)}
+button{width:min(100%,470px);height:57px;border-radius:16px;cursor:pointer;font-size:12px;font-weight:900;letter-spacing:4px;color:white;transition:transform .25s ease,box-shadow .25s ease,opacity .25s ease}
+.verify{position:relative;overflow:hidden;border:1px solid rgba(221,170,255,.7);background:linear-gradient(135deg,#7100ff,#a900ff);box-shadow:0 0 20px rgba(139,35,255,.48),0 0 50px rgba(111,0,255,.12);margin-bottom:12px}
+.verify::before{content:"";position:absolute;width:55%;height:100%;left:-100%;top:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.40),transparent);transform:skewX(-22deg);animation:scan 3s infinite}
+@keyframes scan{0%,25%{left:-100%}65%,100%{left:160%}}
+.verify span{position:relative;z-index:2}
+.get-key{border:1px solid rgba(184,105,255,.35);background:rgba(255,255,255,.025);box-shadow:0 0 15px rgba(121,0,255,.08)}
+button:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(157,45,255,.55),0 0 60px rgba(121,0,255,.16)}
+button:active{transform:scale(.97)}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.status{min-height:20px;margin-top:19px;color:#a995b6;font-size:11px;letter-spacing:1px;line-height:1.6}
+.status.success{color:#b9ffdf;text-shadow:0 0 12px rgba(91,255,185,.35)}
+.status.error{color:#ff9fda;text-shadow:0 0 12px rgba(255,70,175,.25)}
+.status.loading{color:#d0a9ff}
+.back{width:auto;height:auto;margin-top:21px;padding:8px 14px;border:0;background:transparent;color:#655a6d;font-size:9px;letter-spacing:3px}
+.back:hover{color:#c995ff;box-shadow:none;transform:none}
+.screen.exit{opacity:0;transform:scale(1.08);pointer-events:none}
+@media(max-width:600px){.content{padding:18px}.system{letter-spacing:3px}.brand{letter-spacing:5px}.title{letter-spacing:3px}.description{font-size:9px;letter-spacing:1.5px}input{height:56px;font-size:15px}button{height:54px}}
+@media(max-height:650px){.content{padding-top:10px;padding-bottom:10px}.description{margin:15px auto 18px}}
 </style>
 </head>
-
 <body>
-
-<!-- ================= BACKGROUND ================= -->
-
 <div class="bg">
-
   <div class="grid"></div>
-
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
-
   <div class="particles" id="particles"></div>
-
 </div>
 
-<!-- ================= LICENSE SCREEN ================= -->
-
 <main class="screen" id="screen">
-
   <div class="content">
-
-    <div class="system">
-      <span class="dot"></span>
-      SECURE ACCESS SYSTEM
-    </div>
-
-    <div class="brand">
-      NEXVORA
-    </div>
-
-    <div class="title">
-      UNBAN
-    </div>
-
+    <div class="system"><span class="dot"></span>SECURE ACCESS SYSTEM</div>
+    <div class="brand">NEXVORA</div>
+    <div class="title">UNBAN</div>
     <p class="description">
       Enter your valid license key to access
       the NEXVORA UNBAN platform.
     </p>
 
     <div class="input-area">
-
       <input
         id="licenseKey"
         type="text"
-        placeholder="ENTER LICENSE KEY"
+        placeholder="NX-XXXX-UN"
         autocomplete="off"
         maxlength="10"
         spellcheck="false"
+        autocapitalize="characters"
+        aria-label="License key"
       >
-
     </div>
 
-    <button
-      class="verify"
-      id="verifyButton"
-      onclick="verifyKey()"
-    >
+    <button class="verify" id="verifyButton" onclick="verifyKey()">
       <span>VERIFY LICENSE</span>
     </button>
 
-    <button
-      class="get-key"
-      onclick="getKey()"
-    >
-      GET LICENSE KEY
-    </button>
-
-    <div
-      class="status"
-      id="status"
-    ></div>
-
-    <button
-      class="back"
-      onclick="goBack()"
-    >
-      ← BACK TO HOME
-    </button>
-
+    <button class="get-key" onclick="getKey()">GET LICENSE KEY</button>
+    <div class="status" id="status" aria-live="polite"></div>
+    <button class="back" onclick="goBack()">← BACK TO HOME</button>
   </div>
-
 </main>
 
 <script>
+const VERIFY_URL =
+  "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/verify-nexvora-license";
 
-/* ================= PARTICLES ================= */
-
-const particleBox =
-  document.getElementById("particles");
-
-const particleCount =
-  window.innerWidth < 600 ? 35 : 60;
+const particleBox = document.getElementById("particles");
+const particleCount = window.innerWidth < 600 ? 35 : 60;
 
 for(let i=0;i<particleCount;i++){
-
-  const particle =
-    document.createElement("span");
-
+  const particle=document.createElement("span");
   particle.className="particle";
-
-  particle.style.left =
-    Math.random()*100+"%";
-
-  particle.style.animationDuration =
-    (5+Math.random()*9)+"s";
-
-  particle.style.animationDelay =
-    (Math.random()*8)+"s";
-
-  const size =
-    (1+Math.random()*2)+"px";
-
+  particle.style.left=Math.random()*100+"%";
+  particle.style.animationDuration=(5+Math.random()*9)+"s";
+  particle.style.animationDelay=(Math.random()*8)+"s";
+  const size=(1+Math.random()*2)+"px";
   particle.style.width=size;
   particle.style.height=size;
-
   particleBox.appendChild(particle);
 }
 
+const input=document.getElementById("licenseKey");
 
-/* ================= ENTER KEY ================= */
+input.addEventListener("input",()=>{
+  input.value=input.value.toUpperCase().replace(/[^A-Z-]/g,"").slice(0,10);
+});
 
-document
-  .getElementById("licenseKey")
-  .addEventListener("keydown",(event)=>{
+input.addEventListener("keydown",(event)=>{
+  if(event.key==="Enter") verifyKey();
+});
 
-    if(event.key==="Enter"){
-      verifyKey();
-    }
-
-  });
-
-
-/* ================= VERIFY ================= */
-
-function verifyKey(){
-
-  const input =
-    document.getElementById("licenseKey");
-
-  const status =
-    document.getElementById("status");
-
-  const button =
-    document.getElementById("verifyButton");
-
-  const key =
-    input.value.trim().toUpperCase();
+async function verifyKey(){
+  const status=document.getElementById("status");
+  const button=document.getElementById("verifyButton");
+  const key=input.value.trim().toUpperCase();
 
   status.className="status";
 
   if(!key){
-
-    status.textContent =
-      "Please enter your license key.";
-
+    status.textContent="Please enter your license key.";
     status.classList.add("error");
-
     input.focus();
-
     return;
   }
 
-  if(key.length < 6){
-
-    status.textContent =
-      "Please enter a valid license key.";
-
+  if(!/^NX-[A-Z]{4}-UN$/.test(key)){
+    status.textContent="Invalid format. Use NX-XXXX-UN.";
     status.classList.add("error");
-
     input.focus();
-
     return;
   }
 
   button.disabled=true;
-
-  status.textContent =
-    "VERIFYING LICENSE...";
-
+  status.textContent="VERIFYING LICENSE...";
   status.classList.add("loading");
 
-  /*
-    SUPABASE LICENSE VERIFICATION
-    will be connected in the next backend step.
-  */
+  try{
+    const response=await fetch(VERIFY_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({key:key})
+    });
 
-  setTimeout(()=>{
+    const result=await response.json();
 
-    button.disabled=false;
+    if(!response.ok || !result.valid){
+      throw new Error(result.message || result.error || "Invalid or revoked license key.");
+    }
 
-    status.textContent =
-      "License verification is not connected yet.";
+    sessionStorage.setItem("nexvora_license_access","verified");
+    sessionStorage.setItem("nexvora_license_key",key);
 
+    status.textContent="LICENSE VERIFIED — OPENING PLATFORM...";
+    status.className="status success";
+
+    setTimeout(()=>{
+      window.location.href="dashboard.html";
+    },700);
+
+  }catch(error){
+    status.textContent=error.message || "Verification failed. Please try again.";
     status.className="status error";
-
-  },1100);
+    button.disabled=false;
+  }
 }
-
-
-/* ================= GET KEY ================= */
 
 function getKey(){
-
-  transitionTo(
-    "payment-license.html"
-  );
-
+  transitionTo("payment-license.html");
 }
-
-
-/* ================= BACK ================= */
 
 function goBack(){
-
-  transitionTo(
-    "index.html"
-  );
-
+  transitionTo("index.html");
 }
-
-
-/* ================= PAGE TRANSITION ================= */
 
 function transitionTo(page){
-
-  const screen =
-    document.getElementById("screen");
-
+  const screen=document.getElementById("screen");
   screen.classList.add("exit");
-
   setTimeout(()=>{
-
     window.location.href=page;
-
   },750);
-
 }
 
-
-/* ================= PAGE RESTORE ================= */
-
 window.addEventListener("pageshow",()=>{
-
-  const screen =
-    document.getElementById("screen");
-
-  screen.classList.remove("exit");
-
+  document.getElementById("screen").classList.remove("exit");
 });
-
 </script>
-
 </body>
 </html>
