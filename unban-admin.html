@@ -4591,13 +4591,11 @@ document.addEventListener(
 
   }
 );
-/* ================= DATE FORMATTER ================= */
+      /* ================= DATE FORMATTER ================= */
 
 function date(value){
 
-  if(!value){
-    return "—";
-  }
+  if(!value) return "—";
 
   try{
 
@@ -4618,81 +4616,40 @@ function date(value){
 }
 
 
-/* ================= FORCE LOGIN SCREEN ================= */
+/* ================= SCREEN CONTROL ================= */
+
+function showWelcomeScreen(){
+
+  $("welcomeScreen").style.display = "flex";
+  $("loginScreen").style.display = "none";
+  $("accessScreen").style.display = "none";
+  $("adminApp").style.display = "none";
+
+}
+
 
 function showLoginScreen(){
 
-  const welcome =
-    $("welcomeScreen");
-
-  const login =
-    $("loginScreen");
-
-  const access =
-    $("accessScreen");
-
-  const app =
-    $("adminApp");
-
-
-  if(welcome){
-
-    welcome.style.display =
-      "none";
-
-  }
-
-
-  if(access){
-
-    access.style.display =
-      "none";
-
-  }
-
-
-  if(app){
-
-    app.style.display =
-      "none";
-
-  }
-
-
-  if(login){
-
-    login.style.display =
-      "flex";
-
-    login.style.visibility =
-      "visible";
-
-    login.style.opacity =
-      "1";
-
-  }
+  $("welcomeScreen").style.display = "none";
+  $("loginScreen").style.display = "flex";
+  $("accessScreen").style.display = "none";
+  $("adminApp").style.display = "none";
 
 }
 
 
-/* ================= ENTER ADMIN BUTTON ================= */
+/* ================= ENTER BUTTON ================= */
 
-const enterButton =
-  $("enterAdminButton");
+$("enterAdminButton").addEventListener(
+  "click",
+  function(event){
 
+    event.preventDefault();
 
-if(enterButton){
+    showLoginScreen();
 
-  enterButton.onclick =
-    function(event){
-
-      event.preventDefault();
-
-      showLoginScreen();
-
-    };
-
-}
+  }
+);
 
 
 /* ================= SESSION RESTORE ================= */
@@ -4704,62 +4661,38 @@ async function restoreAdminSession(){
     const result =
       await db.auth.getSession();
 
-
     if(result.error){
 
-      showLoginScreen();
-
+      showWelcomeScreen();
       return;
 
     }
-
 
     const session =
       result.data?.session;
 
-
     if(!session){
 
-      showLoginScreen();
-
+      showWelcomeScreen();
       return;
 
     }
 
-
     const allowed =
-      await verifyAdmin(
-        session.user
-      );
-
+      await verifyAdmin(session.user);
 
     if(!allowed){
 
       await db.auth.signOut();
-
-      showLoginScreen();
-
+      showWelcomeScreen();
       return;
 
     }
 
-
-    $("welcomeScreen")
-      .style.display =
-      "none";
-
-    $("loginScreen")
-      .style.display =
-      "none";
-
-    $("accessScreen")
-      .style.display =
-      "flex";
-
-    $("adminApp")
-      .style.display =
-      "none";
-
+    $("welcomeScreen").style.display = "none";
+    $("loginScreen").style.display = "none";
+    $("accessScreen").style.display = "flex";
+    $("adminApp").style.display = "none";
 
   }catch(error){
 
@@ -4768,7 +4701,7 @@ async function restoreAdminSession(){
       error
     );
 
-    showLoginScreen();
+    showWelcomeScreen();
 
   }
 
@@ -4778,59 +4711,34 @@ async function restoreAdminSession(){
 /* ================= AUTH STATE LISTENER ================= */
 
 db.auth.onAuthStateChange(
-  async(
-    event,
-    session
-  )=>{
+  async(event, session)=>{
 
-    if(
-      event ===
-      "SIGNED_OUT"
-    ){
+    if(event === "SIGNED_OUT"){
 
-      showLoginScreen();
-
+      showWelcomeScreen();
       return;
 
     }
 
-
     if(
-      event ===
-      "SIGNED_IN" &&
+      event === "SIGNED_IN" &&
       session?.user
     ){
 
       const allowed =
-        await verifyAdmin(
-          session.user
-        );
-
+        await verifyAdmin(session.user);
 
       if(!allowed){
 
         await db.auth.signOut();
-
         return;
 
       }
 
-
-      $("welcomeScreen")
-        .style.display =
-        "none";
-
-      $("loginScreen")
-        .style.display =
-        "none";
-
-      $("accessScreen")
-        .style.display =
-        "flex";
-
-      $("adminApp")
-        .style.display =
-        "none";
+      $("welcomeScreen").style.display = "none";
+      $("loginScreen").style.display = "none";
+      $("accessScreen").style.display = "flex";
+      $("adminApp").style.display = "none";
 
     }
 
@@ -4840,36 +4748,9 @@ db.auth.onAuthStateChange(
 
 /* ================= PAGE START ================= */
 
-window.addEventListener(
-  "DOMContentLoaded",
-  async()=>{
+showWelcomeScreen();
 
-    /*
-      First make sure every screen
-      has a known visibility state.
-    */
-
-    $("welcomeScreen")
-      .style.display =
-      "flex";
-
-    $("loginScreen")
-      .style.display =
-      "none";
-
-    $("accessScreen")
-      .style.display =
-      "none";
-
-    $("adminApp")
-      .style.display =
-      "none";
-
-
-    await restoreAdminSession();
-
-  }
-);
+restoreAdminSession();
 
 </script>
 
