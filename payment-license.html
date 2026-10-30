@@ -1206,19 +1206,10 @@ async function copyUpi(){
 
 function continueToBot(){
 
-  const message =
-    document.getElementById("message");
+  const botLink =
+    "https://t.me/NexvoraUnbanBot";
 
-  /*
-    Telegram bot connection will be added
-    after the real bot is created.
-  */
-
-  message.textContent =
-    "Payment reference saved? Telegram verification will be connected next.";
-
-  message.className =
-    "message";
+  window.location.href = botLink;
 
 }
 
