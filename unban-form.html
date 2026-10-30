@@ -15,331 +15,55 @@ if(sessionStorage.getItem("nexvora_license_access")!=="verified"){
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-
-html,body{
-  min-height:100%;
-  background:#05020a;
-  color:#fff;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  min-height:100vh;
-  overflow-x:hidden;
-  padding:22px 16px 55px;
-}
-
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:-5;
-  background:
-    radial-gradient(circle at 10% 5%,#50008b55,transparent 35%),
-    radial-gradient(circle at 90% 90%,#7100a544,transparent 35%),
-    #05020a;
-}
-
-.grid{
-  position:fixed;
-  width:200%;
-  height:180%;
-  left:-50%;
-  top:40%;
-  z-index:-4;
-  pointer-events:none;
-  background-image:
-    linear-gradient(#a34cff12 1px,transparent 1px),
-    linear-gradient(90deg,#a34cff12 1px,transparent 1px);
-  background-size:45px 45px;
-  transform:perspective(520px) rotateX(65deg);
-  animation:gridMove 10s linear infinite;
-}
-
-@keyframes gridMove{
-  to{transform:perspective(520px) rotateX(65deg) translateY(45px)}
-}
-
-.orb{
-  position:fixed;
-  z-index:-3;
-  border-radius:50%;
-  filter:blur(90px);
-  opacity:.32;
-  pointer-events:none;
-}
-
-.orb.one{
-  width:280px;height:280px;
-  left:-110px;top:8%;
-  background:#7200ff;
-  animation:floatOne 8s ease-in-out infinite alternate;
-}
-
-.orb.two{
-  width:300px;height:300px;
-  right:-110px;bottom:-30px;
-  background:#bd00ff;
-  animation:floatTwo 9s ease-in-out infinite alternate;
-}
-
-@keyframes floatOne{
-  to{transform:translate(65px,40px) scale(1.17)}
-}
-
-@keyframes floatTwo{
-  to{transform:translate(-55px,-45px) scale(1.15)}
-}
-
-.particles{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
-}
-
-.particle{
-  position:absolute;
-  width:2px;height:2px;
-  border-radius:50%;
-  background:#dcbcff;
-  box-shadow:0 0 7px #a53dff,0 0 16px #8d21ff;
-  animation:particleFloat linear infinite;
-}
-
-@keyframes particleFloat{
-  0%{transform:translateY(110vh);opacity:0}
-  15%{opacity:1}
-  85%{opacity:.8}
-  100%{transform:translateY(-10vh);opacity:0}
-}
-
-.wrap{
-  width:min(100%,680px);
-  margin:auto;
-  animation:pageIn .9s ease both;
-}
-
-@keyframes pageIn{
-  from{opacity:0;transform:translateY(25px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 0 22px;
-  border-bottom:1px solid #a65cff44;
-}
-
-.brand{
-  font-size:17px;
-  font-weight:900;
-  letter-spacing:2px;
-  background:linear-gradient(90deg,#fff,#c47cff);
-  background-clip:text;
-  color:transparent;
-}
-
-.back{
-  color:#d9b5ff;
-  text-decoration:none;
-  font-size:11px;
-  letter-spacing:1px;
-  border:1px solid #a65cff66;
-  border-radius:10px;
-  padding:10px 12px;
-}
-
-.heading{
-  padding:38px 0 20px;
-  text-align:center;
-}
-
-.eyebrow{
-  font-size:10px;
-  letter-spacing:5px;
-  color:#bd8af0;
-}
-
-h1{
-  font-size:clamp(25px,6vw,39px);
-  margin:13px 0;
-  letter-spacing:1px;
-  background:linear-gradient(110deg,#fff,#d9b4ff,#8c25ff,#fff);
-  background-size:300% auto;
-  background-clip:text;
-  color:transparent;
-  filter:drop-shadow(0 0 14px #8d21ff66);
-  animation:titleShine 5s linear infinite;
-}
-
-@keyframes titleShine{
-  to{background-position:300% center}
-}
-
-.intro{
-  max-width:540px;
-  margin:auto;
-  font-size:12px;
-  color:#b7a7c7;
-  line-height:1.8;
-}
-
-.form-section{
-  margin-top:22px;
-  padding:10px 0;
-}
-
-.section-title{
-  color:#d9b5ff;
-  font-size:11px;
-  letter-spacing:3px;
-  padding-bottom:13px;
-  border-bottom:1px solid #a65cff35;
-  margin-bottom:17px;
-}
-
-label{
-  display:block;
-  font-size:11px;
-  color:#dfc9f5;
-  margin:18px 0 8px;
-  letter-spacing:.5px;
-}
-
-input,select{
-  width:100%;
-  height:49px;
-  padding:0 14px;
-  border:1px solid #8b52ac66;
-  border-radius:11px;
-  background:#10091b99;
-  color:#fff;
-  outline:none;
-  font-size:13px;
-  transition:.25s;
-}
-
-input:focus,select:focus{
-  border-color:#bc6cff;
-  box-shadow:0 0 18px #922dff35;
-  background:#170b25;
-}
-
+html,body{min-height:100%;background:#05020a;color:#fff;font-family:Arial,sans-serif}
+body{min-height:100vh;overflow-x:hidden;padding:22px 16px 55px}
+.bg{position:fixed;inset:0;z-index:-5;background:radial-gradient(circle at 10% 5%,#50008b55,transparent 35%),radial-gradient(circle at 90% 90%,#7100a544,transparent 35%),#05020a}
+.grid{position:fixed;width:200%;height:180%;left:-50%;top:40%;z-index:-4;pointer-events:none;background-image:linear-gradient(#a34cff12 1px,transparent 1px),linear-gradient(90deg,#a34cff12 1px,transparent 1px);background-size:45px 45px;transform:perspective(520px) rotateX(65deg);animation:gridMove 10s linear infinite}
+@keyframes gridMove{to{transform:perspective(520px) rotateX(65deg) translateY(45px)}}
+.orb{position:fixed;z-index:-3;border-radius:50%;filter:blur(90px);opacity:.32;pointer-events:none}
+.orb.one{width:280px;height:280px;left:-110px;top:8%;background:#7200ff;animation:floatOne 8s ease-in-out infinite alternate}
+.orb.two{width:300px;height:300px;right:-110px;bottom:-30px;background:#bd00ff;animation:floatTwo 9s ease-in-out infinite alternate}
+@keyframes floatOne{to{transform:translate(65px,40px) scale(1.17)}}
+@keyframes floatTwo{to{transform:translate(-55px,-45px) scale(1.15)}}
+.particles{position:fixed;inset:0;z-index:-2;pointer-events:none}
+.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#dcbcff;box-shadow:0 0 7px #a53dff,0 0 16px #8d21ff;animation:particleFloat linear infinite}
+@keyframes particleFloat{0%{transform:translateY(110vh);opacity:0}15%{opacity:1}85%{opacity:.8}100%{transform:translateY(-10vh);opacity:0}}
+.wrap{width:min(100%,680px);margin:auto;animation:pageIn .9s ease both}
+@keyframes pageIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0 22px;border-bottom:1px solid #a65cff44}
+.brand{font-size:17px;font-weight:900;letter-spacing:2px;background:linear-gradient(90deg,#fff,#c47cff);background-clip:text;color:transparent}
+.back{color:#d9b5ff;text-decoration:none;font-size:11px;letter-spacing:1px;border:1px solid #a65cff66;border-radius:10px;padding:10px 12px}
+.heading{padding:38px 0 20px;text-align:center}
+.eyebrow{font-size:10px;letter-spacing:5px;color:#bd8af0}
+h1{font-size:clamp(25px,6vw,39px);margin:13px 0;letter-spacing:1px;background:linear-gradient(110deg,#fff,#d9b4ff,#8c25ff,#fff);background-size:300% auto;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px #8d21ff66);animation:titleShine 5s linear infinite}
+@keyframes titleShine{to{background-position:300% center}}
+.intro{max-width:540px;margin:auto;font-size:12px;color:#b7a7c7;line-height:1.8}
+.form-section{margin-top:22px;padding:10px 0}
+.section-title{color:#d9b5ff;font-size:11px;letter-spacing:3px;padding-bottom:13px;border-bottom:1px solid #a65cff35;margin-bottom:17px}
+label{display:block;font-size:11px;color:#dfc9f5;margin:18px 0 8px;letter-spacing:.5px}
+input,select{width:100%;height:49px;padding:0 14px;border:1px solid #8b52ac66;border-radius:11px;background:#10091b99;color:#fff;outline:none;font-size:13px;transition:.25s}
+input:focus,select:focus{border-color:#bc6cff;box-shadow:0 0 18px #922dff35;background:#170b25}
 input::placeholder{color:#746580}
-
-select option{
-  background:#10091b;
-  color:#fff;
-}
-
-input[type=file]{
-  height:auto;
-  min-height:49px;
-  padding:13px;
-  font-size:11px;
-}
-
-input[type=date]{
-  color-scheme:dark;
-}
-
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.hint{
-  font-size:10px;
-  color:#92829f;
-  margin-top:8px;
-  line-height:1.7;
-}
-
-.policy{
-  display:flex;
-  align-items:flex-start;
-  gap:11px;
-  margin-top:25px;
-  padding:15px;
-  border:1px solid #8b52ac55;
-  border-radius:12px;
-  background:#ffffff05;
-}
-
-.policy input{
-  width:17px;
-  height:17px;
-  flex:0 0 auto;
-  margin-top:2px;
-  accent-color:#a443ff;
-}
-
-.policy label{
-  margin:0;
-  font-size:10px;
-  line-height:1.8;
-  color:#c6b8d1;
-}
-
-button{
-  width:100%;
-  height:54px;
-  margin-top:22px;
-  border:1px solid #c38bff77;
-  border-radius:12px;
-  background:linear-gradient(110deg,#7000e8,#a52aff);
-  color:white;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:3px;
-  cursor:pointer;
-  box-shadow:0 0 22px #8b2bff35;
-  transition:.25s;
-}
-
-button:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 30px #922dff66;
-}
-
-button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
-
-#message{
-  margin-top:15px;
-  min-height:20px;
-  font-size:11px;
-  color:#e0baff;
-  line-height:1.7;
-  text-align:center;
-}
-
-.disclaimer{
-  font-size:10px;
-  color:#93859e;
-  line-height:1.8;
-  margin-top:23px;
-  text-align:center;
-}
-
-@media(max-width:480px){
-  body{padding:15px 14px 40px}
-  .row{grid-template-columns:1fr;gap:0}
-  .heading{padding-top:30px}
-  header{align-items:center}
-  .brand{font-size:15px}
-}
+select option{background:#10091b;color:#fff}
+input[type=file]{height:auto;min-height:49px;padding:13px;font-size:11px}
+input[type=date]{color-scheme:dark}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hint{font-size:10px;color:#92829f;margin-top:8px;line-height:1.7}
+.policy{display:flex;align-items:flex-start;gap:11px;margin-top:25px;padding:15px;border:1px solid #8b52ac55;border-radius:12px;background:#ffffff05}
+.policy input{width:17px;height:17px;flex:0 0 auto;margin-top:2px;accent-color:#a443ff}
+.policy label{margin:0;font-size:10px;line-height:1.8;color:#c6b8d1}
+button{width:100%;height:54px;margin-top:22px;border:1px solid #c38bff77;border-radius:12px;background:linear-gradient(110deg,#7000e8,#a52aff);color:white;font-size:11px;font-weight:900;letter-spacing:3px;cursor:pointer;box-shadow:0 0 22px #8b2bff35;transition:.25s}
+button:hover{transform:translateY(-3px);box-shadow:0 0 30px #922dff66}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+#message{margin-top:15px;min-height:20px;font-size:11px;color:#e0baff;line-height:1.7;text-align:center;overflow-wrap:anywhere}
+#message.success{color:#9dffca}
+#message.error{color:#ff9cba}
+.disclaimer{font-size:10px;color:#93859e;line-height:1.8;margin-top:23px;text-align:center}
+@media(max-width:480px){body{padding:15px 14px 40px}.row{grid-template-columns:1fr;gap:0}.heading{padding-top:30px}header{align-items:center}.brand{font-size:15px}}
 </style>
 </head>
 
 <body>
-
 <div class="bg"></div>
 <div class="grid"></div>
 <div class="orb one"></div>
@@ -347,7 +71,6 @@ button:disabled{
 <div class="particles" id="particles"></div>
 
 <main class="wrap">
-
 <header>
   <div class="brand">NEXVORA UNBAN</div>
   <a class="back" href="dashboard.html">← DASHBOARD</a>
@@ -363,24 +86,17 @@ button:disabled{
 </section>
 
 <form id="appealForm">
-
   <div class="form-section">
-
     <div class="section-title">01 / ACCOUNT INFORMATION</div>
 
     <label for="uid">PLAYER UID *</label>
-    <input id="uid" name="player_uid"
-      inputmode="numeric" maxlength="30"
-      required placeholder="Enter your Player UID">
+    <input id="uid" name="player_uid" inputmode="numeric" maxlength="30" required placeholder="Enter your Player UID">
 
     <div class="row">
       <div>
         <label for="level">ID LEVEL *</label>
-        <input id="level" name="id_level"
-          required maxlength="20"
-          placeholder="Account level">
+        <input id="level" name="id_level" required maxlength="20" placeholder="Account level">
       </div>
-
       <div>
         <label for="region">REGION *</label>
         <select id="region" name="region" required>
@@ -397,14 +113,10 @@ button:disabled{
     </div>
 
     <label for="gameName">GAME NAME *</label>
-    <input id="gameName" name="game_name"
-      required maxlength="60"
-      placeholder="Enter in-game name">
-
+    <input id="gameName" name="game_name" required maxlength="60" placeholder="Enter in-game name">
   </div>
 
   <div class="form-section">
-
     <div class="section-title">02 / BAN INFORMATION</div>
 
     <div class="row">
@@ -417,7 +129,6 @@ button:disabled{
           <option>Other</option>
         </select>
       </div>
-
       <div>
         <label for="banType">BAN TYPE *</label>
         <select id="banType" name="ban_type" required>
@@ -432,14 +143,9 @@ button:disabled{
     <input id="banDate" name="ban_date" type="date">
 
     <label for="screenshot">BAN SCREENSHOT (OPTIONAL)</label>
-    <input id="screenshot" name="ban_screenshot"
-      type="file" accept="image/png,image/jpeg,image/webp">
+    <input id="screenshot" name="ban_screenshot" type="file" accept="image/png,image/jpeg,image/webp">
 
-    <p class="hint">
-      Upload a clear screenshot showing the ban notice.
-      Maximum file size: 5 MB.
-    </p>
-
+    <p class="hint">Upload a clear screenshot showing the ban notice. Maximum file size: 5 MB.</p>
   </div>
 
   <div class="policy">
@@ -453,19 +159,14 @@ button:disabled{
     </label>
   </div>
 
-  <button type="submit" id="submitBtn">
-    SUBMIT APPEAL REQUEST
-  </button>
-
-  <div id="message" role="status"></div>
-
+  <button type="submit" id="submitBtn">SUBMIT APPEAL REQUEST</button>
+  <div id="message" role="status" aria-live="polite"></div>
 </form>
 
 <p class="disclaimer">
   INDEPENDENT APPEAL REQUEST SERVICE · NO UNBAN GUARANTEE.
   Never share your password or account access token.
 </p>
-
 </main>
 
 <script>
@@ -484,29 +185,70 @@ for(let i=0;i<particleCount;i++){
   particleBox.appendChild(p);
 }
 
-document.getElementById("appealForm").addEventListener("submit",function(event){
+const form=document.getElementById("appealForm");
+const submitBtn=document.getElementById("submitBtn");
+const message=document.getElementById("message");
+
+form.addEventListener("submit",async function(event){
   event.preventDefault();
 
+  message.className="";
+  message.textContent="";
+
+  if(!form.reportValidity()) return;
+
   const file=document.getElementById("screenshot").files[0];
-  const message=document.getElementById("message");
 
   if(file){
     if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+      message.className="error";
       message.textContent="Please select a PNG, JPG or WEBP image.";
       return;
     }
-
     if(file.size>5*1024*1024){
+      message.className="error";
       message.textContent="Screenshot must be 5 MB or smaller.";
       return;
     }
   }
 
-  message.textContent=
-    "Form details checked. Secure submission is not connected yet.";
+  const formData=new FormData(form);
+  formData.set("policy_accepted","true");
 
+  submitBtn.disabled=true;
+  submitBtn.textContent="SUBMITTING...";
+  message.textContent="Submitting your appeal request securely...";
+
+  try{
+    const response=await fetch(
+      "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/submit-unban-appeal",
+      {
+        method:"POST",
+        body:formData
+      }
+    );
+
+    const result=await response.json();
+
+    if(!response.ok || !result.success){
+      throw new Error(result.error || "Submission failed. Please try again.");
+    }
+
+    message.className="success";
+    message.innerHTML=
+      "✓ REQUEST SUBMITTED SUCCESSFULLY<br><br>"+
+      "YOUR ORDER ID: <strong>"+result.order_id+"</strong><br><br>"+
+      "Save this Order ID. You will need it to check your request status.";
+
+    form.reset();
+    submitBtn.textContent="REQUEST SUBMITTED";
+  }catch(error){
+    message.className="error";
+    message.textContent=error.message || "Network error. Please try again.";
+    submitBtn.disabled=false;
+    submitBtn.textContent="SUBMIT APPEAL REQUEST";
+  }
 });
 </script>
-
 </body>
 </html>
