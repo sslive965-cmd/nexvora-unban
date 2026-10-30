@@ -1,31 +1,2484 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">  
-<title>NEXVORA UNBAN — Admin Panel</title>  
-<style>  
-*{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;background:#07030c;color:#f7efff;font-family:Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.bg{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 20% 0%,#51008055,transparent 42%),radial-gradient(ellipse at 100% 100%,#34004444,transparent 40%)}.brand{font-weight:900;letter-spacing:2px;color:#e0b7ff}.login-wrap{position:relative;min-height:100vh;display:grid;place-items:center;padding:20px}.login-card{width:min(100%,420px);padding:30px 24px;border:1px solid #a65cff66;border-radius:22px;background:#10091bed;box-shadow:0 0 45px #922bff20}.eyebrow{font-size:10px;letter-spacing:3px;color:#bf8df3;margin-top:22px}h1{font-size:29px;margin:12px 0}p{font-size:13px;color:#b7a6c7;line-height:1.7}label{display:block;margin:16px 0 8px;font-size:12px;color:#ddc5f4}input,select,textarea{width:100%;padding:12px 13px;border:1px solid #8050a866;border-radius:10px;background:#08040e;color:white;outline:none}input,select{height:46px}textarea{min-height:100px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:#c17aff}.btn{border:1px solid #c18aff66;border-radius:10px;min-height:42px;padding:0 15px;background:#ffffff08;color:#fff;font-size:11px;font-weight:bold;letter-spacing:.8px}.btn:hover{background:#ffffff14}.btn.primary{background:linear-gradient(110deg,#7000e8,#a52aff)}.btn.success{border-color:#48e0a055;background:#48e0a01a}.btn.danger{border-color:#ff557755;background:#ff55771a}.btn.full{width:100%;margin-top:18px}.message{margin-top:14px;min-height:18px;color:#ffb4df;font-size:12px}.warning{margin-top:18px;padding:12px;border:1px solid #a65cff33;border-radius:10px;font-size:11px;color:#ad9aba;line-height:1.6}.app{position:relative;min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}.sidebar{padding:23px 15px;border-right:1px solid #a65cff2d;background:#0b0611}.sidebar .brand{padding:0 8px 25px;line-height:1.7}.nav{width:100%;display:block;text-align:left;padding:12px;margin:4px 0;border:1px solid transparent;border-radius:10px;background:transparent;color:#bba9cc;font-size:12px}.nav.active,.nav:hover{background:#a42dff18;border-color:#a65cff44;color:white}.side-note{font-size:10px;color:#7f708d;line-height:1.7;padding:20px 8px}.main{min-width:0;padding:24px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid #a65cff2d;padding-bottom:18px}.top h2{font-size:20px}.pill{font-size:10px;border:1px solid #9f5bd655;border-radius:20px;padding:8px 10px;color:#d9b4ff}.content{padding-top:25px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:22px 0}.stat{padding:18px;border:1px solid #a65cff35;border-radius:14px;background:#150b20}.stat span{font-size:11px;color:#b7a6c7}.stat strong{display:block;font-size:22px;margin-top:12px}.panel{padding:20px;border:1px solid #a65cff35;border-radius:15px;background:#10091bd9;margin-bottom:15px}.panel h3{font-size:15px;margin-bottom:10px}.panel p{font-size:12px}.row,.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.row .btn{flex:1;min-width:120px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.list{padding:14px 0;border-bottom:1px solid #a65cff22;font-size:12px;color:#b9a8c9;line-height:1.8}.badge{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid #a65cff55;font-size:10px;margin:2px}.badge.active,.badge.verified,.badge.completed{color:#b5ffcf;border-color:#48e0a055;background:#48e0a01a}.badge.rejected{color:#ffb4b4;border-color:#ff557755;background:#ff55771a}.badge.pending{color:#ffd89a;border-color:#ffb84d55;background:#ffb84d1a}.empty{padding:22px 0;color:#9e8cac;font-size:12px}.key-box{margin-top:14px;padding:15px;border:1px dashed #c17aff66;border-radius:12px;background:#08040e}.key-value{font-family:monospace;font-size:17px;letter-spacing:1px;color:#f2d8ff;word-break:break-all}.small,.field-note{font-size:11px;color:#9e8cac}.toast{position:fixed;right:18px;bottom:18px;z-index:20;max-width:360px;padding:13px 15px;border-radius:11px;background:#160c20;border:1px solid #a65cff66;box-shadow:0 10px 35px #0008;font-size:12px}.modal{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:18px;background:#0009}.modal-card{width:min(100%,560px);max-height:90vh;overflow:auto;padding:22px;border:1px solid #a65cff55;border-radius:18px;background:#10091b}@media(max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid #a65cff2d;padding:14px}.sidebar .brand{padding:0 4px 12px}.navs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.nav{margin:0}.side-note{display:none}.main{padding:17px}.cards,.grid2{grid-template-columns:1fr}}  
-</style></head><body><div class="bg"></div>  
-<section id="loginView" class="login-wrap"><form class="login-card" id="loginForm"><div class="brand">NEXVORA UNBAN</div><div class="eyebrow">RESTRICTED CONTROL CENTER</div><h1>Admin Login</h1><p>Sign in with your authorized administrator account.</p><label>Admin Email</label><input id="email" type="email" autocomplete="username" required placeholder="Enter admin email"><label>Password</label><input id="password" type="password" autocomplete="current-password" required placeholder="Enter password"><button class="btn primary full" id="loginButton">SECURE LOGIN</button><div class="message" id="loginMessage"></div><div class="warning">Admin access is restricted to the allowlisted Supabase account. Never share this password.</div></form></section>  
-<section id="adminApp" class="app hidden"><aside class="sidebar"><div class="brand">NEXVORA<br>ADMIN</div><div class="navs"><button class="nav active" data-section="overview">◈ &nbsp; Dashboard</button><button class="nav" data-section="licenses">⌘ &nbsp; License Keys</button><button class="nav" data-section="forms">▤ &nbsp; Unban Forms</button><button class="nav" data-section="payments">₹ &nbsp; Payments</button><button class="nav" data-section="telegram">↗ &nbsp; Telegram</button><button class="nav" data-section="settings">⚙ &nbsp; Settings</button></div><p class="side-note">ADMIN ACCESS ONLY<br>Never share your login details.</p><button class="btn full" id="logoutButton">LOG OUT</button></aside><main class="main"><header class="top"><h2 id="sectionTitle">Dashboard</h2><span class="pill">SECURE ADMIN CONTROL</span></header><div class="content" id="sectionContent"></div></main></section>  
-<div id="modalRoot"></div><div id="toastRoot"></div>  
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>  
-const SUPABASE_URL="https://sitgwrnvxaugresvlvfl.supabase.co",SUPABASE_KEY="sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ",db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY),$=id=>document.getElementById(id);let currentSection="overview";  
-const names={overview:"Dashboard",licenses:"License Keys",forms:"Unban Forms",payments:"Payments",telegram:"Telegram",settings:"Settings"};  
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}function toast(t){$('toastRoot').innerHTML='<div class="toast">'+esc(t)+'</div>';setTimeout(()=>$('toastRoot').innerHTML='',3200)}function msg(t,e=true){$('loginMessage').textContent=t;$('loginMessage').style.color=e?'#ffb4df':'#b5ffcf'}function date(v){if(!v)return'—';const d=new Date(v);return isNaN(d)?String(v):d.toLocaleString()}function badge(s){s=String(s||'unknown');let c=['active','verified','completed','approved','processing'].includes(s)?'verified':['revoked','rejected','declined','cancelled'].includes(s)?'rejected':'pending';return '<span class="badge '+c+'">'+esc(s)+'</span>'}async function user(){return(await db.auth.getUser()).data.user||null}async function hash(t){const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return Array.from(new Uint8Array(d)).map(x=>x.toString(16).padStart(2,'0')).join('')}function rnd(n){const s='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',a=new Uint32Array(n);crypto.getRandomValues(a);return Array.from(a,x=>s[x%s.length]).join('')}  
-async function verify(u){if(!u?.email)return false;const r=await db.from('admin_allowlist').select('email').eq('email',u.email).maybeSingle();if(r.error)throw r.error;return!!r.data}function showAdmin(){$('loginView').classList.add('hidden');$('adminApp').classList.remove('hidden')}function showLogin(){$('adminApp').classList.add('hidden');$('loginView').classList.remove('hidden')}  
-async function overview(){const [a,b,c,d]=await Promise.all([db.from('license_keys').select('id',{count:'exact',head:true}),db.from('unban_forms').select('id',{count:'exact',head:true}),db.from('unban_forms').select('id',{count:'exact',head:true}).not('payment_utr','is',null).is('payment_verified_at',null),db.from('telegram_events').select('id',{count:'exact',head:true})]);[a,b,c,d].forEach(r=>{if(r.error)throw r.error});$('sectionContent').innerHTML='<p>Welcome to the NEXVORA UNBAN control center.</p><div class="cards"><div class="stat"><span>License Keys</span><strong>'+(a.count??0)+'</strong></div><div class="stat"><span>Unban Forms</span><strong>'+(b.count??0)+'</strong></div><div class="stat"><span>Pending Payments</span><strong>'+(c.count??0)+'</strong></div><div class="stat"><span>Telegram Events</span><strong>'+(d.count??0)+'</strong></div></div><div class="panel"><h3>System Status</h3><p>Supabase connection is active. Admin authentication is verified.</p></div><div class="panel"><h3>Service Notice</h3><p>This is an independent appeal-request assistance service, not an official Garena panel. No unban result is guaranteed.</p></div>'}  
-async function licenses(){const r=await db.from('license_keys').select('id,key_prefix,status,customer_email,created_at,expires_at,approved_at,notes').order('created_at',{ascending:false}).limit(100);if(r.error)throw r.error;$('sectionContent').innerHTML='<div class="panel"><div class="top"><h3>License Keys</h3><button class="btn primary" onclick="genModal()">＋ GENERATE KEY</button></div><p>Generated license secrets are shown once. Database stores only a SHA-256 hash.</p><div class="actions"><button class="btn" onclick="licenses()">↻ REFRESH</button></div>'+(r.data.length?r.data.map(x=>'<div class="list"><strong>'+esc(x.key_prefix||'License')+'</strong> '+badge(x.status)+'<br>Customer: '+esc(x.customer_email||'Not assigned')+'<br>Created: '+esc(date(x.created_at))+'<br>Expires: '+esc(date(x.expires_at))+(x.notes?'<br>Notes: '+esc(x.notes):'')+'<div class="actions">'+(x.status==='active'?'<button class="btn danger" onclick="revoke(\''+x.id+'\')">REVOKE</button>':'')+'<button class="btn danger" onclick="delKey(\''+x.id+'\')">DELETE</button></div></div>').join(''):'<div class="empty">No license records found.</div>')+'</div>'}  
-function genModal(){$('modalRoot').innerHTML='<div class="modal"><div class="modal-card"><h3>Generate License Key</h3><p>Optional customer email assignment.</p><label>Customer Email</label><input id="genEmail" type="email" placeholder="customer@example.com"><div class="actions"><button class="btn primary" onclick="generate()">GENERATE</button><button class="btn" onclick="$(\'modalRoot\').innerHTML=\'\'">CANCEL</button></div></div></div>'}  
-async function generate(){try{const key='NX-'+rnd(4)+'-'+rnd(2),r=await db.from('license_keys').insert({key_hash:await hash(key),key_prefix:key,status:'active',customer_email:$('genEmail').value.trim().toLowerCase()||null,approved_by:(await user())?.id||null,approved_at:new Date().toISOString()});if(r.error)throw r.error;$('modalRoot').innerHTML='<div class="modal"><div class="modal-card"><h3>License Generated</h3><p>Copy this key now. The full key is not stored in plaintext.</p><div class="key-box"><div class="key-value">'+esc(key)+'</div></div><div class="actions"><button class="btn primary" onclick="copyKey('+JSON.stringify(key)+')">COPY KEY</button><button class="btn" onclick="$(\'modalRoot\').innerHTML=\'\'">DONE</button></div></div></div>';toast('License generated');licenses()}catch(e){toast('Generate failed: '+e.message)}}  
-async function copyKey(k){try{await navigator.clipboard.writeText(k);toast('Copied')}catch(e){toast('Copy failed; copy manually')}}async function revoke(id){if(!confirm('Revoke this license?'))return;const r=await db.from('license_keys').update({status:'revoked'}).eq('id',id);if(r.error)return toast(r.error.message);toast('License revoked');licenses()}async function delKey(id){if(!confirm('Delete this license permanently?'))return;const r=await db.from('license_keys').delete().eq('id',id);if(r.error)return toast(r.error.message);toast('License deleted');licenses()}  
-async function forms(paymentOnly=false){let q=db.from('unban_forms').select('*').order('created_at',{ascending:false}).limit(100);if(paymentOnly)q=q.not('payment_utr','is',null).is('payment_verified_at',null);const r=await q;if(r.error)throw r.error;$('sectionContent').innerHTML='<div class="panel"><div class="top"><h3>'+(paymentOnly?'Payments Awaiting Review':'Unban Forms')+'</h3><button class="btn" onclick="forms('+paymentOnly+')">↻ REFRESH</button></div><p>Review submitted records and update status.</p>'+(r.data.length?r.data.map(x=>'<div class="list"><strong>Order: '+esc(x.order_id||x.id)+'</strong> '+badge(x.status)+'<br>UID: '+esc(x.player_uid)+'<br>ID Level: '+esc(x.id_level)+'<br>Game: '+esc(x.game_name)+'<br>Region: '+esc(x.region)+' &nbsp; Device: '+esc(x.device)+'<br>Ban: '+esc(x.ban_type)+' &nbsp; Date: '+esc(x.ban_date)+'<br>Customer: '+esc(x.full_name||'—')+'<br>UTR: '+esc(x.payment_utr||'Not submitted')+'<br>Submitted: '+esc(date(x.submitted_at||x.created_at))+'<div class="actions"><button class="btn primary" onclick="openForm(\''+x.id+'\')">VIEW / UPDATE</button></div></div>').join(''):'<div class="empty">No matching records found.</div>')+'</div>'}  
-async function openForm(id){const r=await db.from('unban_forms').select('*').eq('id',id).maybeSingle();if(r.error||!r.data)return toast(r.error?.message||'Form not found');const x=r.data;$('modalRoot').innerHTML='<div class="modal"><div class="modal-card"><h3>Unban Form — '+esc(x.order_id||x.id)+'</h3><div class="grid2"><div><label>Player UID</label><input disabled value="'+esc(x.player_uid)+'"></div><div><label>ID Level</label><input disabled value="'+esc(x.id_level)+'"></div><div><label>Game</label><input disabled value="'+esc(x.game_name)+'"></div><div><label>Region</label><input disabled value="'+esc(x.region)+'"></div><div><label>Device</label><input disabled value="'+esc(x.device)+'"></div><div><label>Ban Type</label><input disabled value="'+esc(x.ban_type)+'"></div></div><label>Status</label><select id="formStatus">'+['submitted','payment_pending','payment_verified','processing','completed','rejected'].map(s=>'<option value="'+s+'" '+(x.status===s?'selected':'')+'>'+s+'</option>').join('')+'</select><label>Admin Notes</label><textarea id="formNotes">'+esc(x.notes||'')+'</textarea><p class="field-note">UTR: '+esc(x.payment_utr||'Not submitted')+'</p><div class="actions"><button class="btn primary" onclick="saveForm(\''+id+'\')">SAVE</button><button class="btn" onclick="$(\'modalRoot\').innerHTML=\'\'">CLOSE</button></div></div></div>'}  
-async function saveForm(id){const st=$('formStatus').value,vals={status:st,notes:$('formNotes').value.trim()||null,updated_at:new Date().toISOString()};if(st==='payment_verified'){vals.payment_verified_by=(await user())?.id||null;vals.payment_verified_at=new Date().toISOString()}const r=await db.from('unban_forms').update(vals).eq('id',id);if(r.error)return toast(r.error.message);$('modalRoot').innerHTML='';toast('Form updated');render(currentSection)}  
-async function telegram(){const r=await db.from('telegram_events').select('*').order('created_at',{ascending:false}).limit(50);if(r.error)throw r.error;$('sectionContent').innerHTML='<div class="panel"><h3>Telegram Integration</h3><p><strong>Bot status:</strong> Not connected yet.</p><p style="margin-top:8px">The Telegram bot has not been created/configured yet. This section is intentionally ready for the later integration.</p><div class="warning">Never put a Telegram bot token in this client-side HTML.</div></div><div class="panel"><h3>Recorded Events</h3>'+(r.data.length?r.data.map(x=>'<div class="list"><strong>'+esc(x.event_type)+'</strong><br>User: '+esc(x.telegram_user_id||'—')+'<br>Created: '+esc(date(x.created_at))+'</div>').join(''):'<div class="empty">No Telegram events recorded yet.</div>')+'</div>'}  
-async function settings(){const r=await db.from('site_settings').select('key,value,updated_at').order('key');if(r.error)throw r.error;const m={};(r.data||[]).forEach(x=>m[x.key]=x.value);$('sectionContent').innerHTML='<div class="panel"><h3>Site Settings</h3><p>Edit values and save them directly to Supabase.</p><div class="grid2"><div><label>License Price</label><input id="sLic" type="number" min="0" value="'+esc(m.license_price_inr??99)+'"></div><div><label>Request Price</label><input id="sReq" type="number" min="0" value="'+esc(m.request_price_inr??399)+'"></div><div><label>UPI ID</label><input id="sUpi" value="'+esc(m.payment_upi_id??'')+'"></div><div><label>Support Username</label><input id="sSup" value="'+esc(m.support_username??'')+'"></div></div><label>Service Disclaimer</label><textarea id="sDis">'+esc(m.service_disclaimer??'')+'</textarea><div class="actions"><button class="btn primary" onclick="saveSettings()">SAVE SETTINGS</button></div></div>'}  
-async function saveSettings(){try{const uid=(await user())?.id||null,vals=[['license_price_inr',Number($('sLic').value)||0],['request_price_inr',Number($('sReq').value)||0],['payment_upi_id',$('sUpi').value.trim()],['support_username',$('sSup').value.trim()],['service_disclaimer',$('sDis').value.trim()]];for(const [key,value] of vals){const r=await db.from('site_settings').upsert({key,value,updated_by:uid,updated_at:new Date().toISOString()},{onConflict:'key'});if(r.error)throw r.error}toast('Settings saved');settings()}catch(e){toast('Save failed: '+e.message)}}  
-const loaders={overview,licenses,forms:()=>forms(false),payments:()=>forms(true),telegram,settings};async function render(k){currentSection=k||'overview';$('sectionTitle').textContent=names[currentSection];document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.section===currentSection));$('sectionContent').innerHTML='<div class="panel"><p>Loading...</p></div>';try{await loaders[currentSection]()}catch(e){$('sectionContent').innerHTML='<div class="panel"><h3>Could not load section</h3><p>'+esc(e.message)+'</p><button class="btn" onclick="render(\''+currentSection+'\')">RETRY</button></div>'}}  
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginButton').disabled=true;msg('Signing in...',false);try{const r=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(r.error)throw r.error;if(!await verify(r.data.user)){await db.auth.signOut();throw new Error('This account is not authorized for the admin panel.')}showAdmin();await render('overview')}catch(e){msg(e.message||'Login failed')}finally{$('loginButton').disabled=false}});document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>render(b.dataset.section)));$('logoutButton').addEventListener('click',async()=>{await db.auth.signOut();showLogin();$('password').value='';msg('Logged out',false)});db.auth.getSession().then(async r=>{if(r.data.session&&await verify(r.data.session.user)){showAdmin();render('overview')}});  
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXVORA UNBAN — Admin Panel</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
+body{
+  min-height:100vh;
+  background:#07030c;
+  color:#f7efff;
+  font-family:Arial,sans-serif
+}
+
+button,input,select,textarea{
+  font:inherit
+}
+
+button{
+  cursor:pointer
+}
+
+.hidden{
+  display:none!important
+}
+
+.bg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 20% 0%,#51008055,transparent 42%),
+    radial-gradient(ellipse at 100% 100%,#34004444,transparent 40%)
+}
+
+.brand{
+  font-weight:900;
+  letter-spacing:2px;
+  color:#e0b7ff
+}
+
+.login-wrap{
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:20px
+}
+
+.login-card{
+  width:min(100%,420px);
+  padding:30px 24px;
+  border:1px solid #a65cff66;
+  border-radius:22px;
+  background:#10091bed;
+  box-shadow:0 0 45px #922bff20
+}
+
+.eyebrow{
+  font-size:10px;
+  letter-spacing:3px;
+  color:#bf8df3;
+  margin-top:22px
+}
+
+h1{
+  font-size:29px;
+  margin:12px 0
+}
+
+p{
+  font-size:13px;
+  color:#b7a6c7;
+  line-height:1.7
+}
+
+label{
+  display:block;
+  margin:16px 0 8px;
+  font-size:12px;
+  color:#ddc5f4
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #8050a866;
+  border-radius:10px;
+  background:#08040e;
+  color:white;
+  outline:none
+}
+
+input,select{
+  height:46px
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#c17aff
+}
+
+.btn{
+  border:1px solid #c18aff66;
+  border-radius:10px;
+  min-height:42px;
+  padding:0 15px;
+  background:#ffffff08;
+  color:#fff;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:.8px
+}
+
+.btn:hover{
+  background:#ffffff14
+}
+
+.btn.primary{
+  background:linear-gradient(110deg,#7000e8,#a52aff)
+}
+
+.btn.success{
+  border-color:#48e0a055;
+  background:#48e0a01a
+}
+
+.btn.danger{
+  border-color:#ff557755;
+  background:#ff55771a
+}
+
+.btn.full{
+  width:100%;
+  margin-top:18px
+}
+
+.message{
+  margin-top:14px;
+  min-height:18px;
+  color:#ffb4df;
+  font-size:12px
+}
+
+.warning{
+  margin-top:18px;
+  padding:12px;
+  border:1px solid #a65cff33;
+  border-radius:10px;
+  font-size:11px;
+  color:#ad9aba;
+  line-height:1.6
+}
+
+.app{
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr)
+}
+
+.sidebar{
+  padding:23px 15px;
+  border-right:1px solid #a65cff2d;
+  background:#0b0611
+}
+
+.sidebar .brand{
+  padding:0 8px 25px;
+  line-height:1.7
+}
+
+.nav{
+  width:100%;
+  display:block;
+  text-align:left;
+  padding:12px;
+  margin:4px 0;
+  border:1px solid transparent;
+  border-radius:10px;
+  background:transparent;
+  color:#bba9cc;
+  font-size:12px
+}
+
+.nav.active,
+.nav:hover{
+  background:#a42dff18;
+  border-color:#a65cff44;
+  color:white
+}
+
+.side-note{
+  font-size:10px;
+  color:#7f708d;
+  line-height:1.7;
+  padding:20px 8px
+}
+
+.main{
+  min-width:0;
+  padding:24px
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  border-bottom:1px solid #a65cff2d;
+  padding-bottom:18px
+}
+
+.top h2{
+  font-size:20px
+}
+
+.pill{
+  font-size:10px;
+  border:1px solid #9f5bd655;
+  border-radius:20px;
+  padding:8px 10px;
+  color:#d9b4ff
+}
+
+.content{
+  padding-top:25px
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:13px;
+  margin:22px 0
+}
+
+.stat{
+  padding:18px;
+  border:1px solid #a65cff35;
+  border-radius:14px;
+  background:#150b20
+}
+
+.stat span{
+  font-size:11px;
+  color:#b7a6c7
+}
+
+.stat strong{
+  display:block;
+  font-size:22px;
+  margin-top:12px
+}
+
+.panel{
+  padding:20px;
+  border:1px solid #a65cff35;
+  border-radius:15px;
+  background:#10091bd9;
+  margin-bottom:15px
+}
+
+.panel h3{
+  font-size:15px;
+  margin-bottom:10px
+}
+
+.panel p{
+  font-size:12px
+}
+
+.row,
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px
+}
+
+.row .btn{
+  flex:1;
+  min-width:120px
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px
+}
+
+.list{
+  padding:14px 0;
+  border-bottom:1px solid #a65cff22;
+  font-size:12px;
+  color:#b9a8c9;
+  line-height:1.8
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:999px;
+  border:1px solid #a65cff55;
+  font-size:10px;
+  margin:2px
+}
+
+.badge.active,
+.badge.verified,
+.badge.completed{
+  color:#b5ffcf;
+  border-color:#48e0a055;
+  background:#48e0a01a
+}
+
+.badge.rejected{
+  color:#ffb4b4;
+  border-color:#ff557755;
+  background:#ff55771a
+}
+
+.badge.pending{
+  color:#ffd89a;
+  border-color:#ffb84d55;
+  background:#ffb84d1a
+}
+
+.empty{
+  padding:22px 0;
+  color:#9e8cac;
+  font-size:12px
+}
+
+.key-box{
+  margin-top:14px;
+  padding:15px;
+  border:1px dashed #c17aff66;
+  border-radius:12px;
+  background:#08040e
+}
+
+.key-value{
+  font-family:monospace;
+  font-size:17px;
+  letter-spacing:1px;
+  color:#f2d8ff;
+  word-break:break-all
+}
+
+.small,
+.field-note{
+  font-size:11px;
+  color:#9e8cac
+}
+
+.order-box{
+  margin-top:12px;
+  padding:14px;
+  border:1px solid #48e0a044;
+  border-radius:12px;
+  background:#48e0a00b
+}
+
+.order-value{
+  font-family:monospace;
+  color:#c9ffd9;
+  font-size:16px;
+  font-weight:bold;
+  letter-spacing:1px;
+  word-break:break-all
+}
+
+.detail-box{
+  margin-top:12px;
+  padding:14px;
+  border:1px solid #a65cff2d;
+  border-radius:12px;
+  background:#08040e
+}
+
+.detail-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:7px 0;
+  border-bottom:1px solid #a65cff18;
+  font-size:11px
+}
+
+.detail-row:last-child{
+  border-bottom:0
+}
+
+.detail-label{
+  color:#8f7ca0
+}
+
+.detail-value{
+  color:#eee0f7;
+  text-align:right;
+  word-break:break-word
+}
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:20;
+  max-width:360px;
+  padding:13px 15px;
+  border-radius:11px;
+  background:#160c20;
+  border:1px solid #a65cff66;
+  box-shadow:0 10px 35px #0008;
+  font-size:12px
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:10;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  background:#0009
+}
+
+.modal-card{
+  width:min(100%,560px);
+  max-height:90vh;
+  overflow:auto;
+  padding:22px;
+  border:1px solid #a65cff55;
+  border-radius:18px;
+  background:#10091b
+}
+
+.copy-inline{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px
+}
+
+.copy-inline .key-value{
+  flex:1;
+  min-width:0
+}
+
+@media(max-width:900px){
+  .cards{
+    grid-template-columns:repeat(2,minmax(0,1fr))
+  }
+}
+
+@media(max-width:700px){
+  .app{
+    grid-template-columns:1fr
+  }
+
+  .sidebar{
+    border-right:0;
+    border-bottom:1px solid #a65cff2d;
+    padding:14px
+  }
+
+  .sidebar .brand{
+    padding:0 4px 12px
+  }
+
+  .navs{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:4px
+  }
+
+  .nav{
+    margin:0
+  }
+
+  .side-note{
+    display:none
+  }
+
+  .main{
+    padding:17px
+  }
+
+  .cards,
+  .grid2{
+    grid-template-columns:1fr
+  }
+
+  .detail-row{
+    flex-direction:column;
+    gap:3px
+  }
+
+  .detail-value{
+    text-align:left
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<section id="loginView" class="login-wrap">
+
+  <form class="login-card" id="loginForm">
+
+    <div class="brand">NEXVORA UNBAN</div>
+
+    <div class="eyebrow">
+      RESTRICTED CONTROL CENTER
+    </div>
+
+    <h1>Admin Login</h1>
+
+    <p>
+      Sign in with your authorized administrator account.
+    </p>
+
+    <label>Admin Email</label>
+    <input
+      id="email"
+      type="email"
+      autocomplete="username"
+      required
+      placeholder="Enter admin email"
+    >
+
+    <label>Password</label>
+    <input
+      id="password"
+      type="password"
+      autocomplete="current-password"
+      required
+      placeholder="Enter password"
+    >
+
+    <button
+      class="btn primary full"
+      id="loginButton"
+      type="submit"
+    >
+      SECURE LOGIN
+    </button>
+
+    <div
+      class="message"
+      id="loginMessage"
+    ></div>
+
+    <div class="warning">
+      Admin access is restricted to the allowlisted Supabase account.
+      Never share this password.
+    </div>
+
+  </form>
+
+</section>
+
+<section id="adminApp" class="app hidden">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      NEXVORA<br>
+      ADMIN
+    </div>
+
+    <div class="navs">
+
+      <button
+        class="nav active"
+        data-section="overview"
+      >
+        ◈ &nbsp; Dashboard
+      </button>
+
+      <button
+        class="nav"
+        data-section="licenses"
+      >
+        ⌘ &nbsp; License Keys
+      </button>
+
+      <button
+        class="nav"
+        data-section="forms"
+      >
+        ▤ &nbsp; Unban Forms
+      </button>
+
+      <button
+        class="nav"
+        data-section="payments"
+      >
+        ₹ &nbsp; Payments
+      </button>
+
+      <button
+        class="nav"
+        data-section="telegram"
+      >
+        ↗ &nbsp; Telegram
+      </button>
+
+      <button
+        class="nav"
+        data-section="settings"
+      >
+        ⚙ &nbsp; Settings
+      </button>
+
+    </div>
+
+    <p class="side-note">
+      ADMIN ACCESS ONLY<br>
+      Never share your login details.
+    </p>
+
+    <button
+      class="btn full"
+      id="logoutButton"
+      type="button"
+    >
+      LOG OUT
+    </button>
+
+  </aside>
+
+  <main class="main">
+
+    <header class="top">
+
+      <h2 id="sectionTitle">
+        Dashboard
+      </h2>
+
+      <span class="pill">
+        SECURE ADMIN CONTROL
+      </span>
+
+    </header>
+
+    <div
+      class="content"
+      id="sectionContent"
+    ></div>
+
+  </main>
+
+</section>
+
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>  
+  const SUPABASE_URL="https://sitgwrnvxaugresvlvfl.supabase.co";
+const SUPABASE_KEY="sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ";
+
+const db=window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const $=id=>document.getElementById(id);
+
+let currentSection="overview";
+
+const names={
+  overview:"Dashboard",
+  licenses:"License Keys",
+  forms:"Unban Forms",
+  payments:"Payments",
+  telegram:"Telegram",
+  settings:"Settings"
+};
+
+function esc(v){
+  return String(v??"").replace(
+    /[&<>"']/g,
+    c=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[c])
+  );
+}
+
+function toast(t){
+  $("toastRoot").innerHTML=
+    '<div class="toast">'+esc(t)+'</div>';
+
+  setTimeout(()=>{
+    $("toastRoot").innerHTML="";
+  },3200);
+}
+
+function msg(t,e=true){
+  $("loginMessage").textContent=t;
+  $("loginMessage").style.color=
+    e ? "#ffb4df" : "#b5ffcf";
+}
+
+function date(v){
+  if(!v)return"—";
+
+  const d=new Date(v);
+
+  return isNaN(d)
+    ? String(v)
+    : d.toLocaleString();
+}
+
+function badge(s){
+  s=String(s||"unknown");
+
+  let c;
+
+  if(
+    [
+      "active",
+      "verified",
+      "completed",
+      "approved",
+      "payment_verified",
+      "submitted",
+      "in_review"
+    ].includes(s)
+  ){
+    c="verified";
+  }else if(
+    [
+      "revoked",
+      "rejected",
+      "declined",
+      "cancelled"
+    ].includes(s)
+  ){
+    c="rejected";
+  }else{
+    c="pending";
+  }
+
+  return '<span class="badge '+c+'">'+
+    esc(s)+
+    '</span>';
+}
+
+async function user(){
+  return (
+    await db.auth.getUser()
+  ).data.user || null;
+}
+
+async function hash(t){
+  const d=await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(t)
+  );
+
+  return Array.from(
+    new Uint8Array(d)
+  )
+  .map(x=>x.toString(16).padStart(2,"0"))
+  .join("");
+}
+
+function rnd(n){
+  const s=
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  const a=new Uint32Array(n);
+
+  crypto.getRandomValues(a);
+
+  return Array.from(
+    a,
+    x=>s[x%s.length]
+  ).join("");
+}
+
+function makeOrderId(){
+  const a=new Uint8Array(6);
+
+  crypto.getRandomValues(a);
+
+  const hex=Array.from(
+    a,
+    x=>x.toString(16).padStart(2,"0")
+  ).join("").toUpperCase();
+
+  return "NXU-"+hex;
+}
+
+async function verify(u){
+  if(!u?.email)return false;
+
+  const r=await db
+    .from("admin_allowlist")
+    .select("email")
+    .eq("email",u.email)
+    .maybeSingle();
+
+  if(r.error)throw r.error;
+
+  return !!r.data;
+}
+
+function showAdmin(){
+  $("loginView").classList.add("hidden");
+  $("adminApp").classList.remove("hidden");
+}
+
+function showLogin(){
+  $("adminApp").classList.add("hidden");
+  $("loginView").classList.remove("hidden");
+}
+
+async function overview(){
+
+  const [
+    a,
+    b,
+    c,
+    d
+  ]=await Promise.all([
+
+    db
+      .from("license_keys")
+      .select("id",{count:"exact",head:true}),
+
+    db
+      .from("unban_forms")
+      .select("id",{count:"exact",head:true}),
+
+    db
+      .from("unban_forms")
+      .select("id",{count:"exact",head:true})
+      .eq("status","payment_pending"),
+
+    db
+      .from("telegram_events")
+      .select("id",{count:"exact",head:true})
+
+  ]);
+
+  [a,b,c,d].forEach(r=>{
+    if(r.error)throw r.error;
+  });
+
+  $("sectionContent").innerHTML=`
+
+    <p>
+      Welcome to the NEXVORA UNBAN control center.
+    </p>
+
+    <div class="cards">
+
+      <div class="stat">
+        <span>License Keys</span>
+        <strong>${a.count??0}</strong>
+      </div>
+
+      <div class="stat">
+        <span>Unban Forms</span>
+        <strong>${b.count??0}</strong>
+      </div>
+
+      <div class="stat">
+        <span>Pending Payments</span>
+        <strong>${c.count??0}</strong>
+      </div>
+
+      <div class="stat">
+        <span>Telegram Events</span>
+        <strong>${d.count??0}</strong>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h3>System Status</h3>
+
+      <p>
+        Supabase connection is active.
+        Admin authentication is verified.
+      </p>
+
+    </div>
+
+    <div class="panel">
+
+      <h3>Service Notice</h3>
+
+      <p>
+        This is an independent appeal-request assistance
+        service, not an official Garena panel.
+        No unban result is guaranteed.
+      </p>
+
+    </div>
+  `;
+}
+
+async function licenses(){
+
+  const r=await db
+    .from("license_keys")
+    .select(
+      "id,key_prefix,status,customer_email,created_at,expires_at,approved_at,notes"
+    )
+    .order("created_at",{ascending:false})
+    .limit(100);
+
+  if(r.error)throw r.error;
+
+  $("sectionContent").innerHTML=`
+
+    <div class="panel">
+
+      <div class="top">
+
+        <h3>License Keys</h3>
+
+        <button
+          class="btn primary"
+          onclick="genModal()"
+        >
+          ＋ GENERATE KEY
+        </button>
+
+      </div>
+
+      <p>
+        Generated license secrets are shown once.
+        Database stores only a SHA-256 hash.
+      </p>
+
+      <div class="actions">
+
+        <button
+          class="btn"
+          onclick="licenses()"
+        >
+          ↻ REFRESH
+        </button>
+
+      </div>
+
+      ${
+        r.data.length
+        ?
+        r.data.map(x=>`
+
+          <div class="list">
+
+            <strong>
+              ${esc(x.key_prefix||"License")}
+            </strong>
+
+            ${badge(x.status)}
+
+            <br>
+
+            Customer:
+            ${esc(x.customer_email||"Not assigned")}
+
+            <br>
+
+            Created:
+            ${esc(date(x.created_at))}
+
+            <br>
+
+            Expires:
+            ${esc(date(x.expires_at))}
+
+            ${
+              x.notes
+              ?
+              `<br>Notes: ${esc(x.notes)}`
+              :
+              ""
+            }
+
+            <div class="actions">
+
+              ${
+                x.status==="active"
+                ?
+                `
+                <button
+                  class="btn danger"
+                  onclick="revoke('${x.id}')"
+                >
+                  REVOKE
+                </button>
+                `
+                :
+                ""
+              }
+
+              <button
+                class="btn danger"
+                onclick="delKey('${x.id}')"
+              >
+                DELETE
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join("")
+        :
+        `
+        <div class="empty">
+          No license records found.
+        </div>
+        `
+      }
+
+    </div>
+  `;
+}
+
+function genModal(){
+
+  $("modalRoot").innerHTML=`
+
+    <div class="modal">
+
+      <div class="modal-card">
+
+        <h3>
+          Generate License Key
+        </h3>
+
+        <p>
+          Optional customer email assignment.
+        </p>
+
+        <label>
+          Customer Email
+        </label>
+
+        <input
+          id="genEmail"
+          type="email"
+          placeholder="customer@example.com"
+        >
+
+        <div class="actions">
+
+          <button
+            class="btn primary"
+            onclick="generate()"
+          >
+            GENERATE
+          </button>
+
+          <button
+            class="btn"
+            onclick="$('modalRoot').innerHTML=''"
+          >
+            CANCEL
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+}
+
+async function generate(){
+
+  try{
+
+    const key=
+      "NX-"+
+      rnd(4)+
+      "-"+
+      rnd(2);
+
+    const r=await db
+      .from("license_keys")
+      .insert({
+
+        key_hash:await hash(key),
+
+        key_prefix:key,
+
+        status:"active",
+
+        customer_email:
+          $("genEmail")
+            .value
+            .trim()
+            .toLowerCase() || null,
+
+        approved_by:
+          (await user())?.id || null,
+
+        approved_at:
+          new Date().toISOString()
+
+      });
+
+    if(r.error)throw r.error;
+
+    $("modalRoot").innerHTML=`
+
+      <div class="modal">
+
+        <div class="modal-card">
+
+          <h3>
+            License Generated
+          </h3>
+
+          <p>
+            Copy this key now.
+            The full key is not stored in plaintext.
+          </p>
+
+          <div class="key-box">
+
+            <div class="key-value">
+              ${esc(key)}
+            </div>
+
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="btn primary"
+              onclick='copyKey(${JSON.stringify(key)})'
+            >
+              COPY KEY
+            </button>
+
+            <button
+              class="btn"
+              onclick="$('modalRoot').innerHTML=''"
+            >
+              DONE
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+    toast("License generated");
+
+    await licenses();
+
+  }catch(e){
+
+    toast(
+      "Generate failed: "+
+      (e.message||"Unknown error")
+    );
+
+  }
+}
+
+async function copyKey(k){
+
+  try{
+
+    await navigator.clipboard.writeText(k);
+
+    toast("License key copied");
+
+  }catch(e){
+
+    toast(
+      "Copy failed; copy manually"
+    );
+
+  }
+}
+
+async function revoke(id){
+
+  if(
+    !confirm(
+      "Revoke this license? It will no longer be active."
+    )
+  ){
+    return;
+  }
+
+  const r=await db
+    .from("license_keys")
+    .update({
+      status:"revoked"
+    })
+    .eq("id",id);
+
+  if(r.error){
+    return toast(r.error.message);
+  }
+
+  toast("License revoked");
+
+  await licenses();
+}
+
+async function delKey(id){
+
+  if(
+    !confirm(
+      "Delete this license permanently?"
+    )
+  ){
+    return;
+  }
+
+  const r=await db
+    .from("license_keys")
+    .delete()
+    .eq("id",id);
+
+  if(r.error){
+    return toast(r.error.message);
+  }
+
+  toast("License deleted");
+
+  await licenses();
+}
+
+async function forms(paymentOnly=false){
+
+  let q=db
+    .from("unban_forms")
+    .select("*")
+    .order("created_at",{ascending:false})
+    .limit(100);
+
+  if(paymentOnly){
+
+    q=q.eq(
+      "status",
+      "payment_pending"
+    );
+
+  }
+
+  const r=await q;
+
+  if(r.error)throw r.error;
+
+  $("sectionContent").innerHTML=`
+
+    <div class="panel">
+
+      <div class="top">
+
+        <h3>
+          ${
+            paymentOnly
+            ?
+            "Payments Awaiting Review"
+            :
+            "Unban Forms"
+          }
+        </h3>
+
+        <button
+          class="btn"
+          onclick="forms(${paymentOnly})"
+        >
+          ↻ REFRESH
+        </button>
+
+      </div>
+
+      <p>
+        Review submitted records and update status.
+      </p>
+
+      ${
+        r.data.length
+        ?
+        r.data.map(x=>`
+
+          <div class="list">
+
+            <strong>
+              Order:
+              ${esc(x.order_id||x.id)}
+            </strong>
+
+            ${badge(x.status)}
+
+            <br>
+
+            UID:
+            ${esc(x.player_uid)}
+
+            <br>
+
+            ID Level:
+            ${esc(x.id_level)}
+
+            <br>
+
+            Game:
+            ${esc(x.game_name)}
+
+            <br>
+
+            Region:
+            ${esc(x.region)}
+            &nbsp;
+            Device:
+            ${esc(x.device)}
+
+            <br>
+
+            Ban:
+            ${esc(x.ban_type)}
+            &nbsp;
+            Date:
+            ${esc(x.ban_date||"—")}
+
+            <br>
+
+            Customer:
+            ${esc(x.full_name||"—")}
+
+            <br>
+
+            UTR:
+            ${esc(x.payment_utr||"Not submitted")}
+
+            <br>
+
+            Payment Verified:
+            ${esc(date(x.payment_verified_at))}
+
+            <br>
+
+            Submitted:
+            ${esc(
+              date(
+                x.submitted_at||
+                x.created_at
+              )
+            )}
+
+            <div class="actions">
+
+              <button
+                class="btn primary"
+                onclick="openForm('${x.id}')"
+              >
+                VIEW / UPDATE
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join("")
+        :
+        `
+        <div class="empty">
+          No matching records found.
+        </div>
+        `
+      }
+
+    </div>
+  `;
+  }
+  async function openForm(id){
+
+  const r=await db
+    .from("unban_forms")
+    .select("*")
+    .eq("id",id)
+    .maybeSingle();
+
+  if(r.error||!r.data){
+    return toast(
+      r.error?.message||
+      "Form not found"
+    );
+  }
+
+  const x=r.data;
+
+  const finalOrder=
+    x.order_id &&
+    !String(x.order_id).startsWith("PENDING-")
+      ? x.order_id
+      : "Not generated yet";
+
+  $("modalRoot").innerHTML=`
+
+    <div class="modal">
+
+      <div class="modal-card">
+
+        <h3>
+          Unban Form Details
+        </h3>
+
+        <p>
+          Review the complete customer submission
+          before updating the form.
+        </p>
+
+        <div class="detail-box">
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Current Order ID
+            </span>
+
+            <span class="detail-value">
+              ${esc(finalOrder)}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Player UID
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.player_uid)}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              ID Level
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.id_level)}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Game Name
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.game_name)}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Region
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.region)}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Device
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.device)}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Ban Type
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.ban_type)}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Ban Date
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.ban_date||"—")}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Full Name
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.full_name||"Not submitted")}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Payment UTR
+            </span>
+
+            <span class="detail-value">
+              ${esc(x.payment_utr||"Not submitted")}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Payment Verified At
+            </span>
+
+            <span class="detail-value">
+              ${esc(date(x.payment_verified_at))}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Created
+            </span>
+
+            <span class="detail-value">
+              ${esc(date(x.created_at))}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">
+              Submitted
+            </span>
+
+            <span class="detail-value">
+              ${esc(
+                date(
+                  x.submitted_at||
+                  x.created_at
+                )
+              )}
+            </span>
+          </div>
+
+        </div>
+
+        ${
+          x.order_id &&
+          !String(x.order_id).startsWith("PENDING-")
+          ?
+          `
+          <div class="order-box">
+
+            <div class="small">
+              FINAL ORDER ID
+            </div>
+
+            <div class="copy-inline">
+
+              <div class="order-value">
+                ${esc(x.order_id)}
+              </div>
+
+              <button
+                class="btn"
+                onclick='copyKey(${JSON.stringify(x.order_id)})'
+              >
+                COPY
+              </button>
+
+            </div>
+
+          </div>
+          `
+          :
+          ""
+        }
+
+        <label>
+          Status
+        </label>
+
+        <select id="formStatus">
+
+          <option
+            value="draft"
+            ${x.status==="draft"?"selected":""}
+          >
+            draft
+          </option>
+
+          <option
+            value="awaiting_payment"
+            ${x.status==="awaiting_payment"?"selected":""}
+          >
+            awaiting_payment
+          </option>
+
+          <option
+            value="payment_pending"
+            ${x.status==="payment_pending"?"selected":""}
+          >
+            payment_pending
+          </option>
+
+          <option
+            value="payment_verified"
+            ${x.status==="payment_verified"?"selected":""}
+          >
+            payment_verified
+          </option>
+
+          <option
+            value="submitted"
+            ${x.status==="submitted"?"selected":""}
+          >
+            submitted
+          </option>
+
+          <option
+            value="in_review"
+            ${x.status==="in_review"?"selected":""}
+          >
+            in_review
+          </option>
+
+          <option
+            value="completed"
+            ${x.status==="completed"?"selected":""}
+          >
+            completed
+          </option>
+
+          <option
+            value="rejected"
+            ${x.status==="rejected"?"selected":""}
+          >
+            rejected
+          </option>
+
+        </select>
+
+        <label>
+          Admin Notes
+        </label>
+
+        <textarea
+          id="formNotes"
+          placeholder="Add internal admin notes..."
+        >${esc(x.notes||"")}</textarea>
+
+        <p class="field-note">
+          Payment UTR:
+          ${esc(x.payment_utr||"Not submitted")}
+        </p>
+
+        <div class="actions">
+
+          <button
+            class="btn primary"
+            onclick="saveForm('${x.id}')"
+          >
+            SAVE
+          </button>
+
+          <button
+            class="btn"
+            onclick="$('modalRoot').innerHTML=''"
+          >
+            CLOSE
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+}
+
+async function saveForm(id){
+
+  try{
+
+    const st=$("formStatus").value;
+
+    const notes=
+      $("formNotes")
+        .value
+        .trim()||
+      null;
+
+    const now=
+      new Date().toISOString();
+
+    const current=await db
+      .from("unban_forms")
+      .select(
+        "id,order_id,status,payment_utr,payment_verified_at"
+      )
+      .eq("id",id)
+      .maybeSingle();
+
+    if(current.error){
+      throw current.error;
+    }
+
+    if(!current.data){
+      throw new Error(
+        "Form record not found."
+      );
+    }
+
+    const existing=current.data;
+
+    const vals={
+      status:st,
+      notes:notes,
+      updated_at:now
+    };
+
+    /*
+      PAYMENT VERIFIED FLOW
+
+      Final Order ID is created ONLY here,
+      when the administrator verifies payment.
+
+      A PENDING-* ID is temporary and must
+      never be shown as the final Order ID.
+    */
+
+    if(st==="payment_verified"){
+
+      let finalOrderId=
+        existing.order_id;
+
+      if(
+        !finalOrderId ||
+        String(finalOrderId)
+          .startsWith("PENDING-")
+      ){
+
+        finalOrderId=
+          makeOrderId();
+
+      }
+
+      vals.order_id=
+        finalOrderId;
+
+      vals.payment_verified_by=
+        (await user())?.id||
+        null;
+
+      vals.payment_verified_at=
+        existing.payment_verified_at||
+        now;
+
+    }
+
+    /*
+      If payment is changed away from
+      payment_verified, we do NOT delete
+      an already generated final Order ID.
+    */
+
+    const r=await db
+      .from("unban_forms")
+      .update(vals)
+      .eq("id",id);
+
+    if(r.error){
+      throw r.error;
+    }
+
+    $("modalRoot").innerHTML="";
+
+    if(st==="payment_verified"){
+
+      const refreshed=await db
+        .from("unban_forms")
+        .select(
+          "order_id,status"
+        )
+        .eq("id",id)
+        .maybeSingle();
+
+      if(refreshed.error){
+        throw refreshed.error;
+      }
+
+      const orderId=
+        refreshed.data?.order_id||
+        vals.order_id||
+        "—";
+
+      toast(
+        "Payment verified. Final Order ID: "+
+        orderId
+      );
+
+    }else{
+
+      toast(
+        "Form updated successfully"
+      );
+
+    }
+
+    await render(currentSection);
+
+  }catch(e){
+
+    toast(
+      "Update failed: "+
+      (e.message||"Unknown error")
+    );
+
+  }
+}
+
+async function telegram(){
+
+  const r=await db
+    .from("telegram_events")
+    .select("*")
+    .order("created_at",{ascending:false})
+    .limit(50);
+
+  if(r.error)throw r.error;
+
+  $("sectionContent").innerHTML=`
+
+    <div class="panel">
+
+      <h3>
+        Telegram Integration
+      </h3>
+
+      <p>
+        <strong>Bot status:</strong>
+        Not connected yet.
+      </p>
+
+      <p style="margin-top:8px">
+        The Telegram notification integration
+        is prepared separately and will not expose
+        any bot token inside this client-side panel.
+      </p>
+
+      <div class="warning">
+        Never put a Telegram bot token in this
+        client-side HTML.
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h3>
+        Recorded Events
+      </h3>
+
+      ${
+        r.data.length
+        ?
+        r.data.map(x=>`
+
+          <div class="list">
+
+            <strong>
+              ${esc(x.event_type)}
+            </strong>
+
+            ${badge(x.event_type)}
+
+            <br>
+
+            User:
+            ${esc(x.telegram_user_id||"—")}
+
+            <br>
+
+            Created:
+            ${esc(date(x.created_at))}
+
+          </div>
+
+        `).join("")
+        :
+        `
+        <div class="empty">
+          No Telegram events recorded yet.
+        </div>
+        `
+      }
+
+    </div>
+  `;
+}
+
+async function settings(){
+
+  const r=await db
+    .from("site_settings")
+    .select(
+      "key,value,updated_at"
+    )
+    .order("key");
+
+  if(r.error)throw r.error;
+
+  const m={};
+
+  (r.data||[]).forEach(x=>{
+    m[x.key]=x.value;
+  });
+
+  $("sectionContent").innerHTML=`
+
+    <div class="panel">
+
+      <h3>
+        Site Settings
+      </h3>
+
+      <p>
+        Edit values and save them directly
+        to Supabase.
+      </p>
+
+      <div class="grid2">
+
+        <div>
+
+          <label>
+            License Price
+          </label>
+
+          <input
+            id="sLic"
+            type="number"
+            min="0"
+            value="${esc(
+              m.license_price_inr??99
+            )}"
+          >
+
+        </div>
+
+        <div>
+
+          <label>
+            Request Price
+          </label>
+
+          <input
+            id="sReq"
+            type="number"
+            min="0"
+            value="${esc(
+              m.request_price_inr??399
+            )}"
+          >
+
+        </div>
+
+        <div>
+
+          <label>
+            UPI ID
+          </label>
+
+          <input
+            id="sUpi"
+            value="${esc(
+              m.payment_upi_id||
+              "jinwoo40054@kphdfc"
+            )}"
+          >
+
+        </div>
+
+        <div>
+
+          <label>
+            Support Username
+          </label>
+
+          <input
+            id="sSup"
+            value="${esc(
+              m.support_username||
+              "@NEXVORA_X"
+            )}"
+          >
+
+        </div>
+
+      </div>
+
+      <label>
+        Service Disclaimer
+      </label>
+
+      <textarea id="sDis">${esc(
+        m.service_disclaimer||
+        "This is an independent appeal-request assistance service. No unban result is guaranteed."
+      )}</textarea>
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="saveSettings()"
+        >
+          SAVE SETTINGS
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+async function saveSettings(){
+
+  try{
+
+    const uid=
+      (await user())?.id||
+      null;
+
+    const vals=[
+
+      [
+        "license_price_inr",
+        Number($("sLic").value)||0
+      ],
+
+      [
+        "request_price_inr",
+        Number($("sReq").value)||0
+      ],
+
+      [
+        "payment_upi_id",
+        $("sUpi").value.trim()
+      ],
+
+      [
+        "support_username",
+        $("sSup").value.trim()
+      ],
+
+      [
+        "service_disclaimer",
+        $("sDis").value.trim()
+      ]
+
+    ];
+
+    for(
+      const [key,value]
+      of vals
+    ){
+
+      const r=await db
+        .from("site_settings")
+        .upsert(
+          {
+            key,
+            value,
+            updated_by:uid,
+            updated_at:
+              new Date().toISOString()
+          },
+          {
+            onConflict:"key"
+          }
+        );
+
+      if(r.error){
+        throw r.error;
+      }
+
+    }
+
+    toast(
+      "Settings saved successfully"
+    );
+
+    await settings();
+
+  }catch(e){
+
+    toast(
+      "Save failed: "+
+      (e.message||"Unknown error")
+    );
+
+  }
+        }
+  const loaders={
+  overview:overview,
+  licenses:licenses,
+  forms:()=>forms(false),
+  payments:()=>forms(true),
+  telegram:telegram,
+  settings:settings
+};
+
+async function render(k){
+
+  currentSection=
+    k||
+    "overview";
+
+  $("sectionTitle").textContent=
+    names[currentSection];
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(b=>{
+      b.classList.toggle(
+        "active",
+        b.dataset.section===
+        currentSection
+      );
+    });
+
+  $("sectionContent").innerHTML=`
+
+    <div class="panel">
+
+      <p>
+        Loading...
+      </p>
+
+    </div>
+  `;
+
+  try{
+
+    const loader=
+      loaders[currentSection];
+
+    if(!loader){
+      throw new Error(
+        "Section loader not found."
+      );
+    }
+
+    await loader();
+
+  }catch(e){
+
+    $("sectionContent").innerHTML=`
+
+      <div class="panel">
+
+        <h3>
+          Could not load section
+        </h3>
+
+        <p>
+          ${esc(
+            e.message||
+            "Unknown error"
+          )}
+        </p>
+
+        <button
+          class="btn"
+          onclick="render('${currentSection}')"
+          style="margin-top:14px"
+        >
+          RETRY
+        </button>
+
+      </div>
+    `;
+  }
+}
+
+async function handleLogin(e){
+
+  e.preventDefault();
+
+  const loginButton=
+    $("loginButton");
+
+  loginButton.disabled=true;
+
+  msg(
+    "Signing in...",
+    false
+  );
+
+  try{
+
+    const email=
+      $("email")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const password=
+      $("password").value;
+
+    if(!email){
+      throw new Error(
+        "Enter your admin email."
+      );
+    }
+
+    if(!password){
+      throw new Error(
+        "Enter your password."
+      );
+    }
+
+    const r=
+      await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if(r.error){
+      throw r.error;
+    }
+
+    const authorized=
+      await verify(r.data.user);
+
+    if(!authorized){
+
+      await db.auth.signOut();
+
+      throw new Error(
+        "This account is not authorized for the admin panel."
+      );
+    }
+
+    msg(
+      "Login successful.",
+      false
+    );
+
+    showAdmin();
+
+    $("password").value="";
+
+    await render("overview");
+
+  }catch(e){
+
+    msg(
+      e.message||
+      "Login failed."
+    );
+
+  }finally{
+
+    loginButton.disabled=false;
+
+  }
+}
+
+async function handleLogout(){
+
+  try{
+
+    await db.auth.signOut();
+
+    showLogin();
+
+    $("password").value="";
+
+    $("email").value="";
+
+    $("sectionContent").innerHTML="";
+
+    currentSection=
+      "overview";
+
+    msg(
+      "Logged out successfully.",
+      false
+    );
+
+  }catch(e){
+
+    toast(
+      "Logout failed: "+
+      (e.message||
+       "Unknown error")
+    );
+
+  }
+}
+
+document
+  .getElementById("loginForm")
+  .addEventListener(
+    "submit",
+    handleLogin
+  );
+
+document
+  .querySelectorAll(".nav")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        const section=
+          button.dataset.section;
+
+        render(section);
+
+      }
+    );
+
+  });
+
+$("logoutButton")
+  .addEventListener(
+    "click",
+    handleLogout
+  );
+
+db.auth.onAuthStateChange(
+  async(event,session)=>{
+
+    if(
+      event==="SIGNED_OUT"
+    ){
+      showLogin();
+      return;
+    }
+
+    if(
+      event==="SIGNED_IN" &&
+      session?.user
+    ){
+
+      try{
+
+        const authorized=
+          await verify(
+            session.user
+          );
+
+        if(!authorized){
+
+          await db.auth.signOut();
+
+          msg(
+            "This account is not authorized for the admin panel."
+          );
+
+          return;
+        }
+
+        showAdmin();
+
+        await render(
+          currentSection||
+          "overview"
+        );
+
+      }catch(e){
+
+        await db.auth.signOut();
+
+        msg(
+          e.message||
+          "Authorization check failed."
+        );
+
+      }
+
+    }
+
+  }
+);
+
+(async function init(){
+
+  try{
+
+    const r=
+      await db.auth.getSession();
+
+    const session=
+      r.data?.session;
+
+    if(!session){
+
+      showLogin();
+
+      return;
+    }
+
+    const authorized=
+      await verify(
+        session.user
+      );
+
+    if(!authorized){
+
+      await db.auth.signOut();
+
+      showLogin();
+
+      msg(
+        "This account is not authorized for the admin panel."
+      );
+
+      return;
+    }
+
+    showAdmin();
+
+    await render("overview");
+
+  }catch(e){
+
+    showLogin();
+
+    msg(
+      e.message||
+      "Unable to initialize admin panel."
+    );
+
+  }
+
+})();
+  </script>
+
 </body>
 </html>
