@@ -1,92 +1,445 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXVORA | Unban Payment</title>
+<title>NEXVORA X | Unban Payment</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#fff;background:radial-gradient(circle at top,#32105c,#10051d 55%,#05020b);padding:22px}
-.wrap{max-width:480px;margin:25px auto;background:#160d24;border:1px solid #8739c9;border-radius:20px;padding:25px;box-shadow:0 0 35px #8c2be455}
-h1{text-align:center;color:#d9a4ff;letter-spacing:2px;font-size:25px}
-.sub{text-align:center;color:#bba9ca;font-size:13px}
-.amount{text-align:center;font-size:38px;font-weight:bold;color:#e8c5ff;margin:22px 0}
-.qr{background:#fff;padding:14px;border-radius:12px;width:max-content;margin:20px auto;min-width:190px;min-height:190px;display:flex;align-items:center;justify-content:center}
-.qr img{max-width:100%}
-.upi{text-align:center;color:#d7b9ef;font-size:14px;word-break:break-all}
-button{width:100%;border:0;border-radius:10px;padding:14px;margin-top:13px;font-weight:bold;font-size:15px;cursor:pointer;background:linear-gradient(90deg,#8b2be2,#c04bff);color:white}
-.secondary{background:#342044;border:1px solid #8d50bd}
-input{width:100%;padding:14px;border-radius:9px;border:1px solid #7845a0;background:#0d0715;color:#fff;margin-top:8px;outline:none}
-label{display:block;margin-top:17px;color:#e1c8f4;font-size:14px}
-.hidden{display:none}
-.note{color:#bba9ca;font-size:12px;text-align:center;line-height:1.6;margin-top:18px}
-.error{color:#ff7777;text-align:center;font-size:13px;margin-top:12px}
-.spinner{width:62px;height:62px;border:5px solid #53336c;border-top-color:#d58aff;border-radius:50%;animation:spin 1s linear infinite;margin:30px auto}
-@keyframes spin{to{transform:rotate(360deg)}}
-#processing{text-align:center;padding:20px 0}
-#processing h2{color:#dda5ff}
-#result{text-align:center;padding:20px 0}
-.order{font-size:21px;font-weight:bold;color:#e4b5ff;word-break:break-all;margin:20px 0}
+:root{
+  --purple:#8b2be2;
+  --pink:#ff008c;
+  --cyan:#00c8ff;
+  --text:#fff;
+  --muted:#b9a9ca;
+}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;overflow-x:hidden;
+  font-family:Arial,sans-serif;color:var(--text);
+  background:#020006;
+}
+.bg{
+  position:fixed;inset:0;z-index:-5;
+  background:
+    radial-gradient(ellipse at 50% 45%,#190b30 0%,#080311 55%,#020006 100%);
+}
+.grid-bg{
+  position:fixed;inset:-45%;z-index:-4;
+  background-image:
+    linear-gradient(#8b2be21c 1px,transparent 1px),
+    linear-gradient(90deg,#8b2be21c 1px,transparent 1px);
+  background-size:55px 55px;
+  transform:perspective(520px) rotateX(65deg);
+  transform-origin:center;
+  animation:gridMove 10s linear infinite;
+  opacity:.48;
+}
+@keyframes gridMove{
+  from{background-position:0 0}
+  to{background-position:0 110px}
+}
+.orb{
+  position:fixed;width:280px;height:280px;border-radius:50%;
+  filter:blur(95px);opacity:.28;z-index:-3;pointer-events:none;
+}
+.orb1{background:#7300ff;top:10%;left:15%;animation:orbMove1 12s ease-in-out infinite alternate}
+.orb2{background:#ff008c;bottom:5%;right:8%;animation:orbMove2 14s ease-in-out infinite alternate}
+.orb3{background:#00c8ff;top:35%;right:20%;animation:orbMove3 11s ease-in-out infinite alternate}
+@keyframes orbMove1{to{transform:translate(100px,80px) scale(1.2)}}
+@keyframes orbMove2{to{transform:translate(-100px,-80px) scale(1.25)}}
+@keyframes orbMove3{to{transform:translate(-80px,100px) scale(.8)}}
+.particles{
+  position:fixed;inset:0;overflow:hidden;z-index:-2;
+  pointer-events:none;
+}
+.particle{
+  position:absolute;bottom:-15px;width:3px;height:3px;
+  background:#c58aff;border-radius:50%;
+  box-shadow:0 0 9px #a64cff,0 0 18px #8b2be2;
+  animation:particleRise linear infinite;
+}
+@keyframes particleRise{
+  0%{transform:translateY(0) scale(.5);opacity:0}
+  15%{opacity:1}
+  85%{opacity:.8}
+  100%{transform:translateY(-110vh) scale(1.3);opacity:0}
+}
+button,input{font:inherit}
+button{
+  border:1px solid #a34cff;
+  border-radius:7px;padding:15px 20px;
+  width:100%;margin-top:14px;
+  background:linear-gradient(100deg,#6716b8,#a32be8,#7d22d0);
+  color:white;font-weight:800;letter-spacing:1px;
+  cursor:pointer;transition:.25s;
+  box-shadow:0 0 18px #8b2be244;
+}
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 25px #a34cff88;
+}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+button.secondary{
+  background:transparent;border-color:#75409c;
+  box-shadow:none;color:#d8baff;
+}
+input{
+  width:100%;padding:15px 12px;margin-top:9px;
+  color:white;background:#080311;
+  border:1px solid #67418b;border-radius:5px;
+  outline:none;
+}
+input:focus{border-color:#b65cff;box-shadow:0 0 13px #8b2be255}
+label{display:block;margin-top:22px;color:#d8c2ef;font-size:13px;letter-spacing:.5px}
+.hidden{display:none!important}
+.topbar{
+  width:min(1100px,92%);margin:auto;
+  padding:23px 0;display:flex;
+  align-items:center;justify-content:space-between;
+  border-bottom:1px solid #ffffff20;
+}
+.brand{
+  font-size:22px;font-weight:900;letter-spacing:3px;
+  background:linear-gradient(90deg,#fff,#d4a4ff,#8c35ff);
+  background-clip:text;-webkit-background-clip:text;
+  color:transparent;text-shadow:0 0 22px #9b43ff44;
+}
+.back-link{
+  color:#d8baff;text-decoration:none;font-size:12px;
+  letter-spacing:1px;border:1px solid #75409c;
+  padding:10px 14px;border-radius:5px;
+}
+main{width:min(760px,90%);margin:55px auto 70px}
+.heading{text-align:center;margin-bottom:38px}
+.eyebrow{
+  color:#bb77ff;font-size:11px;letter-spacing:4px;
+  font-weight:bold;
+}
+h1{
+  font-size:clamp(27px,6vw,43px);
+  letter-spacing:2px;margin:13px 0;
+  background:linear-gradient(90deg,#fff,#d5a2ff,#a34cff);
+  background-clip:text;-webkit-background-clip:text;color:transparent;
+}
+.subtitle{color:var(--muted);font-size:13px;line-height:1.8}
+.section{
+  padding:28px 0;border-top:1px solid #ffffff20;
+  animation:sectionIn .55s ease both;
+}
+@keyframes sectionIn{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.amount{
+  text-align:center;font-size:clamp(42px,10vw,62px);
+  font-weight:900;letter-spacing:2px;
+  color:#e1baff;text-shadow:0 0 25px #9d43ff88;
+  margin:10px 0 20px;
+}
+.qr{
+  background:#fff;padding:13px;width:210px;height:210px;
+  display:flex;align-items:center;justify-content:center;
+  margin:25px auto;border-radius:5px;
+  box-shadow:0 0 30px #a34cff55;
+}
+.qr img{max-width:100%;max-height:100%}
+.upi{
+  text-align:center;color:#d9baff;
+  font-size:13px;overflow-wrap:anywhere;
+}
+.stage-title{
+  color:#d9aaff;text-align:center;
+  font-size:21px;letter-spacing:2px;
+}
+.note{
+  color:#a99ab9;font-size:12px;
+  text-align:center;line-height:1.8;margin-top:20px;
+}
+.error{color:#ff719e;font-size:13px;text-align:center;margin-top:14px}
+.success{color:#c8a0ff;text-align:center;line-height:1.8}
+.loading-line{
+  width:100%;height:3px;margin:28px 0;
+  background:#241432;overflow:hidden;
+}
+.loading-line:after{
+  content:"";display:block;width:35%;height:100%;
+  background:#c06bff;box-shadow:0 0 15px #a34cff;
+  animation:loading 1.3s ease-in-out infinite;
+}
+@keyframes loading{
+  from{transform:translateX(-110%)}
+  to{transform:translateX(310%)}
+}
+.order{
+  color:#e4b5ff;font-size:clamp(19px,5vw,27px);
+  font-weight:bold;text-align:center;
+  overflow-wrap:anywhere;margin:25px 0;
+  text-shadow:0 0 15px #9b43ff66;
+}
+.footer-note{
+  text-align:center;color:#786b88;
+  font-size:11px;margin-top:40px;line-height:1.8;
+}
+@media(max-width:600px){
+  main{margin-top:38px}
+  .topbar{padding:18px 0}
+  .brand{font-size:18px}
+  .section{padding:23px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
+}
 </style>
 </head>
-<body>
-<div class="wrap">
-  <h1>NEXVORA X</h1>
-  <p class="sub">UNBAN APPEAL PAYMENT</p>
 
-  <section id="payment">
+<body>
+<div class="bg"></div>
+<div class="grid-bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<div class="particles" id="particles"></div>
+
+<header class="topbar">
+  <div class="brand">NEXVORA X</div>
+  <a class="back-link" href="dashboard.html">← DASHBOARD</a>
+</header>
+
+<main>
+  <div class="heading">
+    <div class="eyebrow">SECURE PAYMENT PORTAL</div>
+    <h1>UNBAN APPEAL</h1>
+    <p class="subtitle">Complete your payment submission to continue your appeal request.</p>
+  </div>
+
+  <section id="payment" class="section">
+    <p class="eyebrow" style="text-align:center">APPLICATION FEE</p>
     <div class="amount">₹399</div>
-    <p class="sub">Scan QR code using any UPI app</p>
+    <p class="subtitle" style="text-align:center">Scan the QR code using your UPI app</p>
     <div class="qr" id="qrcode"></div>
     <p class="upi">UPI ID: <b>jinwoo40054@kphdfc</b></p>
     <button id="upiButton">PAY VIA UPI APP</button>
-    <button class="secondary" id="doneButton">DONE</button>
-    <p class="note">Pay exactly ₹399. After completing payment, tap DONE and submit your UTR for verification.</p>
+    <button class="secondary" id="doneButton">PAYMENT DONE</button>
+    <p class="note">Pay exactly ₹399. After payment, tap PAYMENT DONE and submit your UTR for manual verification.</p>
   </section>
 
-  <section id="utrSection" class="hidden">
-    <h2 style="text-align:center;color:#dda5ff">Payment Details</h2>
-    <label>Your Full Name</label>
-    <input id="fullName" type="text" placeholder="Enter your full name" maxlength="100">
-    <label>UTR</label>
-    <input id="utr" type="text" placeholder="Enter your UTR number" maxlength="50">
-    <button id="verifyButton">VERIFY</button>
+  <section id="utrSection" class="section hidden">
+    <h2 class="stage-title">PAYMENT DETAILS</h2>
+    <label for="fullName">YOUR FULL NAME</label>
+    <input id="fullName" type="text" placeholder="Enter your full name" maxlength="100" autocomplete="name">
+    <label for="utr">UPI TRANSACTION REFERENCE (UTR)</label>
+    <input id="utr" type="text" placeholder="Enter your UTR number" maxlength="50" autocomplete="off">
+    <button id="verifyButton">SUBMIT FOR VERIFICATION</button>
     <p id="error" class="error"></p>
   </section>
 
-  <section id="processing" class="hidden">
-    <div class="spinner"></div>
-    <h2>PROCESSING</h2>
-    <p class="sub">Please keep this page open.</p>
+  <section id="processing" class="section hidden">
+    <h2 class="stage-title">PAYMENT UNDER REVIEW</h2>
+    <div class="loading-line"></div>
+    <p class="subtitle" style="text-align:center">Your payment details have been submitted. Please wait while an admin reviews your payment.</p>
   </section>
 
-  <section id="result" class="hidden">
-    <h2 style="color:#c99aff">VERIFICATION COMPLETE</h2>
-    <p class="sub">Your Order ID</p>
+  <section id="verified" class="section hidden">
+    <h2 class="stage-title">PAYMENT SUCCESSFUL</h2>
+    <p class="success">Your payment has been verified. Your unban request has not yet been submitted.</p>
+    <p class="subtitle" style="text-align:center">Amount paid: ₹399</p>
+    <div id="verifiedName" class="success"></div>
+    <div id="verifiedUtr" class="subtitle" style="text-align:center"></div>
+    <button id="submitAppealButton">SUBMIT UNBAN REQUEST</button>
+  </section>
+
+  <section id="finalizing" class="section hidden">
+    <h2 class="stage-title">FINALIZING YOUR REQUEST</h2>
+    <div class="loading-line"></div>
+    <p class="subtitle" style="text-align:center">Please wait while your request is being submitted.</p>
+  </section>
+
+  <section id="result" class="section hidden">
+    <h2 class="stage-title">REQUEST SUBMITTED</h2>
+    <p class="subtitle" style="text-align:center">Your final Order ID</p>
     <div class="order" id="orderId"></div>
     <button id="copyButton">COPY ORDER ID</button>
-    <button class="secondary" onclick="location.href='my-form.html'">MY FORM</button>
+    <button class="secondary" onclick="location.href='my-form.html'">TRACK MY FORM</button>
+    <button class="secondary" onclick="location.href='dashboard.html'">DONE</button>
+    <p class="note">Your 14-day review countdown starts from this submission time. Keep your Order ID safe.</p>
   </section>
-</div>
+
+  <p class="footer-note">NEXVORA X · PAYMENT VERIFICATION IS MANUAL · SUPPORT: @NEXVORA_X</p>
+</main>
+
 
 <script>
 const API = "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow";
 const UPI = "upi://pay?pa=jinwoo40054@kphdfc&pn=NEXVORA%20UNBAN&am=399&cu=INR&tn=NEXVORA%20UNBAN%20APPEAL";
+
 const requestId = sessionStorage.getItem("nexvora_unban_request_id");
 
-const payment = document.getElementById("payment");
-const utrSection = document.getElementById("utrSection");
-const processing = document.getElementById("processing");
-const result = document.getElementById("result");
-const errorBox = document.getElementById("error");
+const sections = [
+  "payment", "utrSection", "processing",
+  "verified", "finalizing", "result"
+];
 
-if (!requestId) {
-  alert("Your appeal session was not found. Please submit the form again.");
-  location.replace("unban-form.html");
-} else {
-  new QRCode(document.getElementById("qrcode"), {
+let polling = false;
+let pollTimer = null;
+
+const el = id => document.getElementById(id);
+
+function showOnly(id) {
+  sections.forEach(sectionId => {
+    el(sectionId).classList.toggle("hidden", sectionId !== id);
+  });
+  el(id).scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function showError(text) {
+  el("error").textContent = text;
+}
+
+function createParticles() {
+  const container = el("particles");
+  const count = window.innerWidth < 600 ? 35 : 60;
+
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement("span");
+    particle.className = "particle";
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.animationDuration = (7 + Math.random() * 12) + "s";
+    particle.style.animationDelay = (Math.random() * 12) + "s";
+    particle.style.opacity = Math.random();
+    container.appendChild(particle);
+  }
+}
+
+async function apiCall(payload) {
+  const response = await fetch(API, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(payload)
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || data.error || data.success === false) {
+    throw new Error(data.error || data.message || "Request failed.");
+  }
+
+  return data;
+}
+
+function showVerified(data) {
+  showOnly("verified");
+
+  el("verifiedName").textContent =
+    "Name: " + (data.full_name || "Not available");
+
+  el("verifiedUtr").textContent =
+    "UTR: " + (data.payment_utr || "Not available");
+
+  sessionStorage.setItem("nexvora_unban_payment_verified", "yes");
+}
+
+function showFinalOrder(orderId) {
+  showOnly("result");
+  el("orderId").textContent = orderId;
+  sessionStorage.setItem("nexvora_unban_order_id", orderId);
+  sessionStorage.removeItem("nexvora_unban_payment_submitted");
+  sessionStorage.removeItem("nexvora_unban_payment_verified");
+}
+
+async function checkStatus() {
+  const data = await apiCall({
+    action: "status",
+    request_id: requestId
+  });
+
+  if (data.verified && data.order_id) {
+    // Older or already-finalized request.
+    showFinalOrder(data.order_id);
+    return "finalized";
+  }
+
+  if (data.verified) {
+    showVerified(data);
+    return "verified";
+  }
+
+  if (
+    data.status === "rejected" ||
+    data.status === "payment_rejected"
+  ) {
+    showOnly("utrSection");
+    showError("Payment was not approved. Please contact support.");
+    return "rejected";
+  }
+
+  return "pending";
+}
+
+async function pollStatus() {
+  if (polling) return;
+  polling = true;
+
+  showOnly("processing");
+
+  while (polling) {
+    try {
+      const state = await checkStatus();
+
+      if (state !== "pending") {
+        polling = false;
+        return;
+      }
+    } catch (error) {
+      console.warn("Status check failed:", error);
+    }
+
+    await new Promise(resolve => {
+      pollTimer = setTimeout(resolve, 5000);
+    });
+  }
+}
+
+function stopPolling() {
+  polling = false;
+  if (pollTimer) clearTimeout(pollTimer);
+}
+
+async function initialize() {
+  createParticles();
+
+  if (!requestId) {
+    alert("Your appeal session was not found. Please submit the form again.");
+    location.replace("unban-form.html");
+    return;
+  }
+
+  const oldOrder = sessionStorage.getItem("nexvora_unban_order_id");
+
+  if (oldOrder) {
+    showFinalOrder(oldOrder);
+    return;
+  }
+
+  if (sessionStorage.getItem("nexvora_unban_payment_submitted") === "yes") {
+    await pollStatus();
+    return;
+  }
+
+  try {
+    const state = await checkStatus();
+
+    if (state === "pending") {
+      showOnly("payment");
+    }
+  } catch (error) {
+    console.error(error);
+    showOnly("payment");
+  }
+
+  new QRCode(el("qrcode"), {
     text: UPI,
     width: 180,
     height: 180,
@@ -94,107 +447,96 @@ if (!requestId) {
   });
 }
 
-document.getElementById("upiButton").onclick = () => {
-  location.href = UPI;
-};
+el("upiButton").addEventListener("click", () => {
+  window.location.href = UPI;
+});
 
-document.getElementById("doneButton").onclick = () => {
-  payment.classList.add("hidden");
-  utrSection.classList.remove("hidden");
-};
+el("doneButton").addEventListener("click", () => {
+  showOnly("utrSection");
+});
 
-document.getElementById("verifyButton").onclick = async () => {
-  const fullName = document.getElementById("fullName").value.trim();
-  const utr = document.getElementById("utr").value.trim();
+el("verifyButton").addEventListener("click", async () => {
+  const fullName = el("fullName").value.trim();
+  const utr = el("utr").value.trim();
 
   if (!fullName || !utr) {
-    errorBox.textContent = "Please enter your full name and UTR.";
+    showError("Please enter your full name and UTR.");
     return;
   }
 
-  const btn = document.getElementById("verifyButton");
+  const btn = el("verifyButton");
   btn.disabled = true;
   btn.textContent = "SUBMITTING...";
-  errorBox.textContent = "";
+  showError("");
 
   try {
-    const response = await fetch(API, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        action: "submit_payment",
-        request_id: requestId,
-        full_name: fullName,
-        utr: utr
-      })
+    await apiCall({
+      action: "submit_payment",
+      request_id: requestId,
+      full_name: fullName,
+      utr: utr
     });
 
-    const data = await response.json();
-    if (!response.ok || !data.success) {
-      throw new Error(data.error || "Submission failed");
-    }
-
     sessionStorage.setItem("nexvora_unban_payment_submitted", "yes");
-    utrSection.classList.add("hidden");
-    processing.classList.remove("hidden");
-    pollStatus();
-  } catch (e) {
-    errorBox.textContent = e.message || "Something went wrong. Please try again.";
+    sessionStorage.removeItem("nexvora_unban_payment_verified");
+
+    await pollStatus();
+  } catch (error) {
+    showError(error.message || "Could not submit payment details.");
     btn.disabled = false;
-    btn.textContent = "VERIFY";
+    btn.textContent = "SUBMIT FOR VERIFICATION";
   }
-};
+});
 
-let polling = false;
+el("submitAppealButton").addEventListener("click", async () => {
+  const btn = el("submitAppealButton");
+  btn.disabled = true;
+  btn.textContent = "SUBMITTING...";
 
-async function pollStatus() {
-  if (polling) return;
-  polling = true;
+  stopPolling();
+  showOnly("finalizing");
 
-  while (true) {
-    try {
-      const response = await fetch(API, {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-          action: "status",
-          request_id: requestId
-        })
-      });
+  try {
+    const data = await apiCall({
+      action: "finalize",
+      request_id: requestId
+    });
 
-      const data = await response.json();
-
-      if (response.ok && data.verified && data.order_id) {
-        processing.classList.add("hidden");
-        result.classList.remove("hidden");
-        document.getElementById("orderId").textContent = data.order_id;
-        sessionStorage.setItem("nexvora_unban_order_id", data.order_id);
-        return;
-      }
-    } catch (e) {
-      // Keep the processing screen active if the network is temporarily unavailable.
+    if (!data.order_id) {
+      throw new Error("Final Order ID was not returned.");
     }
 
-    await new Promise(resolve => setTimeout(resolve, 5000));
-  }
-}
+    showFinalOrder(data.order_id);
+  } catch (error) {
+    console.error("Finalize error:", error);
 
-document.getElementById("copyButton").onclick = async () => {
-  const id = document.getElementById("orderId").textContent;
+    showOnly("verified");
+    btn.disabled = false;
+    btn.textContent = "SUBMIT UNBAN REQUEST";
+
+    const errorMessage = document.createElement("p");
+    errorMessage.className = "error";
+    errorMessage.textContent =
+      error.message || "Could not submit your appeal. Please try again.";
+
+    el("verified").appendChild(errorMessage);
+  }
+});
+
+el("copyButton").addEventListener("click", async () => {
+  const orderId = el("orderId").textContent;
+
   try {
-    await navigator.clipboard.writeText(id);
-    document.getElementById("copyButton").textContent = "COPIED!";
-  } catch (e) {
-    window.prompt("Copy your Order ID:", id);
+    await navigator.clipboard.writeText(orderId);
+    el("copyButton").textContent = "COPIED!";
+  } catch (error) {
+    window.prompt("Copy your Order ID:", orderId);
   }
-};
+});
 
-if (sessionStorage.getItem("nexvora_unban_payment_submitted") === "yes" && requestId) {
-  payment.classList.add("hidden");
-  utrSection.classList.add("hidden");
-  processing.classList.remove("hidden");
-  pollStatus();
-}
-</script>
+window.addEventListener("beforeunload", stopPolling);
+
+initialize();
+  </script>
 </body>
 </html>
