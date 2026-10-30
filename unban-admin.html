@@ -1,27 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0"
+>
+
 <title>NEXVORA UNBAN — Admin Control</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-html,body{
+html,
+body{
+  width:100%;
   min-height:100%;
 }
 
 body{
-  min-height:100vh;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background:#05030a;
+  color:#f5edff;
   overflow-x:hidden;
-  background:#05020a;
-  color:#f8efff;
-  font-family:Arial,Helvetica,sans-serif;
 }
 
 button,
@@ -36,1239 +51,2230 @@ button{
 }
 
 .hidden{
-  display:none!important;
+  display:none !important;
 }
+
 
 /* ================= BACKGROUND ================= */
 
-.bg{
+body::before{
+  content:"";
   position:fixed;
   inset:0;
   z-index:-5;
-  overflow:hidden;
+
   background:
-    radial-gradient(circle at 20% 10%,#7b00ff35,transparent 35%),
-    radial-gradient(circle at 80% 80%,#d000ff20,transparent 35%),
-    linear-gradient(135deg,#05020a,#0b0312 45%,#040108);
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(168,75,255,.18),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 25%,
+      rgba(103,44,255,.14),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(176,56,255,.10),
+      transparent 38%
+    ),
+    #05030a;
 }
 
-.bg::before,
-.bg::after{
+body::after{
   content:"";
-  position:absolute;
-  width:420px;
-  height:420px;
+  position:fixed;
+  inset:0;
+  z-index:-4;
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      rgba(255,255,255,.015) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.015) 1px,
+      transparent 1px
+    );
+
+  background-size:55px 55px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+}
+
+
+/* ================= GLOW ================= */
+
+.glow-orb{
+  position:fixed;
+  width:260px;
+  height:260px;
   border-radius:50%;
-  filter:blur(80px);
-  opacity:.35;
-  animation:floatGlow 8s ease-in-out infinite alternate;
+  filter:blur(90px);
+  opacity:.22;
+  pointer-events:none;
+  z-index:-3;
 }
 
-.bg::before{
-  background:#7d00ff;
-  top:-180px;
-  left:-150px;
+.orb-one{
+  top:-80px;
+  left:-80px;
+  background:#a855f7;
 }
 
-.bg::after{
-  background:#d900ff;
-  right:-180px;
-  bottom:-180px;
-  animation-delay:2s;
+.orb-two{
+  right:-100px;
+  top:35%;
+  background:#6d28d9;
 }
 
-@keyframes floatGlow{
-  from{
-    transform:translate3d(0,0,0) scale(1);
-  }
-  to{
-    transform:translate3d(40px,25px,0) scale(1.15);
-  }
+.orb-three{
+  left:30%;
+  bottom:-150px;
+  background:#c026d3;
 }
 
-/* ================= WELCOME SCREEN ================= */
 
-#welcomeView{
-  position:relative;
+/* ================= COMMON ================= */
+
+.screen{
+  width:100%;
   min-height:100vh;
+}
+
+.center-screen{
+  min-height:100vh;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:25px;
-  overflow:hidden;
+
+  padding:30px;
 }
 
-.welcome-box{
-  width:min(760px,100%);
-  text-align:center;
-  padding:55px 30px;
-  border:1px solid #b45cff55;
-  border-radius:30px;
-  background:
-    linear-gradient(145deg,#160820e8,#09040fe8);
-  box-shadow:
-    0 0 30px #8e00ff20,
-    0 0 100px #8e00ff10,
-    inset 0 0 40px #b300ff08;
-  animation:welcomeIn 1s ease both;
-}
-
-@keyframes welcomeIn{
-  from{
-    opacity:0;
-    transform:translateY(35px) scale(.96);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-.welcome-logo{
+.brand-mark{
   font-size:13px;
-  letter-spacing:7px;
+  letter-spacing:5px;
   font-weight:900;
-  color:#d8a8ff;
-  margin-bottom:25px;
-  text-shadow:0 0 20px #a900ff88;
+  color:#dcb8ff;
 }
 
-.welcome-title{
-  font-size:clamp(32px,7vw,70px);
-  line-height:1.05;
-  font-weight:900;
-  letter-spacing:2px;
-  background:linear-gradient(90deg,#fff,#d9a6ff,#a800ff,#fff);
-  background-size:250% auto;
+.brand-mark span{
+  color:#fff;
+}
+
+.eyebrow{
+  margin-top:14px;
+
+  font-size:10px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+
+  color:#a995b8;
+}
+
+.main-title{
+  margin-top:18px;
+
+  font-size:
+    clamp(
+      42px,
+      8vw,
+      88px
+    );
+
+  line-height:.95;
+  font-weight:1000;
+  letter-spacing:-3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #d8a8ff,
+      #8f45ff
+    );
+
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
-  animation:titleShine 4s linear infinite;
+
+  text-shadow:
+    0 0 35px rgba(168,85,247,.18);
 }
 
-@keyframes titleShine{
-  to{
-    background-position:250% center;
-  }
-}
+.description{
+  max-width:650px;
+  margin-top:22px;
 
-.welcome-sub{
-  max-width:600px;
-  margin:22px auto 0;
-  color:#bcaac9;
-  font-size:14px;
+  color:#a99bb3;
+  font-size:15px;
   line-height:1.8;
+}
+
+
+/* ================= WELCOME ================= */
+
+#welcomeScreen{
+  position:relative;
+  overflow:hidden;
+}
+
+.welcome-content{
+  width:min(1100px,100%);
+  margin:auto;
+}
+
+.welcome-line{
+  width:70px;
+  height:2px;
+  margin-top:30px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #c084fc,
+      transparent
+    );
+
+  box-shadow:
+    0 0 18px #a855f7;
+}
+
+.welcome-message{
+  margin-top:30px;
+
+  max-width:720px;
+
+  color:#d2c5da;
+  font-size:17px;
+  line-height:1.8;
+}
+
+.welcome-message strong{
+  color:#f1d8ff;
 }
 
 .welcome-tag{
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  margin-top:22px;
-  padding:8px 14px;
-  border:1px solid #a65cff55;
-  border-radius:999px;
-  background:#a65cff0d;
-  color:#d9b7f4;
+  gap:9px;
+
+  margin-top:32px;
+
+  padding:9px 0;
+
+  color:#b996ca;
   font-size:10px;
-  letter-spacing:2px;
+  letter-spacing:3px;
+  text-transform:uppercase;
 }
 
-.pulse-dot{
+.welcome-dot{
   width:7px;
   height:7px;
   border-radius:50%;
-  background:#b94cff;
-  box-shadow:0 0 14px #b94cff;
-  animation:pulse 1.4s infinite;
-}
 
-@keyframes pulse{
-  0%,100%{
-    transform:scale(.8);
-    opacity:.5;
-  }
-  50%{
-    transform:scale(1.25);
-    opacity:1;
-  }
-}
+  background:#c084fc;
 
-.enter-btn{
-  position:relative;
-  min-width:230px;
-  height:55px;
-  margin-top:35px;
-  padding:0 30px;
-  border:1px solid #d18aff88;
-  border-radius:15px;
-  color:#fff;
-  background:linear-gradient(110deg,#6800d9,#a500ff,#6800d9);
-  background-size:200% 100%;
   box-shadow:
-    0 0 25px #a000ff35,
-    inset 0 0 20px #fff1;
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:2px;
-  transition:.25s;
-  animation:buttonGlow 2s ease-in-out infinite;
+    0 0 14px #c084fc;
 }
 
-@keyframes buttonGlow{
-  0%,100%{
-    box-shadow:0 0 20px #a000ff25;
-  }
-  50%{
-    box-shadow:0 0 40px #a000ff55;
-  }
-}
 
-.enter-btn:hover{
-  transform:translateY(-3px) scale(1.02);
-  background-position:100% 0;
-}
-
-.enter-btn:active{
-  transform:scale(.98);
-}
-
-/* ================= LOGIN ================= */
-
-#loginView{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:22px;
-}
-
-.login-card{
-  width:min(430px,100%);
-  padding:32px 25px;
-  border:1px solid #a65cff55;
-  border-radius:25px;
-  background:linear-gradient(145deg,#15091eea,#08040dea);
-  box-shadow:
-    0 0 35px #8e00ff22,
-    inset 0 0 35px #a000ff08;
-  animation:loginIn .7s ease both;
-}
-
-@keyframes loginIn{
-  from{
-    opacity:0;
-    transform:translateY(25px) scale(.97);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-.login-logo{
-  text-align:center;
-  font-size:13px;
-  letter-spacing:5px;
-  font-weight:900;
-  color:#d6a5ff;
-  margin-bottom:12px;
-}
-
-.login-eyebrow{
-  text-align:center;
-  font-size:9px;
-  letter-spacing:3px;
-  color:#8f76a1;
-  margin-bottom:12px;
-}
-
-.login-title{
-  text-align:center;
-  font-size:28px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.login-desc{
-  text-align:center;
-  color:#9e8cac;
-  font-size:12px;
-  line-height:1.6;
-  margin-bottom:22px;
-}
-
-label{
-  display:block;
-  margin:15px 0 8px;
-  color:#d8c2e7;
-  font-size:11px;
-  letter-spacing:.5px;
-}
-
-input,
-select,
-textarea{
-  width:100%;
-  border:1px solid #8050a866;
-  border-radius:11px;
-  background:#07030c;
-  color:#fff;
-  outline:none;
-}
-
-input,
-select{
-  height:46px;
-  padding:0 13px;
-}
-
-textarea{
-  min-height:100px;
-  padding:12px 13px;
-  resize:vertical;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:#c17aff;
-  box-shadow:0 0 18px #a000ff15;
-}
-
-.login-btn{
-  width:100%;
-  height:48px;
-  margin-top:22px;
-  border:1px solid #c98aff77;
-  border-radius:12px;
-  color:#fff;
-  background:linear-gradient(110deg,#7100e8,#ae28ff);
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:1.5px;
-  transition:.25s;
-}
-
-.login-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 25px #a000ff35;
-}
-
-.login-btn:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-.login-message{
-  min-height:20px;
-  margin-top:13px;
-  text-align:center;
-  font-size:11px;
-  color:#ffb4df;
-}
-
-.login-warning{
-  margin-top:17px;
-  padding:11px;
-  border:1px solid #a65cff2d;
-  border-radius:10px;
-  color:#8e7c9c;
-  font-size:10px;
-  line-height:1.6;
-  text-align:center;
-}
-
-/* ================= ACCESS GRANTED ================= */
-
-#accessView{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:25px;
-}
-
-.access-box{
-  width:min(600px,100%);
-  padding:45px 25px;
-  text-align:center;
-  border:1px solid #a65cff55;
-  border-radius:28px;
-  background:#100719ee;
-  box-shadow:0 0 70px #9900ff22;
-  animation:accessIn .7s ease both;
-}
-
-@keyframes accessIn{
-  from{
-    opacity:0;
-    transform:scale(.9);
-  }
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-}
-
-.access-icon{
-  width:80px;
-  height:80px;
-  margin:0 auto 22px;
-  display:grid;
-  place-items:center;
-  border:1px solid #a65cff77;
-  border-radius:50%;
-  color:#dba8ff;
-  font-size:32px;
-  box-shadow:
-    0 0 25px #a000ff35,
-    inset 0 0 20px #a000ff15;
-  animation:accessPulse 1.5s infinite;
-}
-
-@keyframes accessPulse{
-  0%,100%{
-    transform:scale(1);
-    box-shadow:0 0 20px #a000ff25;
-  }
-  50%{
-    transform:scale(1.08);
-    box-shadow:0 0 45px #a000ff55;
-  }
-}
-
-.access-title{
-  font-size:31px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.access-sub{
-  margin-top:10px;
-  color:#aa98b8;
-  font-size:12px;
-}
-
-.access-btn{
-  min-width:220px;
-  height:48px;
-  margin-top:28px;
-  border:1px solid #c18aff66;
-  border-radius:12px;
-  color:#fff;
-  background:linear-gradient(110deg,#7000e8,#a52aff);
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:1.5px;
-}
-
-/* ================= ADMIN APP BASE ================= */
-
-.app{
-  position:relative;
-  min-height:100vh;
-  display:grid;
-  grid-template-columns:230px minmax(0,1fr);
-}
-
-.sidebar{
-  padding:22px 15px;
-  border-right:1px solid #a65cff2d;
-  background:#0a0510e8;
-  backdrop-filter:blur(15px);
-}
-
-.brand{
-  font-weight:900;
-  letter-spacing:2px;
-  color:#e0b7ff;
-}
-
-.sidebar .brand{
-  padding:0 8px 25px;
-  line-height:1.7;
-}
-
-.nav{
-  width:100%;
-  display:block;
-  text-align:left;
-  padding:12px;
-  margin:4px 0;
-  border:1px solid transparent;
-  border-radius:10px;
-  background:transparent;
-  color:#bba9cc;
-  font-size:12px;
-  transition:.2s;
-}
-
-.nav.active,
-.nav:hover{
-  background:#a42dff18;
-  border-color:#a65cff44;
-  color:#fff;
-}
-
-.side-note{
-  padding:20px 8px;
-  color:#756681;
-  font-size:10px;
-  line-height:1.7;
-}
-
-.main{
-  min-width:0;
-  padding:24px;
-}
-
-.top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-  border-bottom:1px solid #a65cff2d;
-  padding-bottom:18px;
-}
-
-.top h2{
-  font-size:20px;
-}
-
-.pill{
-  padding:8px 10px;
-  border:1px solid #9f5bd655;
-  border-radius:20px;
-  color:#d9b4ff;
-  font-size:10px;
-}
-
-.content{
-  padding-top:25px;
-}
+/* ================= BUTTONS ================= */
 
 .btn{
-  min-height:42px;
-  padding:0 15px;
-  border:1px solid #c18aff66;
-  border-radius:10px;
-  background:#ffffff08;
-  color:#fff;
+  min-height:44px;
+
+  border:1px solid
+    rgba(192,132,252,.28);
+
+  background:
+    rgba(255,255,255,.025);
+
+  color:#eee3f7;
+
+  padding:
+    0 20px;
+
+  transition:
+    .2s ease;
+
+  letter-spacing:1px;
   font-size:11px;
-  font-weight:bold;
-  letter-spacing:.7px;
-  transition:.2s;
+  font-weight:800;
+  text-transform:uppercase;
 }
 
 .btn:hover{
-  background:#ffffff14;
-  transform:translateY(-1px);
+  border-color:
+    rgba(192,132,252,.75);
+
+  color:#fff;
+
+  background:
+    rgba(168,85,247,.10);
+
+  box-shadow:
+    0 0 25px
+    rgba(168,85,247,.15);
+
+  transform:
+    translateY(-1px);
 }
 
 .btn.primary{
-  background:linear-gradient(110deg,#7000e8,#a52aff);
+  border-color:#a855f7;
+
+  background:
+    linear-gradient(
+      90deg,
+      #7c3aed,
+      #a855f7
+    );
+
+  color:#fff;
+
+  box-shadow:
+    0 0 30px
+    rgba(168,85,247,.22);
 }
 
-.btn.success{
-  border-color:#48e0a055;
-  background:#48e0a01a;
+.btn.primary:hover{
+  box-shadow:
+    0 0 40px
+    rgba(168,85,247,.38);
 }
 
-.btn.danger{
-  border-color:#ff557755;
-  background:#ff55771a;
+.enter-btn{
+  margin-top:36px;
+
+  min-width:230px;
+  min-height:52px;
+
+  letter-spacing:2px;
 }
 
-.btn.full{
+
+/* ================= LOGIN ================= */
+
+#loginScreen{
+  position:relative;
+}
+
+.login-content{
+  width:min(520px,100%);
+  margin:auto;
+}
+
+.login-top{
+  margin-bottom:42px;
+}
+
+.login-title{
+  margin-top:15px;
+
+  font-size:
+    clamp(34px,6vw,56px);
+
+  font-weight:950;
+  letter-spacing:-2px;
+}
+
+.login-subtitle{
+  margin-top:13px;
+
+  color:#97899f;
+  line-height:1.7;
+  font-size:13px;
+}
+
+.form-line{
+  margin-top:26px;
+}
+
+.form-line label{
+  display:block;
+
+  margin-bottom:9px;
+
+  color:#9f8da9;
+
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.form-line input,
+.form-line select,
+.form-line textarea{
   width:100%;
-  margin-top:18px;
+
+  border:0;
+  border-bottom:1px solid
+    rgba(192,132,252,.22);
+
+  outline:none;
+
+  background:transparent;
+
+  color:#fff;
+
+  padding:
+    13px 2px;
+
+  border-radius:0;
+
+  transition:.2s ease;
 }
+
+.form-line input:focus,
+.form-line select:focus,
+.form-line textarea:focus{
+  border-bottom-color:#b76cff;
+
+  box-shadow:
+    0 8px 25px
+    rgba(168,85,247,.08);
+}
+
+.form-line input::placeholder{
+  color:#5f5367;
+}
+
+.login-submit{
+  width:100%;
+  margin-top:34px;
+}
+
+.login-error{
+  min-height:24px;
+  margin-top:20px;
+
+  color:#ff9eb8;
+
+  font-size:12px;
+}
+
+.login-error.success{
+  color:#b8ffd6;
+}
+
+
+/* ================= ACCESS GRANTED ================= */
+
+#accessScreen{
+  position:relative;
+}
+
+.access-content{
+  width:min(850px,100%);
+  margin:auto;
+  text-align:center;
+}
+
+.access-icon{
+  width:78px;
+  height:78px;
+
+  margin:0 auto 28px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:1px solid
+    rgba(180,255,210,.35);
+
+  border-radius:50%;
+
+  color:#baffd2;
+  font-size:34px;
+
+  box-shadow:
+    0 0 45px
+    rgba(72,224,160,.12);
+
+  animation:
+    accessPulse 2s infinite;
+}
+
+@keyframes accessPulse{
+
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.06);
+  }
+
+}
+
+.access-title{
+  font-size:
+    clamp(38px,7vw,72px);
+
+  font-weight:1000;
+  letter-spacing:-3px;
+
+  color:#d7ffe5;
+}
+
+.access-text{
+  margin-top:18px;
+
+  color:#8fa99a;
+  font-size:13px;
+  line-height:1.8;
+}
+
+.access-btn{
+  margin-top:34px;
+}
+
+
+/* ================= ADMIN APP ================= */
+
+#adminApp{
+  min-height:100vh;
+}
+
+.admin-shell{
+  min-height:100vh;
+
+  display:grid;
+  grid-template-columns:
+    235px 1fr;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.admin-sidebar{
+  min-height:100vh;
+
+  position:sticky;
+  top:0;
+
+  border-right:
+    1px solid
+    rgba(192,132,252,.13);
+
+  padding:28px 20px;
+
+  background:
+    rgba(5,3,10,.72);
+
+  backdrop-filter:
+    blur(18px);
+}
+
+.admin-logo{
+  padding:
+    0 8px 28px;
+
+  border-bottom:
+    1px solid
+    rgba(192,132,252,.10);
+}
+
+.admin-logo-name{
+  font-size:19px;
+  font-weight:1000;
+  letter-spacing:2px;
+}
+
+.admin-logo-sub{
+  margin-top:6px;
+
+  font-size:9px;
+  letter-spacing:3px;
+
+  color:#8f7e99;
+}
+
+.admin-nav{
+  margin-top:24px;
+}
+
+.nav-item{
+  width:100%;
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  border:0;
+
+  border-left:
+    2px solid transparent;
+
+  background:transparent;
+
+  color:#8e8098;
+
+  padding:
+    13px 10px;
+
+  text-align:left;
+
+  font-size:11px;
+  letter-spacing:1px;
+  font-weight:800;
+
+  transition:.2s ease;
+}
+
+.nav-item:hover{
+  color:#eadcff;
+  padding-left:15px;
+}
+
+.nav-item.active{
+  color:#fff;
+
+  border-left-color:#b26cff;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(168,85,247,.12),
+      transparent
+    );
+}
+
+.admin-sidebar-bottom{
+  position:absolute;
+  left:20px;
+  right:20px;
+  bottom:25px;
+}
+
+.logout-btn{
+  width:100%;
+}
+
+
+/* ================= MAIN ================= */
+
+.admin-main{
+  min-width:0;
+  padding:34px 42px 60px;
+}
+
+.admin-header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+
+  padding-bottom:24px;
+
+  border-bottom:
+    1px solid
+    rgba(192,132,252,.10);
+}
+
+.admin-section-title{
+  font-size:
+    clamp(25px,4vw,40px);
+
+  font-weight:950;
+  letter-spacing:-1px;
+}
+
+.admin-section-description{
+  margin-top:8px;
+
+  color:#82758c;
+  font-size:11px;
+}
+
+.security-label{
+  color:#a98aba;
+  font-size:9px;
+  letter-spacing:2px;
+  white-space:nowrap;
+}
+
+#sectionContent{
+  padding-top:30px;
+}
+
 
 /* ================= RESPONSIVE ================= */
 
-@media(max-width:700px){
+@media(max-width:850px){
 
-  .welcome-box{
-    padding:42px 20px;
-  }
-
-  .welcome-title{
-    font-size:38px;
-  }
-
-  .app{
+  .admin-shell{
     grid-template-columns:1fr;
   }
 
-  .sidebar{
+  .admin-sidebar{
+    min-height:auto;
+    position:relative;
+
     border-right:0;
-    border-bottom:1px solid #a65cff2d;
-    padding:14px;
+    border-bottom:
+      1px solid
+      rgba(192,132,252,.13);
+
+    padding:18px;
   }
 
-  .sidebar .brand{
-    padding:0 4px 12px;
-  }
-
-  .navs{
+  .admin-nav{
     display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
+
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
     gap:4px;
   }
 
-  .nav{
-    margin:0;
+  .nav-item{
+    border-left:0;
+    border-bottom:
+      2px solid transparent;
   }
 
-  .side-note{
-    display:none;
+  .nav-item.active{
+    border-left:0;
+    border-bottom-color:#b26cff;
   }
 
-  .main{
-    padding:17px;
+  .admin-sidebar-bottom{
+    position:static;
+    margin-top:14px;
   }
+
+  .admin-main{
+    padding:24px 18px 50px;
+  }
+
+  .admin-header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
 }
+
+@media(max-width:500px){
+
+  .center-screen{
+    padding:22px;
+  }
+
+  .main-title{
+    letter-spacing:-2px;
+  }
+
+  .welcome-message{
+    font-size:14px;
+  }
+
+}
+
+
+/* ================= SECTION ELEMENTS ================= */
+
+.section-title{
+  font-size:20px;
+  font-weight:900;
+}
+
+.section-subtitle{
+  margin-top:7px;
+  color:#82758c;
+  font-size:11px;
+}
+
+.flat-row{
+  padding:20px 0;
+
+  border-bottom:
+    1px solid
+    rgba(192,132,252,.10);
+}
+
+.flat-row:first-child{
+  border-top:
+    1px solid
+    rgba(192,132,252,.10);
+}
+
+.flat-row-title{
+  font-size:14px;
+  font-weight:800;
+  color:#eee5f5;
+}
+
+.flat-row-meta{
+  margin-top:8px;
+
+  color:#82758c;
+
+  font-size:11px;
+  line-height:1.8;
+}
+
+.action-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+
+  margin-top:14px;
+}
+
+.empty-state{
+  padding:35px 0;
+
+  color:#766a80;
+
+  font-size:12px;
+
+  border-top:
+    1px solid
+    rgba(192,132,252,.10);
+
+  border-bottom:
+    1px solid
+    rgba(192,132,252,.10);
+}
+
+
+/* ================= TOAST ================= */
+
+#toastRoot{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:9999;
+}
+
+.toast{
+  padding:13px 17px;
+
+  border-left:
+    2px solid #b56cff;
+
+  background:
+    rgba(14,8,22,.95);
+
+  color:#eee4f5;
+
+  font-size:11px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,.45);
+}
+
+
+/* ================= MODAL ================= */
+
+#modalRoot{
+  position:relative;
+  z-index:5000;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:
+    rgba(0,0,0,.78);
+
+  backdrop-filter:
+    blur(8px);
+}
+
+.modal-card{
+  width:min(700px,100%);
+  max-height:90vh;
+
+  overflow:auto;
+
+  padding:30px 0;
+
+  border-top:
+    1px solid
+    rgba(192,132,252,.35);
+
+  border-bottom:
+    1px solid
+    rgba(192,132,252,.15);
+
+  background:#08050d;
+}
+
+.modal-card h3{
+  font-size:24px;
+  font-weight:950;
+}
+
+.modal-card > p{
+  margin-top:8px;
+  color:#81738b;
+  font-size:11px;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div class="glow-orb orb-one"></div>
+<div class="glow-orb orb-two"></div>
+<div class="glow-orb orb-three"></div>
 
-<!-- ================= WELCOME ================= -->
 
-<section id="welcomeView">
-  <div class="welcome-box">
+<!-- =====================================================
+     WELCOME SCREEN
+===================================================== -->
 
-    <div class="welcome-logo">
-      NEXVORA UNBAN
+<section
+  id="welcomeScreen"
+  class="screen center-screen"
+>
+
+  <div class="welcome-content">
+
+    <div class="brand-mark">
+      NEXVORA <span>UNBAN</span>
     </div>
 
-    <h1 class="welcome-title">
+    <div class="eyebrow">
+      PRIVATE ADMINISTRATION SYSTEM
+    </div>
+
+    <h1 class="main-title">
       WELCOME OUR<br>
       DEAR ADMIN
     </h1>
 
-    <p class="welcome-sub">
-      Welcome to the NEXVORA UNBAN secure control center.
-      Manage requests, payments, licenses and verification
-      from one protected administrative environment.
+    <div class="welcome-line"></div>
+
+    <p class="welcome-message">
+      Welcome to the <strong>NEXVORA UNBAN</strong>
+      control center. This is the private administration
+      area where requests, payments, licenses and system
+      activity can be securely managed.
+      <br><br>
+      Please continue only if you are the authorized
+      administrator of this platform.
     </p>
 
     <div class="welcome-tag">
-      <span class="pulse-dot"></span>
+      <span class="welcome-dot"></span>
       SECURE ADMIN ENVIRONMENT
     </div>
 
     <br>
 
-    <button class="enter-btn" id="welcomeEnter">
-      ENTER ADMIN CONTROL&nbsp; →
+    <button
+      id="enterAdminButton"
+      class="btn primary enter-btn"
+      type="button"
+    >
+      ENTER ADMIN CONTROL →
     </button>
 
   </div>
-</section>
-
-<!-- ================= LOGIN ================= -->
-
-<section id="loginView" class="hidden">
-
-  <form class="login-card" id="loginForm">
-
-    <div class="login-logo">
-      NEXVORA
-    </div>
-
-    <div class="login-eyebrow">
-      RESTRICTED ADMIN ACCESS
-    </div>
-
-    <h1 class="login-title">
-      Admin Login
-    </h1>
-
-    <p class="login-desc">
-      Authenticate with your authorized administrator account
-      to continue into the secure control center.
-    </p>
-
-    <label for="email">
-      ADMIN EMAIL
-    </label>
-
-    <input
-      id="email"
-      type="email"
-      autocomplete="username"
-      required
-      placeholder="Enter admin email"
-    >
-
-    <label for="password">
-      PASSWORD
-    </label>
-
-    <input
-      id="password"
-      type="password"
-      autocomplete="current-password"
-      required
-      placeholder="Enter admin password"
-    >
-
-    <button
-      class="login-btn"
-      id="loginButton"
-      type="submit"
-    >
-      SECURE LOGIN
-    </button>
-
-    <div
-      class="login-message"
-      id="loginMessage"
-    ></div>
-
-    <div class="login-warning">
-      ADMIN ACCESS ONLY<br>
-      Never share your administrator credentials.
-    </div>
-
-  </form>
 
 </section>
 
-<!-- ================= ACCESS GRANTED ================= -->
 
-<section id="accessView" class="hidden">
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
 
-  <div class="access-box">
+<section
+  id="loginScreen"
+  class="screen center-screen hidden"
+>
+
+  <div class="login-content">
+
+    <div class="login-top">
+
+      <div class="brand-mark">
+        NEXVORA <span>UNBAN</span>
+      </div>
+
+      <div class="eyebrow">
+        RESTRICTED CONTROL CENTER
+      </div>
+
+      <h2 class="login-title">
+        ADMIN LOGIN
+      </h2>
+
+      <p class="login-subtitle">
+        Authenticate with your authorized
+        administrator account to continue.
+      </p>
+
+    </div>
+
+
+    <form id="loginForm">
+
+      <div class="form-line">
+
+        <label for="loginEmail">
+          Admin Email
+        </label>
+
+        <input
+          id="loginEmail"
+          type="email"
+          autocomplete="username"
+          placeholder="Enter admin email"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-line">
+
+        <label for="loginPassword">
+          Password
+        </label>
+
+        <input
+          id="loginPassword"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Enter password"
+          required
+        >
+
+      </div>
+
+
+      <button
+        id="loginButton"
+        class="btn primary login-submit"
+        type="submit"
+      >
+        SECURE LOGIN
+      </button>
+
+
+      <div
+        id="loginError"
+        class="login-error"
+      ></div>
+
+    </form>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ACCESS GRANTED
+===================================================== -->
+
+<section
+  id="accessScreen"
+  class="screen center-screen hidden"
+>
+
+  <div class="access-content">
 
     <div class="access-icon">
       ✓
     </div>
 
-    <h1 class="access-title">
-      ACCESS GRANTED
-    </h1>
+    <div class="eyebrow">
+      AUTHENTICATION SUCCESSFUL
+    </div>
 
-    <p class="access-sub">
-      Administrator authentication successful.
-      Your secure control environment is ready.
+    <h2 class="access-title">
+      ACCESS GRANTED
+    </h2>
+
+    <p class="access-text">
+      Administrator identity verified successfully.
+      <br>
+      Your NEXVORA UNBAN control environment is ready.
     </p>
 
     <button
-      class="access-btn"
-      id="accessEnter"
+      id="accessPanelButton"
+      class="btn primary access-btn"
+      type="button"
     >
-      ENTER CONTROL PANEL&nbsp; →
+      ENTER CONTROL PANEL →
     </button>
 
   </div>
 
 </section>
 
-<!-- ================= ADMIN APP ================= -->
 
-<section id="adminApp" class="app hidden">
+<!-- =====================================================
+     ADMIN APPLICATION
+===================================================== -->
 
-  <aside class="sidebar">
+<section
+  id="adminApp"
+  class="screen hidden"
+>
 
-    <div class="brand">
-      NEXVORA<br>
-      ADMIN
-    </div>
+  <div class="admin-shell">
 
-    <div class="navs">
 
-      <button
-        class="nav active"
-        data-section="overview"
-      >
-        ◈ &nbsp; Dashboard
-      </button>
+    <!-- SIDEBAR -->
 
-      <button
-        class="nav"
-        data-section="licenses"
-      >
-        ⌘ &nbsp; License Keys
-      </button>
+    <aside class="admin-sidebar">
 
-      <button
-        class="nav"
-        data-section="forms"
-      >
-        ▤ &nbsp; Unban Forms
-      </button>
+      <div class="admin-logo">
 
-      <button
-        class="nav"
-        data-section="payments"
-      >
-        ₹ &nbsp; Payments
-      </button>
+        <div class="admin-logo-name">
+          NEXVORA
+        </div>
 
-      <button
-        class="nav"
-        data-section="telegram"
-      >
-        ↗ &nbsp; Telegram
-      </button>
+        <div class="admin-logo-sub">
+          UNBAN ADMIN CONTROL
+        </div>
 
-      <button
-        class="nav"
-        data-section="settings"
-      >
-        ⚙ &nbsp; Settings
-      </button>
+      </div>
 
-    </div>
 
-    <p class="side-note">
-      ADMIN CONTROL ONLY<br>
-      Secure • Private • Protected
-    </p>
+      <nav class="admin-nav">
 
-    <button
-      class="btn full"
-      id="logoutButton"
-    >
-      LOG OUT
-    </button>
+        <button
+          class="nav-item active"
+          data-section="dashboard"
+          type="button"
+        >
+          ◈ &nbsp; DASHBOARD
+        </button>
 
-  </aside>
+        <button
+          class="nav-item"
+          data-section="licenses"
+          type="button"
+        >
+          ⌁ &nbsp; LICENSE KEYS
+        </button>
 
-  <main class="main">
+        <button
+          class="nav-item"
+          data-section="forms"
+          type="button"
+        >
+          ▤ &nbsp; UNBAN FORMS
+        </button>
 
-    <header class="top">
+        <button
+          class="nav-item"
+          data-section="payments"
+          type="button"
+        >
+          ₹ &nbsp; PAYMENTS
+        </button>
 
-      <h2 id="sectionTitle">
-        Dashboard
-      </h2>
+        <button
+          class="nav-item"
+          data-section="telegram"
+          type="button"
+        >
+          ↗ &nbsp; TELEGRAM
+        </button>
 
-      <span class="pill">
-        NEXVORA SECURE CONTROL
-      </span>
+        <button
+          class="nav-item"
+          data-section="settings"
+          type="button"
+        >
+          ⚙ &nbsp; SETTINGS
+        </button>
 
-    </header>
+      </nav>
 
-    <div
-      class="content"
-      id="sectionContent"
-    ></div>
 
-  </main>
+      <div class="admin-sidebar-bottom">
+
+        <button
+          id="logoutButton"
+          class="btn logout-btn"
+          type="button"
+        >
+          LOG OUT
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="admin-main">
+
+      <header class="admin-header">
+
+        <div>
+
+          <h1
+            id="sectionTitle"
+            class="admin-section-title"
+          >
+            Dashboard
+          </h1>
+
+          <p
+            id="sectionDescription"
+            class="admin-section-description"
+          >
+            NEXVORA UNBAN system overview.
+          </p>
+
+        </div>
+
+        <div class="security-label">
+          ● SECURE ADMIN CONTROL
+        </div>
+
+      </header>
+
+
+      <div id="sectionContent">
+
+      </div>
+
+    </main>
+
+  </div>
 
 </section>
 
+
+<!-- GLOBAL ROOTS -->
+
 <div id="modalRoot"></div>
+
 <div id="toastRoot"></div>
+
+
+<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const SUPABASE_URL="https://sitgwrnvxaugresvlvfl.supabase.co";
-const SUPABASE_KEY="sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ";
 
-const db=window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const SUPABASE_URL =
+  "https://sitgwrnvxaugresvlvfl.supabase.co";
 
-const $=id=>document.getElementById(id);
+const SUPABASE_KEY =
+  "sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ";
 
-let currentSection="overview";
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-const names={
-  overview:"Dashboard",
-  licenses:"License Keys",
-  forms:"Unban Forms",
-  payments:"Payments",
-  telegram:"Telegram",
-  settings:"Settings"
+const $ =
+  id => document.getElementById(id);
+
+let currentSection =
+  "dashboard";
+
+const sectionNames = {
+
+  dashboard:{
+    title:"Dashboard",
+    description:
+      "NEXVORA UNBAN system overview."
+  },
+
+  licenses:{
+    title:"License Keys",
+    description:
+      "Manage generated license keys."
+  },
+
+  forms:{
+    title:"Unban Forms",
+    description:
+      "Review and manage customer requests."
+  },
+
+  payments:{
+    title:"Payments",
+    description:
+      "Review submitted ₹399 payment information."
+  },
+
+  telegram:{
+    title:"Telegram",
+    description:
+      "View recorded Telegram events."
+  },
+
+  settings:{
+    title:"Settings",
+    description:
+      "Manage NEXVORA UNBAN configuration."
+  }
+
 };
 
-/* ================= HELPERS ================= */
 
-function esc(v){
-  return String(v??"").replace(
-    /[&<>"']/g,
-    c=>({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-    }[c])
-  );
+/* ================= BASIC HELPERS ================= */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(
+      /[&<>"']/g,
+      char => ({
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+
+      }[char])
+    );
+
 }
 
-function toast(text){
-  $("toastRoot").innerHTML=
-    '<div class="toast">'+esc(text)+'</div>';
+
+function toast(message){
+
+  const root =
+    $("toastRoot");
+
+  if(!root){
+    return;
+  }
+
+  root.innerHTML =
+    `<div class="toast">
+      ${esc(message)}
+    </div>`;
 
   setTimeout(()=>{
-    $("toastRoot").innerHTML="";
+
+    root.innerHTML="";
+
   },3200);
+
 }
 
-function date(v){
-  if(!v)return"—";
 
-  const d=new Date(v);
+function date(value){
 
-  return isNaN(d)
-    ?String(v)
-    :d.toLocaleString();
-}
-
-function badge(status){
-
-  status=String(status||"unknown");
-
-  let cls="pending";
-
-  if([
-    "active",
-    "verified",
-    "completed",
-    "approved"
-  ].includes(status)){
-    cls="verified";
+  if(!value){
+    return "—";
   }
 
-  if([
-    "revoked",
-    "rejected",
-    "declined",
-    "cancelled"
-  ].includes(status)){
-    cls="rejected";
+  const d =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      d.getTime()
+    )
+  ){
+
+    return String(value);
+
   }
 
-  return `
-    <span class="badge ${cls}">
-      ${esc(status)}
-    </span>
-  `;
+  return d.toLocaleString();
+
 }
+
+
+function copyText(value,label){
+
+  if(!value){
+
+    toast(
+      `${label || "Value"} not available`
+    );
+
+    return;
+
+  }
+
+  navigator.clipboard
+    .writeText(String(value))
+    .then(()=>{
+
+      toast(
+        `${label || "Value"} copied`
+      );
+
+    })
+    .catch(()=>{
+
+      toast(
+        "Copy failed"
+      );
+
+    });
+
+}
+
+
+/* ================= WELCOME BUTTON ================= */
+
+$("enterAdminButton").addEventListener(
+  "click",
+  ()=>{
+
+    $("welcomeScreen")
+      .classList
+      .add("hidden");
+
+    $("loginScreen")
+      .classList
+      .remove("hidden");
+
+    setTimeout(()=>{
+
+      $("loginEmail").focus();
+
+    },300);
+
+  }
+);
+
+
+/* ================= LOGIN FORM ================= */
+
+$("loginForm").addEventListener(
+  "submit",     
+  async event=>{  event.preventDefault();  await loginAdmin();  } );
+  /* ================= AUTH ================= */
 
 async function currentUser(){
-  const r=await db.auth.getUser();
-  return r.data.user||null;
+
+  const result =
+    await db.auth.getSession();
+
+  return result?.data?.session?.user || null;
+
 }
 
-async function hashText(text){
-
-  const data=await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(text)
-  );
-
-  return Array.from(
-    new Uint8Array(data)
-  )
-  .map(x=>x.toString(16).padStart(2,"0"))
-  .join("");
-}
-
-function randomText(length){
-
-  const chars=
-    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-  const arr=new Uint32Array(length);
-
-  crypto.getRandomValues(arr);
-
-  return Array.from(
-    arr,
-    x=>chars[x%chars.length]
-  ).join("");
-}
-
-function makeFinalOrderId(){
-
-  return "NXU-"+randomText(12);
-}
-
-/* ================= ADMIN AUTH ================= */
 
 async function verifyAdmin(user){
 
-  if(!user?.email){
+  if(!user){
     return false;
   }
 
-  const r=await db
-    .from("admin_allowlist")
-    .select("email")
-    .eq("email",user.email)
-    .maybeSingle();
+  /*
+    Admin allowlist:
+    Supabase Auth account must be the
+    authorized administrator account.
+  */
 
-  if(r.error){
-    throw r.error;
+  const allowedEmails = [
+
+    "jinwoosung40054@gmail.com",
+    "virexabusiness143@gmail.com"
+
+  ];
+
+  const email =
+    String(user.email || "")
+      .trim()
+      .toLowerCase();
+
+  return allowedEmails
+    .map(x=>x.toLowerCase())
+    .includes(email);
+
+}
+
+
+/* ================= LOGIN ================= */
+
+async function loginAdmin(){
+
+  const email =
+    $("loginEmail")
+      .value
+      .trim();
+
+  const password =
+    $("loginPassword")
+      .value;
+
+  const errorBox =
+    $("loginError");
+
+  const button =
+    $("loginButton");
+
+
+  if(!email || !password){
+
+    errorBox.innerHTML =
+      "Please enter email and password.";
+
+    return;
+
   }
 
-  return !!r.data;
+
+  button.disabled = true;
+
+  button.innerText =
+    "AUTHENTICATING...";
+
+  errorBox.innerHTML = "";
+
+
+  try{
+
+    const result =
+      await db.auth.signInWithPassword({
+
+        email,
+        password
+
+      });
+
+
+    if(result.error){
+
+      errorBox.innerHTML = `
+        <div>
+          ✕ ACCESS FAILED
+          <br>
+          <span style="
+            color:#766a80;
+            display:inline-block;
+            margin-top:6px;
+          ">
+            Incorrect email or password.
+          </span>
+        </div>
+      `;
+
+      toast(
+        "Wrong email or password"
+      );
+
+      return;
+
+    }
+
+
+    const user =
+      result.data.user;
+
+
+    const isAdmin =
+      await verifyAdmin(user);
+
+
+    if(!isAdmin){
+
+      await db.auth.signOut();
+
+      errorBox.innerHTML = `
+        <div>
+          ✕ ADMIN ACCESS DENIED
+          <br>
+          <span style="
+            color:#766a80;
+            display:inline-block;
+            margin-top:6px;
+          ">
+            This account is not authorized.
+          </span>
+        </div>
+      `;
+
+      toast(
+        "Admin access denied"
+      );
+
+      return;
+
+    }
+
+
+    errorBox.classList.add(
+      "success"
+    );
+
+    errorBox.innerHTML =
+      "✓ Authentication successful";
+
+
+    setTimeout(()=>{
+
+      showAccessScreen();
+
+    },700);
+
+
+  }catch(error){
+
+    console.error(error);
+
+    errorBox.innerHTML =
+      "✕ Login failed.";
+
+    toast(
+      error?.message ||
+      "Login failed"
+    );
+
+  }finally{
+
+    button.disabled = false;
+
+    button.innerText =
+      "SECURE LOGIN";
+
+  }
+
 }
 
-function showLogin(){
 
-  $("welcomeView").classList.add("hidden");
-  $("accessView").classList.add("hidden");
-  $("adminApp").classList.add("hidden");
+/* ================= ACCESS SCREEN ================= */
 
-  $("loginView").classList.remove("hidden");
+function showAccessScreen(){
+
+  $("loginScreen")
+    .classList
+    .add("hidden");
+
+  $("accessScreen")
+    .classList
+    .remove("hidden");
+
 }
 
-function showAccess(){
 
-  $("welcomeView").classList.add("hidden");
-  $("loginView").classList.add("hidden");
-  $("adminApp").classList.add("hidden");
+/* ================= ENTER CONTROL PANEL ================= */
 
-  $("accessView").classList.remove("hidden");
+$("accessPanelButton").addEventListener(
+  "click",
+  async()=>{
+
+    $("accessScreen")
+      .classList
+      .add("hidden");
+
+    $("adminApp")
+      .classList
+      .remove("hidden");
+
+    await render(
+      "dashboard"
+    );
+
+  }
+);
+
+
+/* ================= LOGOUT ================= */
+
+$("logoutButton").addEventListener(
+  "click",
+  async()=>{
+
+    await db.auth.signOut();
+
+    location.reload();
+
+  }
+);
+
+
+/* ================= NAVIGATION ================= */
+
+document
+  .querySelectorAll(".nav-item")
+  .forEach(item=>{
+
+    item.addEventListener(
+      "click",
+      async()=>{
+
+        const section =
+          item.dataset.section;
+
+        if(!section){
+          return;
+        }
+
+        await render(
+          section
+        );
+
+      }
+    );
+
+  });
+
+
+/* ================= RENDER ================= */
+
+async function render(section){
+
+  currentSection =
+    section || "dashboard";
+
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(item=>{
+
+      item.classList.toggle(
+        "active",
+        item.dataset.section ===
+        currentSection
+      );
+
+    });
+
+
+  const info =
+    sectionNames[
+      currentSection
+    ] ||
+    sectionNames.dashboard;
+
+
+  $("sectionTitle")
+    .textContent =
+    info.title;
+
+
+  $("sectionDescription")
+    .textContent =
+    info.description;
+
+
+  try{
+
+    if(
+      currentSection ===
+      "dashboard"
+    ){
+
+      await overview();
+
+      return;
+
+    }
+
+
+    if(
+      currentSection ===
+      "licenses"
+    ){
+
+      await licenses();
+
+      return;
+
+    }
+
+
+    if(
+      currentSection ===
+      "forms"
+    ){
+
+      await forms();
+
+      return;
+
+    }
+
+
+    if(
+      currentSection ===
+      "payments"
+    ){
+
+      await payments();
+
+      return;
+
+    }
+
+
+    if(
+      currentSection ===
+      "telegram"
+    ){
+
+      await telegram();
+
+      return;
+
+    }
+
+
+    if(
+      currentSection ===
+      "settings"
+    ){
+
+      await settings();
+
+      return;
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    $("sectionContent").innerHTML = `
+
+      <div class="empty-state">
+
+        Unable to load this section.
+
+        <br><br>
+
+        ${esc(
+          error?.message ||
+          "Unknown error"
+        )}
+
+      </div>
+
+    `;
+
+  }
+
 }
 
-function showAdmin(){
-
-  $("welcomeView").classList.add("hidden");
-  $("loginView").classList.add("hidden");
-  $("accessView").classList.add("hidden");
-
-  $("adminApp").classList.remove("hidden");
-}
 
 /* ================= DASHBOARD ================= */
 
 async function overview(){
 
   const [
-    licenses,
-    forms,
-    payments,
-    telegram
-  ]=await Promise.all([
+    licensesResult,
+    formsResult,
+    paymentsResult,
+    telegramResult
+  ] = await Promise.all([
 
     db
       .from("license_keys")
-      .select("id",{count:"exact",head:true}),
+      .select("id",{
+        count:"exact",
+        head:true
+      }),
 
     db
       .from("unban_forms")
-      .select("id",{count:"exact",head:true}),
+      .select("id",{
+        count:"exact",
+        head:true
+      }),
 
     db
       .from("unban_forms")
-      .select("id",{count:"exact",head:true})
-      .eq("status","payment_pending"),
+      .select("id",{
+        count:"exact",
+        head:true
+      })
+      .not(
+        "payment_utr",
+        "is",
+        null
+      ),
 
     db
       .from("telegram_events")
-      .select("id",{count:"exact",head:true})
+      .select("id",{
+        count:"exact",
+        head:true
+      })
+
   ]);
 
-  [
-    licenses,
-    forms,
-    payments,
-    telegram
-  ].forEach(r=>{
-    if(r.error)throw r.error;
-  });
 
-  $("sectionContent").innerHTML=`
+  const licenseCount =
+    licensesResult.count || 0;
 
-    <div class="panel">
+  const formCount =
+    formsResult.count || 0;
 
-      <h3>
-        Welcome, Dear Admin
-      </h3>
+  const paymentCount =
+    paymentsResult.count || 0;
 
-      <p>
-        NEXVORA UNBAN secure control center is active.
-        Select a section from the control menu.
-      </p>
+  const telegramCount =
+    telegramResult.count || 0;
 
-    </div>
 
-    <div class="cards">
+  $("sectionContent").innerHTML = `
 
-      <div class="stat">
-        <span>License Keys</span>
-        <strong>${licenses.count??0}</strong>
+    <div>
+
+      <div class="section-title">
+        System Overview
       </div>
 
-      <div class="stat">
-        <span>Unban Forms</span>
-        <strong>${forms.count??0}</strong>
-      </div>
-
-      <div class="stat">
-        <span>Pending Payments</span>
-        <strong>${payments.count??0}</strong>
-      </div>
-
-      <div class="stat">
-        <span>Telegram Events</span>
-        <strong>${telegram.count??0}</strong>
+      <div class="section-subtitle">
+        Live information from the NEXVORA UNBAN database.
       </div>
 
     </div>
 
-    <div class="panel">
 
-      <h3>
-        System Status
-      </h3>
+    <div style="
+      margin-top:35px;
+      display:grid;
+      grid-template-columns:
+        repeat(4,minmax(0,1fr));
+      gap:0;
+    ">
 
-      <p>
-        Supabase connection is active and
-        administrator authentication is protected.
-      </p>
+
+      <div class="flat-row">
+
+        <div
+          style="
+            font-size:32px;
+            font-weight:950;
+            color:#e7ccff;
+          "
+        >
+          ${licenseCount}
+        </div>
+
+        <div
+          style="
+            margin-top:7px;
+            color:#887891;
+            font-size:10px;
+            letter-spacing:2px;
+          "
+        >
+          LICENSE KEYS
+        </div>
+
+      </div>
+
+
+      <div class="flat-row">
+
+        <div
+          style="
+            font-size:32px;
+            font-weight:950;
+            color:#e7ccff;
+          "
+        >
+          ${formCount}
+        </div>
+
+        <div
+          style="
+            margin-top:7px;
+            color:#887891;
+            font-size:10px;
+            letter-spacing:2px;
+          "
+        >
+          UNBAN FORMS
+        </div>
+
+      </div>
+
+
+      <div class="flat-row">
+
+        <div
+          style="
+            font-size:32px;
+            font-weight:950;
+            color:#e7ccff;
+          "
+        >
+          ${paymentCount}
+        </div>
+
+        <div
+          style="
+            margin-top:7px;
+            color:#887891;
+            font-size:10px;
+            letter-spacing:2px;
+          "
+        >
+          PAYMENTS
+        </div>
+
+      </div>
+
+
+      <div class="flat-row">
+
+        <div
+          style="
+            font-size:32px;
+            font-weight:950;
+            color:#e7ccff;
+          "
+        >
+          ${telegramCount}
+        </div>
+
+        <div
+          style="
+            margin-top:7px;
+            color:#887891;
+            font-size:10px;
+            letter-spacing:2px;
+          "
+        >
+          TELEGRAM EVENTS
+        </div>
+
+      </div>
 
     </div>
 
-    <div class="panel">
 
-      <h3>
-        Service Notice
-      </h3>
+    <div
+      style="
+        margin-top:42px;
+        padding:24px 0;
+        border-top:
+          1px solid
+          rgba(192,132,252,.10);
+        border-bottom:
+          1px solid
+          rgba(192,132,252,.10);
+      "
+    >
 
-      <p>
-        NEXVORA provides independent appeal-request
-        assistance. No unban result is guaranteed.
-      </p>
+      <div
+        style="
+          color:#d8c2e5;
+          font-size:13px;
+          font-weight:800;
+        "
+      >
+        NEXVORA UNBAN CONTROL CENTER
+      </div>
+
+      <div
+        style="
+          margin-top:9px;
+          color:#766b7d;
+          font-size:11px;
+          line-height:1.8;
+          max-width:700px;
+        "
+      >
+        Manage licenses, customer forms, ₹399 payments,
+        Telegram activity and platform settings directly
+        from this control environment.
+      </div>
 
     </div>
+
   `;
+
 }
 
-/* ================= LICENSE LIST ================= */
+
+/* ================= LICENSE KEYS ================= */
 
 async function licenses(){
 
-  const r=await db
-    .from("license_keys")
-    .select(`
-      id,
-      key_prefix,
-      status,
-      customer_email,
-      created_at,
-      expires_at,
-      approved_at,
-      notes
-    `)
-    .order("created_at",{ascending:false})
-    .limit(100);
+  const result =
+    await db
+      .from("license_keys")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(100);
 
-  if(r.error){
-    throw r.error;
+
+  if(result.error){
+
+    throw result.error;
+
   }
 
-  const rows=r.data||[];
 
-  $("sectionContent").innerHTML=`
+  const rows =
+    result.data || [];
 
-    <div class="panel">
 
-      <div class="top">
+  $("sectionContent").innerHTML = `
 
-        <h3>
-          License Keys
-        </h3>
+    <div>
 
-        <button
-          class="btn primary"
-          onclick="genModal()"
-        >
-          ＋ GENERATE KEY
-        </button>
-
+      <div class="section-title">
+        License Keys
       </div>
 
-      <p>
-        All generated license codes are displayed here.
-      </p>
-
-      <div class="actions">
-
-        <button
-          class="btn"
-          onclick="licenses()"
-        >
-          ↻ REFRESH
-        </button>
-
+      <div class="section-subtitle">
+        Generate and manage NEXVORA access licenses.
       </div>
+
+    </div>
+
+
+    <div
+      style="
+        margin-top:25px;
+        padding-bottom:20px;
+        border-bottom:
+          1px solid
+          rgba(192,132,252,.10);
+      "
+    >
+
+      <button
+        class="btn primary"
+        type="button"
+        onclick="genModal()"
+      >
+        + GENERATE LICENSE
+      </button>
+
+    </div>
+
+
+    <div style="margin-top:10px">
 
       ${
         rows.length
+
         ?
+
         rows.map(x=>`
 
-          <div class="list">
+          <div class="flat-row">
 
-            <strong>
-              ${esc(x.key_prefix||"License")}
-            </strong>
+            <div class="flat-row-title">
 
-            ${badge(x.status)}
+              ${esc(
+                x.key_prefix ||
+                x.license_key ||
+                "LICENSE"
+              )}
 
-            <br>
+            </div>
 
-            Customer:
-            ${esc(x.customer_email||"Not assigned")}
+            <div class="flat-row-meta">
 
-            <br>
+              Status:
+              ${esc(
+                x.status ||
+                "active"
+              )}
 
-            Created:
-            ${esc(date(x.created_at))}
+              <br>
 
-            <br>
+              Created:
+              ${esc(
+                date(x.created_at)
+              )}
 
-            Expires:
-            ${esc(date(x.expires_at))}
+              ${
+                x.expires_at
+                ?
+                `
+                <br>
+                Expires:
+                ${esc(
+                  date(x.expires_at)
+                )}
+                `
+                :
+                ""
+              }
 
-            ${
-              x.notes
-              ?
-              `<br>Notes: ${esc(x.notes)}`
-              :""
-            }
+            </div>
 
-            <div class="actions">
+
+            <div class="action-row">
 
               <button
                 class="btn"
-                onclick='copyKey(${JSON.stringify(
-                  x.key_prefix||""
-                )})'
+                type="button"
+                onclick='copyText(
+                  ${JSON.stringify(
+                    x.license_key ||
+                    x.key_prefix ||
+                    ""
+                  )},
+                  "License key"
+                )'
               >
                 COPY
               </button>
 
+
               ${
-                x.status==="active"
+                x.status ===
+                "revoked"
+
                 ?
+
+                ""
+
+                :
+
                 `
                 <button
-                  class="btn danger"
+                  class="btn"
+                  type="button"
                   onclick="revokeLicense('${x.id}')"
                 >
                   REVOKE
                 </button>
                 `
-                :""
               }
 
+
               <button
-                class="btn danger"
+                class="btn"
+                type="button"
                 onclick="deleteLicense('${x.id}')"
               >
                 DELETE
@@ -1279,50 +2285,150 @@ async function licenses(){
           </div>
 
         `).join("")
+
         :
+
         `
-        <div class="empty">
-          No license records found.
+        <div class="empty-state">
+          No license keys found.
         </div>
         `
       }
 
     </div>
+
   `;
+
 }
+
 
 /* ================= LICENSE GENERATOR ================= */
 
+function randomText(length){
+
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let output="";
+
+  for(
+    let i=0;
+    i<length;
+    i++
+  ){
+
+    output +=
+      chars[
+        Math.floor(
+          Math.random() *
+          chars.length
+        )
+      ];
+
+  }
+
+  return output;
+
+}
+
+
+async function hashText(text){
+
+  const data =
+    new TextEncoder()
+      .encode(text);
+
+  const hash =
+    await crypto.subtle.digest(
+      "SHA-256",
+      data
+    );
+
+  return Array
+    .from(
+      new Uint8Array(hash)
+    )
+    .map(
+      b =>
+        b
+          .toString(16)
+          .padStart(2,"0")
+    )
+    .join("");
+
+}
+
+
+function makeFinalOrderId(){
+
+  return (
+    "NXU-" +
+    randomText(12)
+  );
+
+}
+
+
 function genModal(){
 
-  $("modalRoot").innerHTML=`
+  $("modalRoot").innerHTML = `
 
-    <div class="modal">
+    <div
+      class="modal"
+      onclick="
+        if(event.target===this)
+          this.remove()
+      "
+    >
 
       <div class="modal-card">
 
         <h3>
-          Generate License Key
+          GENERATE LICENSE
         </h3>
 
         <p>
-          Create a new NEXVORA license code.
+          Create a new customer access key.
         </p>
 
-        <label>
-          Customer Email
-        </label>
 
-        <input
-          id="genEmail"
-          type="email"
-          placeholder="customer@example.com"
+        <div
+          class="form-line"
+          style="margin-top:28px"
         >
 
-        <div class="actions">
+          <label>
+            License Duration
+          </label>
+
+          <select id="licenseDuration">
+
+            <option value="30">
+              30 DAYS
+            </option>
+
+            <option value="90">
+              90 DAYS
+            </option>
+
+            <option value="365">
+              365 DAYS
+            </option>
+
+            <option value="0">
+              NO EXPIRY
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="action-row">
 
           <button
             class="btn primary"
+            type="button"
             onclick="generateLicense()"
           >
             GENERATE
@@ -1330,6 +2436,7 @@ function genModal(){
 
           <button
             class="btn"
+            type="button"
             onclick="$('modalRoot').innerHTML=''"
           >
             CANCEL
@@ -1340,318 +2447,456 @@ function genModal(){
       </div>
 
     </div>
+
   `;
+
 }
+
+
+/* ================= GENERATE LICENSE ================= */
 
 async function generateLicense(){
 
-  try{
+  const duration =
+    Number(
+      $("licenseDuration").value
+    );
 
-    const key=
-      "NX-"+
-      randomText(4)+
-      "-"+
-      randomText(2);
 
-    const email=
-      $("genEmail").value
-      .trim()
-      .toLowerCase();
+  const license =
+    "NXV-" +
+    randomText(4) +
+    "-" +
+    randomText(4) +
+    "-" +
+    randomText(4);
 
-    const admin=await currentUser();
 
-    const r=await db
+  const keyHash =
+    await hashText(
+      license
+    );
+
+
+  const expires =
+    duration > 0
+    ?
+    new Date(
+      Date.now() +
+      duration *
+      86400000
+    ).toISOString()
+    :
+    null;
+
+
+  const payload = {
+
+    key_hash:
+      keyHash,
+
+    key_prefix:
+      license,
+
+    status:
+      "active",
+
+    expires_at:
+      expires
+
+  };
+
+
+  const result =
+    await db
       .from("license_keys")
-      .insert({
+      .insert(payload)
+      .select()
+      .single();
 
-        key_hash:await hashText(key),
 
-        key_prefix:key,
+  if(result.error){
 
-        status:"active",
+    toast(
+      "License creation failed: "+
+      result.error.message
+    );
 
-        customer_email:
-          email||null,
+    return;
 
-        approved_by:
-          admin?.id||null,
+  }
 
-        approved_at:
-          new Date().toISOString()
 
-      });
+  $("modalRoot").innerHTML = `
 
-    if(r.error){
-      throw r.error;
-    }
+    <div
+      class="modal"
+    >
 
-    $("modalRoot").innerHTML=`
+      <div class="modal-card">
 
-      <div class="modal">
+        <h3>
+          LICENSE GENERATED
+        </h3>
 
-        <div class="modal-card">
+        <p>
+          Save this license key securely.
+        </p>
 
-          <h3>
-            LICENSE GENERATED
-          </h3>
 
-          <p>
-            Your new license code is ready.
-          </p>
+        <div
+          style="
+            margin-top:25px;
+            padding:20px 0;
+            border-top:
+              1px solid
+              rgba(192,132,252,.15);
+            border-bottom:
+              1px solid
+              rgba(192,132,252,.15);
+            color:#ead8f6;
+            font-family:monospace;
+            font-size:17px;
+            letter-spacing:2px;
+            word-break:break-all;
+          "
+        >
+          ${esc(license)}
+        </div>
 
-          <div class="key-box">
 
-            <div class="key-value">
-              ${esc(key)}
-            </div>
+        <div class="action-row">
 
-          </div>
+          <button
+            class="btn primary"
+            type="button"
+            onclick='copyText(
+              ${JSON.stringify(license)},
+              "License key"
+            )'
+          >
+            COPY KEY
+          </button>
 
-          <div class="actions">
-
-            <button
-              class="btn primary"
-              onclick='copyKey(${JSON.stringify(key)})'
-            >
-              COPY KEY
-            </button>
-
-            <button
-              class="btn"
-              onclick="$('modalRoot').innerHTML=''"
-            >
-              DONE
-            </button>
-
-          </div>
+          <button
+            class="btn"
+            type="button"
+            onclick="
+              $('modalRoot').innerHTML=''
+            "
+          >
+            CLOSE
+          </button>
 
         </div>
 
       </div>
-    `;
 
-    toast("License generated successfully");
+    </div>
 
-    await licenses();
+  `;
 
-  }catch(e){
 
-    toast(
-      "License generation failed: "+
-      (e.message||"Unknown error")
-    );
+  toast(
+    "License generated successfully"
+  );
 
-  }
 }
 
-/* ================= LICENSE ACTIONS ================= */
 
-async function copyKey(key){
-
-  if(!key){
-    toast("License code unavailable");
-    return;
-  }
-
-  try{
-
-    await navigator.clipboard.writeText(key);
-
-    toast("License code copied");
-
-  }catch(e){
-
-    toast(
-      "Copy failed — please copy the code manually"
-    );
-
-  }
-}
+/* ================= REVOKE LICENSE ================= */
 
 async function revokeLicense(id){
 
   if(
     !confirm(
-      "Are you sure you want to revoke this license?"
+      "Revoke this license key?"
     )
   ){
-    return;
-  }
 
-  const r=await db
-    .from("license_keys")
-    .update({
-      status:"revoked"
-    })
-    .eq("id",id);
-
-  if(r.error){
-
-    toast(r.error.message);
     return;
 
   }
 
-  toast("License revoked");
+
+  const result =
+    await db
+      .from("license_keys")
+      .update({
+        status:"revoked"
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(result.error){
+
+    toast(
+      "Revoke failed: "+
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  toast(
+    "License revoked"
+  );
+
 
   await licenses();
+
 }
+
+
+/* ================= DELETE LICENSE ================= */
 
 async function deleteLicense(id){
 
   if(
     !confirm(
-      "Delete this license permanently?"
+      "Delete this license key permanently?"
     )
   ){
-    return;
-  }
 
-  const r=await db
-    .from("license_keys")
-    .delete()
-    .eq("id",id);
-
-  if(r.error){
-
-    toast(r.error.message);
     return;
 
   }
 
-  toast("License deleted");
+
+  const result =
+    await db
+      .from("license_keys")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(result.error){
+
+    toast(
+      "Delete failed: "+
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  toast(
+    "License deleted"
+  );
+
 
   await licenses();
+
   }
   /* ================= UNBAN FORMS ================= */
 
 async function forms(){
 
-  const r=await db
-    .from("unban_forms")
-    .select("*")
-    .order("created_at",{ascending:false})
-    .limit(100);
+  const result =
+    await db
+      .from("unban_forms")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(100);
 
-  if(r.error){
-    throw r.error;
+
+  if(result.error){
+    throw result.error;
   }
 
-  const rows=r.data||[];
 
-  $("sectionContent").innerHTML=`
+  const rows =
+    result.data || [];
 
-    <div class="panel">
 
-      <div class="top">
+  $("sectionContent").innerHTML = `
 
-        <h3>
-          Unban Forms
-        </h3>
+    <div>
 
-        <button
-          class="btn"
-          onclick="forms()"
-        >
-          ↻ REFRESH
-        </button>
-
+      <div class="section-title">
+        Unban Forms
       </div>
 
-      <p>
-        Customer submitted unban requests.
-      </p>
+      <div class="section-subtitle">
+        Review customer requests and manage their status.
+      </div>
+
+    </div>
+
+
+    <div
+      style="
+        margin-top:25px;
+        padding-bottom:18px;
+        border-bottom:
+          1px solid
+          rgba(192,132,252,.10);
+      "
+    >
+
+      <button
+        class="btn"
+        type="button"
+        onclick="forms()"
+      >
+        ↻ REFRESH
+      </button>
+
+    </div>
+
+
+    <div style="margin-top:8px">
 
       ${
         rows.length
+
         ?
+
         rows.map(x=>`
 
-          <div class="list">
+          <div class="flat-row">
 
-            <strong>
-              Request
-            </strong>
+            <div class="flat-row-title">
 
-            ${badge(x.status)}
+              ${
+                x.order_id &&
+                !String(
+                  x.order_id
+                ).startsWith("PENDING-")
+                ?
+                esc(x.order_id)
+                :
+                "PENDING REQUEST"
+              }
 
-            <br>
+            </div>
 
-            Order:
-            <strong>
-              ${esc(x.order_id||x.id)}
-            </strong>
 
-            <br>
+            <div class="flat-row-meta">
 
-            Player UID:
-            ${esc(x.player_uid)}
+              Player UID:
+              ${esc(x.player_uid)}
 
-            <br>
+              <br>
 
-            ID Level:
-            ${esc(x.id_level)}
+              ID Level:
+              ${esc(x.id_level)}
 
-            <br>
+              <br>
 
-            Game:
-            ${esc(x.game_name)}
+              Game:
+              ${esc(x.game_name)}
 
-            <br>
+              <br>
 
-            Region:
-            ${esc(x.region)}
+              Region:
+              ${esc(x.region)}
 
-            &nbsp; • &nbsp;
+              <br>
 
-            Device:
-            ${esc(x.device)}
+              Device:
+              ${esc(x.device)}
 
-            <br>
+              <br>
 
-            Ban Type:
-            ${esc(x.ban_type)}
+              Ban Type:
+              ${esc(x.ban_type)}
 
-            &nbsp; • &nbsp;
+              <br>
 
-            Ban Date:
-            ${esc(x.ban_date||"—")}
+              Ban Date:
+              ${esc(x.ban_date || "—")}
 
-            <br>
+              <br>
 
-            Full Name:
-            ${esc(x.full_name||"Not submitted")}
+              Full Name:
+              ${esc(x.full_name || "Not submitted")}
 
-            <br>
+              <br>
 
-            UTR:
-            ${esc(x.payment_utr||"Not submitted")}
+              UTR:
+              ${esc(x.payment_utr || "Not submitted")}
 
-            <br>
+              <br>
 
-            Created:
-            ${esc(date(x.created_at))}
+              Status:
+              <strong>
+                ${esc(x.status)}
+              </strong>
 
-            <div class="actions">
+              <br>
+
+              Submitted:
+              ${esc(date(x.submitted_at || x.created_at))}
+
+            </div>
+
+
+            <div class="action-row">
+
+              <button
+                class="btn"
+                type="button"
+                onclick='copyText(
+                  ${JSON.stringify(
+                    x.order_id || ""
+                  )},
+                  "Order ID"
+                )'
+              >
+                COPY ORDER ID
+              </button>
+
+
+              ${
+                x.payment_utr
+                ?
+                `
+                <button
+                  class="btn"
+                  type="button"
+                  onclick='copyText(
+                    ${JSON.stringify(
+                      x.payment_utr
+                    )},
+                    "UTR"
+                  )'
+                >
+                  COPY UTR
+                </button>
+                `
+                :
+                ""
+              }
+
 
               <button
                 class="btn primary"
+                type="button"
                 onclick="openForm('${x.id}')"
               >
                 VIEW / UPDATE
               </button>
 
-              <button
-                class="btn"
-                onclick='copyText(${JSON.stringify(
-                  x.order_id||""
-                )},"Order ID")'
-              >
-                COPY ORDER ID
-              </button>
 
               <button
-                class="btn danger"
+                class="btn"
+                type="button"
                 onclick="deleteForm('${x.id}')"
               >
                 DELETE
@@ -1662,16 +2907,20 @@ async function forms(){
           </div>
 
         `).join("")
+
         :
+
         `
-        <div class="empty">
+        <div class="empty-state">
           No unban forms found.
         </div>
         `
       }
 
     </div>
+
   `;
+
 }
 
 
@@ -1679,155 +2928,221 @@ async function forms(){
 
 async function payments(){
 
-  const r=await db
-    .from("unban_forms")
-    .select(`
-      id,
-      order_id,
-      full_name,
-      payment_utr,
-      status,
-      payment_verified_by,
-      payment_verified_at,
-      created_at,
-      updated_at
-    `)
-    .not("payment_utr","is",null)
-    .order("created_at",{ascending:false})
-    .limit(100);
+  const result =
+    await db
+      .from("unban_forms")
+      .select(`
+        id,
+        order_id,
+        full_name,
+        payment_utr,
+        status,
+        payment_verified_at,
+        created_at,
+        updated_at
+      `)
+      .not(
+        "payment_utr",
+        "is",
+        null
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(100);
 
-  if(r.error){
-    throw r.error;
+
+  if(result.error){
+    throw result.error;
   }
 
-  const rows=r.data||[];
 
-  $("sectionContent").innerHTML=`
+  const rows =
+    result.data || [];
 
-    <div class="panel">
 
-      <div class="top">
+  $("sectionContent").innerHTML = `
 
-        <h3>
-          Payments
-        </h3>
+    <div>
 
-        <button
-          class="btn"
-          onclick="payments()"
-        >
-          ↻ REFRESH
-        </button>
-
+      <div class="section-title">
+        Payments
       </div>
 
-      <p>
-        Only payment information is shown here:
-        customer name, UTR, amount and verification status.
-      </p>
+      <div class="section-subtitle">
+        ₹399 payment records are managed separately from customer forms.
+      </div>
+
+    </div>
+
+
+    <div
+      style="
+        margin-top:25px;
+        padding-bottom:18px;
+        border-bottom:
+          1px solid
+          rgba(192,132,252,.10);
+      "
+    >
+
+      <button
+        class="btn"
+        type="button"
+        onclick="payments()"
+      >
+        ↻ REFRESH PAYMENTS
+      </button>
+
+    </div>
+
+
+    <div style="margin-top:8px">
 
       ${
         rows.length
+
         ?
+
         rows.map(x=>`
 
-          <div class="list">
+          <div class="flat-row">
 
-            <strong>
-              ${esc(x.full_name||"Customer")}
-            </strong>
+            <div class="flat-row-title">
 
-            ${badge(
-              x.status==="payment_verified"
-              ?"verified"
-              :"payment_pending"
-            )}
-
-            <br>
-
-            Amount:
-            <strong>
-              ₹399
-            </strong>
-
-            <br>
-
-            UTR:
-            <strong>
-              ${esc(x.payment_utr||"—")}
-            </strong>
-
-            <br>
-
-            Payment Time:
-            ${esc(
-              date(
-                x.updated_at||
-                x.created_at
-              )
-            )}
-
-            ${
-              x.payment_verified_at
-              ?
-              `
-              <br>
-              Verified:
               ${esc(
-                date(x.payment_verified_at)
+                x.full_name ||
+                "CUSTOMER"
               )}
-              `
-              :
-              ""
-            }
 
-            <div class="actions">
+            </div>
+
+
+            <div class="flat-row-meta">
+
+              Amount:
+              <strong
+                style="color:#e6caff"
+              >
+                ₹399
+              </strong>
+
+              <br>
+
+              UTR:
+              <strong
+                style="color:#e6caff"
+              >
+                ${esc(
+                  x.payment_utr ||
+                  "—"
+                )}
+              </strong>
+
+              <br>
+
+              Payment Status:
+              ${esc(x.status)}
+
+              <br>
+
+              Submitted:
+              ${esc(
+                date(
+                  x.updated_at ||
+                  x.created_at
+                )
+              )}
+
+              ${
+                x.payment_verified_at
+                ?
+                `
+                <br>
+
+                Verified:
+                ${esc(
+                  date(
+                    x.payment_verified_at
+                  )
+                )}
+                `
+                :
+                ""
+              }
+
+            </div>
+
+
+            <div class="action-row">
 
               <button
                 class="btn"
-                onclick='copyText(${JSON.stringify(
-                  x.payment_utr||""
-                )},"UTR")'
+                type="button"
+                onclick='copyText(
+                  ${JSON.stringify(
+                    x.payment_utr || ""
+                  )},
+                  "UTR"
+                )'
               >
                 COPY UTR
               </button>
 
+
               ${
-                x.status==="payment_pending"
+                x.status ===
+                "payment_pending"
+
                 ?
+
                 `
                 <button
-                  class="btn success"
+                  class="btn primary"
+                  type="button"
                   onclick="verifyPayment('${x.id}')"
                 >
                   VERIFY PAYMENT
                 </button>
 
                 <button
-                  class="btn danger"
+                  class="btn"
+                  type="button"
                   onclick="rejectPayment('${x.id}')"
                 >
                   REJECT
                 </button>
                 `
+
                 :
+
                 `
                 <button
                   class="btn"
-                  onclick='copyText(${JSON.stringify(
-                    x.order_id||""
-                  )},"Order ID")'
+                  type="button"
+                  onclick='copyText(
+                    ${JSON.stringify(
+                      x.order_id || ""
+                    )},
+                    "Order ID"
+                  )'
                 >
                   COPY ORDER ID
                 </button>
                 `
+
               }
 
+
               <button
-                class="btn danger"
+                class="btn"
+                type="button"
                 onclick="deletePayment('${x.id}')"
               >
-                DELETE
+                DELETE PAYMENT
               </button>
 
             </div>
@@ -1835,45 +3150,20 @@ async function payments(){
           </div>
 
         `).join("")
+
         :
+
         `
-        <div class="empty">
+        <div class="empty-state">
           No payment records found.
         </div>
         `
       }
 
     </div>
+
   `;
-}
 
-
-/* ================= COPY ================= */
-
-async function copyText(value,label){
-
-  if(!value){
-
-    toast(
-      label+" is not available"
-    );
-
-    return;
-  }
-
-  try{
-
-    await navigator.clipboard.writeText(value);
-
-    toast(label+" copied");
-
-  }catch(e){
-
-    toast(
-      "Copy failed — please copy manually"
-    );
-
-  }
 }
 
 
@@ -1881,25 +3171,45 @@ async function copyText(value,label){
 
 async function openForm(id){
 
-  const r=await db
-    .from("unban_forms")
-    .select("*")
-    .eq("id",id)
-    .maybeSingle();
+  const result =
+    await db
+      .from("unban_forms")
+      .select("*")
+      .eq(
+        "id",
+        id
+      )
+      .maybeSingle();
 
-  if(r.error||!r.data){
+
+  if(result.error){
 
     toast(
-      r.error?.message||
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  const x =
+    result.data;
+
+
+  if(!x){
+
+    toast(
       "Form not found"
     );
 
     return;
+
   }
 
-  const x=r.data;
 
-  const statuses=[
+  const statuses = [
+
     "draft",
     "awaiting_payment",
     "payment_pending",
@@ -1908,201 +3218,329 @@ async function openForm(id){
     "in_review",
     "completed",
     "rejected"
+
   ];
 
-  $("modalRoot").innerHTML=`
 
-    <div class="modal">
+  $("modalRoot").innerHTML = `
+
+    <div
+      class="modal"
+      onclick="
+        if(event.target===this)
+          $('modalRoot').innerHTML=''
+      "
+    >
 
       <div class="modal-card">
 
-        <h3>
-          UNBAN FORM
-        </h3>
+        <div
+          style="
+            padding:0 25px;
+          "
+        >
 
-        <p>
-          Complete customer request details.
-        </p>
-
-        <div class="grid2">
-
-          <div>
-            <label>
-              Order ID
-            </label>
-
-            <input
-              disabled
-              value="${esc(x.order_id||"—")}"
-            >
+          <div class="brand-mark">
+            NEXVORA <span>UNBAN</span>
           </div>
 
-          <div>
-            <label>
-              Player UID
-            </label>
-
-            <input
-              disabled
-              value="${esc(x.player_uid||"—")}"
-            >
+          <div class="eyebrow">
+            REQUEST DETAILS
           </div>
 
-          <div>
-            <label>
-              ID Level
-            </label>
+          <h3
+            style="
+              margin-top:15px;
+              font-size:28px;
+              font-weight:950;
+            "
+          >
+            CUSTOMER FORM
+          </h3>
 
-            <input
-              disabled
-              value="${esc(x.id_level||"—")}"
-            >
-          </div>
 
-          <div>
-            <label>
-              Game
-            </label>
+          <div
+            style="
+              margin-top:28px;
+            "
+          >
 
-            <input
-              disabled
-              value="${esc(x.game_name||"—")}"
-            >
-          </div>
+            <div class="flat-row">
 
-          <div>
-            <label>
-              Region
-            </label>
+              <div class="flat-row-title">
+                ORDER ID
+              </div>
 
-            <input
-              disabled
-              value="${esc(x.region||"—")}"
-            >
-          </div>
+              <div class="flat-row-meta">
+                ${esc(
+                  x.order_id || "—"
+                )}
+              </div>
 
-          <div>
-            <label>
-              Device
-            </label>
+              <div class="action-row">
 
-            <input
-              disabled
-              value="${esc(x.device||"—")}"
-            >
-          </div>
+                <button
+                  class="btn"
+                  type="button"
+                  onclick='copyText(
+                    ${JSON.stringify(
+                      x.order_id || ""
+                    )},
+                    "Order ID"
+                  )'
+                >
+                  COPY
+                </button>
 
-          <div>
-            <label>
-              Ban Type
-            </label>
+              </div>
 
-            <input
-              disabled
-              value="${esc(x.ban_type||"—")}"
-            >
-          </div>
+            </div>
 
-          <div>
-            <label>
-              Ban Date
-            </label>
 
-            <input
-              disabled
-              value="${esc(x.ban_date||"—")}"
-            >
-          </div>
+            <div class="flat-row">
 
-          <div>
-            <label>
-              Full Name
-            </label>
+              <div class="flat-row-title">
+                PLAYER INFORMATION
+              </div>
 
-            <input
-              disabled
-              value="${esc(x.full_name||"—")}"
-            >
-          </div>
+              <div class="flat-row-meta">
 
-          <div>
-            <label>
-              UTR
-            </label>
+                UID:
+                ${esc(x.player_uid)}
 
-            <input
-              disabled
-              value="${esc(x.payment_utr||"—")}"
-            >
-          </div>
+                <br>
 
-        </div>
+                ID Level:
+                ${esc(x.id_level)}
 
-        <label>
-          Status
-        </label>
+                <br>
 
-        <select id="formStatus">
+                Game:
+                ${esc(x.game_name)}
 
-          ${
-            statuses.map(s=>`
-              <option
-                value="${s}"
-                ${x.status===s?"selected":""}
+                <br>
+
+                Region:
+                ${esc(x.region)}
+
+                <br>
+
+                Device:
+                ${esc(x.device)}
+
+              </div>
+
+            </div>
+
+
+            <div class="flat-row">
+
+              <div class="flat-row-title">
+                BAN INFORMATION
+              </div>
+
+              <div class="flat-row-meta">
+
+                Type:
+                ${esc(x.ban_type)}
+
+                <br>
+
+                Ban Date:
+                ${esc(x.ban_date || "—")}
+
+                <br>
+
+                Policy Accepted:
+                ${x.policy_accepted ? "YES" : "NO"}
+
+              </div>
+
+            </div>
+
+
+            <div class="flat-row">
+
+              <div class="flat-row-title">
+                PAYMENT INFORMATION
+              </div>
+
+              <div class="flat-row-meta">
+
+                Amount:
+                <strong
+                  style="color:#e6caff"
+                >
+                  ₹399
+                </strong>
+
+                <br>
+
+                Full Name:
+                ${esc(
+                  x.full_name ||
+                  "Not submitted"
+                )}
+
+                <br>
+
+                UTR:
+                ${esc(
+                  x.payment_utr ||
+                  "Not submitted"
+                )}
+
+              </div>
+
+
+              ${
+                x.payment_utr
+                ?
+                `
+                <div class="action-row">
+
+                  <button
+                    class="btn"
+                    type="button"
+                    onclick='copyText(
+                      ${JSON.stringify(
+                        x.payment_utr
+                      )},
+                      "UTR"
+                    )'
+                  >
+                    COPY UTR
+                  </button>
+
+                </div>
+                `
+                :
+                ""
+              }
+
+            </div>
+
+
+            <div class="flat-row">
+
+              <div class="flat-row-title">
+                STATUS
+              </div>
+
+              <div class="form-line">
+
+                <select
+                  id="formStatus"
+                >
+
+                  ${
+                    statuses.map(
+                      status=>`
+
+                        <option
+                          value="${status}"
+                          ${
+                            x.status === status
+                            ?
+                            "selected"
+                            :
+                            ""
+                          }
+                        >
+                          ${status}
+                        </option>
+
+                      `
+                    ).join("")
+                  }
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <div class="flat-row">
+
+              <div class="flat-row-title">
+                ADMIN NOTES
+              </div>
+
+              <div class="form-line">
+
+                <textarea
+                  id="formNotes"
+                  rows="5"
+                  placeholder="Add internal admin notes..."
+                >${esc(
+                  x.notes || ""
+                )}</textarea>
+
+              </div>
+
+            </div>
+
+
+            <div class="action-row">
+
+              <button
+                class="btn primary"
+                type="button"
+                onclick="saveForm('${x.id}')"
               >
-                ${s}
-              </option>
-            `).join("")
-          }
+                SAVE UPDATE
+              </button>
 
-        </select>
+              ${
+                x.payment_utr &&
+                x.status ===
+                "payment_pending"
 
-        <label>
-          Admin Notes
-        </label>
+                ?
+                `
+                <button
+                  class="btn"
+                  type="button"
+                  onclick="verifyPayment('${x.id}')"
+                >
+                  VERIFY ₹399
+                </button>
+                `
+                :
+                ""
+              }
 
-        <textarea
-          id="formNotes"
-        >${esc(x.notes||"")}</textarea>
+              <button
+                class="btn"
+                type="button"
+                onclick="
+                  $('modalRoot').innerHTML=''
+                "
+              >
+                CLOSE
+              </button>
 
-        <div class="actions">
+              <button
+                class="btn"
+                type="button"
+                onclick="deleteForm('${x.id}')"
+              >
+                DELETE FORM
+              </button>
 
-          <button
-            class="btn primary"
-            onclick="saveForm('${x.id}')"
-          >
-            SAVE
-          </button>
+            </div>
 
-          <button
-            class="btn"
-            onclick="$('modalRoot').innerHTML=''"
-          >
-            CLOSE
-          </button>
-
-          <button
-            class="btn"
-            onclick='copyText(${JSON.stringify(
-              x.order_id||""
-            )},"Order ID")'
-          >
-            COPY ORDER ID
-          </button>
-
-          <button
-            class="btn danger"
-            onclick="deleteForm('${x.id}')"
-          >
-            DELETE FORM
-          </button>
+          </div>
 
         </div>
 
       </div>
 
     </div>
+
   `;
+
 }
 
 
@@ -2110,80 +3548,131 @@ async function openForm(id){
 
 async function saveForm(id){
 
-  const status=
+  const status =
     $("formStatus").value;
 
-  const values={
-    status:status,
-    notes:
-      $("formNotes").value.trim()||
-      null,
-    updated_at:
-      new Date().toISOString()
-  };
+  const notes =
+    $("formNotes")
+      .value
+      .trim() ||
+    null;
 
-  if(status==="payment_verified"){
 
-    const current=
-      await db
-        .from("unban_forms")
-        .select(
-          "order_id,payment_verified_at"
-        )
-        .eq("id",id)
-        .maybeSingle();
+  const current =
+    await db
+      .from("unban_forms")
+      .select(
+        "order_id,payment_verified_at"
+      )
+      .eq(
+        "id",
+        id
+      )
+      .maybeSingle();
 
-    if(current.error){
 
-      toast(current.error.message);
-      return;
-    }
-
-    const old=current.data;
-
-    if(
-      !old?.order_id||
-      String(old.order_id)
-        .startsWith("PENDING-")
-    ){
-
-      values.order_id=
-        makeFinalOrderId();
-    }
-
-    values.payment_verified_by=
-      (await currentUser())?.id||
-      null;
-
-    values.payment_verified_at=
-      old?.payment_verified_at||
-      new Date().toISOString();
-  }
-
-  const r=await db
-    .from("unban_forms")
-    .update(values)
-    .eq("id",id);
-
-  if(r.error){
+  if(current.error){
 
     toast(
-      "Update failed: "+
-      r.error.message
+      current.error.message
     );
 
     return;
+
   }
 
-  $("modalRoot").innerHTML="";
+
+  const old =
+    current.data;
+
+
+  const payload = {
+
+    status,
+
+    notes,
+
+    updated_at:
+      new Date().toISOString()
+
+  };
+
+
+  if(
+    status ===
+    "payment_verified"
+  ){
+
+    if(
+      !old?.order_id ||
+      String(
+        old.order_id
+      ).startsWith(
+        "PENDING-"
+      )
+    ){
+
+      payload.order_id =
+        makeFinalOrderId();
+
+    }
+
+
+    const user =
+      await currentUser();
+
+
+    payload.payment_verified_by =
+      user?.id || null;
+
+
+    payload.payment_verified_at =
+      old?.payment_verified_at ||
+      new Date().toISOString();
+
+  }
+
+
+  const result =
+    await db
+      .from("unban_forms")
+      .update(payload)
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(result.error){
+
+    toast(
+      "Update failed: "+
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  $("modalRoot")
+    .innerHTML="";
+
 
   toast(
-    status==="payment_verified"
-    ?"Payment verified successfully"
-    :"Form updated successfully"
+    status ===
+    "payment_verified"
+    ?
+    "Payment verified and Order ID generated"
+    :
+    "Form updated successfully"
   );
 
-  await render(currentSection);
+
+  await render(
+    currentSection
+  );
+
 }
 
 
@@ -2196,68 +3685,110 @@ async function verifyPayment(id){
       "Verify this ₹399 payment?"
     )
   ){
+
     return;
+
   }
 
-  const current=
+
+  const current =
     await db
       .from("unban_forms")
       .select(
         "order_id,payment_verified_at"
       )
-      .eq("id",id)
+      .eq(
+        "id",
+        id
+      )
       .maybeSingle();
+
 
   if(current.error){
 
-    toast(current.error.message);
-    return;
-  }
-
-  const x=current.data;
-
-  const values={
-    status:"payment_verified",
-    payment_verified_by:
-      (await currentUser())?.id||
-      null,
-    payment_verified_at:
-      x?.payment_verified_at||
-      new Date().toISOString(),
-    updated_at:
-      new Date().toISOString()
-  };
-
-  if(
-    !x?.order_id||
-    String(x.order_id)
-      .startsWith("PENDING-")
-  ){
-
-    values.order_id=
-      makeFinalOrderId();
-  }
-
-  const r=await db
-    .from("unban_forms")
-    .update(values)
-    .eq("id",id);
-
-  if(r.error){
-
     toast(
-      "Payment verification failed: "+
-      r.error.message
+      current.error.message
     );
 
     return;
+
   }
 
+
+  const old =
+    current.data;
+
+
+  const user =
+    await currentUser();
+
+
+  const payload = {
+
+    status:
+      "payment_verified",
+
+    payment_verified_by:
+      user?.id || null,
+
+    payment_verified_at:
+      old?.payment_verified_at ||
+      new Date().toISOString(),
+
+    updated_at:
+      new Date().toISOString()
+
+  };
+
+
+  if(
+    !old?.order_id ||
+    String(
+      old.order_id
+    ).startsWith(
+      "PENDING-"
+    )
+  ){
+
+    payload.order_id =
+      makeFinalOrderId();
+
+  }
+
+
+  const result =
+    await db
+      .from("unban_forms")
+      .update(payload)
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(result.error){
+
+    toast(
+      "Payment verification failed: "+
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  $("modalRoot")
+    .innerHTML="";
+
+
   toast(
-    "Payment verified — final Order ID generated"
+    "₹399 payment verified successfully"
   );
 
+
   await payments();
+
 }
 
 
@@ -2270,31 +3801,48 @@ async function rejectPayment(id){
       "Reject this payment?"
     )
   ){
+
     return;
+
   }
 
-  const r=await db
-    .from("unban_forms")
-    .update({
-      status:"rejected",
-      updated_at:
-        new Date().toISOString()
-    })
-    .eq("id",id);
 
-  if(r.error){
+  const result =
+    await db
+      .from("unban_forms")
+      .update({
+
+        status:"rejected",
+
+        updated_at:
+          new Date().toISOString()
+
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(result.error){
 
     toast(
-      "Reject failed: "+
-      r.error.message
+      "Payment rejection failed: "+
+      result.error.message
     );
 
     return;
+
   }
 
-  toast("Payment rejected");
+
+  toast(
+    "Payment rejected"
+  );
+
 
   await payments();
+
 }
 
 
@@ -2304,30 +3852,44 @@ async function deletePayment(id){
 
   if(
     !confirm(
-      "Delete this payment record permanently?"
+      "Delete this payment and its connected form permanently?"
     )
   ){
+
     return;
+
   }
 
-  const r=await db
-    .from("unban_forms")
-    .delete()
-    .eq("id",id);
 
-  if(r.error){
+  const result =
+    await db
+      .from("unban_forms")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(result.error){
 
     toast(
-      "Delete failed: "+
-      r.error.message
+      "Payment delete failed: "+
+      result.error.message
     );
 
     return;
+
   }
 
-  toast("Payment record deleted");
+
+  toast(
+    "Payment deleted"
+  );
+
 
   await payments();
+
 }
 
 
@@ -2340,151 +3902,149 @@ async function deleteForm(id){
       "Delete this unban form permanently?"
     )
   ){
+
     return;
+
   }
 
-  const r=await db
-    .from("unban_forms")
-    .delete()
-    .eq("id",id);
 
-  if(r.error){
+  const result =
+    await db
+      .from("unban_forms")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(result.error){
 
     toast(
-      "Delete failed: "+
-      r.error.message
+      "Form delete failed: "+
+      result.error.message
     );
 
     return;
+
   }
 
-  $("modalRoot").innerHTML="";
 
-  toast("Unban form deleted");
+  $("modalRoot")
+    .innerHTML="";
+
+
+  toast(
+    "Unban form deleted"
+  );
+
 
   await forms();
+
   }
   /* ================= TELEGRAM ================= */
 
 async function telegram(){
 
-  const r=await db
-    .from("telegram_events")
-    .select("*")
-    .order("created_at",{ascending:false})
-    .limit(100);
+  const result =
+    await db
+      .from("telegram_events")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(100);
 
-  if(r.error){
 
-    $("sectionContent").innerHTML=`
+  if(result.error){
 
-      <div class="panel">
-
-        <h3>Telegram Events</h3>
-
-        <div class="empty">
-          ${esc(r.error.message)}
-        </div>
-
+    $("sectionContent").innerHTML = `
+      <div class="empty-state">
+        ${esc(result.error.message)}
       </div>
-
     `;
 
     return;
+
   }
 
-  const rows=r.data||[];
 
-  $("sectionContent").innerHTML=`
+  const rows =
+    result.data || [];
 
-    <div class="panel">
 
-      <div class="top">
+  $("sectionContent").innerHTML = `
 
-        <div>
+    <div>
 
-          <h3>
-            Telegram Events
-          </h3>
-
-          <p>
-            Recent Telegram activity recorded by the system.
-          </p>
-
-        </div>
-
-        <button
-          class="btn"
-          onclick="telegram()"
-        >
-          ↻ REFRESH
-        </button>
-
+      <div class="section-title">
+        Telegram Events
       </div>
+
+      <div class="section-subtitle">
+        Recent Telegram activity recorded by the system.
+      </div>
+
+    </div>
+
+
+    <div
+      style="
+        margin-top:25px;
+        padding-bottom:18px;
+        border-bottom:
+          1px solid
+          rgba(192,132,252,.10);
+      "
+    >
+
+      <button
+        class="btn"
+        type="button"
+        onclick="telegram()"
+      >
+        ↻ REFRESH TELEGRAM
+      </button>
+
+    </div>
+
+
+    <div style="margin-top:8px">
 
       ${
         rows.length
+
         ?
+
         rows.map(x=>`
 
-          <div class="list">
+          <div class="flat-row">
 
-            <strong>
-              ${esc(
-                x.event_type||
-                x.type||
-                "Telegram Event"
-              )}
-            </strong>
+            <div class="flat-row-title">
 
-            <br>
+              ${
+                esc(
+                  x.event_type ||
+                  x.type ||
+                  "TELEGRAM EVENT"
+                )
+              }
 
-            Event ID:
-            ${esc(x.id||"—")}
+            </div>
 
-            <br>
 
-            Created:
-            ${esc(date(x.created_at))}
-
-            ${
-              x.chat_id
-              ?
-              `
-              <br>
-              Chat ID:
-              ${esc(x.chat_id)}
-              `
-              :
-              ""
-            }
-
-            ${
-              x.message_id
-              ?
-              `
-              <br>
-              Message ID:
-              ${esc(x.message_id)}
-              `
-              :
-              ""
-            }
-
-            <div class="actions">
+            <div class="flat-row-meta">
 
               ${
                 x.chat_id
                 ?
                 `
-                <button
-                  class="btn"
-                  onclick='copyText(${JSON.stringify(
-                    String(x.chat_id)
-                  )},"Chat ID")'
-                >
-                  COPY CHAT ID
-                </button>
+                Chat ID:
+                ${esc(x.chat_id)}
+                <br>
                 `
                 :
                 ""
@@ -2494,14 +4054,22 @@ async function telegram(){
                 x.message_id
                 ?
                 `
-                <button
-                  class="btn"
-                  onclick='copyText(${JSON.stringify(
-                    String(x.message_id)
-                  )},"Message ID")'
-                >
-                  COPY MESSAGE ID
-                </button>
+                Message ID:
+                ${esc(x.message_id)}
+                <br>
+                `
+                :
+                ""
+              }
+
+              ${
+                x.created_at
+                ?
+                `
+                Created:
+                ${esc(
+                  date(x.created_at)
+                )}
                 `
                 :
                 ""
@@ -2509,12 +4077,36 @@ async function telegram(){
 
             </div>
 
+
+            <div class="action-row">
+
+              <button
+                class="btn"
+                type="button"
+                onclick='copyText(
+                  ${JSON.stringify(
+                    JSON.stringify(
+                      x,
+                      null,
+                      2
+                    )
+                  )},
+                  "Telegram event"
+                )'
+              >
+                COPY EVENT
+              </button>
+
+            </div>
+
           </div>
 
         `).join("")
+
         :
+
         `
-        <div class="empty">
+        <div class="empty-state">
           No Telegram events recorded yet.
         </div>
         `
@@ -2523,6 +4115,7 @@ async function telegram(){
     </div>
 
   `;
+
 }
 
 
@@ -2530,129 +4123,236 @@ async function telegram(){
 
 async function settings(){
 
-  const r=await db
-    .from("site_settings")
-    .select("*")
-    .limit(1)
-    .maybeSingle();
+  const result =
+    await db
+      .from("site_settings")
+      .select("*")
+      .limit(20);
 
-  if(r.error){
 
-    $("sectionContent").innerHTML=`
+  if(result.error){
 
-      <div class="panel">
+    $("sectionContent").innerHTML = `
 
-        <h3>
-          Site Settings
-        </h3>
+      <div class="empty-state">
 
-        <div class="empty">
-          ${esc(r.error.message)}
-        </div>
+        Settings table error:
+        ${esc(
+          result.error.message
+        )}
 
       </div>
 
     `;
 
     return;
+
   }
 
-  const x=r.data||{};
 
-  $("sectionContent").innerHTML=`
+  const rows =
+    result.data || [];
 
-    <div class="panel">
 
-      <div class="top">
+  let settingsData = {};
 
-        <div>
 
-          <h3>
-            Site Settings
-          </h3>
+  rows.forEach(row=>{
 
-          <p>
-            Manage the public payment and support settings.
-          </p>
+    const key =
+      row.key ||
+      row.setting_key ||
+      row.name;
+
+
+    const value =
+      row.value ??
+      row.setting_value ??
+      row.content ??
+      "";
+
+
+    if(key){
+
+      settingsData[key] =
+        value;
+
+    }
+
+  });
+
+
+  const licensePrice =
+    settingsData.license_price_inr ||
+    "99";
+
+
+  const unbanPrice =
+    settingsData.unban_price_inr ||
+    "399";
+
+
+  const upiId =
+    settingsData.upi_id ||
+    "jinwoo40054@kphdfc";
+
+
+  const support =
+    settingsData.support_username ||
+    "@NEXVORA_X";
+
+
+  const telegramChannel =
+    settingsData.telegram_channel ||
+    "https://t.me/+CDLeQTcwWGszNDBl";
+
+
+  $("sectionContent").innerHTML = `
+
+    <div>
+
+      <div class="section-title">
+        Site Settings
+      </div>
+
+      <div class="section-subtitle">
+        Update payment and support configuration used by the website.
+      </div>
+
+    </div>
+
+
+    <div
+      style="
+        margin-top:28px;
+        max-width:720px;
+      "
+    >
+
+      <div class="flat-row">
+
+        <div class="flat-row-title">
+          LICENSE PRICE
+        </div>
+
+        <div class="form-line">
+
+          <input
+            id="settingLicensePrice"
+            type="number"
+            min="0"
+            value="${esc(
+              licensePrice
+            )}"
+          >
 
         </div>
 
       </div>
 
-      <label>
-        License Price INR
-      </label>
 
-      <input
-        id="setLicensePrice"
-        type="number"
-        value="${esc(
-          x.license_price_inr||
-          x.license_price||
-          99
-        )}"
-      >
+      <div class="flat-row">
 
-      <label>
-        Unban Price INR
-      </label>
+        <div class="flat-row-title">
+          UNBAN PRICE
+        </div>
 
-      <input
-        id="setUnbanPrice"
-        type="number"
-        value="${esc(
-          x.unban_price_inr||
-          399
-        )}"
-      >
+        <div class="form-line">
 
-      <label>
-        UPI ID
-      </label>
+          <input
+            id="settingUnbanPrice"
+            type="number"
+            min="0"
+            value="${esc(
+              unbanPrice
+            )}"
+          >
 
-      <input
-        id="setUpi"
-        value="${esc(
-          x.upi_id||
-          "jinwoo40054@kphdfc"
-        )}"
-      >
+        </div>
 
-      <label>
-        Support Username
-      </label>
+      </div>
 
-      <input
-        id="setSupport"
-        value="${esc(
-          x.support_username||
-          "@NEXVORA_X"
-        )}"
-      >
 
-      <label>
-        Telegram Channel
-      </label>
+      <div class="flat-row">
 
-      <input
-        id="setTelegram"
-        value="${esc(
-          x.telegram_channel||
-          "https://t.me/+CDLeQTcwWGszNDBl"
-        )}"
-      >
+        <div class="flat-row-title">
+          UPI ID
+        </div>
 
-      <div class="actions">
+        <div class="form-line">
+
+          <input
+            id="settingUpi"
+            type="text"
+            value="${esc(
+              upiId
+            )}"
+            placeholder="example@upi"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="flat-row">
+
+        <div class="flat-row-title">
+          SUPPORT USERNAME
+        </div>
+
+        <div class="form-line">
+
+          <input
+            id="settingSupport"
+            type="text"
+            value="${esc(
+              support
+            )}"
+            placeholder="@NEXVORA_X"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="flat-row">
+
+        <div class="flat-row-title">
+          TELEGRAM CHANNEL
+        </div>
+
+        <div class="form-line">
+
+          <input
+            id="settingTelegram"
+            type="text"
+            value="${esc(
+              telegramChannel
+            )}"
+            placeholder="https://t.me/..."
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="action-row">
 
         <button
           class="btn primary"
-          onclick="saveSettings('${x.id||""}')"
+          type="button"
+          onclick="saveSettings()"
         >
           SAVE SETTINGS
         </button>
 
+
         <button
           class="btn"
+          type="button"
           onclick="settings()"
         >
           RESET
@@ -2663,250 +4363,209 @@ async function settings(){
     </div>
 
   `;
+
 }
 
 
 /* ================= SAVE SETTINGS ================= */
 
-async function saveSettings(id){
+async function saveSettings(){
 
-  const payload={
+  const values = {
 
     license_price_inr:
-      Number(
-        $("setLicensePrice").value
-      )||99,
+      $("settingLicensePrice")
+        .value
+        .trim(),
 
     unban_price_inr:
-      Number(
-        $("setUnbanPrice").value
-      )||399,
+      $("settingUnbanPrice")
+        .value
+        .trim(),
 
     upi_id:
-      $("setUpi").value.trim(),
+      $("settingUpi")
+        .value
+        .trim(),
 
     support_username:
-      $("setSupport").value.trim(),
+      $("settingSupport")
+        .value
+        .trim(),
 
     telegram_channel:
-      $("setTelegram").value.trim(),
+      $("settingTelegram")
+        .value
+        .trim()
 
-    updated_at:
-      new Date().toISOString()
   };
 
-  let r;
 
-  if(id){
+  if(!values.upi_id){
 
-    r=await db
-      .from("site_settings")
-      .update(payload)
-      .eq("id",id);
+    toast(
+      "UPI ID cannot be empty"
+    );
 
-  }else{
-
-    r=await db
-      .from("site_settings")
-      .insert(payload);
+    return;
 
   }
 
-  if(r.error){
+
+  if(!values.support_username){
+
+    toast(
+      "Support username cannot be empty"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    for(
+      const [key,value]
+      of Object.entries(values)
+    ){
+
+      const existing =
+        await db
+          .from("site_settings")
+          .select("*")
+          .or(
+            `key.eq.${key},setting_key.eq.${key},name.eq.${key}`
+          )
+          .limit(1);
+
+
+      if(existing.error){
+
+        throw existing.error;
+
+      }
+
+
+      if(
+        existing.data &&
+        existing.data.length
+      ){
+
+        const row =
+          existing.data[0];
+
+
+        const id =
+          row.id;
+
+
+        const updatePayload = {};
+
+
+        if(
+          Object.prototype
+            .hasOwnProperty
+            .call(row,"value")
+        ){
+
+          updatePayload.value =
+            value;
+
+        }
+
+        else if(
+          Object.prototype
+            .hasOwnProperty
+            .call(
+              row,
+              "setting_value"
+            )
+        ){
+
+          updatePayload.setting_value =
+            value;
+
+        }
+
+        else if(
+          Object.prototype
+            .hasOwnProperty
+            .call(
+              row,
+              "content"
+            )
+        ){
+
+          updatePayload.content =
+            value;
+
+        }
+
+
+        const updated =
+          await db
+            .from("site_settings")
+            .update(
+              updatePayload
+            )
+            .eq(
+              "id",
+              id
+            );
+
+
+        if(updated.error){
+
+          throw updated.error;
+
+        }
+
+      }
+
+      else{
+
+        const insertPayload = {
+
+          key,
+          value
+
+        };
+
+
+        const inserted =
+          await db
+            .from("site_settings")
+            .insert(
+              insertPayload
+            );
+
+
+        if(inserted.error){
+
+          throw inserted.error;
+
+        }
+
+      }
+
+    }
+
+
+    toast(
+      "Settings saved successfully"
+    );
+
+
+    await settings();
+
+  }
+
+  catch(error){
 
     toast(
       "Settings save failed: "+
-      r.error.message
-    );
-
-    return;
-  }
-
-  toast(
-    "Settings saved successfully"
-  );
-
-  await settings();
-}
-
-
-/* ================= SECTION RENDER ================= */
-
-let currentSection="dashboard";
-
-async function render(section){
-
-  currentSection=
-    section||
-    "dashboard";
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(el=>{
-
-      el.classList.toggle(
-        "active",
-        el.dataset.section===
-        currentSection
-      );
-
-    });
-
-  try{
-
-    if(currentSection==="dashboard"){
-
-      await overview();
-
-    }else if(
-      currentSection==="licenses"
-    ){
-
-      await licenses();
-
-    }else if(
-      currentSection==="forms"
-    ){
-
-      await forms();
-
-    }else if(
-      currentSection==="payments"
-    ){
-
-      await payments();
-
-    }else if(
-      currentSection==="telegram"
-    ){
-
-      await telegram();
-
-    }else if(
-      currentSection==="settings"
-    ){
-
-      await settings();
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    $("sectionContent").innerHTML=`
-
-      <div class="panel">
-
-        <h3>
-          Something went wrong
-        </h3>
-
-        <div class="empty">
-          ${esc(
-            error?.message||
-            "Unable to load this section."
-          )}
-        </div>
-
-      </div>
-
-    `;
-
-    toast(
-      error?.message||
-      "Section loading failed"
-    );
-
-  }
-}
-
-
-/* ================= NAVIGATION ================= */
-
-function setupNavigation(){
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(item=>{
-
-      item.addEventListener(
-        "click",
-        async()=>{
-
-          const section=
-            item.dataset.section;
-
-          if(!section){
-            return;
-          }
-
-          await render(section);
-
-        }
-      );
-
-    });
-
-}
-
-
-/* ================= LOGIN EVENTS ================= */
-
-function setupAuth(){
-
-  const loginButton=
-    $("loginButton");
-
-  const loginEmail=
-    $("loginEmail");
-
-  const loginPassword=
-    $("loginPassword");
-
-  if(loginButton){
-
-    loginButton.addEventListener(
-      "click",
-      async()=>{
-
-        await loginAdmin();
-
-      }
-    );
-
-  }
-
-  if(loginPassword){
-
-    loginPassword.addEventListener(
-      "keydown",
-      async event=>{
-
-        if(event.key==="Enter"){
-
-          await loginAdmin();
-
-        }
-
-      }
-    );
-
-  }
-
-  if(loginEmail){
-
-    loginEmail.addEventListener(
-      "keydown",
-      async event=>{
-
-        if(event.key==="Enter"){
-
-          await loginAdmin();
-
-        }
-
-      }
+      error.message
     );
 
   }
@@ -2914,543 +4573,243 @@ function setupAuth(){
 }
 
 
-/* ================= ADMIN LOGIN ================= */
-
-async function loginAdmin(){
-
-  const email=
-    $("loginEmail")
-      .value
-      .trim();
-
-  const password=
-    $("loginPassword")
-      .value;
-
-  if(!email||!password){
-
-    showLoginError(
-      "Please enter email and password."
-    );
-
-    return;
-  }
-
-  const button=
-    $("loginButton");
-
-  if(button){
-
-    button.disabled=true;
-
-    button.innerText=
-      "AUTHENTICATING...";
-  }
-
-  try{
-
-    const r=
-      await db.auth.signInWithPassword({
-        email,
-        password
-      });
-
-    if(r.error){
-
-      showLoginError(
-        "ACCESS FAILED"
-      );
-
-      toast(
-        "Wrong email or password"
-      );
-
-      return;
-    }
-
-    const allowed=
-      await verifyAdmin(
-        r.data.user
-      );
-
-    if(!allowed){
-
-      await db.auth.signOut();
-
-      showLoginError(
-        "ADMIN ACCESS DENIED"
-      );
-
-      toast(
-        "This account is not an admin"
-      );
-
-      return;
-    }
-
-    showAccess();
-
-  }catch(error){
-
-    console.error(error);
-
-    showLoginError(
-      "LOGIN FAILED"
-    );
-
-    toast(
-      error?.message||
-      "Login failed"
-    );
-
-  }finally{
-
-    if(button){
-
-      button.disabled=false;
-
-      button.innerText=
-        "SECURE LOGIN";
-
-    }
-
-  }
-
-}
-
-
-/* ================= LOGIN ERROR ================= */
-
-function showLoginError(message){
-
-  const box=
-    $("loginError");
-
-  if(!box){
-    return;
-  }
-
-  box.innerHTML=`
-
-    <div class="error-animation">
-
-      <div class="error-icon">
-        ×
-      </div>
-
-      <strong>
-        ${esc(message)}
-      </strong>
-
-      <span>
-        Please check your credentials and try again.
-      </span>
-
-    </div>
-
-  `;
-
-  box.classList.add("show");
-
-  setTimeout(()=>{
-
-    box.classList.remove("show");
-
-  },5000);
-
-}
-
-
-/* ================= WELCOME SCREEN ================= */
-
-function setupWelcome(){
-
-  const enter=
-    $("enterAdminButton");
-
-  if(!enter){
-    return;
-  }
-
-  enter.addEventListener(
-    "click",
-    ()=>{
-
-      const welcome=
-        $("welcomeScreen");
-
-      const login=
-        $("loginScreen");
-
-      if(welcome){
-        welcome.classList.add(
-          "hidden"
-        );
-      }
-
-      if(login){
-        login.classList.remove(
-          "hidden"
-        );
-      }
-
-      setTimeout(()=>{
-
-        const email=
-          $("loginEmail");
-
-        if(email){
-          email.focus();
-        }
-
-      },400);
-
-    }
-  );
-
-}
-
-
-/* ================= ACCESS SCREEN ================= */
-
-function setupAccessButton(){
-
-  const button=
-    $("accessPanelButton");
-
-  if(!button){
-    return;
-  }
-
-  button.addEventListener(
-    "click",
-    async()=>{
-
-      const access=
-        $("accessScreen");
-
-      const app=
-        $("adminApp");
-
-      if(access){
-
-        access.classList.add(
-          "hidden"
-        );
-
-      }
-
-      if(app){
-
-        app.classList.remove(
-          "hidden"
-        );
-
-      }
-
-      await render(
-        "dashboard"
-      );
-
-    }
-  );
-
-}
-
-
-/* ================= LOGOUT ================= */
-
-async function logoutAdmin(){
-
-  await db.auth.signOut();
-
-  location.reload();
-
-}
-
-
-/* ================= STARTUP ================= */
-
-async function bootAdmin(){
-
-  setupNavigation();
-
-  setupAuth();
-
-  setupWelcome();
-
-  setupAccessButton();
-
-  const session=
-    await currentUser();
-
-  if(session){
-
-    const allowed=
-      await verifyAdmin(
-        session
-      );
-
-    if(allowed){
-
-      showAccess();
-
-      return;
-
-    }
-
-    await db.auth.signOut();
-
-  }
-
-  const welcome=
-    $("welcomeScreen");
-
-  const login=
-    $("loginScreen");
-
-  const access=
-    $("accessScreen");
-
-  const app=
-    $("adminApp");
-
-  if(welcome){
-    welcome.classList.remove(
-      "hidden"
-    );
-  }
-
-  if(login){
-    login.classList.add(
-      "hidden"
-    );
-  }
-
-  if(access){
-    access.classList.add(
-      "hidden"
-    );
-  }
-
-  if(app){
-    app.classList.add(
-      "hidden"
-    );
-  }
-
-}
-
-
-/* ================= BOOT ================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  bootAdmin
-);
-  /* ================= FINAL UI CONNECTIONS ================= */
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-  /* Navigation */
-
-  document
-    .querySelectorAll("[data-section]")
-    .forEach(item=>{
-
-      item.addEventListener("click",async()=>{
-
-        const section=
-          item.getAttribute("data-section");
-
-        if(section){
-
-          await render(section);
-
-        }
-
-      });
-
-    });
-
-
-  /* Welcome → Login */
-
-  const welcomeBtn=
-    document.getElementById(
-      "enterAdminButton"
-    );
-
-  if(welcomeBtn){
-
-    welcomeBtn.onclick=()=>{
-
-      const welcome=
-        document.getElementById(
-          "welcomeScreen"
-        );
-
-      const login=
-        document.getElementById(
-          "loginScreen"
-        );
-
-      if(welcome){
-        welcome.classList.add("hidden");
-      }
-
-      if(login){
-        login.classList.remove("hidden");
-      }
-
-      setTimeout(()=>{
-
-        const email=
-          document.getElementById(
-            "loginEmail"
-          );
-
-        if(email){
-          email.focus();
-        }
-
-      },350);
-
-    };
-
-  }
-
-
-  /* Login */
-
-  const loginBtn=
-    document.getElementById(
-      "loginButton"
-    );
-
-  if(loginBtn){
-
-    loginBtn.onclick=
-      loginAdmin;
-
-  }
-
-
-  /* Enter Control Panel */
-
-  const accessBtn=
-    document.getElementById(
-      "accessPanelButton"
-    );
-
-  if(accessBtn){
-
-    accessBtn.onclick=async()=>{
-
-      const access=
-        document.getElementById(
-          "accessScreen"
-        );
-
-      const app=
-        document.getElementById(
-          "adminApp"
-        );
-
-      if(access){
-        access.classList.add("hidden");
-      }
-
-      if(app){
-        app.classList.remove("hidden");
-      }
-
-      await render("dashboard");
-
-    };
-
-  }
-
-
-  /* Logout */
-
-  const logoutBtn=
-    document.getElementById(
-      "logoutButton"
-    );
-
-  if(logoutBtn){
-
-    logoutBtn.onclick=
-      logoutAdmin;
-
-  }
-
-});
-
-
-/* ================= ENTER KEY LOGIN ================= */
+/* ================= CLOSE MODAL ON ESC ================= */
 
 document.addEventListener(
   "keydown",
   event=>{
 
     if(
-      event.key!=="Enter"
-    ){
-      return;
-    }
-
-    const login=
-      document.getElementById(
-        "loginScreen"
-      );
-
-    if(
-      login &&
-      !login.classList.contains(
-        "hidden"
-      )
+      event.key ===
+      "Escape"
     ){
 
-      const password=
-        document.getElementById(
-          "loginPassword"
-        );
-
-      if(
-        document.activeElement===
-        password
-      ){
-
-        loginAdmin();
-
-      }
+      $("modalRoot")
+        .innerHTML = "";
 
     }
 
   }
 );
+  /* ================= DATE FORMATTER ================= */
+
+function date(value){
+
+  if(!value){
+    return "—";
+  }
+
+  try{
+
+    return new Date(value)
+      .toLocaleString(
+        "en-IN",
+        {
+          dateStyle:"medium",
+          timeStyle:"short"
+        }
+      );
+
+  }
+
+  catch(error){
+
+    return String(value);
+
+  }
+
+}
 
 
-/* ================= FINAL SAFETY ================= */
+/* ================= SESSION RESTORE ================= */
 
-window.addEventListener(
-  "error",
-  event=>{
+async function restoreAdminSession(){
+
+  try{
+
+    const result =
+      await db.auth.getSession();
+
+
+    const session =
+      result.data?.session;
+
+
+    if(!session){
+
+      $("welcomeScreen")
+        .style.display =
+        "flex";
+
+      $("loginScreen")
+        .style.display =
+        "none";
+
+      $("accessScreen")
+        .style.display =
+        "none";
+
+      $("adminApp")
+        .style.display =
+        "none";
+
+      return;
+
+    }
+
+
+    const allowed =
+      await verifyAdmin(
+        session.user
+      );
+
+
+    if(!allowed){
+
+      await db.auth.signOut();
+
+      $("welcomeScreen")
+        .style.display =
+        "flex";
+
+      $("loginScreen")
+        .style.display =
+        "none";
+
+      $("accessScreen")
+        .style.display =
+        "none";
+
+      $("adminApp")
+        .style.display =
+        "none";
+
+      return;
+
+    }
+
+
+    $("welcomeScreen")
+      .style.display =
+      "none";
+
+    $("loginScreen")
+      .style.display =
+      "none";
+
+    $("accessScreen")
+      .style.display =
+      "flex";
+
+    $("adminApp")
+      .style.display =
+      "none";
+
+
+  }
+
+  catch(error){
 
     console.error(
-      "Admin Panel Error:",
-      event.error
+      "Session restore error:",
+      error
     );
 
   }
+
+}
+
+
+/* ================= AUTH STATE LISTENER ================= */
+
+db.auth.onAuthStateChange(
+  async (
+    event,
+    session
+  )=>{
+
+    if(
+      event ===
+      "SIGNED_OUT"
+    ){
+
+      $("welcomeScreen")
+        .style.display =
+        "flex";
+
+      $("loginScreen")
+        .style.display =
+        "none";
+
+      $("accessScreen")
+        .style.display =
+        "none";
+
+      $("adminApp")
+        .style.display =
+        "none";
+
+      return;
+
+    }
+
+
+    if(
+      event ===
+      "SIGNED_IN" &&
+      session?.user
+    ){
+
+      const allowed =
+        await verifyAdmin(
+          session.user
+        );
+
+
+      if(!allowed){
+
+        await db.auth.signOut();
+
+        return;
+
+      }
+
+
+      $("welcomeScreen")
+        .style.display =
+        "none";
+
+      $("loginScreen")
+        .style.display =
+        "none";
+
+      $("accessScreen")
+        .style.display =
+        "flex";
+
+      $("adminApp")
+        .style.display =
+        "none";
+
+    }
+
+  }
 );
 
 
-/* ================= CLOSE SCRIPT ================= */
+/* ================= PAGE START ================= */
+
+window.addEventListener(
+  "DOMContentLoaded",
+  async()=>{
+
+    await restoreAdminSession();
+
+  }
+);
 
 </script>
 
 </body>
+
 </html>
