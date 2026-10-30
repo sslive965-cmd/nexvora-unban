@@ -4614,137 +4614,84 @@ function date(value){
 /* ================= SCREEN CONTROL ================= */
 
 function showWelcomeScreen(){
-
-  $("welcomeScreen").style.display = "flex";
-  $("loginScreen").style.display = "none";
-  $("accessScreen").style.display = "none";
-  $("adminApp").style.display = "none";
-
+  $("welcomeScreen").classList.remove("hidden");
+  $("loginScreen").classList.add("hidden");
+  $("accessScreen").classList.add("hidden");
+  $("adminApp").classList.add("hidden");
 }
-
 
 function showLoginScreen(){
-
-  $("welcomeScreen").style.display = "none";
-  $("loginScreen").style.display = "flex";
-  $("accessScreen").style.display = "none";
-  $("adminApp").style.display = "none";
-
+  $("welcomeScreen").classList.add("hidden");
+  $("loginScreen").classList.remove("hidden");
+  $("accessScreen").classList.add("hidden");
+  $("adminApp").classList.add("hidden");
 }
 
+function showAccessScreen(){
+  $("welcomeScreen").classList.add("hidden");
+  $("loginScreen").classList.add("hidden");
+  $("accessScreen").classList.remove("hidden");
+  $("adminApp").classList.add("hidden");
+}
 
-/* ================= ENTER BUTTON ================= */
-
-$("enterAdminButton").addEventListener(
-  "click",
-  function(event){
-
-    event.preventDefault();
-
-    showLoginScreen();
-
-  }
-);
-
+function showAdminScreen(){
+  $("welcomeScreen").classList.add("hidden");
+  $("loginScreen").classList.add("hidden");
+  $("accessScreen").classList.add("hidden");
+  $("adminApp").classList.remove("hidden");
+}
 
 /* ================= SESSION RESTORE ================= */
 
 async function restoreAdminSession(){
-
   try{
-
-    const result =
-      await db.auth.getSession();
-
-    if(result.error){
-
-      showWelcomeScreen();
-      return;
-
-    }
-
-    const session =
-      result.data?.session;
+    const result = await db.auth.getSession();
+    const session = result.data?.session;
 
     if(!session){
-
       showWelcomeScreen();
       return;
-
     }
 
-    const allowed =
-      await verifyAdmin(session.user);
+    const allowed = await verifyAdmin(session.user);
 
     if(!allowed){
-
       await db.auth.signOut();
       showWelcomeScreen();
       return;
-
     }
 
-    $("welcomeScreen").style.display = "none";
-    $("loginScreen").style.display = "none";
-    $("accessScreen").style.display = "flex";
-    $("adminApp").style.display = "none";
+    showAccessScreen();
 
   }catch(error){
-
-    console.error(
-      "Session restore error:",
-      error
-    );
-
+    console.error("Session restore error:", error);
     showWelcomeScreen();
-
   }
-
 }
-
 
 /* ================= AUTH STATE LISTENER ================= */
 
-db.auth.onAuthStateChange(
-  async(event, session)=>{
-
-    if(event === "SIGNED_OUT"){
-
-      showWelcomeScreen();
-      return;
-
-    }
-
-    if(
-      event === "SIGNED_IN" &&
-      session?.user
-    ){
-
-      const allowed =
-        await verifyAdmin(session.user);
-
-      if(!allowed){
-
-        await db.auth.signOut();
-        return;
-
-      }
-
-      $("welcomeScreen").style.display = "none";
-      $("loginScreen").style.display = "none";
-      $("accessScreen").style.display = "flex";
-      $("adminApp").style.display = "none";
-
-    }
-
+db.auth.onAuthStateChange(async(event, session)=>{
+  if(event === "SIGNED_OUT"){
+    showWelcomeScreen();
+    return;
   }
-);
 
+  if(event === "SIGNED_IN" && session?.user){
+    const allowed = await verifyAdmin(session.user);
+
+    if(!allowed){
+      await db.auth.signOut();
+      return;
+    }
+
+    showAccessScreen();
+  }
+});
 
 /* ================= PAGE START ================= */
 
 showWelcomeScreen();
-
 restoreAdminSession();
 
 </script>
