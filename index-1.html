@@ -500,6 +500,7 @@ body.leaving .page {
 
 </div>
 
+
 <script>
 /* PARTICLES */
 const particleArea = document.getElementById("particles");
@@ -513,6 +514,7 @@ for (let i = 0; i < 38; i++) {
   }
 
   const size = 1 + Math.random() * 2;
+
   particle.style.width = size + "px";
   particle.style.height = size + "px";
   particle.style.left = Math.random() * 100 + "%";
@@ -523,35 +525,28 @@ for (let i = 0; i < 38; i++) {
   particleArea.appendChild(particle);
 }
 
-/*
-  IMPORTANT:
-  Browser Back / Forward / Refresh par
-  leaving class ko reset karna zaroori hai.
-*/
+/* NAVIGATION STATE */
+const enterButton = document.getElementById("enterButton");
+
+let navigationStarted = false;
+
+/* RESET PAGE WHEN RESTORED */
 function restoreWelcomePage() {
+  navigationStarted = false;
+
   document.body.classList.remove("leaving");
 
-  const enterButton = document.getElementById("enterButton");
   enterButton.disabled = false;
-  enterButton.innerHTML = 'ENTER <span aria-hidden="true">→</span>';
+  enterButton.innerHTML =
+    'ENTER <span aria-hidden="true">→</span>';
 }
 
-/* Browser page restore / back-forward cache */
+/* Initial load, browser Back and Forward */
 window.addEventListener("pageshow", function () {
   restoreWelcomePage();
 });
 
-/* Tab visible hone par bhi stale exit state clear karo */
-document.addEventListener("visibilitychange", function () {
-  if (!document.hidden) {
-    restoreWelcomePage();
-  }
-});
-
 /* ENTER BUTTON */
-const enterButton = document.getElementById("enterButton");
-let navigationStarted = false;
-
 enterButton.addEventListener("click", function () {
   if (navigationStarted) return;
 
@@ -561,10 +556,11 @@ enterButton.addEventListener("click", function () {
   document.body.classList.add("leaving");
 
   setTimeout(function () {
-    window.location.assign("./license.html");
+    window.location.href = "./license.html";
   }, 550);
 });
 </script>
+  
 
 </body>
 </html>
