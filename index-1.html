@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080812">
+  <title>NEXVORA UNBAN</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #080812;
+      --blue: #6485ff;
+      --purple: #a16bff;
+      --text: #f5f5ff;
+      --muted: #9292aa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 15% 15%, #25205a55, transparent 42%),
+        radial-gradient(ellipse at 85% 80%, #35145c44, transparent 40%),
+        var(--bg);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .15;
+      background-image:
+        linear-gradient(#7777ff12 1px, transparent 1px),
+        linear-gradient(90deg, #7777ff12 1px, transparent 1px);
+      background-size: 45px 45px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    .ambient {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .16;
+      pointer-events: none;
+      animation: float 9s ease-in-out infinite alternate;
+    }
+
+    .ambient.one {
+      background: #596cff;
+      top: -130px;
+      left: -100px;
+    }
+
+    .ambient.two {
+      background: #a04cff;
+      bottom: -150px;
+      right: -100px;
+      animation-delay: -4s;
+    }
+
+    @keyframes float {
+      from { transform: translate(0, 0); }
+      to { transform: translate(45px, 35px); }
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 25px 20px 35px;
+    }
+
+    .brand {
+      width: 100%;
+      max-width: 1050px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: appear .8s ease both;
+    }
+
+    .brand-logo {
+      width: 49px;
+      height: 49px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 12px #7184ff70);
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 2.1px;
+    }
+
+    .brand-sub {
+      color: #9292b2;
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      margin-top: 4px;
+    }
+
+    .main {
+      width: 100%;
+      max-width: 480px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 45px 0;
+    }
+
+    .screen {
+      width: 100%;
+      text-align: center;
+      animation: appear .7s ease both;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .eyebrow {
+      color: #a5a9ff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 23px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 8vw, 49px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.13;
+    }
+
+    .gradient-text {
+      background: linear-gradient(100deg, #8ba4ff, #c18aff 65%, #8ba4ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .description {
+      max-width: 370px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .welcome-line {
+      width: 45px;
+      height: 2px;
+      margin: 28px auto;
+      border-radius: 5px;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      box-shadow: 0 0 15px #8b78ff;
+    }
+
+    .button {
+      width: 100%;
+      min-height: 54px;
+      border: 0;
+      border-radius: 12px;
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      cursor: pointer;
+      background: linear-gradient(105deg, #526fff, #9162ec);
+      box-shadow: 0 8px 30px #6559ed35;
+      transition: .25s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px #8066ff55;
+      filter: brightness(1.1);
+    }
+
+    .button:disabled {
+      opacity: .6;
+      cursor: wait;
+      transform: none;
+    }
+
+    .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      margin-top: 14px;
+      padding: 0 25px;
+      border: 1px solid #7775bb55;
+      border-radius: 11px;
+      color: #c9c6ff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      transition: .2s;
+    }
+
+    .secondary-button:hover {
+      background: #7775bb16;
+      border-color: #9990ff;
+    }
+
+    .license-title {
+      font-size: 31px;
+      letter-spacing: -1px;
+    }
+
+    .license-description {
+      margin: 13px auto 30px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .input-label {
+      display: block;
+      text-align: left;
+      color: #b8b8d1;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      margin-bottom: 10px;
+    }
+
+    .license-input {
+      width: 100%;
+      height: 56px;
+      padding: 0 17px;
+      border-radius: 11px;
+      outline: none;
+      border: 1px solid #7775bb55;
+      background: #111120cc;
+      color: white;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-align: center;
+      transition: .25s;
+    }
+
+    .license-input:focus {
+      border-color: #8a80ff;
+      box-shadow: 0 0 0 3px #8275ff18;
+    }
+
+    .license-input::placeholder {
+      color: #666680;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+    }
+
+    .verify-button {
+      margin-top: 17px;
+    }
+
+    .message {
+      min-height: 22px;
+      margin-top: 17px;
+      font-size: 11px;
+      line-height: 1.7;
+      color: #ff929f;
+    }
+
+    .success-mark {
+      width: 65px;
+      height: 65px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #6be6b566;
+      border-radius: 50%;
+      color: #70edbd;
+      font-size: 30px;
+      box-shadow: 0 0 35px #4de6ae20;
+      animation: pop .5s ease both;
+    }
+
+    .success-title {
+      color: #79eec2;
+      font-size: 30px;
+      letter-spacing: -1px;
+    }
+
+    .success-note {
+      color: var(--muted);
+      margin-top: 15px;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    footer {
+      color: #66667e;
+      font-size: 9px;
+      letter-spacing: 1.7px;
+      text-align: center;
+      padding-top: 20px;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(.65); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 480px) {
+      .page { padding: 20px 22px 25px; }
+      .brand-logo { width: 45px; height: 45px; }
+      .brand-name { font-size: 13px; }
+      .main { padding: 35px 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient one"></div>
+  <div class="ambient two"></div>
+
+  <div class="page">
+
+    <!-- TOP BRANDING -->
+    <header class="brand">
+      <img
+        class="brand-logo"
+        src="assets/nexvora-logo.png"
+        alt="NEXVORA UNBAN Logo"
+      >
+      <div>
+        <div class="brand-name">NEXVORA UNBAN</div>
+        <div class="brand-sub">NEXVORA UNIVERSE</div>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <!-- WELCOME SCREEN -->
+      <section class="screen" id="welcomeScreen">
+        <div class="eyebrow">WELCOME TO THE UNIVERSE</div>
+
+        <h1>
+          YOUR JOURNEY<br>
+          <span class="gradient-text">BEGINS HERE.</span>
+        </h1>
+
+        <p class="description">
+          Welcome to NEXVORA UNBAN.
+          A dedicated experience built with simplicity,
+          precision and trust.
+        </p>
+
+        <div class="welcome-line"></div>
+
+        <button class="button" id="enterButton">
+          ENTER
+        </button>
+      </section>
+
+      <!-- LICENSE SCREEN -->
+      <section class="screen hidden" id="licenseScreen">
+        <div class="eyebrow">LICENSE AUTHENTICATION</div>
+
+        <h1 class="license-title">
+          ENTER <span class="gradient-text">LICENSE KEY</span>
+        </h1>
+
+        <p class="license-description">
+          Enter your NEXVORA license key below
+          to verify your access.
+        </p>
+
+        <form id="licenseForm">
+          <label class="input-label" for="licenseKey">
+            YOUR LICENSE KEY
+          </label>
+
+          <input
+            class="license-input"
+            id="licenseKey"
+            type="text"
+            placeholder="NX-XXXX-UN"
+            maxlength="11"
+            autocomplete="off"
+            spellcheck="false"
+            required
+          >
+
+          <button class="button verify-button" id="verifyButton" type="submit">
+            VERIFY LICENSE
+          </button>
+        </form>
+
+        <div class="message" id="message" role="status" aria-live="polite"></div>
+
+        <a
+          class="secondary-button"
+          href="https://t.me/NexvoraUnbanOfficialBot"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GET KEY
+        </a>
+      </section>
+
+      <!-- SUCCESS SCREEN -->
+      <section class="screen hidden" id="successScreen">
+        <div class="success-mark">✓</div>
+
+        <div class="eyebrow">LICENSE VERIFIED SUCCESSFULLY</div>
+
+        <h1 class="success-title">ACCESS GRANTED</h1>
+
+        <p class="success-note">
+          Your license has been verified.<br>
+          Welcome to NEXVORA UNBAN.
+        </p>
+      </section>
+
+    </main>
+
+    <footer>
+      © 2026 NEXVORA UNIVERSE · ALL RIGHTS RESERVED
+    </footer>
+  </div>
+
+  <script>
+    const API_URL =
+      "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/nexvora-unban-license-api";
+
+    const welcomeScreen = document.getElementById("welcomeScreen");
+    const licenseScreen = document.getElementById("licenseScreen");
+    const successScreen = document.getElementById("successScreen");
+
+    const enterButton = document.getElementById("enterButton");
+    const licenseForm = document.getElementById("licenseForm");
+    const licenseInput = document.getElementById("licenseKey");
+    const verifyButton = document.getElementById("verifyButton");
+    const message = document.getElementById("message");
+
+    function showScreen(screen) {
+      welcomeScreen.classList.add("hidden");
+      licenseScreen.classList.add("hidden");
+      successScreen.classList.add("hidden");
+
+      screen.classList.remove("hidden");
+    }
+
+    enterButton.addEventListener("click", () => {
+      showScreen(licenseScreen);
+      setTimeout(() => licenseInput.focus(), 300);
+    });
+
+    licenseInput.addEventListener("input", () => {
+      licenseInput.value = licenseInput.value
+        .toUpperCase()
+        .replace(/\s/g, "");
+      message.textContent = "";
+    });
+
+    function getErrorMessage(code) {
+      const errors = {
+        INVALID_KEY_FORMAT: "Please enter a valid license key format.",
+        LICENSE_NOT_FOUND: "This license key does not exist.",
+        LICENSE_REVOKED: "This license key has been revoked.",
+        LICENSE_EXPIRED: "This license key has expired.",
+        LICENSE_EXHAUSTED: "This license has no remaining uses.",
+        LICENSE_INACTIVE: "This license is currently inactive."
+      };
+
+      return errors[code] || "Verification failed. Please try again.";
+    }
+
+    licenseForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const licenseKey = licenseInput.value.trim().toUpperCase();
+
+      if (!/^NX-[A-Z0-9]{4}-UN$/.test(licenseKey)) {
+        message.textContent = "Invalid format. Example: NX-AB12-UN";
+        return;
+      }
+
+      verifyButton.disabled = true;
+      verifyButton.textContent = "VERIFYING...";
+      message.style.color = "#a9a7ff";
+      message.textContent = "Checking your license securely...";
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            license_key: licenseKey
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.code === "LICENSE_VALID") {
+          showScreen(successScreen);
+        } else {
+          message.style.color = "#ff929f";
+          message.textContent = getErrorMessage(result.code);
+        }
+
+      } catch (error) {
+        message.style.color = "#ff929f";
+        message.textContent =
+          "Connection error. Please check your internet and try again.";
+      } finally {
+        verifyButton.disabled = false;
+        verifyButton.textContent = "VERIFY LICENSE";
+      }
+    });
+  </script>
+</body>
+  </html>
+  
