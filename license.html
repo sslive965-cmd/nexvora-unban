@@ -125,7 +125,7 @@ body {
   }
 }
 
-/* PAGE ENTRANCE */
+/* PAGE */
 
 .page {
   position: relative;
@@ -157,8 +157,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  opacity: 0;
-  animation: revealDown .9s .35s ease forwards;
+  animation: revealDown .9s .35s ease both;
 }
 
 .logo-wrap {
@@ -169,7 +168,7 @@ body {
   overflow: hidden;
   border: 1px solid #6e9cff99;
   box-shadow: 0 0 15px #168cff65, 0 0 25px #8c37ff30;
-  animation: logoGlow 3s ease-in-out infinite alternate;
+  animation: logoGlow 3s infinite alternate;
 }
 
 .logo {
@@ -201,7 +200,7 @@ body {
   }
 }
 
-/* MAIN CONTENT */
+/* MAIN */
 
 .main {
   flex: 1;
@@ -255,6 +254,8 @@ h1 {
   animation: revealUp .8s .95s both;
 }
 
+/* INPUT */
+
 .label {
   display: block;
   text-align: left;
@@ -295,60 +296,95 @@ h1 {
   animation: revealUp .8s 1.1s both;
 }
 
-.button {
+/* SAME BUTTON DESIGN AS ENTER */
+
+.button,
+.get-key {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 55px;
-  border: 0;
+  min-height: 57px;
+  border: 1px solid #b3baff99;
   border-radius: 10px;
   color: white;
-  background: linear-gradient(105deg, #126be8, #7542d8);
   font-family: 'Orbitron', sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 0 22px #246fff40;
-  transition: .25s;
-  position: relative;
   overflow: hidden;
+  background: linear-gradient(105deg, #126be8, #7542d8);
+  box-shadow:
+    0 0 20px #246fff55,
+    0 0 45px #7d35ff25;
+  transition: transform .3s, box-shadow .3s, filter .3s;
 }
 
-.button::before {
+/* Moving shine */
+.button::before,
+.get-key::before {
   content: "";
   position: absolute;
   top: 0;
   left: -100%;
-  width: 60%;
+  width: 65%;
   height: 100%;
   transform: skewX(-25deg);
-  background: linear-gradient(90deg, transparent, #ffffff50, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ffffff65,
+    transparent
+  );
+  animation: buttonShine 3s infinite;
+  pointer-events: none;
 }
 
-.button:hover::before {
-  animation: buttonShine .8s ease;
+.button:hover,
+.get-key:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 25px #246fff99,
+    0 0 60px #7d35ff55;
+  filter: brightness(1.1);
 }
 
-.button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 32px #775cff70;
+.button:active,
+.get-key:active {
+  transform: scale(.97);
 }
 
 .button:disabled {
-  opacity: .55;
+  opacity: .65;
   cursor: wait;
   transform: none;
+  filter: none;
 }
+
+.button:disabled::before {
+  animation-play-state: paused;
+}
+
+@keyframes buttonShine {
+  0%, 45% {
+    left: -100%;
+  }
+  75%, 100% {
+    left: 150%;
+  }
+}
+
+/* VERIFY */
 
 .verify-button {
   margin-top: 16px;
   animation: revealUp .8s 1.25s both;
 }
 
-@keyframes buttonShine {
-  to { left: 150%; }
-}
-
-/* MESSAGE AND LOADER */
+/* MESSAGE */
 
 .message {
   min-height: 24px;
@@ -381,30 +417,14 @@ h1 {
 /* GET KEY */
 
 .get-key {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 145px;
-  min-height: 47px;
-  margin-top: 8px;
-  padding: 0 24px;
-  border-radius: 9px;
-  border: 1px solid #8a75e877;
-  color: #d2c7ff;
-  text-decoration: none;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  transition: .25s;
+  width: 190px;
+  min-height: 53px;
+  margin: 8px auto 0;
+  font-size: 11px;
   animation: revealUp .8s 1.4s both;
 }
 
-.get-key:hover {
-  background: #8159ff18;
-  border-color: #aa8cff;
-  box-shadow: 0 0 20px #8159ff30;
-}
+/* BACK */
 
 .back-link {
   display: inline-block;
@@ -458,6 +478,8 @@ h1 {
   font-size: 12px;
   line-height: 1.9;
 }
+
+/* FOOTER */
 
 .footer {
   text-align: center;
@@ -527,8 +549,14 @@ h1 {
 }
 
 @media(max-width: 500px) {
-  .page { padding: 20px 21px; }
-  .logo-wrap { width: 51px; height: 51px; }
+  .page {
+    padding: 20px 21px;
+  }
+
+  .logo-wrap {
+    width: 51px;
+    height: 51px;
+  }
 }
 
 @media(prefers-reduced-motion: reduce) {
@@ -602,13 +630,23 @@ h1 {
             >
           </div>
 
-          <button class="button verify-button" id="verifyButton" type="submit">
+          <button
+            class="button verify-button"
+            id="verifyButton"
+            type="submit"
+          >
             VERIFY LICENSE
           </button>
 
         </form>
 
-        <div class="message" id="message" role="status" aria-live="polite"></div>
+        <div
+          class="message"
+          id="message"
+          role="status"
+          aria-live="polite"
+        ></div>
+
         <div class="loader" id="loader"></div>
 
         <a
@@ -623,7 +661,7 @@ h1 {
         <br>
 
         <a href="./index.html" class="back-link">
-  ← BACK TO WELCOME
+          ← BACK TO WELCOME
         </a>
 
       </div>
@@ -655,13 +693,12 @@ h1 {
 </div>
 
 <script>
-/* CREATE ANIMATED PARTICLES */
+/* PARTICLES */
 
 const particleArea = document.getElementById("particles");
 
 for (let i = 0; i < 55; i++) {
   const particle = document.createElement("span");
-
   particle.className = "particle";
 
   if (Math.random() > 0.5) {
@@ -765,4 +802,5 @@ form.addEventListener("submit", async (event) => {
 </script>
 
 </body>
-</html>
+  </html>
+  
