@@ -4,497 +4,811 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050711">
-<meta name="description" content="NEXVORA UNBAN - Secure Free Fire Player UID Verification">
+<meta name="theme-color" content="#050914">
+
 <title>NEXVORA UNBAN | Player Verification</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-:root {
-  --bg:#050711;
-  --surface:#0d1322;
-  --surface2:#111b30;
-  --border:rgba(130,165,255,.15);
-  --text:#f5f8ff;
-  --muted:#929db5;
-  --blue:#3978ff;
-  --purple:#8755ff;
-  --cyan:#35ddff;
-  --green:#27e6a0;
-  --red:#ff5573;
+<style>
+:root{
+  --bg:#050914;
+  --panel:#0c1729;
+  --panel2:#101f36;
+  --blue:#3988ff;
+  --cyan:#32d8ff;
+  --green:#39e6a3;
+  --text:#f2f7ff;
+  --muted:#91a4c1;
+  --border:rgba(112,165,255,.17);
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:85px;
+}
+
 body{
   min-height:100vh;
+  overflow-x:hidden;
   background:
-    radial-gradient(ellipse at 15% 5%,rgba(37,104,255,.19),transparent 34%),
-    radial-gradient(ellipse at 88% 28%,rgba(125,62,255,.14),transparent 34%),
-    radial-gradient(ellipse at 50% 85%,rgba(0,195,255,.07),transparent 40%),
+    radial-gradient(ellipse at 50% 0%,#102347 0%,transparent 43%),
     var(--bg);
   color:var(--text);
-  font-family:Inter,sans-serif;
-  overflow-x:hidden;
+  font-family:Inter,Arial,sans-serif;
 }
-body.modal-open{overflow:hidden}
-button,input,select{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-.container{width:min(100% - 32px,1050px);margin:auto}
 
-/* AMBIENT PARTICLES */
+body.menu-open,
+body.modal-open{
+  overflow:hidden;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button,a{
+  -webkit-tap-highlight-color:transparent;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  cursor:pointer;
+}
+
+.container{
+  width:min(100% - 34px,760px);
+  margin-inline:auto;
+}
 
 .particle-layer{
   position:fixed;
   inset:0;
-  z-index:-1;
   overflow:hidden;
   pointer-events:none;
+  z-index:0;
 }
+
 .particle{
   position:absolute;
-  width:3px;height:3px;
+  width:3px;
+  height:3px;
   border-radius:50%;
-  background:#70caff;
-  box-shadow:0 0 12px 2px rgba(62,157,255,.65);
-  opacity:.55;
-  animation:particleFloat linear infinite;
+  background:#6abaff;
+  opacity:0;
+  box-shadow:0 0 12px #3988ff;
+  animation:particleFloat 8s ease-in-out infinite;
 }
+
 @keyframes particleFloat{
-  0%{transform:translate3d(0,30px,0);opacity:0}
-  15%{opacity:.65}
-  85%{opacity:.5}
-  100%{transform:translate3d(35px,-110vh,0);opacity:0}
+  0%,100%{transform:translateY(0);opacity:0}
+  50%{transform:translateY(-45px);opacity:.7}
 }
+
 .ambient-glow{
   position:fixed;
-  width:340px;height:340px;
+  width:300px;
+  height:300px;
   border-radius:50%;
   filter:blur(100px);
-  opacity:.12;
+  opacity:.13;
   pointer-events:none;
-  z-index:-1;
-  animation:ambientMove 12s ease-in-out infinite alternate;
+  z-index:0;
 }
-.ambient-one{background:#246bff;top:15%;left:-180px}
-.ambient-two{background:#873dff;right:-190px;top:55%;animation-delay:-5s}
-@keyframes ambientMove{
-  from{transform:translateY(-25px) scale(.9)}
-  to{transform:translateY(55px) scale(1.15)}
+
+.ambient-one{
+  top:180px;
+  left:-180px;
+  background:#147cff;
+}
+
+.ambient-two{
+  top:650px;
+  right:-190px;
+  background:#00c8ff;
+}
+
+header,.page-content,footer{
+  position:relative;
+  z-index:1;
 }
 
 /* HEADER */
 
 .header{
-  height:76px;
-  display:flex;
-  align-items:center;
-  border-bottom:1px solid rgba(130,165,255,.13);
-  background:rgba(5,7,17,.82);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
   position:sticky;
   top:0;
   z-index:100;
+  height:70px;
+  border-bottom:1px solid var(--border);
+  background:rgba(5,9,20,.88);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
 }
+
 .header-inner{
+  width:min(100% - 30px,900px);
+  height:100%;
+  margin:auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
-}
-.brand{display:flex;align-items:center;gap:11px}
-.brand-logo{
-  width:45px;height:45px;
-  object-fit:cover;
-  border-radius:50%;
-  padding:3px;
-  border:1px solid rgba(65,154,255,.7);
-  background:#0b1428;
-  box-shadow:0 0 12px rgba(40,125,255,.35),0 0 25px rgba(40,125,255,.14);
-}
-.brand-name{font-size:14px;font-weight:900;letter-spacing:1.2px}
-.brand-subtitle{color:#8e9cba;font-size:8px;letter-spacing:2px;margin-top:4px}
-.header-actions{display:flex;align-items:center;gap:11px}
-.support-btn{
-  position:relative;
-  overflow:hidden;
-  border:1px solid rgba(71,133,255,.48);
-  background:rgba(48,103,255,.13);
-  color:#c4d6ff;
-  border-radius:10px;
-  padding:10px 13px;
-  font-size:10px;
-  font-weight:900;
-  box-shadow:0 0 16px rgba(55,112,255,.08);
-}
-.menu-btn{
-  width:43px;height:43px;
-  display:grid;place-items:center;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:rgba(16,27,48,.9);
-  color:white;
-}
-.hamburger{width:19px;display:grid;gap:5px}
-.hamburger i{
-  display:block;height:2px;border-radius:4px;
-  background:#b9d7ff;
-  box-shadow:0 0 8px rgba(53,190,255,.5);
+  gap:12px;
 }
 
-/* HAMBURGER DRAWER */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+
+.brand-logo{
+  width:43px;
+  height:43px;
+  object-fit:cover;
+  border-radius:50%;
+  border:1px solid rgba(73,157,255,.7);
+  box-shadow:0 0 17px rgba(42,132,255,.25);
+}
+
+.brand-name{
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.brand-subtitle{
+  margin-top:4px;
+  color:#83a4d2;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:1.4px;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.support-btn{
+  padding:10px 13px;
+  border:1px solid rgba(58,151,255,.35);
+  border-radius:9px;
+  background:rgba(40,121,255,.1);
+  color:#a9d1ff;
+  font-size:10px;
+  font-weight:800;
+}
+
+.menu-toggle{
+  width:42px;
+  height:42px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#101c30;
+}
+
+.menu-toggle span{
+  width:19px;
+  height:2px;
+  border-radius:4px;
+  background:#dcecff;
+  transition:.25s;
+}
+
+.menu-toggle.active span:nth-child(1){
+  transform:translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+
+.menu-toggle.active span:nth-child(3){
+  transform:translateY(-8px) rotate(-45deg);
+}
+
+/* SIDE DRAWER */
 
 .menu-overlay{
   position:fixed;
   inset:0;
-  z-index:300;
-  background:rgba(0,3,12,.72);
-  backdrop-filter:blur(5px);
+  z-index:199;
+  background:rgba(0,0,0,.68);
   opacity:0;
   visibility:hidden;
   transition:.3s;
 }
-.menu-overlay.active{opacity:1;visibility:visible}
+
+.menu-overlay.active{
+  opacity:1;
+  visibility:visible;
+}
+
 .side-menu{
-  position:absolute;
-  right:0;top:0;
-  height:100%;
-  width:min(330px,86%);
-  padding:23px;
-  background:linear-gradient(160deg,#111c33,#080d1a 75%);
-  border-left:1px solid rgba(77,145,255,.28);
-  box-shadow:-20px 0 65px rgba(0,0,0,.4);
+  position:fixed;
+  top:0;
+  right:0;
+  z-index:200;
+  width:min(310px,85vw);
+  height:100dvh;
+  padding:25px 20px;
+  background:linear-gradient(160deg,#122541,#080e1b 75%);
+  border-left:1px solid var(--border);
   transform:translateX(105%);
-  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  transition:transform .35s ease;
+  box-shadow:-20px 0 60px rgba(0,0,0,.35);
 }
-.menu-overlay.active .side-menu{transform:translateX(0)}
-.menu-top{
-  display:flex;justify-content:space-between;align-items:center;
-  padding-bottom:22px;border-bottom:1px solid var(--border);
+
+.side-menu.active{
+  transform:translateX(0);
 }
-.menu-brand{display:flex;align-items:center;gap:10px}
-.menu-brand img{
-  width:40px;height:40px;border-radius:50%;object-fit:cover;
-  border:1px solid rgba(65,154,255,.6);
+
+.drawer-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:23px;
+  border-bottom:1px solid var(--border);
 }
-.menu-brand strong{font-size:12px;letter-spacing:1px}
-.menu-brand small{display:block;color:var(--muted);font-size:8px;margin-top:4px}
-.close-menu{
-  width:37px;height:37px;border-radius:10px;
+
+.drawer-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.drawer-brand img{
+  width:39px;
+  height:39px;
+  border-radius:50%;
+}
+
+.drawer-close{
+  width:35px;
+  height:35px;
   border:1px solid var(--border);
-  background:#17233b;color:white;font-size:22px;
+  border-radius:50%;
+  color:white;
+  background:#172b49;
+  font-size:21px;
 }
-.menu-caption{
-  color:#789dff;font-size:9px;font-weight:900;
-  letter-spacing:2px;margin:25px 0 12px;
+
+.drawer-label{
+  margin:25px 0 12px;
+  color:#7194c2;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.8px;
 }
-.menu-links{display:grid;gap:9px}
+
+.menu-links{
+  display:grid;
+  gap:9px;
+}
+
 .menu-links a{
-  display:flex;align-items:center;gap:12px;
-  padding:15px 13px;
-  border:1px solid rgba(130,165,255,.12);
-  border-radius:11px;
-  color:#dce7ff;
-  background:rgba(255,255,255,.025);
-  font-size:11px;font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  border:1px solid transparent;
+  border-radius:10px;
+  background:rgba(255,255,255,.035);
+  color:#dce9ff;
+  font-size:12px;
+  font-weight:700;
   transition:.2s;
 }
+
 .menu-links a:hover{
-  border-color:rgba(65,145,255,.55);
-  background:rgba(45,105,255,.12);
+  border-color:rgba(68,150,255,.4);
+  background:rgba(42,126,255,.12);
   transform:translateX(-3px);
 }
-.menu-link-icon{width:23px;text-align:center;color:#69caff;font-size:15px}
-.menu-support{
-  margin-top:25px;padding:15px;
-  border:1px solid rgba(52,205,255,.2);
-  border-radius:12px;
-  background:rgba(30,150,255,.07);
-  color:#b9dfff;font-size:10px;line-height:1.8;
-}
 
-/* COMMON */
-
-.section{margin-top:32px}
-.section-heading{font-size:22px;font-weight:900;letter-spacing:-.6px}
-.section-description{margin-top:9px;color:var(--muted);font-size:12px;line-height:1.8}
-.panel{
-  background:linear-gradient(145deg,rgba(18,29,50,.96),rgba(8,14,27,.97));
-  border:1px solid var(--border);
-  border-radius:18px;padding:21px;
-}
-.small-label{
-  color:#81b6ff;font-size:9px;font-weight:900;
-  letter-spacing:2.2px;text-transform:uppercase;
+.drawer-icon{
+  width:22px;
+  text-align:center;
+  color:#69b4ff;
+  font-size:16px;
 }
 
 /* HERO */
 
-.hero{padding-top:25px}
+.hero{
+  padding:28px 0 18px;
+  text-align:center;
+}
+
 .hero-banner{
-  width:100%;display:block;object-fit:cover;
-  border-radius:17px;
-  border:1px solid rgba(85,145,255,.25);
-  box-shadow:0 15px 45px rgba(0,0,0,.3),0 0 28px rgba(43,113,255,.09);
+  width:100%;
+  display:block;
+  border:1px solid rgba(85,155,255,.25);
+  border-radius:16px;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
 }
+
 .game-brand{
-  display:flex;align-items:center;justify-content:center;
-  gap:13px;margin:25px auto 0;
   width:fit-content;
-  padding:9px 18px 9px 10px;
-  border:1px solid rgba(69,145,255,.22);
+  margin:20px auto 0;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:8px 18px 8px 9px;
+  border:1px solid rgba(64,150,255,.3);
   border-radius:50px;
-  background:linear-gradient(100deg,rgba(24,52,94,.65),rgba(18,25,48,.65));
-  box-shadow:0 0 24px rgba(43,111,255,.09);
+  background:rgba(20,46,78,.6);
 }
+
 .game-brand img{
-  width:48px;height:48px;
+  width:45px;
+  height:45px;
   object-fit:contain;
-  padding:5px;
   border-radius:50%;
-  border:1px solid rgba(64,179,255,.65);
+  padding:4px;
+  border:1px solid rgba(77,169,255,.5);
   background:#071225;
-  box-shadow:0 0 13px rgba(45,155,255,.35);
 }
+
 .game-brand span{
-  font-size:10px;font-weight:900;letter-spacing:1px;
-  line-height:1.8;color:#e0eaff;
-}
-.hero-tagline{
-  text-align:center;color:var(--muted);
-  font-size:11px;line-height:1.8;margin-top:15px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.7px;
 }
 
-/* TRUST FEATURES */
-
-.trust-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:11px;margin-top:24px;
+.hero-title{
+  margin-top:20px;
+  font-size:clamp(24px,6vw,37px);
+  font-weight:900;
+  letter-spacing:-1.2px;
+  line-height:1.2;
 }
+
+.hero-title span{
+  color:#65adff;
+  text-shadow:0 0 24px rgba(49,136,255,.4);
+}
+
+.hero-description{
+  max-width:490px;
+  margin:12px auto 0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.9;
+}
+
+/* TRUST STRIP */
+
+.trust-strip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:22px 0;
+}
+
 .trust-item{
-  display:flex;align-items:center;gap:11px;
-  padding:14px 12px;
-  background:linear-gradient(130deg,rgba(17,29,51,.9),rgba(10,16,29,.9));
-  border:1px solid var(--border);border-radius:12px;
+  padding:12px 5px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:rgba(16,32,55,.6);
+  text-align:center;
 }
-.trust-icon{
-  width:36px;height:36px;flex-shrink:0;
-  display:grid;place-items:center;border-radius:11px;
-  background:rgba(71,120,255,.14);font-size:16px;
-}
-.trust-item strong{display:block;font-size:10px;font-weight:800}
-.trust-item small{display:block;color:var(--muted);font-size:9px;margin-top:4px}
 
-/* VERIFY */
+.trust-item strong{
+  display:block;
+  color:#80baff;
+  font-size:10px;
+}
+
+.trust-item span{
+  display:block;
+  margin-top:5px;
+  color:#91a4c1;
+  font-size:8px;
+}
+
+/* SECTION */
+
+.section{
+  padding:30px 0;
+}
+
+.section-heading{
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:-.5px;
+}
+
+.section-description{
+  margin-top:9px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+}
+
+.small-label{
+  color:#62aaff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+
+/* VERIFY PANEL */
 
 .verify-panel{
-  margin-top:31px;padding:22px;
+  padding:21px;
+  border:1px solid rgba(73,151,255,.27);
+  border-radius:17px;
   background:
-    radial-gradient(circle at 100% 0%,rgba(50,117,255,.16),transparent 48%),
-    linear-gradient(145deg,#101b31,#090f1d);
-  border:1px solid rgba(71,135,255,.3);
-  border-radius:18px;
-  box-shadow:0 15px 45px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.025);
+    radial-gradient(circle at 100% 0%,rgba(42,121,255,.13),transparent 45%),
+    linear-gradient(145deg,#101f36,#091322);
+  box-shadow:0 18px 45px rgba(0,0,0,.2);
 }
-.verify-title{font-size:21px;font-weight:900}
-.verify-description{color:var(--muted);font-size:11px;line-height:1.8;margin-top:9px}
-.why-box{
-  margin-top:19px;padding:15px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.025);border-radius:12px;
+
+.form-label{
+  display:block;
+  margin:17px 0 8px;
+  color:#b9cbe5;
+  font-size:10px;
+  font-weight:800;
 }
-.why-box strong{color:#a9c7ff;font-size:10px;letter-spacing:1.3px}
-.why-box p{color:var(--muted);font-size:11px;line-height:1.8;margin-top:8px}
-.form-group{margin-top:19px}
-.form-group label{
-  display:block;font-size:10px;font-weight:900;
-  letter-spacing:1px;margin-bottom:10px;
-}
+
 .form-control{
-  width:100%;height:49px;
-  border:1px solid rgba(130,165,255,.2);
-  border-radius:11px;padding:0 14px;outline:none;
-  color:white;background:#080f1e;font-size:12px;transition:.2s;
+  width:100%;
+  height:49px;
+  padding:0 14px;
+  outline:none;
+  border:1px solid rgba(115,159,222,.22);
+  border-radius:10px;
+  background:#071121;
+  color:white;
+  font-size:12px;
+  transition:.2s;
 }
+
 .form-control:focus{
-  border-color:#4b9cff;
-  box-shadow:0 0 0 3px rgba(71,120,255,.13),0 0 18px rgba(53,143,255,.1);
+  border-color:#398cff;
+  box-shadow:0 0 0 3px rgba(57,140,255,.1);
 }
-.form-control option{background:#101421;color:white}
-.uid-input{letter-spacing:1px;font-weight:700}
 
-/* SHINING BUTTONS */
-
-.shine-btn{
-  position:relative;isolation:isolate;overflow:hidden;
+.form-control::placeholder{
+  color:#647895;
 }
-.shine-btn::before{
-  content:"";position:absolute;top:-80%;left:-65%;
-  width:45%;height:260%;
-  transform:rotate(25deg);
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);
-  animation:buttonShine 3.2s ease-in-out infinite;
+
+.verify-btn,.proceed-btn{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  width:100%;
+  min-height:51px;
+  margin-top:20px;
+  border:1px solid rgba(151,205,255,.45);
+  border-radius:11px;
+  background:linear-gradient(105deg,#1765ef,#6451ff 55%,#168fe9);
+  color:white;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:1px;
+  box-shadow:0 8px 25px rgba(39,105,255,.23);
+  transition:.2s;
+}
+
+.verify-btn::before,.proceed-btn::before{
+  content:"";
+  position:absolute;
   z-index:-1;
+  top:-80%;
+  left:-75%;
+  width:45%;
+  height:260%;
+  transform:rotate(25deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.42),transparent);
+  animation:buttonShine 3s ease-in-out infinite;
 }
-@keyframes buttonShine{
-  0%,35%{left:-70%}
-  75%,100%{left:130%}
-}
-.verify-btn{
-  width:100%;min-height:52px;
-  border:1px solid rgba(141,190,255,.4);
-  border-radius:11px;margin-top:20px;
-  color:white;font-size:12px;font-weight:900;letter-spacing:.8px;
-  background:linear-gradient(105deg,#2367ff,#674dff 55%,#258dff);
-  box-shadow:0 7px 24px rgba(55,111,255,.3),0 0 20px rgba(51,145,255,.12);
-  transition:transform .2s,box-shadow .2s;
-}
-.verify-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 30px rgba(55,111,255,.45),0 0 24px rgba(51,145,255,.2);
-}
-.verify-btn:active{transform:scale(.98)}
-.verify-btn:disabled{opacity:.65;cursor:not-allowed}
-.warning-text{text-align:center;color:#a2aabd;font-size:10px;line-height:1.8;margin-top:14px}
-.micro-points{
-  display:flex;flex-wrap:wrap;justify-content:center;
-  gap:12px;margin-top:18px;
-}
-.micro-points span{color:#aeb9d1;font-size:9px;font-weight:700}
 
-/* INLINE RESULT WILL BE REPLACED BY MODAL IN PART 3 */
-.result-panel{display:none!important}
+@keyframes buttonShine{
+  0%,35%{left:-75%}
+  75%,100%{left:140%}
+}
+
+.verify-btn:disabled{
+  opacity:.65;
+  cursor:wait;
+}
+
+.verify-btn:active,.proceed-btn:active{
+  transform:scale(.98);
+}
+
 .message-box{
-  display:none;margin-top:15px;padding:13px;
-  border-radius:10px;font-size:11px;line-height:1.7;
+  display:none;
+  margin-top:14px;
+  padding:12px;
+  border-radius:9px;
+  font-size:10px;
+  line-height:1.7;
 }
-.message-box.show{display:block;animation:fadeUp .3s ease both}
+
 .message-box.error{
-  color:#ff9aab;border:1px solid rgba(255,85,115,.3);
-  background:rgba(255,85,115,.08);
+  display:block;
+  border:1px solid rgba(255,90,105,.25);
+  background:rgba(255,65,80,.08);
+  color:#ff9da7;
 }
-.message-box.info{
-  color:#a9c7ff;border:1px solid rgba(71,120,255,.3);
-  background:rgba(71,120,255,.08);
+
+.message-box.success{
+  display:block;
+  border:1px solid rgba(57,230,163,.25);
+  background:rgba(57,230,163,.07);
+  color:#76edbd;
 }
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
+
+.loading-box{
+  display:none;
+  margin-top:15px;
+  color:#91bdff;
+  text-align:center;
+  font-size:10px;
 }
+
 .loading-spinner{
-  display:inline-block;width:15px;height:15px;
-  border:2px solid rgba(255,255,255,.3);
-  border-top-color:white;border-radius:50%;
-  vertical-align:middle;margin-right:8px;
+  width:23px;
+  height:23px;
+  margin:0 auto 9px;
+  border:2px solid rgba(92,160,255,.2);
+  border-top-color:#64b5ff;
+  border-radius:50%;
   animation:spin .7s linear infinite;
 }
-@keyframes spin{to{transform:rotate(360deg)}}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.form-note{
+  margin-top:13px;
+  color:#8295b2;
+  font-size:9px;
+  line-height:1.8;
+}
 
 /* HOW IT WORKS */
 
 .steps-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:12px;margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:11px;
+  margin-top:20px;
 }
+
 .step-card{
-  padding:17px;border:1px solid var(--border);
-  border-radius:14px;background:rgba(17,27,46,.85);
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:rgba(13,27,47,.78);
 }
+
 .step-number{
-  width:34px;height:34px;display:grid;place-items:center;
-  border-radius:10px;background:rgba(71,120,255,.15);
-  color:#a9c0ff;font-size:12px;font-weight:900;
+  color:#62aaff;
+  font-size:22px;
+  font-weight:900;
 }
-.step-card h3{font-size:12px;margin-top:14px;line-height:1.6}
-.step-card p{color:var(--muted);font-size:10px;line-height:1.8;margin-top:8px}
+
+.step-card h3{
+  margin-top:12px;
+  font-size:12px;
+}
+
+.step-card p{
+  margin-top:8px;
+  color:#91a4c1;
+  font-size:9px;
+  line-height:1.9;
+}
 
 /* FAQ */
 
-.faq-list{display:grid;gap:10px;margin-top:20px}
+.faq-list{
+  display:grid;
+  gap:9px;
+  margin-top:19px;
+}
+
 .faq-item{
-  overflow:hidden;border:1px solid var(--border);
-  border-radius:12px;background:rgba(17,27,46,.85);
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:rgba(13,27,47,.78);
 }
+
 .faq-question{
-  width:100%;padding:16px;display:flex;align-items:center;
-  justify-content:space-between;gap:12px;
-  background:transparent;border:none;color:#edf1ff;
-  text-align:left;font-size:11px;font-weight:800;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:16px;
+  border:0;
+  background:transparent;
+  color:#e7f0ff;
+  text-align:left;
+  font-size:11px;
+  font-weight:800;
 }
-.faq-question span:last-child{color:#91aaff;font-size:18px;transition:.2s}
-.faq-item.active .faq-question span:last-child{transform:rotate(45deg)}
+
+.faq-question span:last-child{
+  color:#6db4ff;
+  font-size:18px;
+}
+
 .faq-answer{
-  display:none;padding:0 16px 16px;
-  color:var(--muted);font-size:10px;line-height:1.9;
+  display:none;
+  padding:0 16px 16px;
+  color:#96a9c6;
+  font-size:10px;
+  line-height:1.9;
 }
-.faq-item.active .faq-answer{display:block;animation:fadeUp .25s ease both}
+
+.faq-item.active .faq-answer{
+  display:block;
+}
 
 /* PRIVACY */
 
 .privacy-panel{
-  margin-top:18px;padding:19px;
-  border:1px solid var(--border);border-radius:14px;
-  background:rgba(17,27,46,.85);
+  margin-top:17px;
+  padding:19px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:rgba(13,27,47,.75);
 }
-.privacy-panel h3{font-size:12px;margin-bottom:10px}
-.privacy-panel p{color:var(--muted);font-size:10px;line-height:1.9;margin-top:8px}
+
+.privacy-panel h3{
+  font-size:11px;
+}
+
+.privacy-panel p{
+  margin-top:8px;
+  color:#9aacc7;
+  font-size:10px;
+  line-height:1.9;
+}
 
 /* FOOTER */
 
 .footer{
-  margin-top:45px;padding:30px 0 22px;
+  margin-top:20px;
+  padding:30px 0 22px;
   border-top:1px solid var(--border);
-  background:rgba(4,7,15,.8);
+  background:rgba(4,9,18,.75);
 }
-.footer-brand{display:flex;align-items:center;gap:11px}
+
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
 .footer-brand img{
-  width:45px;height:45px;object-fit:cover;
-  border-radius:50%;padding:3px;
-  border:1px solid rgba(65,154,255,.6);
-  background:#0b1428;
+  width:43px;
+  height:43px;
+  border-radius:50%;
 }
-.footer-brand strong{display:block;font-size:13px;letter-spacing:1px}
-.footer-brand small{display:block;margin-top:5px;color:var(--muted);font-size:9px;letter-spacing:1.5px}
-.footer-description{color:var(--muted);font-size:10px;line-height:1.9;margin-top:16px;max-width:480px}
+
+.footer-brand strong{
+  display:block;
+  font-size:12px;
+}
+
+.footer-brand small{
+  display:block;
+  margin-top:5px;
+  color:#79a9e9;
+  font-size:8px;
+  letter-spacing:1px;
+}
+
+.footer-description{
+  max-width:450px;
+  margin-top:14px;
+  color:#8da1bd;
+  font-size:10px;
+  line-height:1.9;
+}
+
 .footer-columns{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:25px;margin-top:27px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+  margin-top:25px;
 }
-.footer-column h3{font-size:10px;letter-spacing:1px;margin-bottom:14px}
-.footer-column a{display:block;color:var(--muted);font-size:10px;margin-top:12px;line-height:1.6}
-.footer-column a:hover{color:#a9c0ff}
+
+.footer-column h3{
+  margin-bottom:12px;
+  color:#7eb8ff;
+  font-size:9px;
+  letter-spacing:1px;
+}
+
+.footer-column a{
+  display:block;
+  margin-top:11px;
+  color:#9eafc9;
+  font-size:9px;
+}
+
 .payment-methods{
-  margin-top:25px;padding:14px;border:1px solid var(--border);
-  border-radius:11px;color:#aeb8ca;font-size:9px;line-height:1.9;
+  margin-top:24px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:#9eb5d7;
+  text-align:center;
+  font-size:9px;
+  line-height:2;
 }
-.copyright{text-align:center;color:#7f899e;font-size:9px;line-height:1.9;margin-top:22px}
+
+.payment-methods small{
+  color:#7488a6;
+}
+
+.copyright{
+  margin-top:20px;
+  padding-top:17px;
+  border-top:1px solid var(--border);
+  color:#7385a1;
+  text-align:center;
+  font-size:8px;
+  line-height:2;
+}
 
 /* RESPONSIVE */
 
-@media(max-width:520px){
-  .container{width:min(100% - 24px,1050px)}
-  .header{height:68px}
-  .brand-logo{width:40px;height:40px}
-  .brand-name{font-size:12px}
-  .support-btn{padding:9px 10px;font-size:9px}
-  .menu-btn{width:40px;height:40px}
-  .section-heading{font-size:19px}
-  .panel,.verify-panel{padding:17px}
-  .trust-grid{gap:8px}
-  .trust-item{padding:11px 9px;gap:8px}
-  .trust-item strong{font-size:9px}
-  .trust-item small{font-size:8px}
-  .steps-grid{gap:9px}
-  .step-card{padding:13px}
-  .footer-columns{gap:18px}
+@media(min-width:700px){
+  .hero{padding-top:38px}
+  .hero-banner{border-radius:20px}
+  .verify-panel{padding:27px}
 }
-@media(max-width:350px){
-  .brand-name{font-size:10px}
-  .brand-subtitle{font-size:7px}
-  .support-btn{display:none}
-  .trust-grid,.steps-grid{grid-template-columns:1fr}
+
+@media(max-width:420px){
+  .container{width:calc(100% - 26px)}
+  .header-inner{width:calc(100% - 24px)}
+  .brand-name{font-size:12px}
+  .support-btn{padding:9px;font-size:9px}
+  .verify-panel{padding:16px}
+  .steps-grid{gap:8px}
+  .step-card{padding:13px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
 }
 </style>
 </head>
@@ -510,303 +824,595 @@ a{color:inherit;text-decoration:none}
 <!-- HEADER -->
 
 <header class="header">
-  <div class="container header-inner">
+  <div class="header-inner">
 
-    <a href="#" class="brand">
-      <img src="assets/nexvora-logo.png" class="brand-logo" alt="NEXVORA Logo">
+    <a href="#home" class="brand">
+      <img
+        src="assets/nexvora-logo.png"
+        class="brand-logo"
+        alt="NEXVORA"
+      >
+
       <div>
         <div class="brand-name">NEXVORA UNBAN</div>
-        <div class="brand-subtitle">OFFICIAL VERIFICATION</div>
+        <div class="brand-subtitle">OFFICIAL PLAYER VERIFICATION</div>
       </div>
     </a>
 
     <div class="header-actions">
-      <a class="support-btn shine-btn"
-         href="https://t.me/NEXVORA_X"
-         target="_blank" rel="noopener">
+
+      <a
+        class="support-btn"
+        href="https://t.me/NEXVORA_X"
+        target="_blank"
+        rel="noopener"
+      >
         SUPPORT ↗
       </a>
 
-      <button class="menu-btn" id="menuOpen" aria-label="Open menu">
-        <span class="hamburger">
-          <i></i><i></i><i></i>
-        </span>
+      <button
+        type="button"
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
-    </div>
 
+    </div>
   </div>
 </header>
 
-<!-- HAMBURGER NAVIGATION DRAWER -->
+<!-- HAMBURGER OVERLAY -->
 
-<div class="menu-overlay" id="menuOverlay">
+<div class="menu-overlay" id="menuOverlay"></div>
 
-  <nav class="side-menu">
+<!-- SIDE DRAWER -->
 
-    <div class="menu-top">
+<aside class="side-menu" id="sideMenu">
 
-      <div class="menu-brand">
-        <img src="assets/nexvora-logo.png" alt="NEXVORA">
-        <div>
-          <strong>NEXVORA UNBAN</strong>
-          <small>PLAYER VERIFICATION</small>
-        </div>
-      </div>
+  <div class="drawer-top">
 
-      <button class="close-menu" id="menuClose" aria-label="Close menu">×</button>
-
+    <div class="drawer-brand">
+      <img src="assets/nexvora-logo.png" alt="NEXVORA">
+      <span>NEXVORA UNBAN</span>
     </div>
 
-    <div class="menu-caption">NAVIGATION MENU</div>
+    <button
+      type="button"
+      class="drawer-close"
+      id="drawerClose"
+      aria-label="Close menu"
+    >×</button>
 
-    <div class="menu-links">
+  </div>
 
-      <a href="#verify">
-        <span class="menu-link-icon">⌕</span>
-        VERIFY PLAYER UID
-      </a>
+  <div class="drawer-label">NAVIGATION MENU</div>
 
-      <a href="#how">
-        <span class="menu-link-icon">◈</span>
-        HOW IT WORKS
-      </a>
+  <nav class="menu-links">
 
-      <a href="#faq">
-        <span class="menu-link-icon">?</span>
-        FREQUENTLY ASKED QUESTIONS
-      </a>
+    <a href="#home">
+      <span class="drawer-icon">⌂</span>
+      Home
+    </a>
 
-      <a href="#privacy">
-        <span class="menu-link-icon">♧</span>
-        PRIVACY POLICY
-      </a>
+    <a href="#verify">
+      <span class="drawer-icon">◎</span>
+      Verify Player UID
+    </a>
 
-      <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">
-        <span class="menu-link-icon">↗</span>
-        CONTACT ADMIN
-      </a>
+    <a href="#how">
+      <span class="drawer-icon">◈</span>
+      How It Works
+    </a>
 
-    </div>
+    <a href="#faq">
+      <span class="drawer-icon">?</span>
+      FAQ
+    </a>
 
-    <div class="menu-support">
-      <strong>NEED HELP?</strong><br>
-      Contact NEXVORA support through our official Telegram channel.
-      <br><br>
-      <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">
-        OPEN TELEGRAM SUPPORT ↗
-      </a>
-    </div>
+    <a href="#privacy">
+      <span class="drawer-icon">▤</span>
+      Privacy Policy
+    </a>
+
+    <a
+      href="https://t.me/NEXVORA_X"
+      target="_blank"
+      rel="noopener"
+    >
+      <span class="drawer-icon">↗</span>
+      Contact Admin
+    </a>
 
   </nav>
 
-</div>
+  <div class="drawer-label">OFFICIAL SUPPORT</div>
+
+  <a
+    class="support-btn"
+    href="https://t.me/NEXVORA_X"
+    target="_blank"
+    rel="noopener"
+    style="display:block;text-align:center"
+  >
+    OPEN TELEGRAM SUPPORT ↗
+  </a>
+
+</aside>
 
 <!-- MAIN CONTENT -->
 
-<main class="container">
+<main class="page-content" id="home">
 
-  <!-- HERO BANNER -->
+  <div class="container">
 
-  <section class="hero">
+    <!-- HERO -->
 
-    <img
-      src="assets/nexvora-home-banner.png"
-      class="hero-banner"
-      alt="NEXVORA UNBAN Banner"
-    >
-
-    <!-- CIRCULAR FREE FIRE BRAND -->
-
-    <div class="game-brand">
+    <section class="hero">
 
       <img
-        src="assets/free-fire-logo.png"
-        alt="Free Fire Logo"
+        src="assets/nexvora-home-banner.png"
+        class="hero-banner"
+        alt="NEXVORA UNBAN Banner"
       >
 
-      <span>
-        FREE FIRE INDIA, GARENA FREE FIRE<br>
-        & FREE FIRE MAX
-      </span>
+      <div class="game-brand">
 
-    </div>
-
-    <p class="hero-tagline">
-      Verify your player UID and server region for next step.
-    </p>
-
-  </section>
-
-  <!-- TRUST FEATURES -->
-
-  <section class="trust-grid">
-
-    <div class="trust-item">
-      <div class="trust-icon">🔒</div>
-      <div>
-        <strong>UID ONLY</strong>
-        <small>No Login Needed</small>
-      </div>
-    </div>
-
-    <div class="trust-item">
-      <div class="trust-icon">⚡</div>
-      <div>
-        <strong>EXPRESS PROCESS</strong>
-        <small>Direct Help</small>
-      </div>
-    </div>
-
-    <div class="trust-item">
-      <div class="trust-icon">🛡️</div>
-      <div>
-        <strong>SECURE CHECKOUT</strong>
-        <small>Protected Payment</small>
-      </div>
-    </div>
-
-    <div class="trust-item">
-      <div class="trust-icon">🎧</div>
-      <div>
-        <strong>SUPPORT</strong>
-        <small>Telegram Assistance</small>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- UID VERIFICATION -->
-
-  <section class="verify-panel section" id="verify">
-
-    <div class="small-label">PLAYER ACCOUNT CHECK</div>
-
-    <h1 class="verify-title" style="margin-top:10px;">
-      Verify Player UID
-    </h1>
-
-    <p class="verify-description">
-      Check your account details before continuing to the next step.
-    </p>
-
-    <div class="why-box">
-
-      <strong>WHY VERIFY YOUR UID?</strong>
-
-      <p>
-        Confirm the player account and server region before proceeding.
-        This helps protect against selecting the wrong account.
-      </p>
-
-    </div>
-
-    <form id="uidForm" autocomplete="off">
-
-      <div class="form-group">
-
-        <label for="region">GAME SERVER REGION</label>
-
-        <select class="form-control" id="region" required>
-          <option value="">Select your server region</option>
-          <option value="india">India Region</option>
-          <option value="global">Global Region</option>
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="uid">ENTER NUMERIC FREE FIRE UID</label>
-
-        <input
-          type="text"
-          class="form-control uid-input"
-          id="uid"
-          placeholder="Enter your 8–12 digit Player UID"
-          inputmode="numeric"
-          maxlength="12"
-          minlength="8"
-          pattern="[0-9]{8,12}"
-          required
+        <img
+          src="assets/free-fire-logo.png"
+          alt="Free Fire"
         >
 
+        <span>FREE FIRE PLAYER VERIFICATION</span>
+
       </div>
 
-      <button type="submit"
-              class="verify-btn shine-btn"
-              id="verifyBtn">
-        VERIFY PLAYER UID →
-      </button>
+      <h1 class="hero-title">
+        WELCOME TO <span>NEXVORA UNBAN</span>
+      </h1>
 
-    </form>
+      <p class="hero-description">
+        Verify your Free Fire player UID through a simple,
+        fast and convenient verification process.
+        Select your server region and enter your Player ID.
+      </p>
 
-    <!-- ERROR AND LOADING MESSAGES -->
+    </section>
 
-    <div class="message-box error" id="errorMessage" role="alert"></div>
-    <div class="message-box info" id="infoMessage" role="status"></div>
+    <!-- TRUST FEATURES -->
 
-    <p class="warning-text">
-      ⚠ Enter your numeric Player ID only.<br>
-      Never enter your password, OTP or login credentials.
-    </p>
+    <div class="trust-strip">
 
-    <div class="micro-points">
-      <span>✨ UID VERIFY</span>
-      <span>🔒 Secure Lookup</span>
-      <span>✓ UID Verification</span>
-      <span>⚡ Quick Process</span>
+      <div class="trust-item">
+        <strong>UID CHECK</strong>
+        <span>Player verification</span>
+      </div>
+
+      <div class="trust-item">
+        <strong>2 REGIONS</strong>
+        <span>India & Global</span>
+      </div>
+
+      <div class="trust-item">
+        <strong>SECURE</strong>
+        <span>Server-side API</span>
+      </div>
+
     </div>
 
-  </section>
+    <!-- UID VERIFICATION -->
+
+    <section class="section" id="verify">
+
+      <div class="small-label">PLAYER ACCOUNT VERIFICATION</div>
+
+      <h2 class="section-heading" style="margin-top:10px">
+        Verify Your Player UID
+      </h2>
+
+      <p class="section-description">
+        Enter your Free Fire UID and select the correct region
+        to retrieve your player details.
+      </p>
+
+      <div class="verify-panel" style="margin-top:20px">
+
+        <form id="verifyForm" autocomplete="off">
+
+          <label class="form-label" for="uidInput">
+            FREE FIRE PLAYER UID
+          </label>
+
+          <input
+            type="text"
+            id="uidInput"
+            class="form-control"
+            placeholder="Enter your 8–12 digit Player UID"
+            inputmode="numeric"
+            maxlength="12"
+            autocomplete="off"
+            required
+          >
+
+          <label class="form-label" for="regionSelect">
+            SELECT SERVER REGION
+          </label>
+
+          <select
+            id="regionSelect"
+            class="form-control"
+            required
+          >
+
+            <option value="" selected disabled>
+              Select your server region
+            </option>
+
+            <option value="india">
+              India Server
+            </option>
+
+            <option value="global">
+              Global Server
+            </option>
+
+          </select>
+
+          <button
+            type="submit"
+            class="verify-btn"
+            id="verifyBtn"
+          >
+            VERIFY PLAYER UID →
+          </button>
+
+        </form>
+
+        <div class="loading-box" id="loadingBox">
+
+          <div class="loading-spinner"></div>
+
+          <strong>VERIFYING PLAYER UID</strong>
+
+          <p style="margin-top:6px;color:#7e9bc1">
+            Please wait while we check your account details.
+          </p>
+
+        </div>
+
+        <div
+          class="message-box"
+          id="messageBox"
+          role="status"
+          aria-live="polite"
+        ></div>
+
+        <p class="form-note">
+          Enter the correct UID and region. Verification
+          results depend on the availability and accuracy
+          of the configured player information provider.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- HOW IT WORKS -->
+
+    <section class="section" id="how">
+
+      <div class="small-label">SIMPLE • FAST • CONVENIENT</div>
+
+      <h2 class="section-heading" style="margin-top:10px">
+        HOW NEXVORA UNBAN WORKS
+      </h2>
+
+      <p class="section-description">
+        Follow these simple steps to complete your
+        player verification.
+      </p>
+
+      <div class="steps-grid">
+
+        <article class="step-card">
+          <div class="step-number">01</div>
+          <h3>Enter Your UID</h3>
+          <p>
+            Enter your numeric Free Fire Player ID
+            in the verification form.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">02</div>
+          <h3>Select Your Region</h3>
+          <p>
+            Choose the correct India or Global
+            server region for your account.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">03</div>
+          <h3>Verify Your Account</h3>
+          <p>
+            Our configured verification service checks
+            the submitted UID and returns available details.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">04</div>
+          <h3>Review & Proceed</h3>
+          <p>
+            Review the player details shown on your
+            screen before continuing.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- FAQ -->
+
+    <section class="section" id="faq">
+
+      <div class="small-label">HELP CENTER</div>
+
+      <h2 class="section-heading" style="margin-top:10px">
+        Frequently Asked Questions
+      </h2>
+
+      <div class="faq-list">
+
+        <article class="faq-item">
+
+          <button class="faq-question" type="button">
+            <span>How can I verify my Player UID?</span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            Enter your numeric Player UID, select your
+            correct server region and tap Verify Player UID.
+          </div>
+
+        </article>
+
+        <article class="faq-item">
+
+          <button class="faq-question" type="button">
+            <span>Which regions are supported?</span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            The verification form currently offers
+            India and Global region selections.
+          </div>
+
+        </article>
+
+        <article class="faq-item">
+
+          <button class="faq-question" type="button">
+            <span>What if my UID is not found?</span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            Check your UID digits and selected region.
+            If the issue continues, try again later
+            or contact official support.
+          </div>
+
+        </article>
+
+        <article class="faq-item">
+
+          <button class="faq-question" type="button">
+            <span>Do I need to share my password?</span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            No. Never share your game password, OTP
+            or personal login credentials for UID verification.
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- PRIVACY -->
+
+    <section class="section" id="privacy">
+
+      <div class="small-label">YOUR PRIVACY MATTERS</div>
+
+      <h2 class="section-heading" style="margin-top:10px">
+        Privacy Policy
+      </h2>
+
+      <div class="privacy-panel">
+
+        <h3>Information We Use</h3>
+
+        <p>
+          The verification form submits the numeric Player UID
+          and selected region to our server-side verification
+          function to retrieve available player information.
+        </p>
+
+        <h3 style="margin-top:18px">Account Security</h3>
+
+        <p>
+          Never provide your game password, OTP,
+          Facebook password or Google login credentials.
+        </p>
+
+        <h3 style="margin-top:18px">Third-Party Services</h3>
+
+        <p>
+          Player details are requested from a configured
+          external verification provider.
+        </p>
+
+        <h3 style="margin-top:18px">Contact</h3>
+
+        <p>
+          For questions, contact the NEXVORA support team
+          through its official Telegram account.
+        </p>
+
+      </div>
+
+    </section>
+
+  </div>
 
 </main>
 
-<!-- FULL-SCREEN VERIFICATION SUCCESS MODAL -->
+<!-- FOOTER -->
+
+<footer class="footer">
+
+  <div class="container">
+
+    <div class="footer-brand">
+
+      <img
+        src="assets/nexvora-logo.png"
+        alt="NEXVORA Logo"
+      >
+
+      <div>
+        <strong>NEXVORA UNBAN</strong>
+        <small>PLAYER VERIFICATION SERVICE</small>
+      </div>
+
+    </div>
+
+    <p class="footer-description">
+      NEXVORA UNBAN provides a convenient player UID
+      verification interface for Free Fire players.
+    </p>
+
+    <div class="footer-columns">
+
+      <div class="footer-column">
+
+        <h3>QUICK LINKS</h3>
+
+        <a href="#home">Home</a>
+        <a href="#verify">Verify Player UID</a>
+        <a href="#how">How It Works</a>
+
+      </div>
+
+      <div class="footer-column">
+
+        <h3>SUPPORT</h3>
+
+        <a href="#faq">FAQ</a>
+        <a href="#privacy">Privacy Policy</a>
+
+        <a
+          href="https://t.me/NEXVORA_X"
+          target="_blank"
+          rel="noopener"
+        >
+          Contact Admin ↗
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 NEXVORA UNBAN. All rights reserved.
+      <br>
+      Independent service. Not affiliated with or endorsed
+      by Garena. Free Fire trademarks belong to their owners.
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- =====================================
+     NEXVORA PLAYER VERIFICATION RESULT
+====================================== -->
 
 <div class="success-modal" id="successModal" aria-hidden="true">
 
   <div class="success-backdrop"></div>
 
-  <div class="success-card" role="dialog" aria-modal="true"
-       aria-labelledby="successTitle">
+  <div
+    class="success-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="successTitle"
+  >
 
-    <button class="success-close" id="successClose"
-            type="button" aria-label="Close result">×</button>
+    <button
+      type="button"
+      class="success-close"
+      id="successClose"
+      aria-label="Close result"
+    >×</button>
 
     <div class="celebration-layer" id="celebrationLayer"></div>
 
-    <div class="success-card-content">
+    <div class="success-content">
 
       <div class="success-emblem">
         <div class="success-emblem-ring"></div>
         <div class="success-emblem-check">✓</div>
       </div>
 
-      <div class="success-overline">NEXVORA PLAYER VERIFICATION</div>
+      <div class="success-overline">
+        NEXVORA PLAYER VERIFICATION
+      </div>
 
       <h2 id="successTitle" class="success-heading">
         Congratulations!
       </h2>
 
       <p class="success-subtitle">
-        Your Free Fire account has been successfully verified.
+        Your Free Fire player UID has been successfully verified.
       </p>
 
       <div class="verified-badge">
-        <span>✓</span> VERIFIED ACCOUNT
+        <span>✓</span> UID VERIFIED
       </div>
 
       <div class="modal-game-brand">
-        <img src="assets/free-fire-logo.png" alt="Free Fire">
-        <span id="resultGame">Free Fire India Region</span>
+
+        <img
+          src="assets/free-fire-logo.png"
+          alt="Free Fire"
+        >
+
+        <span id="resultGame">Free Fire</span>
+
       </div>
 
-      <div class="modal-player-name" id="resultUsername">Player</div>
+      <div class="modal-player-name" id="resultUsername">
+        Player Name
+      </div>
 
       <div class="modal-stats">
 
         <div class="modal-stat">
-          <small>LEVEL</small>
+          <small>PLAYER LEVEL</small>
           <strong id="resultLevel">--</strong>
         </div>
 
@@ -816,7 +1422,7 @@ a{color:inherit;text-decoration:none}
         </div>
 
         <div class="modal-stat">
-          <small>UID STATUS</small>
+          <small>STATUS</small>
           <strong class="green-value">Verified</strong>
         </div>
 
@@ -835,25 +1441,27 @@ a{color:inherit;text-decoration:none}
         </div>
 
         <div class="modal-detail-row">
-          <span>SECURITY CHECK</span>
-          <strong class="green-value">✓ Verified</strong>
+          <span>VERIFICATION</span>
+          <strong class="green-value">Successful</strong>
         </div>
 
       </div>
 
       <div class="success-note">
-        Your UID verification is complete. Review your player details
-        before continuing.
+        Your player information has been retrieved.
+        Please review your details before proceeding.
       </div>
 
-      <button type="button"
-              class="proceed-btn shine-btn"
-              id="proceedBtn">
-        PROCEED →
+      <button
+        type="button"
+        class="proceed-btn"
+        id="proceedBtn"
+      >
+        PROCEED <span>→</span>
       </button>
 
       <p class="proceed-caption">
-        Continue only after checking your account details.
+        Player UID verification completed successfully.
       </p>
 
     </div>
@@ -862,8 +1470,9 @@ a{color:inherit;text-decoration:none}
 
 </div>
 
+<!-- SUCCESS CARD STYLES -->
+
 <style>
-/* SUCCESS MODAL */
 
 .success-modal{
   position:fixed;
@@ -872,67 +1481,77 @@ a{color:inherit;text-decoration:none}
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:16px;
+  padding:12px;
   opacity:0;
   visibility:hidden;
   pointer-events:none;
   transition:opacity .3s,visibility .3s;
 }
+
 .success-modal.active{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
 }
+
 .success-backdrop{
   position:absolute;
   inset:0;
-  background:rgba(1,4,13,.88);
-  backdrop-filter:blur(13px);
-  -webkit-backdrop-filter:blur(13px);
+  background:rgba(1,5,15,.91);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
 }
+
 .success-card{
   position:relative;
-  z-index:1;
+  z-index:2;
   width:min(100%,460px);
-  max-height:92vh;
+  max-height:94dvh;
   overflow-y:auto;
   overscroll-behavior:contain;
-  border:1px solid rgba(76,155,255,.4);
-  border-radius:22px;
+  border:1px solid rgba(79,158,255,.42);
+  border-radius:23px;
   background:
-    radial-gradient(circle at 50% 0%,rgba(42,119,255,.22),transparent 42%),
-    linear-gradient(155deg,#111e36,#080e1c 72%);
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(46,125,255,.23),
+      transparent 43%
+    ),
+    linear-gradient(155deg,#12223d,#080f1e 75%);
   box-shadow:
-    0 0 35px rgba(42,117,255,.17),
-    0 25px 90px rgba(0,0,0,.65),
-    inset 0 1px rgba(255,255,255,.06);
-  transform:translateY(35px) scale(.94);
-  transition:transform .45s cubic-bezier(.2,.8,.2,1);
+    0 0 35px rgba(48,132,255,.2),
+    0 25px 90px rgba(0,0,0,.7);
+  transform:translateY(30px) scale(.94);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1);
   scrollbar-width:thin;
   scrollbar-color:#315b9a transparent;
 }
+
 .success-modal.active .success-card{
   transform:translateY(0) scale(1);
 }
+
 .success-close{
   position:absolute;
   top:13px;
   right:13px;
-  z-index:8;
-  width:34px;
-  height:34px;
-  border:1px solid rgba(255,255,255,.12);
+  z-index:5;
+  width:35px;
+  height:35px;
+  border:1px solid rgba(255,255,255,.15);
   border-radius:50%;
-  color:#dce9ff;
   background:rgba(255,255,255,.06);
-  font-size:21px;
+  color:white;
+  font-size:22px;
 }
-.success-card-content{
+
+.success-content{
   position:relative;
   z-index:3;
   padding:29px 23px 23px;
   text-align:center;
 }
+
 .celebration-layer{
   position:absolute;
   inset:0;
@@ -940,6 +1559,7 @@ a{color:inherit;text-decoration:none}
   overflow:hidden;
   pointer-events:none;
 }
+
 .confetti-piece{
   position:absolute;
   top:-15px;
@@ -947,60 +1567,75 @@ a{color:inherit;text-decoration:none}
   height:12px;
   border-radius:2px;
   opacity:0;
-  animation:confettiFall 2.8s ease-in forwards;
+  animation:confettiFall 3s ease-in forwards;
 }
+
 @keyframes confettiFall{
-  0%{transform:translateY(-10px) rotate(0deg);opacity:0}
+  0%{
+    transform:translateY(-10px) rotate(0);
+    opacity:0;
+  }
   10%{opacity:1}
-  100%{transform:translateY(650px) rotate(650deg);opacity:0}
+  100%{
+    transform:translateY(650px) rotate(650deg);
+    opacity:0;
+  }
 }
+
 .success-emblem{
   position:relative;
-  width:76px;
-  height:76px;
+  width:78px;
+  height:78px;
   display:grid;
   place-items:center;
-  margin:0 auto 17px;
+  margin:0 auto 18px;
   border-radius:50%;
-  background:rgba(39,230,160,.1);
-  border:1px solid rgba(39,230,160,.55);
-  box-shadow:0 0 30px rgba(39,230,160,.18);
-  animation:emblemPop .65s cubic-bezier(.2,1.5,.5,1) both;
+  border:1px solid rgba(57,230,163,.65);
+  background:rgba(57,230,163,.1);
+  box-shadow:0 0 32px rgba(57,230,163,.2);
+  animation:emblemPop .6s cubic-bezier(.2,1.5,.5,1) both;
 }
+
 .success-emblem-ring{
   position:absolute;
   inset:-8px;
-  border:1px solid rgba(39,230,160,.3);
+  border:1px solid rgba(57,230,163,.4);
   border-radius:50%;
   animation:ringPulse 2s ease-out infinite;
 }
+
 .success-emblem-check{
-  color:#50f0b3;
-  font-size:38px;
+  color:#55f0b5;
+  font-size:39px;
   font-weight:900;
 }
+
 @keyframes emblemPop{
   from{transform:scale(.3);opacity:0}
   to{transform:scale(1);opacity:1}
 }
+
 @keyframes ringPulse{
   0%{transform:scale(.85);opacity:.8}
   100%{transform:scale(1.3);opacity:0}
 }
+
 .success-overline{
   color:#83baff;
   font-size:8px;
   font-weight:900;
   letter-spacing:2px;
 }
+
 .success-heading{
-  margin-top:9px;
+  margin-top:10px;
+  color:#f5f9ff;
   font-size:27px;
   font-weight:900;
   letter-spacing:-.8px;
-  color:#f5f9ff;
   text-shadow:0 0 22px rgba(90,154,255,.3);
 }
+
 .success-subtitle{
   max-width:300px;
   margin:9px auto 0;
@@ -1008,50 +1643,59 @@ a{color:inherit;text-decoration:none}
   font-size:10px;
   line-height:1.8;
 }
+
 .verified-badge{
   width:fit-content;
   margin:16px auto;
-  padding:8px 13px;
-  border:1px solid rgba(39,230,160,.35);
+  padding:8px 14px;
+  border:1px solid rgba(57,230,163,.35);
   border-radius:30px;
-  background:rgba(39,230,160,.08);
+  background:rgba(57,230,163,.08);
   color:#7af0bd;
   font-size:9px;
   font-weight:900;
   letter-spacing:.8px;
 }
-.verified-badge span{margin-right:5px}
+
+.verified-badge span{
+  margin-right:5px;
+}
+
 .modal-game-brand{
   display:flex;
   align-items:center;
   justify-content:center;
   gap:9px;
-  margin-top:16px;
+  margin-top:15px;
   color:#dceaff;
   font-size:10px;
   font-weight:800;
 }
+
 .modal-game-brand img{
-  width:30px;
-  height:30px;
+  width:34px;
+  height:34px;
   object-fit:contain;
   border-radius:50%;
   padding:3px;
   border:1px solid rgba(65,154,255,.55);
   background:#071225;
 }
+
 .modal-player-name{
   margin:12px 0 17px;
+  color:white;
   font-size:19px;
   font-weight:900;
   overflow-wrap:anywhere;
-  color:white;
 }
+
 .modal-stats{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:8px;
 }
+
 .modal-stat{
   min-width:0;
   padding:12px 5px;
@@ -1059,25 +1703,33 @@ a{color:inherit;text-decoration:none}
   border-radius:11px;
   background:rgba(255,255,255,.035);
 }
+
 .modal-stat small{
   display:block;
   color:#94a6c5;
   font-size:8px;
   font-weight:800;
-  letter-spacing:.6px;
+  letter-spacing:.5px;
 }
+
 .modal-stat strong{
   display:block;
   margin-top:8px;
+  color:#edf5ff;
   font-size:12px;
   font-weight:900;
   overflow-wrap:anywhere;
 }
-.green-value{color:#50eab0!important}
+
+.green-value{
+  color:#50eab0!important;
+}
+
 .modal-details{
   margin-top:15px;
   border-top:1px solid rgba(130,165,255,.13);
 }
+
 .modal-detail-row{
   display:flex;
   justify-content:space-between;
@@ -1088,17 +1740,20 @@ a{color:inherit;text-decoration:none}
   text-align:left;
   font-size:9px;
 }
+
 .modal-detail-row span{
-  color:#9aabc7;
   flex-shrink:0;
+  color:#9aabc7;
   font-weight:800;
   letter-spacing:.4px;
 }
+
 .modal-detail-row strong{
   color:#edf5ff;
   text-align:right;
   overflow-wrap:anywhere;
 }
+
 .success-note{
   margin-top:15px;
   padding:11px;
@@ -1109,28 +1764,25 @@ a{color:inherit;text-decoration:none}
   font-size:9px;
   line-height:1.8;
 }
+
 .proceed-btn{
   position:relative;
   isolation:isolate;
   overflow:hidden;
   width:100%;
-  min-height:51px;
-  margin-top:18px;
+  min-height:52px;
+  margin-top:19px;
   border:1px solid rgba(144,198,255,.55);
   border-radius:12px;
   color:white;
   background:linear-gradient(105deg,#2167ff,#784bff 55%,#258cff);
-  box-shadow:0 8px 28px rgba(51,110,255,.35),0 0 22px rgba(58,145,255,.16);
+  box-shadow:0 8px 28px rgba(51,110,255,.35);
   font-size:12px;
   font-weight:900;
   letter-spacing:1px;
   transition:.2s;
 }
-.proceed-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 32px rgba(51,110,255,.48),0 0 25px rgba(58,145,255,.25);
-}
-.proceed-btn:active{transform:scale(.98)}
+
 .proceed-btn::before{
   content:"";
   position:absolute;
@@ -1139,299 +1791,86 @@ a{color:inherit;text-decoration:none}
   width:45%;
   height:260%;
   transform:rotate(25deg);
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.4),
+    transparent
+  );
   animation:buttonShine 2.8s ease-in-out infinite;
-  z-index:-1;
 }
+
+.proceed-btn span{
+  margin-left:8px;
+}
+
+.proceed-btn:active{
+  transform:scale(.98);
+}
+
 .proceed-caption{
   margin-top:11px;
   color:#7889a8;
   font-size:8px;
   line-height:1.7;
 }
+
 @media(max-width:390px){
-  .success-modal{padding:9px}
-  .success-card{max-height:94vh}
-  .success-card-content{padding:25px 15px 18px}
+
+  .success-modal{padding:8px}
+
+  .success-content{
+    padding:26px 15px 18px;
+  }
+
   .success-heading{font-size:24px}
+
   .modal-stat{padding:11px 3px}
+
   .modal-stat strong{font-size:11px}
+
 }
+
 @media(prefers-reduced-motion:reduce){
-  .success-emblem,.success-emblem-ring,.confetti-piece{animation:none!important}
+
+  .success-emblem,
+  .success-emblem-ring,
+  .confetti-piece{
+    animation:none!important;
+  }
+
   .success-card{transition:none}
+
 }
-</style>
 
-<!-- HOW IT WORKS -->
-
-<section class="section" id="how">
-
-  <div class="small-label">SIMPLE • FAST • CONVENIENT</div>
-
-  <h2 class="section-heading" style="margin-top:10px;">
-    HOW NEXVORA UNBAN WORKS
-  </h2>
-
-  <p class="section-description">
-    A simple step-by-step process to verify your player account.
-  </p>
-
-  <div class="steps-grid">
-
-    <article class="step-card">
-      <div class="step-number">01</div>
-      <h3>Enter & Verify UID</h3>
-      <p>
-        Enter your 8–12 digit numeric Free Fire Player ID
-        and select the correct server region to verify
-        your in-game account details.
-      </p>
-    </article>
-
-    <article class="step-card">
-      <div class="step-number">02</div>
-      <h3>Complete the Process</h3>
-      <p>
-        Follow the instructions provided at each step.
-        Never share your password, OTP or bank account
-        login details with anyone.
-      </p>
-    </article>
-
-    <article class="step-card">
-      <div class="step-number">03</div>
-      <h3>Review Your Details</h3>
-      <p>
-        Check your selected player UID and account
-        information carefully before proceeding.
-      </p>
-    </article>
-
-    <article class="step-card">
-      <div class="step-number">04</div>
-      <h3>Get Support</h3>
-      <p>
-        If you have any questions about the process,
-        contact the NEXVORA support team through
-        the official Telegram support link.
-      </p>
-    </article>
-
-  </div>
-
-</section>
-
-<!-- FAQ -->
-
-<section class="section" id="faq">
-
-  <div class="small-label">HELP CENTER</div>
-
-  <h2 class="section-heading" style="margin-top:10px;">
-    Frequently Asked Questions
-  </h2>
-
-  <p class="section-description">
-    Find answers to common questions about UID verification.
-  </p>
-
-  <div class="faq-list">
-
-    <article class="faq-item">
-      <button class="faq-question" type="button">
-        <span>Is this website safe and genuine?</span>
-        <span>+</span>
-      </button>
-      <div class="faq-answer">
-        NEXVORA UNBAN requests your numeric Player UID
-        and selected server region for verification.
-        Never share your game password, OTP,
-        Facebook or Google login credentials.
-        Always review the details shown on any checkout
-        page before making a payment.
-      </div>
-    </article>
-
-    <article class="faq-item">
-      <button class="faq-question" type="button">
-        <span>How fast is the process?</span>
-        <span>+</span>
-      </button>
-      <div class="faq-answer">
-        Processing time can depend on payment confirmation,
-        provider availability and order processing.
-        Keep any order reference safe and use the
-        available order-status facility.
-      </div>
-    </article>
-
-    <article class="faq-item">
-      <button class="faq-question" type="button">
-        <span>Which payment methods are supported?</span>
-        <span>+</span>
-      </button>
-      <div class="faq-answer">
-        Available payment methods, if any, will be shown
-        on the relevant payment page. Check the exact
-        amount and payment details before completing
-        a transaction.
-      </div>
-    </article>
-
-    <article class="faq-item">
-      <button class="faq-question" type="button">
-        <span>What if my UID is not found?</span>
-        <span>+</span>
-      </button>
-      <div class="faq-answer">
-        Check that the UID contains only digits and that
-        you selected the correct server region. If the
-        problem continues, contact support.
-      </div>
-    </article>
-
-  </div>
-
-</section>
-
-<!-- PRIVACY POLICY -->
-
-<section class="section" id="privacy">
-
-  <div class="small-label">YOUR PRIVACY MATTERS</div>
-
-  <h2 class="section-heading" style="margin-top:10px;">
-    Privacy Policy
-  </h2>
-
-  <div class="privacy-panel">
-
-    <h3>Information We Use</h3>
-    <p>
-      The UID verification feature uses the numeric Player UID
-      and selected server region submitted by the visitor
-      to request account information from the configured
-      verification provider.
-    </p>
-
-    <h3 style="margin-top:18px;">Account Security</h3>
-    <p>
-      Never submit your game password, OTP, Facebook password,
-      Google password or other private login credentials
-      through this website.
-    </p>
-
-    <h3 style="margin-top:18px;">Third-Party Services</h3>
-    <p>
-      UID information is checked through a third-party
-      verification provider using a protected server-side
-      API connection.
-    </p>
-
-    <h3 style="margin-top:18px;">Contact</h3>
-    <p>
-      For privacy-related questions, contact the support
-      team through the official NEXVORA Telegram account.
-    </p>
-
-  </div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer class="footer">
-
-  <div class="container">
-
-    <div class="footer-brand">
-      <img src="assets/nexvora-logo.png" alt="NEXVORA Logo">
-      <div>
-        <strong>NEXVORA UNBAN</strong>
-        <small>FAST • SAFE • RELIABLE</small>
-      </div>
-    </div>
-
-    <p class="footer-description">
-      A Free Fire player UID verification service.
-      Verify your player details through a simple and
-      convenient process.
-    </p>
-
-    <div class="footer-columns">
-
-      <div class="footer-column">
-        <h3>NEXVORA UNBAN</h3>
-        <a href="#verify">Verify Player UID</a>
-        <a href="#how">How UNBAN Works</a>
-        <a href="#faq">Frequently Asked Questions</a>
-      </div>
-
-      <div class="footer-column">
-        <h3>HELP & SUPPORT</h3>
-        <a href="#verify">Verify Player UID</a>
-        <a href="#privacy">Privacy Policy</a>
-        <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">
-          ↗ Contact Admin (Telegram)
-        </a>
-      </div>
-
-      <div class="footer-column">
-        <h3>LEGAL & SAFETY</h3>
-        <a href="#privacy">Terms of Service</a>
-        <a href="#privacy">Privacy Policy</a>
-        <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">
-          Contact Support
-        </a>
-      </div>
-
-    </div>
-
-    <div class="payment-methods">
-      PAYMENT METHODS<br>
-      UPI • Google Pay • PhonePe • Paytm • Visa • Mastercard
-      • RuPay • NetBanking<br>
-      <small>
-        Payment options are subject to availability on the relevant checkout page.
-      </small>
-    </div>
-
-    <div class="copyright">
-      © 2026 NEXVORA UNBAN. All rights reserved.
-      <br>
-      NEXVORA UNBAN is an independent service and is not
-      affiliated with or endorsed by Garena.
-      Free Fire trademarks belong to their respective owners.
-    </div>
-
-  </div>
-
-</footer>
-
+  </style>
+  
 <script>
 "use strict";
 
-/* =========================================
-   NEXVORA UNBAN - MAIN JAVASCRIPT
-========================================= */
+/* ==========================================
+   NEXVORA UNBAN - FINAL JAVASCRIPT
+========================================== */
 
 const API_URL =
   "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/nexvora-unban-uid-lookup";
 
-/* ELEMENTS */
+/* ==========================================
+   ELEMENTS
+========================================== */
 
 const menuToggle = document.getElementById("menuToggle");
 const menuOverlay = document.getElementById("menuOverlay");
 const sideMenu = document.getElementById("sideMenu");
+const drawerClose = document.getElementById("drawerClose");
 
 const verifyForm = document.getElementById("verifyForm");
 const uidInput = document.getElementById("uidInput");
 const regionSelect = document.getElementById("regionSelect");
 const verifyBtn = document.getElementById("verifyBtn");
 
-const messageBox = document.getElementById("messageBox");
 const loadingBox = document.getElementById("loadingBox");
+const messageBox = document.getElementById("messageBox");
 
 const successModal = document.getElementById("successModal");
 const successClose = document.getElementById("successClose");
@@ -1443,44 +1882,52 @@ let requestController = null;
 let requestTimeout = null;
 
 
-/* =========================================
-   MENU DRAWER
-========================================= */
+/* ==========================================
+   HAMBURGER MENU
+========================================== */
 
 function openMenu() {
-  if (!menuOverlay || !sideMenu) return;
 
-  menuOverlay.classList.add("active");
+  if (!sideMenu || !menuOverlay || !menuToggle) return;
+
   sideMenu.classList.add("active");
+  menuOverlay.classList.add("active");
+  menuToggle.classList.add("active");
+
+  menuToggle.setAttribute("aria-expanded", "true");
 
   document.body.classList.add("menu-open");
-
-  if (menuToggle) {
-    menuToggle.setAttribute("aria-expanded", "true");
-  }
 }
 
 function closeMenu() {
-  if (!menuOverlay || !sideMenu) return;
 
-  menuOverlay.classList.remove("active");
+  if (!sideMenu || !menuOverlay || !menuToggle) return;
+
   sideMenu.classList.remove("active");
+  menuOverlay.classList.remove("active");
+  menuToggle.classList.remove("active");
+
+  menuToggle.setAttribute("aria-expanded", "false");
 
   document.body.classList.remove("menu-open");
-
-  if (menuToggle) {
-    menuToggle.setAttribute("aria-expanded", "false");
-  }
 }
 
 if (menuToggle) {
+
   menuToggle.addEventListener("click", () => {
-    if (sideMenu && sideMenu.classList.contains("active")) {
+
+    if (sideMenu.classList.contains("active")) {
       closeMenu();
     } else {
       openMenu();
     }
+
   });
+
+}
+
+if (drawerClose) {
+  drawerClose.addEventListener("click", closeMenu);
 }
 
 if (menuOverlay) {
@@ -1488,20 +1935,29 @@ if (menuOverlay) {
 }
 
 document.querySelectorAll(".menu-links a").forEach(link => {
+
   link.addEventListener("click", closeMenu);
+
 });
 
+
+/* ==========================================
+   KEYBOARD CONTROLS
+========================================== */
+
 document.addEventListener("keydown", event => {
+
   if (event.key === "Escape") {
     closeMenu();
     closeSuccessModal();
   }
+
 });
 
 
-/* =========================================
+/* ==========================================
    FAQ ACCORDION
-========================================= */
+========================================== */
 
 document.querySelectorAll(".faq-question").forEach(button => {
 
@@ -1514,19 +1970,27 @@ document.querySelectorAll(".faq-question").forEach(button => {
     const wasOpen = currentItem.classList.contains("active");
 
     document.querySelectorAll(".faq-item").forEach(item => {
+
       item.classList.remove("active");
 
-      const icon = item.querySelector(".faq-question span:last-child");
+      const icon = item.querySelector(
+        ".faq-question span:last-child"
+      );
 
       if (icon) icon.textContent = "+";
+
     });
 
     if (!wasOpen) {
+
       currentItem.classList.add("active");
 
-      const icon = button.querySelector("span:last-child");
+      const icon = button.querySelector(
+        "span:last-child"
+      );
 
       if (icon) icon.textContent = "−";
+
     }
 
   });
@@ -1534,11 +1998,11 @@ document.querySelectorAll(".faq-question").forEach(button => {
 });
 
 
-/* =========================================
-   MESSAGE HELPERS
-========================================= */
+/* ==========================================
+   MESSAGE FUNCTIONS
+========================================== */
 
-function showMessage(message, type = "error") {
+function showMessage(message, type) {
 
   if (!messageBox) return;
 
@@ -1546,7 +2010,6 @@ function showMessage(message, type = "error") {
 
   messageBox.className = "message-box " + type;
 
-  messageBox.style.display = "block";
 }
 
 function hideMessage() {
@@ -1554,8 +2017,14 @@ function hideMessage() {
   if (!messageBox) return;
 
   messageBox.textContent = "";
-  messageBox.style.display = "none";
+  messageBox.className = "message-box";
+
 }
+
+
+/* ==========================================
+   LOADING FUNCTIONS
+========================================== */
 
 function showLoading() {
 
@@ -1564,9 +2033,12 @@ function showLoading() {
   }
 
   if (verifyBtn) {
+
     verifyBtn.disabled = true;
     verifyBtn.textContent = "VERIFYING...";
+
   }
+
 }
 
 function hideLoading() {
@@ -1576,15 +2048,18 @@ function hideLoading() {
   }
 
   if (verifyBtn) {
+
     verifyBtn.disabled = false;
-    verifyBtn.textContent = "VERIFY PLAYER UID";
+    verifyBtn.textContent = "VERIFY PLAYER UID →";
+
   }
+
 }
 
 
-/* =========================================
-   LAST LOGIN FORMATTER
-========================================= */
+/* ==========================================
+   LAST LOGIN FORMAT
+========================================== */
 
 function formatLastLogin(value) {
 
@@ -1599,52 +2074,73 @@ function formatLastLogin(value) {
   }
 
   return date.toLocaleString("en-IN", {
+
     day: "2-digit",
     month: "short",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit"
+
   });
+
 }
 
 
-/* =========================================
-   PLAYER RESULT MODAL
-========================================= */
+/* ==========================================
+   FILL PLAYER DETAILS
+========================================== */
 
 function fillPlayerDetails(player, selectedRegion) {
 
   const username =
-    typeof player.username === "string"
+    typeof player.username === "string" &&
+    player.username.trim()
       ? player.username
       : "Unknown Player";
 
   const uid = String(player.user_id);
 
   const level =
-    player.level !== null && player.level !== undefined
+    player.level !== null &&
+    player.level !== undefined
       ? String(player.level)
       : "N/A";
 
-  const region =
-    typeof player.region === "string"
+  const playerRegion =
+    typeof player.region === "string" &&
+    player.region.trim()
       ? player.region
       : selectedRegion.toUpperCase();
 
   const gameName =
     selectedRegion === "india"
-      ? "Free Fire India Region"
-      : "Free Fire Global Region";
+      ? "Free Fire India"
+      : "Free Fire Global";
 
-  document.getElementById("resultUsername").textContent = username;
-  document.getElementById("resultUID").textContent = uid;
-  document.getElementById("resultLevel").textContent = level;
-  document.getElementById("resultRegion").textContent = region;
-  document.getElementById("resultGame").textContent = gameName;
+  document.getElementById("resultUsername").textContent =
+    username;
+
+  document.getElementById("resultUID").textContent =
+    uid;
+
+  document.getElementById("resultLevel").textContent =
+    level;
+
+  document.getElementById("resultRegion").textContent =
+    playerRegion;
+
+  document.getElementById("resultGame").textContent =
+    gameName;
 
   document.getElementById("resultLastLogin").textContent =
     formatLastLogin(player.last_login);
+
 }
+
+
+/* ==========================================
+   OPEN SUCCESS CARD
+========================================== */
 
 function openSuccessModal(player, selectedRegion) {
 
@@ -1653,7 +2149,11 @@ function openSuccessModal(player, selectedRegion) {
   fillPlayerDetails(player, selectedRegion);
 
   successModal.classList.add("active");
-  successModal.setAttribute("aria-hidden", "false");
+
+  successModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
 
   document.body.classList.add("modal-open");
 
@@ -1662,43 +2162,82 @@ function openSuccessModal(player, selectedRegion) {
   if (successClose) {
     successClose.focus();
   }
+
 }
+
+
+/* ==========================================
+   CLOSE SUCCESS CARD
+========================================== */
 
 function closeSuccessModal() {
 
   if (!successModal) return;
 
   successModal.classList.remove("active");
-  successModal.setAttribute("aria-hidden", "true");
+
+  successModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
 
   document.body.classList.remove("modal-open");
+
 }
+
+
+/* CLOSE BUTTON */
 
 if (successClose) {
-  successClose.addEventListener("click", closeSuccessModal);
+
+  successClose.addEventListener(
+    "click",
+    closeSuccessModal
+  );
+
 }
 
+
+/* ==========================================
+   PROCEED BUTTON
+========================================== */
+
 if (proceedBtn) {
+
   proceedBtn.addEventListener("click", () => {
 
     closeSuccessModal();
 
-    if (verifyForm) {
-      verifyForm.scrollIntoView({
+    const verifySection = document.getElementById("verify");
+
+    if (verifySection) {
+
+      verifySection.scrollIntoView({
+
         behavior: "smooth",
         block: "center"
+
       });
+
     }
 
   });
+
 }
+
+
+/* CLOSE WHEN BACKDROP IS CLICKED */
 
 if (successModal) {
 
   successModal.addEventListener("click", event => {
 
-    if (event.target.classList.contains("success-backdrop")) {
+    if (
+      event.target.classList.contains("success-backdrop")
+    ) {
+
       closeSuccessModal();
+
     }
 
   });
@@ -1706,9 +2245,9 @@ if (successModal) {
 }
 
 
-/* =========================================
-   CELEBRATION CONFETTI
-========================================= */
+/* ==========================================
+   CONFETTI ANIMATION
+========================================== */
 
 function createConfetti() {
 
@@ -1717,11 +2256,13 @@ function createConfetti() {
   celebrationLayer.innerHTML = "";
 
   const colors = [
+
     "#43e9a8",
     "#4e9cff",
     "#a77aff",
     "#ffffff",
     "#ffd166"
+
   ];
 
   for (let i = 0; i < 42; i++) {
@@ -1730,18 +2271,22 @@ function createConfetti() {
 
     piece.className = "confetti-piece";
 
-    piece.style.left = Math.random() * 100 + "%";
+    piece.style.left =
+      Math.random() * 100 + "%";
 
     piece.style.background =
-      colors[Math.floor(Math.random() * colors.length)];
+      colors[
+        Math.floor(Math.random() * colors.length)
+      ];
 
     piece.style.animationDelay =
-      Math.random() * 1.4 + "s";
+      Math.random() * 1.2 + "s";
 
     piece.style.animationDuration =
-      (2 + Math.random() * 1.5) + "s";
+      2 + Math.random() * 1.5 + "s";
 
     celebrationLayer.appendChild(piece);
+
   }
 
   window.setTimeout(() => {
@@ -1751,60 +2296,102 @@ function createConfetti() {
     }
 
   }, 5000);
+
 }
 
 
-/* =========================================
+/* ==========================================
    UID VALIDATION
-========================================= */
+========================================== */
 
 function validateUID(uid, region) {
 
   if (!uid) {
+
     return "Please enter your Free Fire Player UID.";
+
   }
 
   if (!/^[0-9]{8,12}$/.test(uid)) {
+
     return "UID must contain 8 to 12 digits only.";
+
   }
 
-  if (region !== "india" && region !== "global") {
+  if (
+    region !== "india" &&
+    region !== "global"
+  ) {
+
     return "Please select a valid server region.";
+
   }
 
   return null;
+
 }
 
 
-/* =========================================
-   API ERROR MESSAGES
-========================================= */
+/* ==========================================
+   API ERROR MESSAGE
+========================================== */
 
 function getErrorMessage(data, status) {
 
-  if (data && typeof data.message === "string" && data.message.trim()) {
+  if (
+    data &&
+    typeof data.message === "string" &&
+    data.message.trim()
+  ) {
+
     return data.message;
+
   }
 
   if (status === 404) {
-    return "Player UID was not found. Please check your UID and region.";
+
+    return "Player UID not found. Check your UID and region.";
+
   }
 
   if (status === 429) {
+
     return "Too many requests. Please wait and try again.";
+
   }
 
   if (status >= 500) {
-    return "Verification service is temporarily unavailable. Try again later.";
+
+    return "Verification service is temporarily unavailable.";
+
   }
 
-  return "Unable to verify this UID. Please check the details and try again.";
+  return "Unable to verify this UID. Please check your details.";
+
 }
 
 
-/* =========================================
+/* ==========================================
+   UID INPUT CLEANUP
+========================================== */
+
+if (uidInput) {
+
+  uidInput.addEventListener("input", () => {
+
+    uidInput.value = uidInput.value.replace(
+      /[^0-9]/g,
+      ""
+    );
+
+  });
+
+}
+
+
+/* ==========================================
    MAIN UID VERIFICATION
-========================================= */
+========================================== */
 
 if (verifyForm) {
 
@@ -1824,11 +2411,17 @@ if (verifyForm) {
       ? regionSelect.value
       : "";
 
-    const validationError = validateUID(uid, region);
+    const validationError = validateUID(
+      uid,
+      region
+    );
 
     if (validationError) {
+
       showMessage(validationError, "error");
+
       return;
+
     }
 
     verificationInProgress = true;
@@ -1838,7 +2431,11 @@ if (verifyForm) {
     requestController = new AbortController();
 
     requestTimeout = window.setTimeout(() => {
-      requestController.abort();
+
+      if (requestController) {
+        requestController.abort();
+      }
+
     }, 20000);
 
     try {
@@ -1848,12 +2445,16 @@ if (verifyForm) {
         method: "POST",
 
         headers: {
+
           "Content-Type": "application/json"
+
         },
 
         body: JSON.stringify({
+
           uid: uid,
           region: region
+
         }),
 
         signal: requestController.signal
@@ -1863,58 +2464,92 @@ if (verifyForm) {
       let data;
 
       try {
+
         data = await response.json();
+
       } catch {
+
         throw new Error("INVALID_RESPONSE");
+
       }
 
-      if (!response.ok || !data || data.ok !== true) {
+      if (
+        !response.ok ||
+        !data ||
+        data.ok !== true
+      ) {
 
         showMessage(
-          getErrorMessage(data, response.status),
+
+          getErrorMessage(
+            data,
+            response.status
+          ),
+
           "error"
+
         );
 
         return;
+
       }
 
       const player = data.player;
 
-      if (!player || typeof player !== "object") {
+      if (
+        !player ||
+        typeof player !== "object"
+      ) {
+
         showMessage(
-          "Verification response was incomplete. Please try again.",
+          "Player information was missing from the verification response.",
           "error"
         );
 
         return;
+
       }
 
-      if (String(player.user_id) !== uid) {
+      if (
+        player.user_id === null ||
+        player.user_id === undefined ||
+        String(player.user_id) !== uid
+      ) {
+
         showMessage(
-          "The returned player UID did not match your submitted UID.",
+          "Returned player UID does not match your submitted UID.",
           "error"
         );
 
         return;
+
       }
 
       if (player.verified !== true) {
+
         showMessage(
           "Player verification could not be confirmed.",
           "error"
         );
 
         return;
+
       }
+
+      /*
+        IMPORTANT:
+        Loading is hidden in finally.
+        Successful response opens the card on this page.
+      */
 
       openSuccessModal(player, region);
 
-      showMessage(
-        "Player UID successfully verified.",
-        "success"
-      );
-
     } catch (error) {
+
+      console.error(
+        "NEXVORA verification error:",
+        error
+      );
 
       if (error.name === "AbortError") {
 
@@ -1924,8 +2559,6 @@ if (verifyForm) {
         );
 
       } else {
-
-        console.error("NEXVORA UID verification error:", error);
 
         showMessage(
           "Unable to connect to the verification service. Please try again.",
@@ -1937,11 +2570,15 @@ if (verifyForm) {
     } finally {
 
       if (requestTimeout !== null) {
+
         window.clearTimeout(requestTimeout);
+
         requestTimeout = null;
+
       }
 
       requestController = null;
+
       verificationInProgress = false;
 
       hideLoading();
@@ -1953,26 +2590,13 @@ if (verifyForm) {
 }
 
 
-/* =========================================
-   UID INPUT CLEANUP
-========================================= */
+/* ==========================================
+   BACKGROUND PARTICLES
+========================================== */
 
-if (uidInput) {
-
-  uidInput.addEventListener("input", () => {
-
-    uidInput.value = uidInput.value.replace(/[^0-9]/g, "");
-
-  });
-
-}
-
-
-/* =========================================
-   AMBIENT PARTICLES
-========================================= */
-
-const particleLayer = document.querySelector(".particle-layer");
+const particleLayer = document.getElementById(
+  "particleLayer"
+);
 
 if (particleLayer) {
 
@@ -1982,14 +2606,17 @@ if (particleLayer) {
 
     particle.className = "particle";
 
-    particle.style.left = Math.random() * 100 + "%";
-    particle.style.top = Math.random() * 100 + "%";
+    particle.style.left =
+      Math.random() * 100 + "%";
+
+    particle.style.top =
+      Math.random() * 100 + "%";
 
     particle.style.animationDelay =
       Math.random() * 7 + "s";
 
     particle.style.animationDuration =
-      (5 + Math.random() * 8) + "s";
+      5 + Math.random() * 8 + "s";
 
     particleLayer.appendChild(particle);
 
@@ -1998,19 +2625,21 @@ if (particleLayer) {
 }
 
 
-/* =========================================
-   INITIAL STATE
-========================================= */
+/* ==========================================
+   INITIAL PAGE STATE
+========================================== */
 
 closeMenu();
+closeSuccessModal();
 
-if (successModal) {
-  successModal.classList.remove("active");
-  successModal.setAttribute("aria-hidden", "true");
-}
+hideLoading();
+hideMessage();
 
-console.log("NEXVORA UNBAN initialized.");
+console.log("NEXVORA UNBAN initialized successfully.");
 
 </script>
+
 </body>
 </html>
+
+  
