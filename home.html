@@ -1258,14 +1258,39 @@ button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
   }
 
   function openSuccessModal(player) {
-    fillResult(player);
+  fillResult(player);
 
-    successModal.classList.add("show");
-    document.body.classList.add("menu-open");
+  // Save verified player details for application.html
+  try {
+    const verifiedPlayer = {
+      username: player.username || "",
+      user_id: String(player.user_id || ""),
+      level: player.level ?? "",
+      region: player.region || "",
+      last_login: player.last_login || "",
+      verified: player.verified === true
+    };
 
-    startCelebration();
+    sessionStorage.setItem(
+      "nexvora_verified_player",
+      JSON.stringify(verifiedPlayer)
+    );
 
-    successClose.focus();
+  } catch (error) {
+    console.error("Unable to save verified player:", error);
+    showMessage(
+      "Unable to save player information. Please try verification again.",
+      "error"
+    );
+    return;
+  }
+
+  successModal.classList.add("show");
+  document.body.classList.add("menu-open");
+
+  startCelebration();
+
+  successClose.focus();
   }
 
   function closeSuccessModal() {
@@ -1284,13 +1309,8 @@ button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
   });
 
   proceedBtn.addEventListener("click", () => {
-    closeSuccessModal();
-
-    $("verify").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  });
+  window.location.href = "application.html";
+});
 
   /* UID INPUT */
   uidInput.addEventListener("input", () => {
