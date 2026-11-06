@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,31 +91,37 @@ textarea{
 .brand{
   display:flex;
   align-items:center;
-  gap:11px;
+  gap:10px;
   min-width:0;
 }
 
 .brand img{
-  width:48px;
-  height:48px;
-  object-fit:contain;
-  filter:drop-shadow(0 0 12px rgba(54,220,255,.5));
+  width:43px;
+  height:43px;
+  min-width:43px;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid rgba(54,220,255,.5);
+  background:#071326;
+  padding:3px;
+  filter:drop-shadow(0 0 10px rgba(54,220,255,.45));
 }
 
 .brand-name{
   font-family:Orbitron,sans-serif;
   font-weight:800;
-  letter-spacing:1.2px;
-  font-size:clamp(13px,2.4vw,18px);
+  letter-spacing:.7px;
+  font-size:clamp(11px,2vw,15px);
+  line-height:1.3;
   white-space:nowrap;
 }
 
 .brand-name span{
   display:block;
   color:var(--cyan);
-  font-size:9px;
-  letter-spacing:3px;
-  margin-top:4px;
+  font-size:8px;
+  letter-spacing:2px;
+  margin-top:3px;
 }
 
 .header-actions{
@@ -199,7 +206,7 @@ textarea{
   transition:.25s;
 }
 
-.menu-backdrop.open{
+.menu-backdrop.active{
   opacity:1;
   visibility:visible;
 }
@@ -219,7 +226,7 @@ textarea{
   overflow-y:auto;
 }
 
-.drawer.open{
+.drawer.active{
   transform:translateX(0);
 }
 
@@ -445,6 +452,11 @@ input[type="file"]{
   background:#071326;
 }
 
+input[type="date"]{
+  color-scheme:dark;
+  min-height:48px;
+}
+
 textarea{
   min-height:100px;
   resize:vertical;
@@ -618,7 +630,11 @@ footer{
 .footer-brand img{
   width:45px;
   height:45px;
-  object-fit:contain;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid rgba(54,220,255,.45);
+  padding:3px;
+  background:#071326;
 }
 
 footer p,
@@ -681,8 +697,19 @@ footer a{
   }
 
   .brand img{
-    width:42px;
-    height:42px;
+    width:39px;
+    height:39px;
+    min-width:39px;
+  }
+
+  .brand-name{
+    font-size:11px;
+    letter-spacing:.4px;
+  }
+
+  .brand-name span{
+    font-size:7px;
+    letter-spacing:1.5px;
   }
 
   .form-grid,
@@ -717,6 +744,7 @@ footer a{
 }
 </style>
 </head>
+
 <body>
 
 <canvas id="particleCanvas" aria-hidden="true"></canvas>
@@ -971,6 +999,27 @@ footer a{
         </div>
 
 
+        <!-- BAN DATE -->
+        <div class="field full">
+
+          <label for="banDate">
+            Select Ban Date
+          </label>
+
+          <input
+            id="banDate"
+            name="banDate"
+            type="date"
+            required
+          >
+
+          <div class="hint">
+            Select the date when your Free Fire account was banned.
+          </div>
+
+        </div>
+
+
         <!-- BAN TYPE -->
         <div class="field">
 
@@ -1123,15 +1172,22 @@ footer a{
     </form>
 
   </section>
-    <!-- HOW UNBAN WORKS -->
+  
+  <!-- HOW UNBAN WORKS -->
   <section class="card" id="how-it-works">
-    <div class="section-kicker">SIMPLE PROCESS</div>
+
+    <div class="section-kicker">
+      SIMPLE PROCESS
+    </div>
+
     <h2>How UNBAN Works</h2>
+
     <p class="hint">
       Follow these four simple steps to verify your Free Fire player information.
     </p>
 
     <div class="steps">
+
       <div class="step">
         <span class="section-kicker">01</span>
         <h3>Enter Player UID</h3>
@@ -1155,15 +1211,23 @@ footer a{
         <h3>View Result</h3>
         <p>View the player information returned by the verification service.</p>
       </div>
+
     </div>
+
   </section>
+
 
   <!-- FAQ -->
   <section class="card" id="faq">
-    <div class="section-kicker">HELP CENTER</div>
+
+    <div class="section-kicker">
+      HELP CENTER
+    </div>
+
     <h2>Frequently Asked Questions</h2>
 
     <div class="faq">
+
       <details>
         <summary>What is a Free Fire UID?</summary>
         <p>A UID is the unique numerical identifier associated with your Free Fire player account.</p>
@@ -1188,12 +1252,19 @@ footer a{
         <summary>How can I contact support?</summary>
         <p>Contact the support team using the official NEXVORA Telegram support link.</p>
       </details>
+
     </div>
+
   </section>
+
 
   <!-- PRIVACY POLICY -->
   <section class="card info-card" id="privacy">
-    <div class="section-kicker">YOUR INFORMATION</div>
+
+    <div class="section-kicker">
+      YOUR INFORMATION
+    </div>
+
     <h2>Privacy Policy</h2>
 
     <h3>UID Information</h3>
@@ -1207,48 +1278,77 @@ footer a{
 
     <h3>Security</h3>
     <p>Do not share private account details with anyone claiming they can guarantee an account unban.</p>
+
   </section>
+
 
   <!-- TERMS -->
   <section class="card info-card" id="terms">
-    <div class="section-kicker">PORTAL GUIDELINES</div>
+
+    <div class="section-kicker">
+      PORTAL GUIDELINES
+    </div>
+
     <h2>Terms of Service</h2>
 
     <p>By using this portal, you agree to provide accurate UID and region information for verification.</p>
+
     <p>Verification results depend on the availability and response of the external player information provider.</p>
+
     <p>NEXVORA UNBAN does not request your password or OTP. Do not share your account credentials.</p>
+
     <p>Use this portal responsibly and only with player information you are authorized to submit.</p>
+
   </section>
+
 
   <!-- REFUNDS -->
   <section class="card info-card" id="refunds">
-    <div class="section-kicker">PAYMENT INFORMATION</div>
+
+    <div class="section-kicker">
+      PAYMENT INFORMATION
+    </div>
+
     <h2>Refunds &amp; Cancellation</h2>
 
     <p>Payment-related requests should be submitted to official support with the relevant transaction details.</p>
+
     <p>Refund eligibility, processing, and cancellation depend on the purchased service and payment provider rules.</p>
+
     <p>Contact the admin before making a payment if you need clarification.</p>
+
   </section>
 
 </main>
 
+
 <!-- FOOTER -->
 <footer>
+
   <div class="footer-brand">
-    <img src="assets/nexvora-logo.png" alt="NEXVORA Logo">
+
+    <img
+      src="assets/nexvora-logo.png"
+      alt="NEXVORA Logo"
+    >
+
     <div>
       <h2>NEXVORA UNBAN</h2>
       <p>FAST • SAFE • RELIABLE</p>
     </div>
+
   </div>
 
   <p class="footer-description">
     India's premium Free Fire Unban destination. Fast, secure and convenient player UID verification.
   </p>
 
-  <p class="footer-trust">✓ UID-Based Verification &amp; Top-Up Process</p>
+  <p class="footer-trust">
+    ✓ UID-Based Verification &amp; Top-Up Process
+  </p>
 
   <div class="footer-columns">
+
     <div>
       <h3>HELP &amp; SUPPORT</h3>
       <a href="home.html">Verify Player UID</a>
@@ -1264,28 +1364,43 @@ footer a{
       <a href="#refunds">Refunds &amp; Cancellation</a>
       <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">Contact Support</a>
     </div>
+
   </div>
 
   <div class="footer-payments">
+
     <h3>ACCEPTED PAYMENTS</h3>
-    <p>UPI • Google Pay • PhonePe • Paytm • Visa • Mastercard • RuPay • NetBanking</p>
+
+    <p>
+      UPI • Google Pay • PhonePe • Paytm • Visa • Mastercard • RuPay • NetBanking
+    </p>
+
   </div>
 
   <div class="footer-bottom">
-    <p>© <span id="footerYear">2026</span> NEXVORA UNBAN. All rights reserved.</p>
+
+    <p>
+      © <span id="footerYear">2026</span> NEXVORA UNBAN. All rights reserved.
+    </p>
+
     <p class="disclaimer">
       Disclaimer: NEXVORA UNBAN is an independent service and is not affiliated with or endorsed by Garena.
       Free Fire trademarks belong to their respective owners.
     </p>
+
   </div>
+
 </footer>
+
 
 <script>
 /* =====================================
    NEXVORA UNBAN - APPLICATION PAGE
 ===================================== */
 
+
 /* MENU */
+
 const menuToggle = document.getElementById("menuToggle");
 const drawer = document.getElementById("drawer");
 const menuBackdrop = document.getElementById("menuBackdrop");
@@ -1294,12 +1409,18 @@ const drawerClose = document.getElementById("drawerClose");
 function openDrawer() {
   drawer.classList.add("active");
   menuBackdrop.classList.add("active");
+
+  menuToggle.setAttribute("aria-expanded", "true");
+
   document.body.style.overflow = "hidden";
 }
 
 function closeDrawer() {
   drawer.classList.remove("active");
   menuBackdrop.classList.remove("active");
+
+  menuToggle.setAttribute("aria-expanded", "false");
+
   document.body.style.overflow = "";
 }
 
@@ -1327,7 +1448,9 @@ document.addEventListener("keydown", event => {
 
 
 /* VERIFIED PLAYER INFORMATION */
+
 function loadVerifiedPlayer() {
+
   const fields = {
     name: document.getElementById("playerName"),
     uid: document.getElementById("playerUID"),
@@ -1338,15 +1461,19 @@ function loadVerifiedPlayer() {
   };
 
   try {
-    const savedPlayer = sessionStorage.getItem("nexvora_verified_player");
+
+    const savedPlayer =
+      sessionStorage.getItem("nexvora_verified_player");
 
     if (!savedPlayer) {
+
       fields.name.textContent = "Not available";
       fields.uid.textContent = "Not available";
       fields.level.textContent = "Not available";
       fields.region.textContent = "Not available";
       fields.lastLogin.textContent = "Not available";
       fields.verified.textContent = "Verification data not found";
+
       return;
     }
 
@@ -1371,74 +1498,164 @@ function loadVerifiedPlayer() {
       player.verified === true ? "VERIFIED" : "NOT CONFIRMED";
 
   } catch (error) {
+
     console.error("Player information error:", error);
-    fields.verified.textContent = "Unable to load verification data";
+
+    fields.verified.textContent =
+      "Unable to load verification data";
+
   }
+
 }
 
 loadVerifiedPlayer();
 
 
+/* BAN DATE LIMIT */
+
+const banDateInput = document.getElementById("banDate");
+
+if (banDateInput) {
+
+  const today = new Date();
+
+  const localToday = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0")
+  ].join("-");
+
+  banDateInput.max = localToday;
+
+}
+
+
 /* APPLICATION FORM */
-const applicationForm = document.getElementById("applicationForm");
-const formNotice = document.getElementById("formNotice");
-const submitApplication = document.getElementById("submitApplication");
+
+const applicationForm =
+  document.getElementById("applicationForm");
+
+const formNotice =
+  document.getElementById("formNotice");
+
+const submitApplication =
+  document.getElementById("submitApplication");
 
 if (applicationForm) {
+
   applicationForm.addEventListener("submit", event => {
+
     event.preventDefault();
 
+    formNotice.className = "notice";
+    formNotice.textContent = "";
+
     if (!applicationForm.checkValidity()) {
+
       applicationForm.reportValidity();
+
       return;
     }
 
-    const screenshotInput = document.getElementById("banScreenshot");
+    const screenshotInput =
+      document.getElementById("banScreenshot");
 
-    if (!screenshotInput || !screenshotInput.files.length) {
-      formNotice.textContent = "Please upload your ban screenshot.";
-      formNotice.style.display = "block";
+    if (
+      !screenshotInput ||
+      !screenshotInput.files ||
+      screenshotInput.files.length === 0
+    ) {
+
+      formNotice.textContent =
+        "Please upload your ban screenshot.";
+
+      formNotice.classList.add("show", "error");
+
       return;
     }
 
     const screenshot = screenshotInput.files[0];
 
     if (!screenshot.type.startsWith("image/")) {
-      formNotice.textContent = "Please select an image file.";
-      formNotice.style.display = "block";
+
+      formNotice.textContent =
+        "Please select a valid image file.";
+
+      formNotice.classList.add("show", "error");
+
       return;
     }
 
-    formNotice.textContent =
-      "Your form details are valid. Application submission and screenshot upload are not connected yet. No data has been uploaded.";
+    const maxFileSize = 5 * 1024 * 1024;
 
-    formNotice.style.display = "block";
-    formNotice.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+    if (screenshot.size > maxFileSize) {
+
+      formNotice.textContent =
+        "Screenshot size must be 5 MB or less.";
+
+      formNotice.classList.add("show", "error");
+
+      return;
+    }
+
+    const banDate = document.getElementById("banDate").value;
+
+    if (banDate > localToday) {
+
+      formNotice.textContent =
+        "Ban date cannot be in the future.";
+
+      formNotice.classList.add("show", "error");
+
+      return;
+    }
+
+    /*
+      IMPORTANT:
+      The form submission and screenshot upload
+      are not connected to a backend yet.
+
+      This button only validates the entered details
+      and redirects to payment.html.
+    */
+
+    submitApplication.disabled = true;
+    submitApplication.textContent = "PROCEEDING...";
+
+    window.location.href = "payment.html";
+
   });
+
 }
 
 
 /* FOOTER YEAR */
+
 document.getElementById("footerYear").textContent =
   new Date().getFullYear();
 
 
 /* BACKGROUND PARTICLES */
-const canvas = document.getElementById("particleCanvas");
-const ctx = canvas.getContext("2d");
+
+const canvas =
+  document.getElementById("particleCanvas");
+
+const ctx =
+  canvas.getContext("2d");
 
 let particles = [];
+
 let animationFrame;
 
 function resizeCanvas() {
+
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
 }
 
 function createParticles() {
+
   particles = [];
 
   const count = Math.min(
@@ -1447,33 +1664,61 @@ function createParticles() {
   );
 
   for (let i = 0; i < count; i++) {
+
     particles.push({
+
       x: Math.random() * canvas.width,
+
       y: Math.random() * canvas.height,
+
       size: Math.random() * 2 + 0.5,
+
       speedX: (Math.random() - 0.5) * 0.35,
+
       speedY: (Math.random() - 0.5) * 0.35,
+
       opacity: Math.random() * 0.6 + 0.2
+
     });
+
   }
+
 }
 
 function drawParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
 
   particles.forEach(particle => {
+
     particle.x += particle.speedX;
     particle.y += particle.speedY;
 
-    if (particle.x < 0 || particle.x > canvas.width) {
+    if (
+      particle.x < 0 ||
+      particle.x > canvas.width
+    ) {
+
       particle.speedX *= -1;
+
     }
 
-    if (particle.y < 0 || particle.y > canvas.height) {
+    if (
+      particle.y < 0 ||
+      particle.y > canvas.height
+    ) {
+
       particle.speedY *= -1;
+
     }
 
     ctx.beginPath();
+
     ctx.arc(
       particle.x,
       particle.y,
@@ -1486,9 +1731,12 @@ function drawParticles() {
       `rgba(0, 190, 255, ${particle.opacity})`;
 
     ctx.fill();
+
   });
 
-  animationFrame = requestAnimationFrame(drawParticles);
+  animationFrame =
+    requestAnimationFrame(drawParticles);
+
 }
 
 resizeCanvas();
@@ -1496,9 +1744,13 @@ createParticles();
 drawParticles();
 
 window.addEventListener("resize", () => {
+
   resizeCanvas();
   createParticles();
+
 });
+
+
 </script>
 
 </body>
