@@ -1532,6 +1532,7 @@ if (banDateInput) {
 
 /* APPLICATION FORM */
 
+
 const applicationForm =
   document.getElementById("applicationForm");
 
@@ -1542,18 +1543,14 @@ const submitApplication =
   document.getElementById("submitApplication");
 
 if (applicationForm) {
-
-  applicationForm.addEventListener("submit", event => {
-
+  applicationForm.addEventListener("submit", async event => {
     event.preventDefault();
 
     formNotice.className = "notice";
     formNotice.textContent = "";
 
     if (!applicationForm.checkValidity()) {
-
       applicationForm.reportValidity();
-
       return;
     }
 
@@ -1565,69 +1562,167 @@ if (applicationForm) {
       !screenshotInput.files ||
       screenshotInput.files.length === 0
     ) {
-
       formNotice.textContent =
         "Please upload your ban screenshot.";
-
       formNotice.classList.add("show", "error");
-
       return;
     }
 
     const screenshot = screenshotInput.files[0];
 
     if (!screenshot.type.startsWith("image/")) {
-
       formNotice.textContent =
         "Please select a valid image file.";
-
       formNotice.classList.add("show", "error");
-
       return;
     }
 
-    const maxFileSize = 5 * 1024 * 1024;
-
-    if (screenshot.size > maxFileSize) {
-
+    if (screenshot.size > 5 * 1024 * 1024) {
       formNotice.textContent =
         "Screenshot size must be 5 MB or less.";
-
       formNotice.classList.add("show", "error");
-
       return;
     }
 
-    const banDate = document.getElementById("banDate").value;
+    const banDate =
+      document.getElementById("banDate").value;
+
+    const localToday =
+      new Date().toLocaleDateString("en-CA");
 
     if (banDate > localToday) {
-
       formNotice.textContent =
         "Ban date cannot be in the future.";
-
       formNotice.classList.add("show", "error");
-
       return;
     }
 
-    /*
-      IMPORTANT:
-      The form submission and screenshot upload
-      are not connected to a backend yet.
+    const playerText =
+      sessionStorage.getItem("nexvora_verified_player");
 
-      This button only validates the entered details
-      and redirects to payment.html.
-    */
+    if (!playerText) {
+      formNotice.textContent =
+        "Player verification missing. Please verify UID again.";
+      formNotice.classList.add("show", "error");
+      return;
+    }
+
+    let player;
+
+    try {
+      player = JSON.parse(playerText);
+    } catch {
+      formNotice.textContent =
+        "Player verification data is invalid. Please verify again.";
+      formNotice.classList.add("show", "error");
+      return;
+    }
+
+    if (
+      !player ||
+      !player.verified ||
+      !player.user_id ||
+      !player.username ||
+      player.level === undefined ||
+      !player.region
+    ) {
+      formNotice.textContent =
+        "Verified player details are incomplete.";
+      formNotice.classList.add("show", "error");
+      return;
+    }
+
+    const fullName =
+      document.getElementById("fullName").value.trim();
+
+    const banType =
+      document.getElementById("banType").value;
+
+    const device =
+      document.getElementById("device").value;
+
+    const reason =
+      document.getElementById("reason").value.trim();
+
+    if (!["permanent", "temporary"].includes(banType)) {
+      formNotice.textContent = "Please select a valid ban type.";
+      formNotice.classList.add("show", "error");
+      return;
+    }
 
     submitApplication.disabled = true;
-    submitApplication.textContent = "PROCEEDING...";
+    submitApplication.textContent = "SAVING APPLICATION...";
 
-    window.location.href = "payment.html";
+    try {
+      const response = await fetch(
+        "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/unban-payment-workflow",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": "sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ"
+          },
+          body: JSON.stringify({
+            action: "create",
+            form: {
+              player_uid: String(player.user_id),
+              id_level: String(player.level),
+              region: String(player.region),
+              game_name: String(player.username),
+              device: device,
+              ban_type: banType,
+              ban_date: banDate,
+              full_name: fullName,
+              reason: reason,
+              policy_accepted: true
+            }
+          })
+        }
+      );
 
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.error || "Could not save application."
+        );
+      }
+
+      sessionStorage.setItem(
+        "nexvora_request_id",
+        result.request_id
+      );
+
+      sessionStorage.setItem(
+        "nexvora_application_details",
+        JSON.stringify({
+          full_name: fullName,
+          ban_type: banType,
+          device: device,
+          reason: reason,
+          ban_date: banDate,
+          player_uid: String(player.user_id),
+          game_name: String(player.username),
+          id_level: String(player.level),
+          region: String(player.region)
+        })
+      );
+
+      window.location.href = "payment.html";
+
+    } catch (error) {
+      console.error("Application save error:", error);
+
+      formNotice.textContent =
+        error.message || "Application could not be saved.";
+
+      formNotice.classList.add("show", "error");
+
+      submitApplication.disabled = false;
+      submitApplication.textContent = "PROCEED";
+    }
   });
-
-}
-
+          }
 
 /* FOOTER YEAR */
 
