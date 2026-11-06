@@ -1,0 +1,1342 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050511">
+  <title>NEXVORA UNBAN | Payment</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #050511;
+      --panel: #0c1022;
+      --panel2: #10172d;
+      --blue: #28a8ff;
+      --cyan: #00e5ff;
+      --purple: #a34cff;
+      --text: #f3f6ff;
+      --muted: #929bb8;
+      --border: rgba(69, 154, 255, .23);
+      --green: #24e6a0;
+      --red: #ff5277;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 10% 0%, rgba(40,168,255,.13), transparent 38%),
+        radial-gradient(ellipse at 95% 25%, rgba(163,76,255,.12), transparent 35%),
+        var(--bg);
+      font-family: 'Rajdhani', sans-serif;
+      padding: 18px 13px 40px;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 540px;
+      margin: auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      padding: 10px 0 25px;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 12px rgba(40,168,255,.65));
+    }
+
+    .brand-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      background: linear-gradient(90deg, #fff, var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-top: 4px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(19px, 5vw, 25px);
+      line-height: 1.5;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #fff, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 8px;
+    }
+
+    .game-banner {
+      text-align: center;
+      padding: 14px 10px;
+      margin-bottom: 17px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: linear-gradient(120deg, rgba(40,168,255,.10), rgba(163,76,255,.10));
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .game-banner img {
+      display: block;
+      max-width: 145px;
+      max-height: 48px;
+      object-fit: contain;
+      margin: 0 auto 8px;
+    }
+
+    .panel {
+      background: linear-gradient(145deg, rgba(16,23,45,.96), rgba(8,11,26,.98));
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      padding: 19px;
+      margin-bottom: 17px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.23);
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      letter-spacing: .7px;
+      color: var(--cyan);
+      margin-bottom: 15px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      font-size: 15px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: 0;
+    }
+
+    .detail-label {
+      color: var(--muted);
+    }
+
+    .detail-value {
+      text-align: right;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .amount-box {
+      text-align: center;
+      padding: 20px 10px;
+      border: 1px solid rgba(0,229,255,.28);
+      border-radius: 16px;
+      background: rgba(0,229,255,.045);
+      margin: 15px 0;
+    }
+
+    .amount-label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .amount {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--cyan);
+      margin-top: 7px;
+      text-shadow: 0 0 18px rgba(0,229,255,.25);
+    }
+
+    .qr-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 220px;
+      padding: 13px;
+      background: white;
+      border-radius: 13px;
+      width: fit-content;
+      margin: 15px auto;
+    }
+
+    #qrcode {
+      width: 190px;
+      height: 190px;
+    }
+
+    #qrcode img, #qrcode canvas {
+      width: 190px !important;
+      height: 190px !important;
+    }
+
+    .upi-id {
+      text-align: center;
+      padding: 12px;
+      border: 1px dashed rgba(40,168,255,.5);
+      border-radius: 11px;
+      color: var(--cyan);
+      font-size: 17px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+      margin: 12px 0;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      margin-top: 12px;
+      transition: .2s ease;
+    }
+
+    .btn:active {
+      transform: scale(.98);
+    }
+
+    .btn-primary {
+      color: #03101b;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      box-shadow: 0 5px 20px rgba(40,168,255,.2);
+    }
+
+    .btn-secondary {
+      color: white;
+      background: linear-gradient(90deg, #5830a0, #963ee4);
+    }
+
+    .btn-outline {
+      color: var(--cyan);
+      background: transparent;
+      border: 1px solid var(--blue);
+    }
+
+    .btn-danger {
+      color: white;
+      background: rgba(255,82,119,.12);
+      border: 1px solid rgba(255,82,119,.45);
+    }
+
+    .notice {
+      padding: 12px;
+      border-radius: 11px;
+      background: rgba(255,183,77,.07);
+      border: 1px solid rgba(255,183,77,.23);
+      color: #ffd28b;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-top: 13px;
+    }
+
+    .safe-note {
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 15px 5px;
+    }
+
+    .field-label {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      margin: 13px 0 6px;
+    }
+
+    .field {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      color: white;
+      background: #070b19;
+      border: 1px solid var(--border);
+      outline: none;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .field:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 2px rgba(0,229,255,.08);
+    }
+
+    .status {
+      text-align: center;
+      padding: 12px;
+      border-radius: 11px;
+      background: rgba(40,168,255,.08);
+      color: var(--cyan);
+      font-weight: 700;
+      margin: 12px 0;
+    }
+
+    .success {
+      color: var(--green);
+    }
+
+    .error {
+      color: var(--red);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .loader {
+      width: 43px;
+      height: 43px;
+      border: 3px solid rgba(40,168,255,.15);
+      border-top-color: var(--cyan);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 15px auto;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .footer {
+      text-align: center;
+      color: #69738f;
+      font-size: 12px;
+      margin-top: 25px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 380px) {
+      .panel { padding: 15px; }
+      .brand-name { font-size: 14px; }
+      .detail-row { font-size: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <!-- BRAND HEADER -->
+    <header class="topbar">
+      <img
+        src="assets/nexvora-logo.png"
+        alt="NEXVORA Logo"
+        class="brand-logo"
+      >
+      <div>
+        <div class="brand-name">NEXVORA UNBAN</div>
+        <div class="brand-subtitle">OFFICIAL PAYMENT PORTAL</div>
+      </div>
+    </header>
+
+    <!-- PAGE HEADING -->
+    <section class="hero">
+      <h1>✦ NEXVORA PAYMENT PAGE ✨</h1>
+      <p>Secure payment for your unban application</p>
+    </section>
+
+    <!-- GAME BRANDING -->
+    <section class="game-banner">
+      <img
+        src="assets/free-fire-logo.png"
+        alt="Free Fire"
+        onerror="this.style.display='none'"
+      >
+      💫 FREE FIRE INDIA 🇮🇳<br>
+      GARENA FREE FIRE ⚡ & FREE FIRE MAX 🔥
+    </section>
+
+    <!-- APPLICATION DETAILS -->
+    <section class="panel" id="applicationPanel">
+      <h2 class="section-title">✦ YOUR APPLICATION DETAILS</h2>
+
+      <div id="applicationDetails">
+        <div class="detail-row">
+          <span class="detail-label">Player UID</span>
+          <span class="detail-value" id="playerUid">Loading...</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Nickname</span>
+          <span class="detail-value" id="playerNickname">Loading...</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Player Level</span>
+          <span class="detail-value" id="playerLevel">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Region</span>
+          <span class="detail-value" id="playerRegion">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Full Name</span>
+          <span class="detail-value" id="appFullName">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Game</span>
+          <span class="detail-value" id="appGame">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Device</span>
+          <span class="detail-value" id="appDevice">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Ban Type</span>
+          <span class="detail-value" id="appBanType">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Ban Date</span>
+          <span class="detail-value" id="appBanDate">—</span>
+        </div>
+      </div>
+
+      <div class="status" id="playerStatus">
+        UID details will be loaded from your application.
+      </div>
+    </section>
+
+    <!-- PAYMENT INTRODUCTION -->
+    <section class="panel" id="paymentIntro">
+      <h2 class="section-title">✦ PAYMENT INFORMATION</h2>
+
+      <p style="color:var(--muted);line-height:1.7;font-size:15px;">
+        Please check your application details carefully before proceeding.
+        The service fee is ₹399. After payment, submit your transaction
+        reference number for manual verification.
+      </p>
+
+      <div class="amount-box">
+        <div class="amount-label">TOTAL SERVICE FEE</div>
+        <div class="amount">₹399</div>
+        <div class="amount-label">One-time payment</div>
+      </div>
+
+      <div class="notice">
+        ⚠️ Only genuine payments will be reviewed. Submitting a UTR does
+        not automatically confirm payment. Your payment must be manually
+        verified by the NEXVORA team.
+      </div>
+
+      <button class="btn btn-primary" id="proceedPaymentBtn">
+        PROCEED TO PAYMENT →
+      </button>
+    </section>
+
+    <!-- CHECKING ANIMATION -->
+    <section class="panel hidden" id="checkingPanel">
+      <div class="loader"></div>
+      <h2 class="section-title" style="text-align:center;">
+        VERIFYING APPLICATION
+      </h2>
+      <p style="text-align:center;color:var(--muted);">
+        Please wait while your application details are checked...
+      </p>
+      <div class="status" id="checkingCountdown">3</div>
+    </section>
+
+    <!-- PAYMENT PANEL -->
+    <section class="panel hidden" id="paymentPanel">
+      <h2 class="section-title">✦ COMPLETE YOUR PAYMENT</h2>
+
+      <div class="amount-box">
+        <div class="amount-label">PAY EXACT AMOUNT</div>
+        <div class="amount">₹399</div>
+      </div>
+
+      <p style="text-align:center;color:var(--muted);">
+        Scan the QR code using any supported UPI app.
+      </p>
+
+      <div class="qr-wrap">
+        <div id="qrcode"></div>
+      </div>
+
+      <div class="upi-id">
+        UPI ID: jinwoo40054@kphdfc
+      </div>
+
+      <button class="btn btn-primary" id="upiPayBtn">
+        PAY VIA UPI APP
+      </button>
+
+      <button class="btn btn-secondary" id="paymentDoneBtn">
+        PAYMENT DONE ✓
+      </button>
+
+      <button class="btn btn-danger" id="cancelPaymentBtn">
+        CANCEL PAYMENT
+      </button>
+
+      <div class="notice">
+        Important: Verify the receiver name and amount in your UPI app
+        before confirming. Never share your UPI PIN, OTP or banking
+        password with anyone.
+      </div>
+    </section>
+
+    <!-- UTR SUBMISSION PANEL -->
+    <section class="panel hidden" id="utrPanel">
+      <h2 class="section-title">✦ SUBMIT PAYMENT DETAILS</h2>
+
+      <p style="color:var(--muted);line-height:1.6;">
+        Enter the payer's name and the UTR / transaction reference number
+        shown in your UPI payment receipt.
+      </p>
+
+      <label class="field-label" for="payerName">Payer Full Name</label>
+      <input
+        class="field"
+        id="payerName"
+        type="text"
+        maxlength="100"
+        placeholder="Enter payer's full name"
+        autocomplete="name"
+      >
+
+      <label class="field-label" for="utrNumber">
+        UTR / Transaction Reference Number
+      </label>
+      <input
+        class="field"
+        id="utrNumber"
+        type="text"
+        maxlength="80"
+        placeholder="Enter transaction reference number"
+        autocomplete="off"
+      >
+
+      <button class="btn btn-primary" id="verifyPaymentBtn">
+        SUBMIT FOR PAYMENT VERIFICATION
+      </button>
+
+      <button class="btn btn-outline" id="backToQrBtn">
+        ← BACK TO QR CODE
+      </button>
+
+      <div id="utrMessage" class="status hidden"></div>
+    </section>
+
+    <!-- PROCESSING PANEL -->
+    <section class="panel hidden" id="processingPanel">
+      <div class="loader"></div>
+      <h2 class="section-title" style="text-align:center;">
+        PAYMENT UNDER REVIEW
+      </h2>
+      <p style="text-align:center;color:var(--muted);line-height:1.7;">
+        Your payment details have been submitted. Please wait for manual
+        verification by the NEXVORA team.
+      </p>
+      <div class="status" id="processingStatus">
+        Payment verification pending
+      </div>
+    </section>
+
+    <!-- CANCELLED PANEL -->
+    <section class="panel hidden" id="cancelledPanel">
+      <h2 class="section-title error">PAYMENT CANCELLED</h2>
+      <p style="color:var(--muted);line-height:1.7;">
+        Your payment flow has been cancelled. No payment verification
+        request was submitted through this page.
+      </p>
+      <button class="btn btn-outline" id="retryPaymentBtn">
+        RETURN TO PAYMENT
+      </button>
+    </section>
+
+    <p class="safe-note">
+      NEXVORA UNBAN provides application and appeal assistance.
+      Account restoration is not guaranteed and depends on the game's
+      official review. Never share your game password or OTP.
+    </p>
+
+    <footer class="footer">
+      © 2026 NEXVORA UNBAN<br>
+      Official Payment Portal
+    </footer>
+
+  </main>
+
+<script>
+/* ==========================================
+   NEXVORA UNBAN — PAYMENT PAGE CONFIGURATION
+========================================== */
+
+const NEXVORA_CONFIG = {
+  SUPABASE_URL:
+    "https://sitgwrnvxaugresvlvfl.supabase.co",
+
+  SUPABASE_PUBLIC_KEY:
+    "sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ",
+
+  PAYMENT_FUNCTION:
+    "unban-payment-workflow",
+
+  UPI_ID:
+    "jinwoo40054@kphdfc",
+
+  PAYEE_NAME:
+    "NEXVORA UNBAN",
+
+  AMOUNT:
+    "399",
+
+  CURRENCY:
+    "INR"
+};
+
+
+/* ==========================================
+   SESSION DATA
+========================================== */
+
+let nexvoraPlayer = null;
+let nexvoraApplication = null;
+let nexvoraRequestId = null;
+
+let nexvoraPaymentSubmitted = false;
+
+
+/* ==========================================
+   HTML ELEMENT HELPER
+========================================== */
+
+function nxElement(id) {
+  return document.getElementById(id);
+}
+
+
+function nxShow(id) {
+  const element = nxElement(id);
+
+  if (element) {
+    element.classList.remove("hidden");
+  }
+}
+
+
+function nxHide(id) {
+  const element = nxElement(id);
+
+  if (element) {
+    element.classList.add("hidden");
+  }
+}
+
+
+function nxSetText(id, value) {
+  const element = nxElement(id);
+
+  if (element) {
+    element.textContent =
+      value === undefined ||
+      value === null ||
+      String(value).trim() === ""
+        ? "Not available"
+        : String(value);
+  }
+}
+
+
+/* ==========================================
+   LOAD SAVED APPLICATION INFORMATION
+========================================== */
+
+function nxLoadSessionData() {
+  try {
+    const playerText =
+      sessionStorage.getItem("nexvora_verified_player");
+
+    const applicationText =
+      sessionStorage.getItem("nexvora_application_details");
+
+    nexvoraRequestId =
+      sessionStorage.getItem("nexvora_request_id");
+
+    if (!playerText || !applicationText || !nexvoraRequestId) {
+      throw new Error(
+        "Application information is missing. Please submit your application again."
+      );
+    }
+
+    nexvoraPlayer = JSON.parse(playerText);
+    nexvoraApplication = JSON.parse(applicationText);
+
+    if (
+      !nexvoraPlayer ||
+      !nexvoraApplication ||
+      !nexvoraPlayer.user_id
+    ) {
+      throw new Error(
+        "Player verification information is incomplete."
+      );
+    }
+
+    return true;
+
+  } catch (error) {
+    console.error("NEXVORA session error:", error);
+
+    nxSetText(
+      "playerStatus",
+      error.message || "Application information could not be loaded."
+    );
+
+    const status = nxElement("playerStatus");
+
+    if (status) {
+      status.classList.add("error");
+    }
+
+    nxHide("proceedPaymentBtn");
+
+    return false;
+  }
+}
+
+
+/* ==========================================
+   DISPLAY APPLICATION DETAILS
+========================================== */
+
+function nxDisplayApplication() {
+  if (!nexvoraPlayer || !nexvoraApplication) {
+    return;
+  }
+
+  nxSetText(
+    "playerUid",
+    nexvoraPlayer.user_id
+  );
+
+  nxSetText(
+    "playerNickname",
+    nexvoraPlayer.username ||
+    nexvoraPlayer.nickname
+  );
+
+  nxSetText(
+    "playerLevel",
+    nexvoraPlayer.level
+  );
+
+  nxSetText(
+    "playerRegion",
+    nexvoraPlayer.region
+  );
+
+  nxSetText(
+    "appFullName",
+    nexvoraApplication.full_name
+  );
+
+  nxSetText(
+    "appGame",
+    nexvoraApplication.game_name
+  );
+
+  nxSetText(
+    "appDevice",
+    nexvoraApplication.device
+  );
+
+  nxSetText(
+    "appBanType",
+    nexvoraApplication.ban_type === "permanent"
+      ? "Permanent Ban"
+      : "Temporary Ban"
+  );
+
+  nxSetText(
+    "appBanDate",
+    nexvoraApplication.ban_date
+  );
+
+  const status = nxElement("playerStatus");
+
+  if (status) {
+    status.textContent =
+      nexvoraPlayer.verified === true
+        ? "✓ PLAYER UID VERIFIED"
+        : "Player details loaded from submitted application";
+
+    status.classList.remove("error");
+  }
+}
+
+
+/* ==========================================
+   CREATE UPI PAYMENT URI
+========================================== */
+
+function nxCreateUpiUri() {
+  const params = new URLSearchParams({
+    pa: NEXVORA_CONFIG.UPI_ID,
+    pn: NEXVORA_CONFIG.PAYEE_NAME,
+    am: NEXVORA_CONFIG.AMOUNT,
+    cu: NEXVORA_CONFIG.CURRENCY,
+    tn: "NEXVORA UNBAN SERVICE"
+  });
+
+  return "upi://pay?" + params.toString();
+}
+
+
+/* ==========================================
+   GENERATE DYNAMIC PAYMENT QR
+========================================== */
+
+function nxGenerateQr() {
+  const qrContainer = nxElement("qrcode");
+
+  if (!qrContainer) {
+    return;
+  }
+
+  qrContainer.innerHTML = "";
+
+  if (typeof QRCode === "undefined") {
+    qrContainer.textContent =
+      "QR generator unavailable. Please use the UPI app button.";
+
+    return;
+  }
+
+  new QRCode(qrContainer, {
+    text: nxCreateUpiUri(),
+    width: 190,
+    height: 190,
+    colorDark: "#050511",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+}
+
+
+/* ==========================================
+   OPEN UPI PAYMENT APP
+========================================== */
+
+function nxOpenUpiApp() {
+  const upiUri = nxCreateUpiUri();
+
+  window.location.href = upiUri;
+}
+
+
+/* ==========================================
+   SHOW PAYMENT MESSAGE
+========================================== */
+
+function nxPaymentMessage(message, type) {
+  const element = nxElement("utrMessage");
+
+  if (!element) {
+    return;
+  }
+
+  element.textContent = message;
+  element.classList.remove(
+    "hidden",
+    "success",
+    "error"
+  );
+
+  if (type === "success") {
+    element.classList.add("success");
+  }
+
+  if (type === "error") {
+    element.classList.add("error");
+  }
+}
+
+
+/* ==========================================
+   SUPABASE EDGE FUNCTION REQUEST
+========================================== */
+
+async function nxPaymentApi(payload) {
+  const response = await fetch(
+    NEXVORA_CONFIG.SUPABASE_URL +
+    "/functions/v1/" +
+    NEXVORA_CONFIG.PAYMENT_FUNCTION,
+    {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": NEXVORA_CONFIG.SUPABASE_PUBLIC_KEY,
+        "Authorization":
+          "Bearer " + NEXVORA_CONFIG.SUPABASE_PUBLIC_KEY
+      },
+
+      body: JSON.stringify(payload)
+    }
+  );
+
+  let result;
+
+  try {
+    result = await response.json();
+  } catch {
+    throw new Error(
+      "Server returned an invalid response."
+    );
+  }
+
+  if (!response.ok || result.success === false) {
+    throw new Error(
+      result.error ||
+      result.message ||
+      "Payment request failed. Please try again."
+    );
+  }
+
+  return result;
+}
+
+
+/* ==========================================
+   INITIALIZE PAYMENT PAGE
+========================================== */
+
+function nxInitializePaymentPage() {
+  const loaded = nxLoadSessionData();
+
+  if (!loaded) {
+    return;
+  }
+
+  nxDisplayApplication();
+  nxGenerateQr();
+}
+
+
+/* Initialize when page is ready */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  nxInitializePaymentPage
+);
+</script>
+
+<script>
+/* ==========================================
+   NEXVORA UNBAN — PAYMENT WORKFLOW
+========================================== */
+
+
+/* ==========================================
+   3 SECOND APPLICATION CHECK
+========================================== */
+
+async function nxStartPaymentCheck() {
+  nxHide("paymentIntro");
+  nxHide("cancelledPanel");
+  nxHide("utrPanel");
+  nxHide("processingPanel");
+
+  nxShow("checkingPanel");
+
+  const countdown = nxElement("checkingCountdown");
+
+  for (let seconds = 3; seconds >= 1; seconds--) {
+    if (countdown) {
+      countdown.textContent = seconds;
+    }
+
+    await new Promise(resolve =>
+      setTimeout(resolve, 1000)
+    );
+  }
+
+  nxHide("checkingPanel");
+
+  nxGenerateQr();
+  nxShow("paymentPanel");
+}
+
+
+/* ==========================================
+   PAYMENT DONE BUTTON
+========================================== */
+
+function nxShowUtrForm() {
+  if (nexvoraPaymentSubmitted) {
+    return;
+  }
+
+  nxHide("paymentPanel");
+  nxShow("utrPanel");
+
+  nxPaymentMessage(
+    "Enter the transaction details from your payment receipt.",
+    ""
+  );
+
+  const nameInput = nxElement("payerName");
+
+  if (
+    nameInput &&
+    !nameInput.value.trim() &&
+    nexvoraApplication &&
+    nexvoraApplication.full_name
+  ) {
+    nameInput.value = nexvoraApplication.full_name;
+  }
+}
+
+
+/* ==========================================
+   SUBMIT UTR FOR MANUAL VERIFICATION
+========================================== */
+
+async function nxSubmitPaymentDetails() {
+  if (nexvoraPaymentSubmitted) {
+    return;
+  }
+
+  const payerName =
+    nxElement("payerName").value.trim();
+
+  const utr =
+    nxElement("utrNumber").value.trim();
+
+  if (!payerName) {
+    nxPaymentMessage(
+      "Please enter the payer's full name.",
+      "error"
+    );
+    return;
+  }
+
+  if (payerName.length < 2) {
+    nxPaymentMessage(
+      "Please enter a valid full name.",
+      "error"
+    );
+    return;
+  }
+
+  if (!utr) {
+    nxPaymentMessage(
+      "Please enter your UTR / transaction reference number.",
+      "error"
+    );
+    return;
+  }
+
+  if (utr.length < 6) {
+    nxPaymentMessage(
+      "Please check your transaction reference number.",
+      "error"
+    );
+    return;
+  }
+
+  const submitButton =
+    nxElement("verifyPaymentBtn");
+
+  submitButton.disabled = true;
+  submitButton.textContent = "SUBMITTING...";
+
+  nxPaymentMessage(
+    "Sending your payment details securely...",
+    ""
+  );
+
+  try {
+    const result = await nxPaymentApi({
+      action: "submit_payment",
+
+      request_id: nexvoraRequestId,
+
+      full_name: payerName,
+
+      utr: utr
+    });
+
+    if (!result.success) {
+      throw new Error(
+        result.error || "Payment submission failed."
+      );
+    }
+
+    nexvoraPaymentSubmitted = true;
+
+    nxHide("utrPanel");
+    nxHide("paymentPanel");
+    nxShow("processingPanel");
+
+    nxSetText(
+      "processingStatus",
+      "Payment verification pending"
+    );
+
+    /*
+      IMPORTANT:
+      UTR submission is not payment approval.
+      Only the admin can approve the payment.
+    */
+
+    if (result.telegram_sent === true) {
+      console.log(
+        "Payment notification sent to Telegram."
+      );
+    } else {
+      console.warn(
+        "Payment submitted, but Telegram notification was not confirmed."
+      );
+    }
+
+    sessionStorage.setItem(
+      "nexvora_payment_submitted",
+      "true"
+    );
+
+    sessionStorage.setItem(
+      "nexvora_payment_request_id",
+      nexvoraRequestId
+    );
+
+  } catch (error) {
+    console.error(
+      "NEXVORA payment submission error:",
+      error
+    );
+
+    nxPaymentMessage(
+      error.message ||
+      "Could not submit payment details. Please try again.",
+      "error"
+    );
+
+    submitButton.disabled = false;
+    submitButton.textContent =
+      "SUBMIT FOR PAYMENT VERIFICATION";
+  }
+}
+
+
+/* ==========================================
+   CANCEL PAYMENT
+========================================== */
+
+function nxCancelPayment() {
+  nxHide("paymentPanel");
+  nxHide("utrPanel");
+  nxHide("checkingPanel");
+
+  nxShow("cancelledPanel");
+}
+
+
+/* ==========================================
+   RETRY PAYMENT
+========================================== */
+
+function nxRetryPayment() {
+  nxHide("cancelledPanel");
+
+  if (nexvoraPaymentSubmitted) {
+    nxShow("processingPanel");
+    return;
+  }
+
+  nxShow("paymentIntro");
+}
+
+
+/* ==========================================
+   BACK TO QR CODE
+========================================== */
+
+function nxBackToQr() {
+  nxHide("utrPanel");
+  nxShow("paymentPanel");
+}
+
+
+/* ==========================================
+   CONNECT ALL BUTTONS
+========================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    const proceedButton =
+      nxElement("proceedPaymentBtn");
+
+    const upiButton =
+      nxElement("upiPayBtn");
+
+    const paymentDoneButton =
+      nxElement("paymentDoneBtn");
+
+    const cancelButton =
+      nxElement("cancelPaymentBtn");
+
+    const submitButton =
+      nxElement("verifyPaymentBtn");
+
+    const backButton =
+      nxElement("backToQrBtn");
+
+    const retryButton =
+      nxElement("retryPaymentBtn");
+
+
+    if (proceedButton) {
+      proceedButton.addEventListener(
+        "click",
+        nxStartPaymentCheck
+      );
+    }
+
+    if (upiButton) {
+      upiButton.addEventListener(
+        "click",
+        nxOpenUpiApp
+      );
+    }
+
+    if (paymentDoneButton) {
+      paymentDoneButton.addEventListener(
+        "click",
+        nxShowUtrForm
+      );
+    }
+
+    if (cancelButton) {
+      cancelButton.addEventListener(
+        "click",
+        nxCancelPayment
+      );
+    }
+
+    if (submitButton) {
+      submitButton.addEventListener(
+        "click",
+        nxSubmitPaymentDetails
+      );
+    }
+
+    if (backButton) {
+      backButton.addEventListener(
+        "click",
+        nxBackToQr
+      );
+    }
+
+    if (retryButton) {
+      retryButton.addEventListener(
+        "click",
+        nxRetryPayment
+      );
+    }
+
+
+    /*
+      Restore processing screen if the customer
+      reloads the same tab after submitting UTR.
+    */
+
+    const alreadySubmitted =
+      sessionStorage.getItem(
+        "nexvora_payment_submitted"
+      );
+
+    const savedRequestId =
+      sessionStorage.getItem(
+        "nexvora_payment_request_id"
+      );
+
+    if (
+      alreadySubmitted === "true" &&
+      savedRequestId === nexvoraRequestId
+    ) {
+      nexvoraPaymentSubmitted = true;
+
+      nxHide("paymentIntro");
+      nxHide("paymentPanel");
+      nxHide("utrPanel");
+      nxHide("checkingPanel");
+      nxHide("cancelledPanel");
+
+      nxShow("processingPanel");
+    }
+
+  }
+);
+
+
+/* ==========================================
+   END OF NEXVORA PAYMENT WORKFLOW
+========================================== */
+</script>
+</body>
+</html>
