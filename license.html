@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -296,7 +295,7 @@ h1 {
   animation: revealUp .8s 1.1s both;
 }
 
-/* SAME BUTTON DESIGN AS ENTER */
+/* BUTTON */
 
 .button,
 .get-key {
@@ -323,7 +322,6 @@ h1 {
   transition: transform .3s, box-shadow .3s, filter .3s;
 }
 
-/* Moving shine */
 .button::before,
 .get-key::before {
   content: "";
@@ -369,15 +367,9 @@ h1 {
 }
 
 @keyframes buttonShine {
-  0%, 45% {
-    left: -100%;
-  }
-  75%, 100% {
-    left: 150%;
-  }
+  0%, 45% { left: -100%; }
+  75%, 100% { left: 150%; }
 }
-
-/* VERIFY */
 
 .verify-button {
   margin-top: 16px;
@@ -423,8 +415,6 @@ h1 {
   font-size: 11px;
   animation: revealUp .8s 1.4s both;
 }
-
-/* BACK */
 
 .back-link {
   display: inline-block;
@@ -477,6 +467,13 @@ h1 {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.9;
+}
+
+.redirect-text {
+  color: #9cafff !important;
+  font-size: 10px !important;
+  margin-top: 20px !important;
+  letter-spacing: 1px;
 }
 
 /* FOOTER */
@@ -681,6 +678,10 @@ h1 {
           Welcome to NEXVORA UNBAN.
         </p>
 
+        <p class="redirect-text" id="redirectText">
+          REDIRECTING TO HOME PAGE...
+        </p>
+
       </div>
 
     </section>
@@ -693,12 +694,15 @@ h1 {
 </div>
 
 <script>
+"use strict";
+
 /* PARTICLES */
 
 const particleArea = document.getElementById("particles");
 
 for (let i = 0; i < 55; i++) {
   const particle = document.createElement("span");
+
   particle.className = "particle";
 
   if (Math.random() > 0.5) {
@@ -711,11 +715,14 @@ for (let i = 0; i < 55; i++) {
   particle.style.height = size + "px";
   particle.style.left = Math.random() * 100 + "%";
   particle.style.top = Math.random() * 100 + "%";
-  particle.style.animationDuration = (8 + Math.random() * 14) + "s";
-  particle.style.animationDelay = (Math.random() * 12) + "s";
+  particle.style.animationDuration =
+    (8 + Math.random() * 14) + "s";
+  particle.style.animationDelay =
+    (Math.random() * 12) + "s";
 
   particleArea.appendChild(particle);
 }
+
 
 /* LICENSE VERIFICATION */
 
@@ -730,11 +737,17 @@ const loader = document.getElementById("loader");
 const verification = document.getElementById("verification");
 const success = document.getElementById("success");
 
-input.addEventListener("input", () => {
+
+/* INPUT FORMATTING */
+
+input.addEventListener("input", function() {
   input.value = input.value.toUpperCase().replace(/\s/g, "");
   message.textContent = "";
   message.style.color = "#ff929f";
 });
+
+
+/* ERROR HANDLING */
 
 function showError(text) {
   message.style.color = "#ff929f";
@@ -742,6 +755,7 @@ function showError(text) {
 }
 
 function getErrorMessage(code) {
+
   const errors = {
     INVALID_KEY_FORMAT: "Invalid license key format.",
     LICENSE_NOT_FOUND: "This license key does not exist.",
@@ -754,7 +768,35 @@ function getErrorMessage(code) {
   return errors[code] || "Verification failed. Please try again.";
 }
 
-form.addEventListener("submit", async (event) => {
+
+/* SUCCESS + REDIRECT */
+
+function showSuccessAndRedirect() {
+
+  verification.style.display = "none";
+
+  success.classList.add("show");
+
+  button.disabled = true;
+
+  /*
+    ACCESS GRANTED animation duration:
+    2500 milliseconds = 2.5 seconds
+  */
+
+  setTimeout(function() {
+
+    window.location.replace("./home.html");
+
+  }, 2500);
+
+}
+
+
+/* SUBMIT */
+
+form.addEventListener("submit", async function(event) {
+
   event.preventDefault();
 
   const licenseKey = input.value.trim().toUpperCase();
@@ -766,41 +808,101 @@ form.addEventListener("submit", async (event) => {
 
   button.disabled = true;
   button.textContent = "VERIFYING...";
+
   message.style.color = "#a9a7ff";
   message.textContent = "Connecting to secure verification...";
 
   loader.classList.add("show");
 
   try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        license_key: licenseKey
-      })
-    });
 
-    const result = await response.json();
+    const controller = new AbortController();
 
-    if (response.ok && result.code === "LICENSE_VALID") {
-      verification.style.display = "none";
-      success.classList.add("show");
-    } else {
-      showError(getErrorMessage(result.code));
+    const timeoutId = setTimeout(function() {
+      controller.abort();
+    }, 15000);
+
+    let response;
+
+    try {
+
+      response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          license_key: licenseKey
+        }),
+        signal: controller.signal
+      });
+
+    } finally {
+
+      clearTimeout(timeoutId);
+
     }
 
+    let result;
+
+    try {
+
+      result = await response.json();
+
+    } catch (parseError) {
+
+      throw new Error("INVALID_RESPONSE");
+
+    }
+
+    if (response.ok && result.code === "LICENSE_VALID") {
+
+      message.textContent = "";
+      loader.classList.remove("show");
+
+      showSuccessAndRedirect();
+
+      return;
+
+    }
+
+    showError(getErrorMessage(result.code));
+
   } catch (error) {
-    showError("Connection error. Please check your internet and try again.");
+
+    if (error.name === "AbortError") {
+
+      showError("Request timed out. Please try again.");
+
+    } else if (error.message === "INVALID_RESPONSE") {
+
+      showError("Invalid server response. Please try again.");
+
+    } else {
+
+      showError("Connection error. Please check your internet and try again.");
+
+    }
+
   } finally {
-    button.disabled = false;
-    button.textContent = "VERIFY LICENSE";
-    loader.classList.remove("show");
+
+    /*
+      Keep the button disabled after successful verification.
+      Otherwise restore it for another attempt.
+    */
+
+    if (!success.classList.contains("show")) {
+
+      button.disabled = false;
+      button.textContent = "VERIFY LICENSE✨";
+      loader.classList.remove("show");
+
+    }
+
   }
+
 });
 </script>
 
 </body>
   </html>
-  
