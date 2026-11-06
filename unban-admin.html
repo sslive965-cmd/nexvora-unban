@@ -316,6 +316,19 @@ body {
     font-size: 15px;
   }
 }
+
+/* FUNCTIONAL RECORD TABLES + DETAILS */
+.table-container table,.panel table{width:100%;border-collapse:collapse;min-width:680px;font-size:13px;}
+.table-container th,.panel th{padding:12px 10px;text-align:left;color:#75dfff;font-size:10px;letter-spacing:1px;border-bottom:1px solid rgba(54,220,255,.2);white-space:nowrap;}
+.table-container td,.panel td{padding:12px 10px;color:#c6d5eb;border-bottom:1px solid rgba(76,155,255,.1);vertical-align:top;}
+.table-container tr:hover td,.panel tr:hover td{background:rgba(40,168,255,.035);}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0 18px;}
+.detail-item{padding:11px;border:1px solid rgba(54,220,255,.13);border-radius:9px;background:rgba(4,13,29,.55);min-width:0;}
+.detail-item small{display:block;color:#7f9ab9;font-size:9px;letter-spacing:.8px;margin-bottom:5px;}
+.detail-item strong{display:block;color:#e8f7ff;font-size:13px;overflow-wrap:anywhere;}
+.detail-panel{margin-top:16px;}
+@media(max-width:520px){.detail-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.detail-item{padding:9px;}}
+
 </style>
 </head>
 
@@ -1349,6 +1362,79 @@ loginForm.addEventListener("submit", async (event) => {
   }
 });
 
+/* ===== COMPLETE ADMIN DATA + ACTION LAYER ===== */
+const esc = (v) => String(v ?? "—").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate = v => v ? new Date(v).toLocaleString('en-IN') : '—';
+let paymentRows = [], applicationRows = [], licenseRows = [], activityRows = [];
+let selectedPayment = null, selectedApplication = null, selectedLicense = null;
+async function loadPaymentRecords(){
+  try { const r=await adminCall('list_payments'); paymentRows=r.records||[]; renderPayments(); }
+  catch(e){ showNotice('Payments: '+e.message,'error'); }
+}
+async function loadApplicationRecords(){
+  try { const r=await adminCall('list_applications'); applicationRows=r.records||[]; renderApplications(); }
+  catch(e){ showNotice('Unban requests: '+e.message,'error'); }
+}
+async function loadLicenseRecords(){
+  try { const r=await adminCall('list_licenses'); licenseRows=r.licenses||[]; renderLicenses(); }
+  catch(e){ showNotice('License keys: '+e.message,'error'); }
+}
+function renderPayments(){
+ const q=$('paymentSearch').value.toLowerCase(), st=$('paymentStatusFilter').value;
+ const rows=paymentRows.filter(x=>(st==='all'||x.status===st)&&[x.order_id,x.player_uid,x.full_name,x.payment_utr].some(v=>String(v||'').toLowerCase().includes(q)));
+ $('paymentsTable').innerHTML=rows.length?`<table><thead><tr><th>Order</th><th>Customer / UID</th><th>UTR</th><th>Status</th><th>Created</th><th>Action</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.order_id)}</td><td>${esc(x.full_name)}<br><small>${esc(x.player_uid)}</small></td><td>${esc(x.payment_utr)}</td><td>${esc(x.status)}</td><td>${esc(fmtDate(x.created_at))}</td><td><button class="secondary-button" data-payment="${esc(x.id)}">DETAILS</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">No matching payment records.</div>';
+ $('paymentsTable').querySelectorAll('[data-payment]').forEach(b=>b.addEventListener('click',()=>showPayment(b.dataset.payment)));
+}
+function showPayment(id){ selectedPayment=paymentRows.find(x=>x.id===id); if(!selectedPayment)return; const x=selectedPayment;
+ $('paymentDetailPanel').hidden=false;
+ $('paymentDetailContent').innerHTML=detailGrid(x,['order_id','full_name','player_uid','id_level','region','game_name','payment_utr','status','ban_type','device','ban_date','reason','created_at','payment_verified_at','admin_note']);
+ $('approvePayment').hidden=x.status!=='payment_pending'; $('rejectPayment').hidden=x.status!=='payment_pending';
+}
+function renderApplications(){
+ const q=$('applicationSearch').value.toLowerCase(), st=$('applicationStatusFilter').value;
+ const rows=applicationRows.filter(x=>(st==='all'||x.status===st)&&[x.order_id,x.player_uid,x.full_name,x.game_name].some(v=>String(v||'').toLowerCase().includes(q)));
+ $('applicationsTable').innerHTML=rows.length?`<table><thead><tr><th>Order</th><th>Player</th><th>Region</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.order_id)}</td><td>${esc(x.game_name)}<br><small>${esc(x.player_uid)}</small></td><td>${esc(x.region)}</td><td>${esc(x.status)}</td><td>${esc(fmtDate(x.created_at))}</td><td><button class="secondary-button" data-app="${esc(x.id)}">DETAILS</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">No matching unban requests.</div>';
+ $('applicationsTable').querySelectorAll('[data-app]').forEach(b=>b.addEventListener('click',()=>showApplication(b.dataset.app)));
+}
+function showApplication(id){ selectedApplication=applicationRows.find(x=>x.id===id); if(!selectedApplication)return; const x=selectedApplication;
+ $('applicationDetailPanel').hidden=false;
+ $('applicationDetailContent').innerHTML=detailGrid(x,['order_id','full_name','player_uid','id_level','region','game_name','device','ban_type','ban_date','reason','payment_utr','status','created_at','submitted_at','admin_note','ban_screenshot_path']);
+ if(x.ban_screenshot_path){ const b=document.createElement('button'); b.className='secondary-button'; b.textContent='VIEW PRIVATE SCREENSHOT'; b.onclick=()=>openScreenshot(x); $('applicationDetailContent').append(b); }
+}
+async function openScreenshot(x){ try { const {data,error}=await supabaseClient.storage.from('unban-appeal-screenshots').createSignedUrl(x.ban_screenshot_path,180); if(error)throw error; window.open(data.signedUrl,'_blank','noopener'); } catch(e){showNotice('Screenshot could not be opened: '+e.message,'error');} }
+function renderLicenses(){
+ const q=$('licenseSearch').value.toLowerCase(); const rows=licenseRows.filter(x=>[x.license_key,x.telegram_user_id,x.plan_code,x.status].some(v=>String(v??'').toLowerCase().includes(q)));
+ $('licensesTable').innerHTML=rows.length?`<table><thead><tr><th>License</th><th>Telegram ID</th><th>Plan</th><th>Usage</th><th>Status</th><th>Expiry</th><th>Action</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.license_key)}</td><td>${esc(x.telegram_user_id)}</td><td>${esc(x.plan_code)}</td><td>${esc(x.uses_count)} / ${x.usage_limit==null?'∞':esc(x.usage_limit)}</td><td>${esc(x.status)}</td><td>${esc(fmtDate(x.expires_at))}</td><td><button class="secondary-button" data-license="${esc(x.id)}">DETAILS</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">No matching license keys.</div>';
+ $('licensesTable').querySelectorAll('[data-license]').forEach(b=>b.addEventListener('click',()=>showLicense(b.dataset.license)));
+}
+function showLicense(id){ selectedLicense=licenseRows.find(x=>x.id===id); if(!selectedLicense)return; const x=selectedLicense; $('licenseDetailPanel').hidden=false;
+ $('licenseDetailContent').innerHTML=detailGrid(x,['license_key','telegram_user_id','plan_code','usage_limit','uses_count','status','issued_at','expires_at','last_used_at','revoked_at','request_id']);
+ $('revokeLicense').hidden=x.status==='revoked';
+}
+function detailGrid(x,keys){return `<div class="detail-grid">${keys.map(k=>`<div class="detail-item"><small>${esc(k.replaceAll('_',' ').toUpperCase())}</small><strong>${esc(k.endsWith('_at')||k==='created_at'||k==='ban_date'?fmtDate(x[k]):x[k])}</strong></div>`).join('')}</div>`;}
+function renderRecentActivity(rows){ $('dashboardRecent').innerHTML=rows.length?`<table><thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Created</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.order_id)}</td><td>${esc(x.full_name)}<br><small>${esc(x.player_uid)}</small></td><td>${esc(x.status)}</td><td>${esc(fmtDate(x.created_at))}</td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">No recent records.</div>'; }
+async function loadActivity(){try{const r=await adminCall('list_activity');activityRows=r.activity||[];$('activityContent').innerHTML=activityRows.length?`<table><thead><tr><th>Action</th><th>Target</th><th>Details</th><th>Time</th></tr></thead><tbody>${activityRows.map(x=>`<tr><td>${esc(x.action)}</td><td>${esc(x.target_type)}<br>${esc(x.target_id)}</td><td>${esc(JSON.stringify(x.details||{}))}</td><td>${esc(fmtDate(x.created_at))}</td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">No activity logged yet.</div>';}catch(e){showNotice(e.message,'error');}}
+async function saveRecord(action,id,patch){const r=await adminCall(action,{id,patch});return r;}
+$('paymentSearch').addEventListener('input',renderPayments); $('paymentStatusFilter').addEventListener('change',renderPayments);
+$('applicationSearch').addEventListener('input',renderApplications); $('applicationStatusFilter').addEventListener('change',renderApplications); $('licenseSearch').addEventListener('input',renderLicenses);
+$('approvePayment').addEventListener('click',async()=>{if(!selectedPayment||!confirm('Approve this payment? Telegram notification will be sent.'))return;try{const r=await adminCall('review_payment',{id:selectedPayment.id,decision:'approve'});showNotice(r.telegram_sent?'Payment approved and Telegram notified.':'Payment approved; Telegram notification unavailable.');await loadPaymentRecords();showPayment(selectedPayment.id);}catch(e){showNotice(e.message,'error');}});
+$('rejectPayment').addEventListener('click',async()=>{if(!selectedPayment||!confirm('Reject this payment?'))return;try{await adminCall('review_payment',{id:selectedPayment.id,decision:'reject'});showNotice('Payment rejected.');await loadPaymentRecords();}catch(e){showNotice(e.message,'error');}});
+$('editPayment').addEventListener('click',()=>openEdit('payment',selectedPayment));
+$('updateApplication').addEventListener('click',()=>openEdit('application',selectedApplication));
+$('deletePayment').addEventListener('click',()=>deleteRecord('delete_payment',selectedPayment,'payment'));
+$('deleteApplication').addEventListener('click',()=>deleteRecord('delete_application',selectedApplication,'application'));
+$('updateLicense').addEventListener('click',()=>openEdit('license',selectedLicense));
+$('revokeLicense').addEventListener('click',async()=>{if(!selectedLicense||!confirm('Revoke this license? Verification will stop working.'))return;try{await adminCall('revoke_license',{id:selectedLicense.id});showNotice('License revoked.');await loadLicenseRecords();}catch(e){showNotice(e.message,'error');}});
+$('deleteLicense').addEventListener('click',async()=>{if(!selectedLicense||!confirm('Permanently delete this license record?'))return;try{await adminCall('delete_license',{id:selectedLicense.id});showNotice('License deleted.');$('licenseDetailPanel').hidden=true;await loadLicenseRecords();}catch(e){showNotice(e.message,'error');}});
+async function deleteRecord(action,row,type){if(!row||!confirm('Permanently delete this record? This cannot be undone.'))return;try{const r=await adminCall(action,{id:row.id});showNotice(r.warning||'Record deleted.');$(''+(type==='payment'?'payment':'application')+'DetailPanel').hidden=true;type==='payment'?await loadPaymentRecords():await loadApplicationRecords();}catch(e){showNotice(e.message,'error');}}
+function openEdit(type,row){if(!row)return;let fields='';if(type==='license'){fields=`<label>Expiry date (blank = no expiry)</label><input id="editExpiry" type="datetime-local" value="${row.expires_at?new Date(row.expires_at).toISOString().slice(0,16):''}">`;}else{fields=`<label>Status</label><select id="editStatus">${['awaiting_payment','payment_pending','payment_verified','payment_rejected','submitted','in_review','completed','rejected','cancelled'].map(s=>`<option ${row.status===s?'selected':''} value="${s}">${s}</option>`).join('')}</select><label>Admin note</label><textarea id="editNote" rows="3">${esc(row.admin_note||'')}</textarea>`;}
+ $('editDialogTitle').textContent=type==='license'?'Update License Expiry':'Update '+type; $('editRecordFields').innerHTML=fields; $('editRecordDialog').hidden=false; $('editRecordForm').onsubmit=async ev=>{ev.preventDefault();try{if(type==='license'){const v=$('editExpiry').value;await saveRecord('update_license',row.id,{expires_at:v?new Date(v).toISOString():null});await loadLicenseRecords();}else{const patch={status:$('editStatus').value,admin_note:$('editNote').value};await saveRecord(type==='payment'?'update_payment':'update_application',row.id,patch);type==='payment'?await loadPaymentRecords():await loadApplicationRecords();} $('editRecordDialog').hidden=true;showNotice('Changes saved successfully.');}catch(e){$('editRecordError').textContent=e.message;}};
+}
+$('closeEditDialog').addEventListener('click',()=>$('editRecordDialog').hidden=true);
+document.querySelectorAll('[data-close-detail]').forEach(b=>b.addEventListener('click',()=>{['paymentDetailPanel','applicationDetailPanel','licenseDetailPanel'].forEach(id=>$(id).hidden=true);}));
+$('openGenerateLicense').textContent='KEYS ISSUED BY TELEGRAM BOT ONLY'; $('openGenerateLicense').disabled=true; $('openGenerateLicense').title='For security, license keys can only be issued by the Telegram bot.';
+
+
 /* ===== NAVIGATION ===== */
 const sectionNames = {
   dashboard: "Dashboard",
@@ -1376,6 +1462,7 @@ function openAdminSection(name) {
   if (name === "payments") loadPaymentRecords();
   if (name === "applications") loadApplicationRecords();
   if (name === "licenses") loadLicenseRecords();
+  if (name === "activity") loadActivity();
 }
 
 document.querySelectorAll(".nav-item").forEach(button => {
