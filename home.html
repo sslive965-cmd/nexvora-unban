@@ -2,1495 +2,867 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080914">
-  <meta name="description" content="NEXVORA UNBAN - Free Fire UID verification portal.">
-  <title>NEXVORA UNBAN</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070914">
+<meta name="description" content="NEXVORA UNBAN - Free Fire UID verification portal.">
+<title>NEXVORA UNBAN</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #080914;
-      --panel: #101225;
-      --panel2: #151931;
-      --blue: #3987ff;
-      --cyan: #36dcff;
-      --purple: #8958ff;
-      --text: #f4f6ff;
-      --muted: #929bb8;
-      --border: rgba(135,155,255,.17);
-      --success: #38e6a5;
-      --danger: #ff5577;
-      --radius: 18px;
-      --shadow: 0 18px 60px rgba(0,0,0,.38);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 90px;
-    }
-
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(ellipse at 15% 5%, rgba(57,135,255,.13), transparent 35%),
-        radial-gradient(ellipse at 90% 35%, rgba(137,88,255,.10), transparent 32%),
-        var(--bg);
-      color: var(--text);
-      font-family: Inter, sans-serif;
-      overflow-x: hidden;
-    }
-
-    body.menu-open {
-      overflow: hidden;
-    }
-
-    button, input, select {
-      font: inherit;
-    }
-
-    button, a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .ambient-glow {
-      position: fixed;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      filter: blur(110px);
-      opacity: .13;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .glow-one {
-      top: 15%;
-      left: -180px;
-      background: var(--blue);
-    }
-
-    .glow-two {
-      right: -180px;
-      top: 55%;
-      background: var(--purple);
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      width: 100%;
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px clamp(16px, 5vw, 64px);
-      background: rgba(8,9,20,.86);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      min-width: 0;
-    }
-
-    .brand img {
-      width: 43px;
-      height: 43px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 12px rgba(57,135,255,.4));
-    }
-
-    .brand-name {
-      font-family: Orbitron, sans-serif;
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      white-space: nowrap;
-    }
-
-    .brand-name span {
-      color: var(--cyan);
-    }
-
-    .brand-subtitle {
-      color: var(--muted);
-      font-size: 9px;
-      letter-spacing: 2.2px;
-      margin-top: 4px;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .support-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 15px;
-      border: 1px solid rgba(54,220,255,.28);
-      border-radius: 999px;
-      color: var(--cyan);
-      font-size: 12px;
-      font-weight: 700;
-      transition: .25s;
-    }
-
-    .support-link:hover {
-      background: rgba(54,220,255,.10);
-      box-shadow: 0 0 22px rgba(54,220,255,.12);
-    }
-
-    .menu-toggle {
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      background: rgba(255,255,255,.045);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      transition: .25s;
-    }
-
-    .menu-toggle:hover {
-      border-color: var(--cyan);
-      background: rgba(54,220,255,.09);
-    }
-
-    .menu-toggle span {
-      width: 19px;
-      height: 2px;
-      border-radius: 5px;
-      background: white;
-      transition: .25s;
-    }
-
-    .menu-toggle.active span:first-child {
-      transform: translateY(7px) rotate(45deg);
-    }
-
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-toggle.active span:last-child {
-      transform: translateY(-7px) rotate(-45deg);
-    }
-
-    .menu-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(0,0,0,.67);
-      opacity: 0;
-      visibility: hidden;
-      transition: .3s;
-      backdrop-filter: blur(4px);
-    }
-
-    .menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .side-menu {
-      position: fixed;
-      z-index: 201;
-      top: 0;
-      right: 0;
-      width: min(340px, 88vw);
-      height: 100dvh;
-      padding: 25px 21px;
-      background:
-        radial-gradient(circle at 100% 0%, rgba(57,135,255,.17), transparent 35%),
-        #101326;
-      border-left: 1px solid var(--border);
-      box-shadow: -20px 0 70px rgba(0,0,0,.4);
-      transform: translateX(105%);
-      transition: transform .35s cubic-bezier(.2,.8,.2,1);
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-    }
-
-    .side-menu.active {
-      transform: translateX(0);
-    }
-
-    .drawer-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 23px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .drawer-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: Orbitron, sans-serif;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .8px;
-    }
-
-    .drawer-brand img {
-      width: 37px;
-      height: 37px;
-      object-fit: contain;
-    }
-
-    .drawer-close {
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: rgba(255,255,255,.05);
-      color: white;
-      font-size: 22px;
-    }
-
-    .drawer-label {
-      margin: 27px 0 12px;
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .menu-links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .menu-links a {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      min-height: 49px;
-      padding: 0 13px;
-      border: 1px solid transparent;
-      border-radius: 12px;
-      color: #dce3ff;
-      font-size: 13px;
-      font-weight: 600;
-      transition: .22s;
-    }
-
-    .menu-links a:hover {
-      color: var(--cyan);
-      border-color: var(--border);
-      background: rgba(57,135,255,.09);
-      transform: translateX(3px);
-    }
-
-    .menu-icon {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 9px;
-      background: rgba(57,135,255,.13);
-      color: var(--cyan);
-      font-size: 14px;
-    }
-
-    .drawer-bottom {
-      margin-top: auto;
-      padding-top: 25px;
-    }
-
-    .drawer-support {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      border-radius: 12px;
-      background: linear-gradient(110deg, #2879ed, #7252e8);
-      color: white;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .drawer-version {
-      margin-top: 15px;
-      color: #68718f;
-      text-align: center;
-      font-size: 10px;
-    }
-
-    .page-container {
-      position: relative;
-      z-index: 1;
-      width: min(1120px, calc(100% - 32px));
-      margin: auto;
-    }
-
-    .hero {
-      padding: 55px 0 30px;
-      text-align: center;
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 13px;
-      border: 1px solid rgba(54,220,255,.2);
-      border-radius: 999px;
-      background: rgba(54,220,255,.06);
-      color: var(--cyan);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 1.7px;
-    }
-
-    .hero h1 {
-      margin-top: 20px;
-      font-family: Orbitron, sans-serif;
-      font-size: clamp(28px, 6vw, 53px);
-      font-weight: 900;
-      line-height: 1.2;
-      letter-spacing: -1.5px;
-    }
-
-    .hero h1 span {
-      color: transparent;
-      background: linear-gradient(90deg, var(--cyan), #7294ff, #b17bff);
-      background-clip: text;
-      -webkit-background-clip: text;
-    }
-
-    .hero-description {
-      max-width: 620px;
-      margin: 17px auto 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .banner-area {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 17px;
-      margin: 25px 0 35px;
-    }
-
-    .banner-card {
-      min-width: 0;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-    }
-
-    .banner-card img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 6;
-      object-fit: cover;
-    }
-
-    .section {
-      padding: 35px 0;
-      scroll-margin-top: 85px;
-    }
-
-    .section-heading {
-      margin-bottom: 22px;
-      text-align: center;
-    }
-
-    .section-kicker {
-      color: var(--cyan);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-    }
-
-    .section-heading h2 {
-      margin-top: 9px;
-      font-family: Orbitron, sans-serif;
-      font-size: clamp(20px, 4vw, 29px);
-      font-weight: 800;
-    }
-
-    .section-heading p {
-      max-width: 570px;
-      margin: 10px auto 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
-    }
-
-    .verify-panel {
-      position: relative;
-      max-width: 690px;
-      margin: 0 auto;
-      padding: clamp(20px, 5vw, 34px);
-      overflow: hidden;
-      border: 1px solid rgba(87,137,255,.27);
-      border-radius: 22px;
-      background:
-        radial-gradient(circle at 100% 0%, rgba(57,135,255,.13), transparent 42%),
-        linear-gradient(145deg, rgba(20,25,49,.97), rgba(12,15,31,.98));
-      box-shadow: 0 25px 80px rgba(0,0,0,.3);
-    }
-
-    .verify-panel::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 12%;
-      width: 76%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-      opacity: .7;
-    }
-
-    .game-brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 13px;
-      margin-bottom: 25px;
-    }
-
-    .game-brand img {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 13px rgba(255,255,255,.13));
-    }
-
-    .game-brand strong {
-      display: block;
-      font-family: Orbitron, sans-serif;
-      font-size: 14px;
-      letter-spacing: .5px;
-    }
-
-    .game-brand small {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .form-group {
-      margin-top: 17px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 9px;
-      color: #dfe5ff;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .form-control {
-      width: 100%;
-      height: 51px;
-      padding: 0 15px;
-      outline: none;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: rgba(5,8,20,.65);
-      color: white;
-      font-size: 13px;
-      transition: .2s;
-    }
-
-    .form-control:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(57,135,255,.12);
-    }
-
-    .form-control::placeholder {
-      color: #68718d;
-    }
-
-    select.form-control {
-      color-scheme: dark;
-    }
-
-    .verify-btn {
-      position: relative;
-      width: 100%;
-      min-height: 52px;
-      margin-top: 23px;
-      overflow: hidden;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(100deg, #2879f4, #6559f5 65%, #8258ec);
-      color: white;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 1.3px;
-      box-shadow: 0 10px 30px rgba(57,105,255,.22);
-      transition: .25s;
-    }
-
-    .verify-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 35px rgba(57,105,255,.34);
-    }
-
-    .verify-btn:disabled {
-      cursor: not-allowed;
-      opacity: .65;
-      transform: none;
-    }
-
-    .loading-box {
-      display: none;
-      margin-top: 17px;
-      padding: 14px;
-      border: 1px solid rgba(54,220,255,.18);
-      border-radius: 11px;
-      background: rgba(54,220,255,.05);
-      color: var(--cyan);
-      text-align: center;
-      font-size: 11px;
-    }
-
-    .loading-box.show {
-      display: block;
-    }
-
-    .loader {
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      margin-right: 8px;
-      vertical-align: middle;
-      border: 2px solid rgba(54,220,255,.2);
-      border-top-color: var(--cyan);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .message-box {
-      display: none;
-      margin-top: 15px;
-      padding: 13px 14px;
-      border-radius: 10px;
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .message-box.error {
-      display: block;
-      border: 1px solid rgba(255,85,119,.22);
-      background: rgba(255,85,119,.08);
-      color: #ff91a7;
-    }
-
-    .message-box.success {
-      display: block;
-      border: 1px solid rgba(56,230,165,.22);
-      background: rgba(56,230,165,.08);
-      color: var(--success);
-    }
-
-    .info-strip {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-top: 19px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .info-strip span::before {
-      content: "✓";
-      margin-right: 6px;
-      color: var(--success);
-      font-weight: 900;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .step-card {
-      padding: 20px 16px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: rgba(16,18,37,.78);
-      transition: .25s;
-    }
-
-    .step-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(54,220,255,.35);
-    }
-
-    .step-number {
-      color: var(--cyan);
-      font-family: Orbitron, sans-serif;
-      font-size: 23px;
-      font-weight: 900;
-    }
-
-    .step-card h3 {
-      margin-top: 12px;
-      font-size: 12px;
-    }
-
-    .step-card p {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.7;
-    }
-
-    .faq-list {
-      max-width: 780px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .faq-item {
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: rgba(16,18,37,.78);
-    }
-
-    .faq-question {
-      width: 100%;
-      min-height: 54px;
-      padding: 13px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      border: 0;
-      background: transparent;
-      color: var(--text);
-      text-align: left;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .faq-question span:last-child {
-      color: var(--cyan);
-      font-size: 18px;
-      transition: .2s;
-    }
-
-    .faq-item.open .faq-question span:last-child {
-      transform: rotate(45deg);
-    }
-
-    .faq-answer {
-      display: none;
-      padding: 0 16px 16px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
-    .faq-item.open .faq-answer {
-      display: block;
-    }
-
-    .privacy-content {
-      max-width: 780px;
-      margin: auto;
-      padding: 22px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: rgba(16,18,37,.7);
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.9;
-    }
-
-    .privacy-content strong {
-      color: var(--text);
-    }
-
-    .site-footer {
-      position: relative;
-      z-index: 1;
-      margin-top: 30px;
-      padding: 28px 16px;
-      border-top: 1px solid var(--border);
-      background: rgba(5,6,15,.65);
-      text-align: center;
-    }
-
-    .footer-brand {
-      font-family: Orbitron, sans-serif;
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .footer-brand span {
-      color: var(--cyan);
-    }
-
-    .site-footer p {
-      margin-top: 9px;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.7;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 17px;
-      margin-top: 15px;
-    }
-
-    .footer-links a {
-      color: #aeb8d7;
-      font-size: 10px;
-    }
-
-    .footer-links a:hover {
-      color: var(--cyan);
-    }
-
-    @media (max-width: 760px) {
-      .steps-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .hero {
-        padding-top: 42px;
-      }
-
-      .banner-area {
-        gap: 10px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .site-header {
-        min-height: 68px;
-        padding: 10px 14px;
-      }
-
-      .brand img {
-        width: 37px;
-        height: 37px;
-      }
-
-      .brand-name {
-        font-size: 12px;
-      }
-
-      .brand-subtitle {
-        font-size: 8px;
-      }
-
-      .support-link {
-        width: 39px;
-        height: 39px;
-        padding: 0;
-        overflow: hidden;
-        font-size: 0;
-      }
-
-      .support-link::before {
-        content: "✉";
-        font-size: 16px;
-      }
-
-      .menu-toggle {
-        width: 40px;
-        height: 40px;
-      }
-
-      .page-container {
-        width: calc(100% - 26px);
-      }
-
-      .hero {
-        padding-top: 35px;
-      }
-
-      .hero-description {
-        font-size: 11px;
-      }
-
-      .banner-area {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .banner-card img {
-        aspect-ratio: 16 / 5.5;
-      }
-
-      .section {
-        padding: 27px 0;
-      }
-
-      .steps-grid {
-        gap: 10px;
-      }
-
-      .step-card {
-        padding: 16px 13px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="ambient-glow glow-one"></div>
-  <div class="ambient-glow glow-two"></div>
-
-  <!-- HEADER -->
-  <header class="site-header">
-    <a href="#home" class="brand">
-      <img src="assets/nexvora-logo.png" alt="NEXVORA Logo">
-      <div>
-        <div class="brand-name">NEXVORA <span>UNBAN</span></div>
-        <div class="brand-subtitle">FREE FIRE PORTAL</div>
-      </div>
-    </a>
-
-    <div class="header-actions">
-      <a class="support-link" href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">
-        Contact Support
-      </a>
-
-      <button class="menu-toggle" id="menuToggle"
-        type="button" aria-label="Open navigation menu"
-        aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- HAMBURGER SIDE DRAWER -->
-  <div class="menu-overlay" id="menuOverlay"></div>
-
-  <aside class="side-menu" id="sideMenu" aria-label="Main navigation">
-    <div class="drawer-top">
-      <div class="drawer-brand">
-        <img src="assets/nexvora-logo.png" alt="NEXVORA">
-        <span>NEXVORA <span style="color:#36dcff">UNBAN</span></span>
-      </div>
-
-      <button class="drawer-close" id="drawerClose"
-        type="button" aria-label="Close menu">×</button>
-    </div>
-
-    <div class="drawer-label">Navigation</div>
-
-    <nav class="menu-links">
-      <a href="#home">
-        <span class="menu-icon">⌂</span>
-        <span>Home</span>
-      </a>
-
-      <a href="#verify">
-        <span class="menu-icon">⌕</span>
-        <span>Verify Player UID</span>
-      </a>
-
-      <a href="#how">
-        <span class="menu-icon">◈</span>
-        <span>How It Works</span>
-      </a>
-
-      <a href="#faq">
-        <span class="menu-icon">?</span>
-        <span>Frequently Asked Questions</span>
-      </a>
-
-      <a href="#privacy">
-        <span class="menu-icon">♧</span>
-        <span>Privacy Policy</span>
-      </a>
-    </nav>
-
-    <div class="drawer-bottom">
-      <a class="drawer-support" href="https://t.me/NEXVORA_X"
-        target="_blank" rel="noopener">
-        Contact Admin on Telegram
-      </a>
-      <div class="drawer-version">NEXVORA UNBAN · Official Portal</div>
-    </div>
-  </aside>
-
-  <main id="home" class="page-container">
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-tag">
-        <span>✦</span>
-        FREE FIRE UID VERIFICATION
-      </div>
-
-      <h1>
-        WELCOME TO<br>
-        <span>NEXVORA UNBAN</span>
-      </h1>
-
-      <p class="hero-description">
-        Welcome to the NEXVORA UNBAN portal. Verify your Free Fire
-        player information through our UID verification system.
-      </p>
-    </section>
-
-    <!-- BANNERS -->
-    <section class="banner-area" aria-label="NEXVORA banners">
-      <div class="banner-card">
-        <img src="assets/nexvora-home-banner.png"
-          alt="NEXVORA UNBAN banner">
-      </div>
-
-      <div class="banner-card">
-        <img src="assets/free-fire-logo.png"
-          alt="Free Fire branding">
-      </div>
-    </section>
-
-    <!-- UID VERIFICATION -->
-    <section class="section" id="verify">
-      <div class="section-heading">
-        <div class="section-kicker">Player Verification</div>
-        <h2>Verify Your Player UID</h2>
-        <p>
-          Enter your Free Fire player UID and choose the correct
-          region to retrieve the available player information.
-        </p>
-      </div>
-
-      <div class="verify-panel">
-        <div class="game-brand">
-          <img src="assets/free-fire-logo.png" alt="Free Fire">
-          <div>
-            <strong>FREE FIRE</strong>
-            <small>PLAYER UID VERIFICATION</small>
-          </div>
-        </div>
-
-        <form id="verifyForm" novalidate>
-          <div class="form-group">
-            <label for="uidInput">PLAYER UID</label>
-            <input
-              class="form-control"
-              type="text"
-              id="uidInput"
-              name="uid"
-              placeholder="Enter your Free Fire UID"
-              inputmode="numeric"
-              autocomplete="off"
-              maxlength="12"
-              required
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="regionSelect">SELECT REGION</label>
-            <select class="form-control" id="regionSelect" name="region" required>
-              <option value="india">India</option>
-              <option value="global">Global</option>
-            </select>
-          </div>
-
-          <button class="verify-btn" id="verifyBtn" type="submit">
-            VERIFY PLAYER UID
-          </button>
-
-          <div class="loading-box" id="loadingBox" aria-live="polite">
-            <span class="loader"></span>
-            Verifying player information. Please wait...
-          </div>
-
-          <div class="message-box" id="messageBox"
-            role="status" aria-live="polite"></div>
-        </form>
-
-        <div class="info-strip">
-          <span>UID Validation</span>
-          <span>Region Selection</span>
-          <span>Player Information</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="section" id="how">
-      <div class="section-heading">
-        <div class="section-kicker">Simple Process</div>
-        <h2>How NEXVORA Works</h2>
-        <p>
-          Follow these steps to verify your Free Fire player information.
-        </p>
-      </div>
-
-      <div class="steps-grid">
-        <article class="step-card">
-          <div class="step-number">01</div>
-          <h3>Enter Player UID</h3>
-          <p>Enter your correct Free Fire player UID in the verification field.</p>
-        </article>
-
-        <article class="step-card">
-          <div class="step-number">02</div>
-          <h3>Select Region</h3>
-          <p>Choose the region associated with your Free Fire account.</p>
-        </article>
-
-        <article class="step-card">
-          <div class="step-number">03</div>
-          <h3>Verify Information</h3>
-          <p>Submit your UID and wait while the system checks available player data.</p>
-        </article>
-
-        <article class="step-card">
-          <div class="step-number">04</div>
-          <h3>View Result</h3>
-          <p>View the player information returned by the verification service.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-      <div class="section-heading">
-        <div class="section-kicker">Need Help?</div>
-        <h2>Frequently Asked Questions</h2>
-        <p>Some useful information about the UID verification portal.</p>
-      </div>
-
-      <div class="faq-list">
-        <article class="faq-item">
-          <button class="faq-question" type="button" aria-expanded="false">
-            <span>What is a Free Fire UID?</span>
-            <span>+</span>
-          </button>
-          <div class="faq-answer">
-            A UID is the unique numerical identifier associated with
-            your Free Fire player account.
-          </div>
-        </article>
-
-        <article class="faq-item">
-          <button class="faq-question" type="button" aria-expanded="false">
-            <span>Which region should I select?</span>
-            <span>+</span>
-          </button>
-          <div class="faq-answer">
-            Select the region that matches the server or game version
-            associated with your account.
-          </div>
-        </article>
-
-        <article class="faq-item">
-          <button class="faq-question" type="button" aria-expanded="false">
-            <span>Why is my UID verification failing?</span>
-            <span>+</span>
-          </button>
-          <div class="faq-answer">
-            Check your UID digits and selected region. Temporary
-            provider or network problems can also prevent verification.
-          </div>
-        </article>
-
-        <article class="faq-item">
-          <button class="faq-question" type="button" aria-expanded="false">
-            <span>Is my password required?</span>
-            <span>+</span>
-          </button>
-          <div class="faq-answer">
-            No. This UID verification form does not ask for your
-            account password or login credentials.
-          </div>
-        </article>
-
-        <article class="faq-item">
-          <button class="faq-question" type="button" aria-expanded="false">
-            <span>How can I contact support?</span>
-            <span>+</span>
-          </button>
-          <div class="faq-answer">
-            You can contact the NEXVORA support team through the
-            official Telegram support link on this page.
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- PRIVACY POLICY -->
-    <section class="section" id="privacy">
-      <div class="section-heading">
-        <div class="section-kicker">Your Information</div>
-        <h2>Privacy & Security</h2>
-      </div>
-
-      <div class="privacy-content">
-        <p>
-          <strong>UID Information:</strong> The portal uses the player
-          UID and selected region to request available player information
-          from its verification service.
-        </p>
-        <p>
-          <strong>Login Credentials:</strong> Never enter your Free Fire
-          password, OTP, or other account login credentials on this page.
-          The UID verification process does not require them.
-        </p>
-        <p>
-          <strong>Third-Party Service:</strong> Player information may be
-          supplied by an external verification provider. Availability
-          and accuracy depend on that provider.
-        </p>
-        <p>
-          <strong>Security:</strong> Do not share private account details
-          with anyone claiming they can guarantee an account unban.
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-brand">NEXVORA <span>UNBAN</span></div>
-    <p>Free Fire UID Verification Portal</p>
-
-    <div class="footer-links">
-      <a href="#home">Home</a>
-      <a href="#verify">Verify UID</a>
-      <a href="#how">How It Works</a>
-      <a href="#faq">FAQ</a>
-      <a href="#privacy">Privacy</a>
-      <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">Support</a>
-    </div>
-
-    <p>© <span id="currentYear">2026</span> NEXVORA UNBAN. All rights reserved.</p>
-    <p>
-      NEXVORA UNBAN is an independent portal and is not affiliated
-      with or endorsed by Garena.
-    </p>
-  </footer>
-  
-<!-- PLAYER VERIFICATION SUCCESS MODAL -->
 <style>
-  .success-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 500;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
-    background: rgba(3,5,15,.86);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    opacity: 0;
-    transition: opacity .3s ease;
-  }
+:root{
+  --bg:#070914;
+  --panel:#10152a;
+  --panel2:#151d36;
+  --blue:#3987ff;
+  --cyan:#36dcff;
+  --purple:#8958ff;
+  --text:#f4f6ff;
+  --muted:#929bb8;
+  --border:rgba(135,155,255,.17);
+  --success:#38e6a5;
+  --danger:#ff5577;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:
+    radial-gradient(ellipse at 12% 5%,rgba(57,135,255,.15),transparent 35%),
+    radial-gradient(ellipse at 90% 40%,rgba(137,88,255,.12),transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,sans-serif;
+}
+body.menu-open{overflow:hidden}
+button,input,select{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer}
 
-  .success-modal.show {
-    display: flex;
-    opacity: 1;
-  }
+/* PARTICLE BACKGROUND */
+#particleCanvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  opacity:.72;
+}
+.ambient-glow{
+  position:fixed;
+  width:320px;height:320px;
+  border-radius:50%;
+  filter:blur(110px);
+  opacity:.15;
+  pointer-events:none;
+  z-index:0;
+}
+.glow-one{top:12%;left:-190px;background:var(--blue)}
+.glow-two{right:-190px;top:55%;background:var(--purple)}
+.page-container,.site-header,.site-footer{position:relative;z-index:1}
 
-  .success-card {
-    position: relative;
-    width: min(470px, 100%);
-    max-height: 90dvh;
-    overflow-y: auto;
-    padding: 28px 22px 22px;
-    border: 1px solid rgba(65,169,255,.38);
-    border-radius: 23px;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(57,135,255,.23), transparent 43%),
-      linear-gradient(150deg, #171c37, #0b0e20 75%);
-    box-shadow:
-      0 0 70px rgba(57,135,255,.16),
-      0 25px 90px rgba(0,0,0,.65);
-    transform: translateY(22px) scale(.96);
-    transition: transform .35s cubic-bezier(.2,.8,.2,1);
-  }
+/* HEADER */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  min-height:76px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px clamp(15px,5vw,64px);
+  background:rgba(7,9,20,.88);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand-logo-circle{
+  width:46px;height:46px;flex-shrink:0;
+  display:grid;place-items:center;
+  overflow:hidden;
+  border:1px solid rgba(54,220,255,.42);
+  border-radius:50%;
+  background:linear-gradient(145deg,#172b50,#0a1024);
+  box-shadow:0 0 18px rgba(57,135,255,.23);
+}
+.brand-logo-circle img{
+  width:100%;height:100%;object-fit:contain;padding:5px;
+}
+.brand-name{
+  font-family:Orbitron,sans-serif;
+  font-size:14px;font-weight:900;letter-spacing:1px;
+  white-space:nowrap;
+}
+.brand-name span{color:var(--cyan)}
+.brand-subtitle{
+  margin-top:4px;color:var(--muted);
+  font-size:9px;letter-spacing:2px;
+}
+.header-actions{display:flex;align-items:center;gap:11px}
+.support-link{
+  width:43px;height:43px;
+  display:grid;place-items:center;
+  border:1px solid rgba(54,220,255,.35);
+  border-radius:13px;
+  background:rgba(54,220,255,.08);
+  color:var(--cyan);font-size:21px;
+  transition:.25s;
+}
+.support-link:hover{
+  background:rgba(54,220,255,.17);
+  box-shadow:0 0 22px rgba(54,220,255,.2);
+  transform:translateY(-2px);
+}
+.menu-toggle{
+  width:43px;height:43px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px;
+  border:1px solid var(--border);
+  border-radius:13px;background:rgba(255,255,255,.045);
+}
+.menu-toggle span{
+  width:19px;height:2px;border-radius:5px;
+  background:white;transition:.25s;
+}
+.menu-toggle.active span:first-child{transform:translateY(7px) rotate(45deg)}
+.menu-toggle.active span:nth-child(2){opacity:0}
+.menu-toggle.active span:last-child{transform:translateY(-7px) rotate(-45deg)}
 
-  .success-modal.show .success-card {
-    transform: translateY(0) scale(1);
-  }
+/* HAMBURGER DRAWER */
+.menu-overlay{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.7);
+  opacity:0;visibility:hidden;transition:.3s;
+  backdrop-filter:blur(5px);
+}
+.menu-overlay.active{opacity:1;visibility:visible}
+.side-menu{
+  position:fixed;top:0;right:0;z-index:201;
+  width:min(340px,88vw);height:100dvh;
+  padding:24px 20px;
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  background:radial-gradient(circle at 100% 0%,rgba(57,135,255,.18),transparent 38%),#101326;
+  border-left:1px solid var(--border);
+  box-shadow:-20px 0 70px rgba(0,0,0,.45);
+  transform:translateX(105%);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.side-menu.active{transform:translateX(0)}
+.drawer-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:20px;border-bottom:1px solid var(--border);
+}
+.drawer-brand{display:flex;align-items:center;gap:10px;font-family:Orbitron,sans-serif;font-size:12px;font-weight:900}
+.drawer-brand img{
+  width:38px;height:38px;padding:4px;
+  border:1px solid rgba(54,220,255,.3);border-radius:50%;
+  object-fit:contain;background:#111b32;
+}
+.drawer-close{
+  width:38px;height:38px;border:1px solid var(--border);
+  border-radius:11px;background:rgba(255,255,255,.05);
+  color:white;font-size:22px;
+}
+.drawer-label{
+  margin:26px 0 12px;color:var(--muted);
+  font-size:10px;font-weight:800;letter-spacing:2px;
+}
+.menu-links{display:flex;flex-direction:column;gap:8px}
+.menu-links a{
+  min-height:48px;padding:0 12px;
+  display:flex;align-items:center;gap:13px;
+  border:1px solid transparent;border-radius:12px;
+  color:#dce3ff;font-size:12px;font-weight:700;transition:.2s;
+}
+.menu-links a:hover{
+  color:var(--cyan);border-color:var(--border);
+  background:rgba(57,135,255,.09);transform:translateX(3px);
+}
+.menu-icon{
+  width:29px;height:29px;display:grid;place-items:center;
+  border-radius:9px;background:rgba(57,135,255,.13);
+  color:var(--cyan);font-size:14px;
+}
+.drawer-bottom{margin-top:auto;padding-top:25px}
+.drawer-support{
+  min-height:46px;display:flex;align-items:center;justify-content:center;
+  border-radius:12px;background:linear-gradient(110deg,#2879ed,#7252e8);
+  color:white;font-size:12px;font-weight:800;
+}
+.drawer-version{text-align:center;margin-top:14px;color:#68718f;font-size:10px}
 
-  .success-close {
-    position: absolute;
-    top: 13px;
-    right: 14px;
-    width: 34px;
-    height: 34px;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    background: rgba(255,255,255,.06);
-    color: white;
-    font-size: 21px;
-  }
+/* PAGE LAYOUT */
+.page-container{width:min(1120px,calc(100% - 32px));margin:auto}
+.hero{text-align:center;padding:48px 0 23px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border:1px solid rgba(54,220,255,.22);
+  border-radius:999px;background:rgba(54,220,255,.06);
+  color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:1.7px;
+}
+.hero h1{
+  margin-top:18px;font-family:Orbitron,sans-serif;
+  font-size:clamp(27px,6vw,51px);font-weight:900;
+  line-height:1.25;letter-spacing:-1px;
+}
+.hero h1 span{
+  color:transparent;background:linear-gradient(90deg,var(--cyan),#7294ff,#b17bff);
+  background-clip:text;-webkit-background-clip:text;
+}
+.hero-description{
+  max-width:650px;margin:14px auto 0;
+  color:var(--muted);font-size:12px;line-height:1.8;
+}
 
-  .success-emblem {
-    width: 75px;
-    height: 75px;
-    margin: 4px auto 17px;
-    display: grid;
-    place-items: center;
-    border: 1px solid rgba(56,230,165,.38);
-    border-radius: 50%;
-    background: rgba(56,230,165,.10);
-    box-shadow: 0 0 35px rgba(56,230,165,.15);
-    color: var(--success);
-    font-size: 38px;
-    animation: emblem-pop .65s cubic-bezier(.2,.8,.2,1) both;
-  }
+/* FULL BANNER - NEVER CROP */
+.banner-area{margin:20px 0 24px}
+.banner-card{
+  width:100%;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);border-radius:17px;
+  background:#0c1021;box-shadow:0 18px 55px rgba(0,0,0,.28);
+}
+.banner-card img{
+  display:block;width:100%;height:auto;
+  max-height:430px;object-fit:contain;
+}
 
-  @keyframes emblem-pop {
-    0% { transform: scale(.4) rotate(-35deg); opacity: 0; }
-    70% { transform: scale(1.15) rotate(8deg); }
-    100% { transform: scale(1) rotate(0); opacity: 1; }
-  }
+/* FREE FIRE BRAND LINE */
+.game-line{
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:12px;margin:26px 0 22px;
+}
+.game-line img{
+  width:65px;height:54px;object-fit:contain;
+  filter:drop-shadow(0 0 12px rgba(255,255,255,.13));
+}
+.game-line-text{
+  color:#e8edff;font-size:clamp(10px,2.2vw,13px);
+  font-weight:900;line-height:1.8;text-align:center;
+}
+.game-line-text .india{color:#ffb34c}
+.game-line-text .garena{color:#ffdb65}
+.game-line-text .max{color:#ff6b61}
 
-  .success-heading {
-    text-align: center;
-  }
+/* FEATURE STRIP */
+.feature-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:12px;margin:22px 0 34px;
+}
+.feature-card{
+  min-width:0;padding:17px 10px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  border:1px solid var(--border);border-radius:14px;
+  background:linear-gradient(145deg,rgba(19,26,49,.94),rgba(11,15,31,.94));
+}
+.feature-icon{font-size:22px;flex-shrink:0}
+.feature-card strong{display:block;font-size:11px;font-weight:800}
+.feature-card small{display:block;margin-top:5px;color:var(--muted);font-size:9px;line-height:1.4}
 
-  .success-heading .success-label {
-    color: var(--success);
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: 2.5px;
-  }
+/* SECTIONS */
+.section{padding:32px 0;scroll-margin-top:85px}
+.section-heading{text-align:center;margin-bottom:22px}
+.section-kicker{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+.section-heading h2{margin-top:9px;font-family:Orbitron,sans-serif;font-size:clamp(20px,4vw,29px);font-weight:800}
+.section-heading p{max-width:590px;margin:10px auto 0;color:var(--muted);font-size:12px;line-height:1.7}
 
-  .success-heading h2 {
-    margin-top: 9px;
-    font-family: Orbitron, sans-serif;
-    font-size: clamp(20px, 5vw, 27px);
-    font-weight: 900;
-    background: linear-gradient(90deg, #fff, #70e5ff, #a78bff);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
+/* UID FORM */
+.verify-panel{
+  position:relative;max-width:690px;margin:auto;padding:clamp(20px,5vw,34px);
+  overflow:hidden;border:1px solid rgba(87,137,255,.28);
+  border-radius:21px;
+  background:radial-gradient(circle at 100% 0%,rgba(57,135,255,.14),transparent 42%),linear-gradient(145deg,#141a33,#0c1022);
+  box-shadow:0 25px 75px rgba(0,0,0,.3);
+}
+.verify-panel:before{
+  content:"";position:absolute;top:0;left:12%;width:76%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+}
+.game-brand{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:23px}
+.game-brand img{width:58px;height:58px;object-fit:contain}
+.game-brand strong{display:block;font-family:Orbitron,sans-serif;font-size:14px}
+.game-brand small{display:block;margin-top:5px;color:var(--muted);font-size:10px}
+.form-group{margin-top:16px}
+.form-group label{display:block;margin-bottom:9px;color:#dfe5ff;font-size:11px;font-weight:700}
+.form-control{
+  width:100%;height:51px;padding:0 15px;outline:none;
+  border:1px solid var(--border);border-radius:11px;
+  background:rgba(5,8,20,.7);color:white;font-size:13px;transition:.2s;
+}
+.form-control:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(57,135,255,.12)}
+.form-control::placeholder{color:#68718d}
+select.form-control{color-scheme:dark}
+.verify-btn{
+  width:100%;min-height:52px;margin-top:22px;
+  border:0;border-radius:12px;
+  background:linear-gradient(100deg,#2879f4,#6559f5 65%,#8258ec);
+  color:white;font-size:12px;font-weight:900;letter-spacing:1.2px;
+  box-shadow:0 10px 30px rgba(57,105,255,.22);transition:.25s;
+}
+.verify-btn:hover{transform:translateY(-2px);box-shadow:0 14px 35px rgba(57,105,255,.34)}
+.verify-btn:disabled{cursor:not-allowed;opacity:.65;transform:none}
+.loading-box{
+  display:none;margin-top:16px;padding:14px;
+  border:1px solid rgba(54,220,255,.18);border-radius:11px;
+  background:rgba(54,220,255,.05);color:var(--cyan);
+  text-align:center;font-size:11px;
+}
+.loading-box.show{display:block}
+.loader{
+  display:inline-block;width:15px;height:15px;margin-right:8px;vertical-align:middle;
+  border:2px solid rgba(54,220,255,.2);border-top-color:var(--cyan);
+  border-radius:50%;animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.message-box{display:none;margin-top:14px;padding:13px;border-radius:10px;font-size:11px;line-height:1.6}
+.message-box.error{display:block;border:1px solid rgba(255,85,119,.22);background:rgba(255,85,119,.08);color:#ff91a7}
+.message-box.success{display:block;border:1px solid rgba(56,230,165,.22);background:rgba(56,230,165,.08);color:var(--success)}
+.info-strip{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 18px;margin-top:18px;color:var(--muted);font-size:10px}
+.info-strip span:before{content:"✓";margin-right:6px;color:var(--success);font-weight:900}
 
-  .success-heading p {
-    margin-top: 8px;
-    color: var(--muted);
-    font-size: 11px;
-    line-height: 1.7;
-  }
+/* HOW IT WORKS */
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.step-card{padding:19px 15px;border:1px solid var(--border);border-radius:15px;background:rgba(16,18,37,.8);transition:.25s}
+.step-card:hover{transform:translateY(-4px);border-color:rgba(54,220,255,.35)}
+.step-number{color:var(--cyan);font-family:Orbitron,sans-serif;font-size:23px;font-weight:900}
+.step-card h3{margin-top:11px;font-size:12px}
+.step-card p{margin-top:8px;color:var(--muted);font-size:10px;line-height:1.7}
 
-  .result-status {
-    display: flex;
-    justify-content: center;
-    margin: 18px 0;
-  }
+/* FAQ */
+.faq-list{max-width:780px;margin:auto;display:flex;flex-direction:column;gap:10px}
+.faq-item{overflow:hidden;border:1px solid var(--border);border-radius:12px;background:rgba(16,18,37,.8)}
+.faq-question{
+  width:100%;min-height:53px;padding:13px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+  border:0;background:transparent;color:var(--text);
+  text-align:left;font-size:12px;font-weight:700;
+}
+.faq-question span:last-child{color:var(--cyan);font-size:18px;transition:.2s}
+.faq-item.open .faq-question span:last-child{transform:rotate(45deg)}
+.faq-answer{display:none;padding:0 16px 16px;color:var(--muted);font-size:11px;line-height:1.8}
+.faq-item.open .faq-answer{display:block}
 
-  .result-status span {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 13px;
-    border: 1px solid rgba(56,230,165,.25);
-    border-radius: 999px;
-    background: rgba(56,230,165,.08);
-    color: var(--success);
-    font-size: 10px;
-    font-weight: 800;
-  }
+/* PRIVACY */
+.privacy-content{
+  max-width:780px;margin:auto;padding:22px;
+  border:1px solid var(--border);border-radius:15px;
+  background:rgba(16,18,37,.75);color:var(--muted);
+  font-size:11px;line-height:1.9;
+}
+.privacy-content p+p{margin-top:10px}
+.privacy-content strong{color:var(--text)}
 
-  .result-status span::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--success);
-    box-shadow: 0 0 10px var(--success);
-  }
+/* COMPLETE FOOTER */
+.site-footer{
+  margin-top:35px;padding:38px 16px 25px;
+  border-top:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(12,16,34,.96),#070914);
+}
+.footer-inner{width:min(1120px,100%);margin:auto}
+.footer-main{
+  display:grid;grid-template-columns:1.25fr 1fr 1fr;
+  gap:35px;padding-bottom:28px;border-bottom:1px solid var(--border);
+}
+.footer-brand-row{display:flex;align-items:center;gap:12px}
+.footer-logo-circle{
+  width:54px;height:54px;flex-shrink:0;display:grid;place-items:center;
+  overflow:hidden;border:1px solid rgba(54,220,255,.4);
+  border-radius:50%;background:#111b32;
+  box-shadow:0 0 18px rgba(57,135,255,.2);
+}
+.footer-logo-circle img{width:100%;height:100%;padding:5px;object-fit:contain}
+.footer-brand-name{font-family:Orbitron,sans-serif;font-size:14px;font-weight:900;letter-spacing:.7px}
+.footer-tagline{margin-top:6px;color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:1.5px}
+.footer-description{margin-top:15px;color:var(--muted);font-size:11px;line-height:1.8}
+.footer-verified{margin-top:13px;color:#dce6ff;font-size:10px;line-height:1.8}
+.footer-verified span{color:var(--success);font-weight:900}
+.footer-column h3{margin-bottom:14px;font-size:11px;font-weight:900;letter-spacing:1.4px}
+.footer-column a{display:block;margin:11px 0;color:var(--muted);font-size:11px;transition:.2s}
+.footer-column a:hover{color:var(--cyan)}
+.payment-area{padding:23px 0;text-align:center;border-bottom:1px solid var(--border)}
+.payment-area h3{font-size:10px;letter-spacing:1.5px}
+.payment-area p{margin-top:10px;color:var(--muted);font-size:11px;line-height:1.8}
+.footer-bottom{text-align:center;padding-top:20px}
+.footer-bottom p{color:var(--muted);font-size:10px;line-height:1.9}
+.footer-bottom .disclaimer{max-width:850px;margin:10px auto 0;color:#737d9b;font-size:9px}
 
-  .result-details {
-    overflow: hidden;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: rgba(4,7,18,.48);
-  }
+/* SUCCESS MODAL */
+.success-modal{
+  position:fixed;inset:0;z-index:500;
+  display:none;align-items:center;justify-content:center;
+  padding:17px;background:rgba(2,4,13,.88);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.success-modal.show{display:flex;animation:modalFade .3s ease both}
+@keyframes modalFade{from{opacity:0}to{opacity:1}}
+.success-card{
+  position:relative;width:min(470px,100%);max-height:90dvh;overflow-y:auto;
+  padding:27px 21px 21px;border:1px solid rgba(65,169,255,.4);
+  border-radius:23px;
+  background:radial-gradient(circle at 50% 0%,rgba(57,135,255,.25),transparent 43%),linear-gradient(150deg,#171c37,#0b0e20 75%);
+  box-shadow:0 0 70px rgba(57,135,255,.18),0 25px 90px rgba(0,0,0,.65);
+  animation:cardEnter .55s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes cardEnter{from{transform:translateY(35px) scale(.88);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.success-close{
+  position:absolute;top:12px;right:13px;width:34px;height:34px;
+  border:1px solid var(--border);border-radius:50%;
+  background:rgba(255,255,255,.06);color:white;font-size:21px;
+}
+.success-emblem{
+  width:76px;height:76px;margin:5px auto 15px;
+  display:grid;place-items:center;border:1px solid rgba(56,230,165,.4);
+  border-radius:50%;background:rgba(56,230,165,.1);
+  box-shadow:0 0 35px rgba(56,230,165,.18);
+  color:var(--success);font-size:38px;
+  animation:emblemPop .7s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes emblemPop{0%{transform:scale(.2) rotate(-40deg);opacity:0}70%{transform:scale(1.17) rotate(8deg)}100%{transform:scale(1);opacity:1}}
+.success-heading{text-align:center}
+.success-label{color:var(--success);font-size:9px;font-weight:900;letter-spacing:2px}
+.success-heading h2{
+  margin-top:9px;font-family:Orbitron,sans-serif;
+  font-size:clamp(20px,5vw,27px);font-weight:900;
+  background:linear-gradient(90deg,#fff,#70e5ff,#b18bff);
+  background-clip:text;-webkit-background-clip:text;color:transparent;
+}
+.success-heading p{margin-top:8px;color:var(--muted);font-size:11px;line-height:1.7}
+.result-status{display:flex;justify-content:center;margin:17px 0}
+.result-status span{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 13px;
+  border:1px solid rgba(56,230,165,.25);border-radius:999px;
+  background:rgba(56,230,165,.08);color:var(--success);
+  font-size:10px;font-weight:800;
+}
+.result-status span:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--success);box-shadow:0 0 10px var(--success)}
+.result-details{overflow:hidden;border:1px solid var(--border);border-radius:14px;background:rgba(4,7,18,.5)}
+.result-detail-row{
+  min-height:42px;padding:10px 13px;
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+  border-bottom:1px solid rgba(135,155,255,.1);
+}
+.result-detail-row:last-child{border-bottom:0}
+.result-detail-row span:first-child{color:var(--muted);font-size:10px}
+.result-detail-row span:last-child{max-width:62%;overflow-wrap:anywhere;color:#f0f3ff;text-align:right;font-size:11px;font-weight:700}
+.result-game{color:var(--cyan)!important;font-family:Orbitron,sans-serif;font-size:10px!important}
+.verified-tag{color:var(--success)!important}
+.proceed-btn{
+  width:100%;min-height:49px;margin-top:18px;border:0;border-radius:11px;
+  background:linear-gradient(100deg,#2879f4,#7654ef);
+  color:white;font-size:11px;font-weight:900;letter-spacing:1.2px;
+  box-shadow:0 10px 30px rgba(57,105,255,.25);
+}
+.success-note{margin-top:11px;color:#7983a2;text-align:center;font-size:9px;line-height:1.6}
 
-  .result-detail-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    min-height: 43px;
-    padding: 10px 13px;
-    border-bottom: 1px solid rgba(135,155,255,.10);
-  }
+/* CELEBRATION */
+#celebrationCanvas{position:fixed;inset:0;z-index:490;width:100%;height:100%;pointer-events:none;display:none}
+#celebrationCanvas.active{display:block}
 
-  .result-detail-row:last-child {
-    border-bottom: 0;
-  }
-
-  .result-detail-row span:first-child {
-    color: var(--muted);
-    font-size: 10px;
-  }
-
-  .result-detail-row span:last-child {
-    max-width: 62%;
-    overflow-wrap: anywhere;
-    color: #f0f3ff;
-    text-align: right;
-    font-size: 11px;
-    font-weight: 700;
-  }
-
-  .result-game {
-    margin-bottom: 12px;
-    color: var(--cyan) !important;
-    font-family: Orbitron, sans-serif;
-    font-size: 10px !important;
-    letter-spacing: .7px;
-  }
-
-  .verified-tag {
-    color: var(--success) !important;
-  }
-
-  .proceed-btn {
-    width: 100%;
-    min-height: 49px;
-    margin-top: 18px;
-    border: 0;
-    border-radius: 11px;
-    background: linear-gradient(100deg, #2879f4, #7654ef);
-    color: white;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 1.2px;
-    box-shadow: 0 10px 30px rgba(57,105,255,.22);
-    transition: .25s;
-  }
-
-  .proceed-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 13px 35px rgba(57,105,255,.35);
-  }
-
-  .success-note {
-    margin-top: 12px;
-    color: #7983a2;
-    text-align: center;
-    font-size: 9px;
-    line-height: 1.6;
-  }
-
-  .celebration-layer {
-    position: fixed;
-    inset: 0;
-    z-index: 510;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .celebration-piece {
-    position: absolute;
-    top: -15px;
-    width: 7px;
-    height: 12px;
-    border-radius: 2px;
-    animation: celebration-fall 2.8s linear forwards;
-  }
-
-  @keyframes celebration-fall {
-    to {
-      transform: translate3d(var(--drift), 110vh, 0) rotate(720deg);
-      opacity: 0;
-    }
-  }
-
-  @media (max-width: 420px) {
-    .success-card {
-      padding: 25px 15px 18px;
-    }
-
-    .result-detail-row {
-      padding: 10px;
-    }
-  }
+@media(max-width:760px){
+  .feature-grid{grid-template-columns:repeat(2,1fr)}
+  .steps-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-main{grid-template-columns:1fr 1fr;gap:25px}
+  .footer-brand-block{grid-column:1/-1}
+}
+@media(max-width:480px){
+  .site-header{min-height:68px;padding:9px 13px}
+  .brand-logo-circle{width:40px;height:40px}
+  .brand-name{font-size:11px}
+  .brand-subtitle{font-size:7px}
+  .support-link,.menu-toggle{width:39px;height:39px}
+  .page-container{width:calc(100% - 26px)}
+  .hero{padding-top:35px}
+  .hero-description{font-size:11px}
+  .banner-card{border-radius:12px}
+  .game-line{gap:8px}
+  .game-line img{width:53px;height:48px}
+  .feature-grid{gap:9px}
+  .feature-card{justify-content:flex-start;padding:13px 9px;gap:8px}
+  .feature-icon{font-size:19px}
+  .feature-card strong{font-size:10px}
+  .feature-card small{font-size:8px}
+  .section{padding:26px 0}
+  .step-card{padding:15px 12px}
+  .footer-main{grid-template-columns:1fr 1fr;gap:22px 14px}
+  .footer-brand-block{grid-column:1/-1}
+  .footer-column h3{font-size:9px}
+  .footer-column a{font-size:10px}
+  .success-card{padding:24px 14px 18px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!
+important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
 </style>
+</head>
+  
+<body>
 
+<canvas id="particleCanvas"></canvas>
+<canvas id="celebrationCanvas"></canvas>
+<div class="ambient-glow glow-one"></div>
+<div class="ambient-glow glow-two"></div>
+
+<header class="site-header">
+  <a href="#home" class="brand">
+    <div class="brand-logo-circle">
+      <img src="assets/nexvora-logo.png" alt="NEXVORA Logo">
+    </div>
+    <div>
+      <div class="brand-name">NEXVORA <span>UNBAN</span></div>
+      <div class="brand-subtitle">FREE FIRE PORTAL</div>
+    </div>
+  </a>
+
+  <div class="header-actions">
+    <a class="support-link" href="https://t.me/NEXVORA_X"
+       target="_blank" rel="noopener" aria-label="Contact Support">🎧</a>
+
+    <button class="menu-toggle" id="menuToggle" type="button"
+            aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<aside class="side-menu" id="sideMenu" aria-label="Navigation menu">
+  <div class="drawer-top">
+    <div class="drawer-brand">
+      <img src="assets/nexvora-logo.png" alt="NEXVORA">
+      <span>NEXVORA <span style="color:#36dcff">UNBAN</span></span>
+    </div>
+    <button class="drawer-close" id="drawerClose" type="button" aria-label="Close menu">×</button>
+  </div>
+
+  <div class="drawer-label">Navigation</div>
+  <nav class="menu-links">
+    <a href="#home"><span class="menu-icon">⌂</span>Home</a>
+    <a href="#verify"><span class="menu-icon">⌕</span>Verify Player UID</a>
+    <a href="#how"><span class="menu-icon">◈</span>How UNBAN Works</a>
+    <a href="#faq"><span class="menu-icon">?</span>Frequently Asked Questions</a>
+    <a href="#privacy"><span class="menu-icon">♧</span>Privacy Policy</a>
+    <a href="#terms"><span class="menu-icon">▤</span>Terms of Service</a>
+    <a href="#refunds"><span class="menu-icon">↩</span>Refunds & Cancellation</a>
+  </nav>
+
+  <div class="drawer-bottom">
+    <a class="drawer-support" href="https://t.me/NEXVORA_X"
+       target="_blank" rel="noopener">🎧 Contact Admin on Telegram</a>
+    <div class="drawer-version">NEXVORA UNBAN · Official Portal</div>
+  </div>
+</aside>
+
+<main id="home" class="page-container">
+
+  <section class="hero">
+    <div class="hero-tag">✦ FREE FIRE UID VERIFICATION PORTAL</div>
+    <h1>WELCOME TO<br><span>NEXVORA UNBAN</span></h1>
+    <p class="hero-description">
+      Welcome to the NEXVORA UNBAN portal. Verify your Free Fire
+      player information through our UID verification system.
+    </p>
+  </section>
+
+  <!-- SINGLE FULL, UNCROPPED NEXVORA BANNER -->
+  <section class="banner-area">
+    <div class="banner-card">
+      <img src="assets/nexvora-home-banner.png"
+           alt="NEXVORA UNBAN Official Banner">
+    </div>
+  </section>
+
+  <!-- FREE FIRE LOGO AND BRANDING -->
+  <section class="game-line" aria-label="Free Fire games">
+    <img src="assets/free-fire-logo.png" alt="Free Fire Logo">
+    <div class="game-line-text">
+      <span class="india">💫 FREE FIRE INDIA 🇮🇳</span>
+      &nbsp; <span class="garena">GARENA FREE FIRE ⚡</span>
+      &nbsp; <span class="max">FREE FIRE MAX 🔥</span>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="feature-grid" aria-label="Service features">
+    <article class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <div><strong>UID Only</strong><small>No Login Needed</small></div>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div><strong>Express Process</strong><small>Direct In-Game</small></div>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon">🛡️</span>
+      <div><strong>Secure Payment</strong><small>Protected Checkout</small></div>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon">🎧</span>
+      <div><strong>Support</strong><small>Telegram Assistance</small></div>
+    </article>
+  </section>
+
+  <!-- UID VERIFICATION -->
+  <section class="section" id="verify">
+    <div class="section-heading">
+      <div class="section-kicker">PLAYER VERIFICATION</div>
+      <h2>Verify Player UID</h2>
+      <p>Enter your Free Fire UID and select your account region.</p>
+    </div>
+
+    <div class="verify-panel">
+      <div class="game-brand">
+        <img src="assets/free-fire-logo.png" alt="Free Fire">
+        <div>
+          <strong>FREE FIRE</strong>
+          <small>PLAYER UID VERIFICATION</small>
+        </div>
+      </div>
+
+      <form id="verifyForm" novalidate>
+        <div class="form-group">
+          <label for="uidInput">PLAYER UID</label>
+          <input class="form-control" type="text" id="uidInput"
+                 name="uid" placeholder="Enter your Free Fire UID"
+                 inputmode="numeric" autocomplete="off"
+                 maxlength="12" required>
+        </div>
+
+        <div class="form-group">
+          <label for="regionSelect">SELECT REGION</label>
+          <select class="form-control" id="regionSelect" name="region" required>
+            <option value="india">India</option>
+            <option value="global">Global</option>
+          </select>
+        </div>
+
+        <button class="verify-btn" id="verifyBtn" type="submit">
+          VERIFY PLAYER UID
+        </button>
+
+        <div class="loading-box" id="loadingBox" aria-live="polite">
+          <span class="loader"></span>
+          Verifying player information. Please wait...
+        </div>
+        <div class="message-box" id="messageBox" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="info-strip">
+        <span>UID Validation</span>
+        <span>Region Selection</span>
+        <span>Player Information</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-heading">
+      <div class="section-kicker">SIMPLE PROCESS</div>
+      <h2>How UNBAN Works</h2>
+      <p>Follow the steps to verify your Free Fire player information.</p>
+    </div>
+
+    <div class="steps-grid">
+      <article class="step-card">
+        <div class="step-number">01</div>
+        <h3>Enter Player UID</h3>
+        <p>Enter your correct Free Fire player UID in the verification field.</p>
+      </article>
+      <article class="step-card">
+        <div class="step-number">02</div>
+        <h3>Select Region</h3>
+        <p>Choose the region associated with your Free Fire account.</p>
+      </article>
+      <article class="step-card">
+        <div class="step-number">03</div>
+        <h3>Verify Information</h3>
+        <p>Submit your UID and wait while the system checks available player data.</p>
+      </article>
+      <article class="step-card">
+        <div class="step-number">04</div>
+        <h3>View Result</h3>
+        <p>View the player information returned by the verification service.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="section-heading">
+      <div class="section-kicker">NEED HELP?</div>
+      <h2>Frequently Asked Questions</h2>
+      <p>Useful information about the NEXVORA UNBAN portal.</p>
+    </div>
+
+    <div class="faq-list">
+      <article class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          <span>What is a Free Fire UID?</span><span>+</span>
+        </button>
+        <div class="faq-answer">
+          A UID is the unique numerical identifier associated with your Free Fire player account.
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          <span>Which region should I select?</span><span>+</span>
+        </button>
+        <div class="faq-answer">
+          Select the region that matches the server or game version associated with your account.
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          <span>Why is my UID verification failing?</span><span>+</span>
+        </button>
+        <div class="faq-answer">
+          Check your UID and selected region. Temporary provider or network problems can also prevent verification.
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          <span>Is my password required?</span><span>+</span>
+        </button>
+        <div class="faq-answer">
+          No. UID verification does not require your account password or login credentials.
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          <span>How can I contact support?</span><span>+</span>
+        </button>
+        <div class="faq-answer">
+          Contact the support team using the official NEXVORA Telegram support link.
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="section" id="privacy">
+    <div class="section-heading">
+      <div class="section-kicker">YOUR INFORMATION</div>
+      <h2>Privacy Policy</h2>
+    </div>
+    <div class="privacy-content">
+      <p><strong>UID Information:</strong> The portal uses the player UID and selected region to request available player information from its verification service.</p>
+      <p><strong>Login Credentials:</strong> Never enter your Free Fire password, OTP, or other account login credentials on this page.</p>
+      <p><strong>Third-Party Service:</strong> Player information may be supplied by an external verification provider. Availability and accuracy depend on that provider.</p>
+      <p><strong>Security:</strong> Do not share private account details with anyone claiming they can guarantee an account unban.</p>
+    </div>
+  </section>
+
+  <!-- TERMS -->
+  <section class="section" id="terms">
+    <div class="section-heading">
+      <div class="section-kicker">SERVICE INFORMATION</div>
+      <h2>Terms of Service</h2>
+    </div>
+    <div class="privacy-content">
+      <p>By using this portal, you agree to provide accurate UID and region information for verification.</p>
+      <p>Verification results depend on the availability and response of the external player information provider.</p>
+      <p>NEXVORA UNBAN does not request your game password or OTP. Do not share those credentials with anyone.</p>
+      <p>Use this service responsibly and only with player information you are authorized to submit.</p>
+    </div>
+  </section>
+
+  <!-- REFUNDS -->
+  <section class="section" id="refunds">
+    <div class="section-heading">
+      <div class="section-kicker">PAYMENT INFORMATION</div>
+      <h2>Refunds & Cancellation</h2>
+    </div>
+    <div class="privacy-content">
+      <p>Any payment-related request should be submitted to the official support team with the relevant transaction details.</p>
+      <p>Refund eligibility, processing time and cancellation conditions depend on the service purchased and the applicable payment-provider rules.</p>
+      <p>Contact the admin before making a payment if you need clarification about a service.</p>
+    </div>
+  </section>
+</main>
+
+<!-- COMPLETE FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-main">
+      <div class="footer-brand-block">
+        <div class="footer-brand-row">
+          <div class="footer-logo-circle">
+            <img src="assets/nexvora-logo.png" alt="NEXVORA Logo">
+          </div>
+          <div>
+            <div class="footer-brand-name">NEXVORA UNBAN</div>
+            <div class="footer-tagline">FAST • SAFE • RELIABLE</div>
+          </div>
+        </div>
+
+        <p class="footer-description">
+          India’s premium Free Fire top-up destination.<br>
+          Fast, secure and convenient player UID verification.
+        </p>
+
+        <p class="footer-verified">
+          <span>✓</span> UID-Based Verification & Top-Up Process
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h3>HELP & SUPPORT</h3>
+        <a href="#verify">Verify Player UID</a>
+        <a href="#how">How UNBAN Works</a>
+        <a href="#faq">Frequently Asked Questions</a>
+        <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">↗ Contact Admin (Telegram)</a>
+      </div>
+
+      <div class="footer-column">
+        <h3>LEGAL & SAFETY</h3>
+        <a href="#terms">Terms of Service</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#refunds">Refunds & Cancellation</a>
+        <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">Contact Support</a>
+      </div>
+    </div>
+
+    <div class="payment-area">
+      <h3>ACCEPTED PAYMENTS</h3>
+      <p>UPI • Google Pay • PhonePe • Paytm • Visa • Mastercard • RuPay • NetBanking</p>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="currentYear">2026</span> NEXVORA UNBAN. All rights reserved.</p>
+      <p class="disclaimer">
+        Disclaimer: NEXVORA UNBAN is an independent service and is not affiliated
+        with or endorsed by Garena. Free Fire and related trademarks belong to
+        their respective owners.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- SUCCESS RESULT MODAL -->
 <div class="success-modal" id="successModal"
-  role="dialog" aria-modal="true" aria-labelledby="successTitle">
-
-  <div class="celebration-layer" id="celebrationLayer"></div>
+     role="dialog" aria-modal="true" aria-labelledby="successTitle">
 
   <div class="success-card">
     <button class="success-close" id="successClose"
-      type="button" aria-label="Close result">×</button>
+            type="button" aria-label="Close result">×</button>
 
     <div class="success-emblem">✓</div>
 
     <div class="success-heading">
       <div class="success-label">NEXVORA VERIFICATION SYSTEM</div>
-      <h2 id="successTitle">Congratulations!</h2>
+      <h2 id="successTitle">Congratulations! 🎉</h2>
       <p>Your player information has been successfully verified.</p>
     </div>
 
@@ -1500,93 +872,67 @@
 
     <div class="result-details">
       <div class="result-detail-row">
-        <span>Game</span>
-        <span class="result-game" id="resultGame">FREE FIRE</span>
+        <span>Game</span><span class="result-game" id="resultGame">FREE FIRE</span>
       </div>
-
       <div class="result-detail-row">
-        <span>Player Nickname</span>
-        <span id="resultUsername">—</span>
+        <span>Player Nickname</span><span id="resultUsername">—</span>
       </div>
-
       <div class="result-detail-row">
-        <span>Player UID</span>
-        <span id="resultUID">—</span>
+        <span>Player UID</span><span id="resultUID">—</span>
       </div>
-
       <div class="result-detail-row">
-        <span>Player Level</span>
-        <span id="resultLevel">—</span>
+        <span>Player Level</span><span id="resultLevel">—</span>
       </div>
-
       <div class="result-detail-row">
-        <span>Region</span>
-        <span id="resultRegion">—</span>
+        <span>Region</span><span id="resultRegion">—</span>
       </div>
-
       <div class="result-detail-row">
-        <span>Last Login</span>
-        <span id="resultLastLogin">—</span>
+        <span>Last Login</span><span id="resultLastLogin">—</span>
       </div>
-
       <div class="result-detail-row">
-        <span>Likes</span>
-        <span id="resultLikes">—</span>
+        <span>Likes</span><span id="resultLikes">—</span>
       </div>
-
       <div class="result-detail-row">
-        <span>Verification</span>
-        <span class="verified-tag" id="resultVerified">VERIFIED</span>
+        <span>Verification</span><span class="verified-tag" id="resultVerified">VERIFIED</span>
       </div>
     </div>
 
-    <button class="proceed-btn" id="proceedBtn" type="button">
-      PROCEED
-    </button>
-
-    <p class="success-note">
-      Player information is displayed according to the data
-      returned by the verification provider.
-    </p>
+    <button class="proceed-btn" id="proceedBtn" type="button">PROCEED</button>
+    <p class="success-note">Player information is displayed according to the data returned by the verification provider.</p>
   </div>
 </div>
-  
+
 <script>
 (() => {
   "use strict";
 
-  /* =====================================
-     CONFIGURATION
-  ===================================== */
-
   const API_URL =
     "https://sitgwrnvxaugresvlvfl.supabase.co/functions/v1/nexvora-unban-uid-lookup";
 
-  /* =====================================
-     ELEMENT REFERENCES
-  ===================================== */
+  const $ = id => document.getElementById(id);
 
-  const menuToggle = document.getElementById("menuToggle");
-  const menuOverlay = document.getElementById("menuOverlay");
-  const sideMenu = document.getElementById("sideMenu");
-  const drawerClose = document.getElementById("drawerClose");
+  const menuToggle = $("menuToggle");
+  const menuOverlay = $("menuOverlay");
+  const sideMenu = $("sideMenu");
+  const drawerClose = $("drawerClose");
 
-  const verifyForm = document.getElementById("verifyForm");
-  const uidInput = document.getElementById("uidInput");
-  const regionSelect = document.getElementById("regionSelect");
-  const verifyBtn = document.getElementById("verifyBtn");
-  const loadingBox = document.getElementById("loadingBox");
-  const messageBox = document.getElementById("messageBox");
+  const verifyForm = $("verifyForm");
+  const uidInput = $("uidInput");
+  const regionSelect = $("regionSelect");
+  const verifyBtn = $("verifyBtn");
+  const loadingBox = $("loadingBox");
+  const messageBox = $("messageBox");
 
-  const successModal = document.getElementById("successModal");
-  const successClose = document.getElementById("successClose");
-  const proceedBtn = document.getElementById("proceedBtn");
-  const celebrationLayer = document.getElementById("celebrationLayer");
+  const successModal = $("successModal");
+  const successClose = $("successClose");
+  const proceedBtn = $("proceedBtn");
 
-  /* =====================================
-     HAMBURGER SIDE MENU
-  ===================================== */
+  const particleCanvas = $("particleCanvas");
+  const celebrationCanvas = $("celebrationCanvas");
+  const particleCtx = particleCanvas.getContext("2d");
+  const celebrationCtx = celebrationCanvas.getContext("2d");
 
+  /* HAMBURGER MENU */
   function openMenu() {
     sideMenu.classList.add("active");
     menuOverlay.classList.add("active");
@@ -1604,11 +950,7 @@
   }
 
   menuToggle.addEventListener("click", () => {
-    if (sideMenu.classList.contains("active")) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
+    sideMenu.classList.contains("active") ? closeMenu() : openMenu();
   });
 
   drawerClose.addEventListener("click", closeMenu);
@@ -1621,47 +963,157 @@
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
       closeMenu();
-
-      if (successModal.classList.contains("show")) {
-        closeSuccessModal();
-      }
+      if (successModal.classList.contains("show")) closeSuccessModal();
     }
   });
 
-  /* =====================================
-     FAQ ACCORDION
-  ===================================== */
-
+  /* FAQ */
   document.querySelectorAll(".faq-question").forEach(button => {
     button.addEventListener("click", () => {
-      const currentItem = button.closest(".faq-item");
-      const wasOpen = currentItem.classList.contains("open");
+      const item = button.closest(".faq-item");
+      const wasOpen = item.classList.contains("open");
 
-      document.querySelectorAll(".faq-item").forEach(item => {
-        item.classList.remove("open");
-
-        const question = item.querySelector(".faq-question");
-        question.setAttribute("aria-expanded", "false");
+      document.querySelectorAll(".faq-item").forEach(other => {
+        other.classList.remove("open");
+        other.querySelector(".faq-question").setAttribute("aria-expanded", "false");
       });
 
       if (!wasOpen) {
-        currentItem.classList.add("open");
+        item.classList.add("open");
         button.setAttribute("aria-expanded", "true");
       }
     });
   });
 
-  /* =====================================
-     FOOTER YEAR
-  ===================================== */
+  $("currentYear").textContent = new Date().getFullYear();
 
-  document.getElementById("currentYear").textContent =
-    new Date().getFullYear();
+  /* BACKGROUND PARTICLES */
+  let particleWidth = 0;
+  let particleHeight = 0;
+  let particles = [];
+  let particleAnimation = 0;
 
-  /* =====================================
-     MESSAGE HELPERS
-  ===================================== */
+  function resizeParticleCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    particleWidth = window.innerWidth;
+    particleHeight = window.innerHeight;
 
+    particleCanvas.width = Math.floor(particleWidth * dpr);
+    particleCanvas.height = Math.floor(particleHeight * dpr);
+    particleCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = Math.min(95, Math.max(35, Math.floor(particleWidth / 12)));
+
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * particleWidth,
+      y: Math.random() * particleHeight,
+      size: Math.random() * 1.8 + .5,
+      speed: Math.random() * .42 + .12,
+      drift: (Math.random() - .5) * .35,
+      alpha: Math.random() * .55 + .2,
+      phase: Math.random() * Math.PI * 2
+    }));
+  }
+
+  function drawParticles() {
+    particleCtx.clearRect(0, 0, particleWidth, particleHeight);
+
+    particles.forEach(p => {
+      p.y -= p.speed;
+      p.x += p.drift;
+      p.phase += .018;
+
+      if (p.y < -5) {
+        p.y = particleHeight + 5;
+        p.x = Math.random() * particleWidth;
+      }
+      if (p.x < -5) p.x = particleWidth + 5;
+      if (p.x > particleWidth + 5) p.x = -5;
+
+      const glow = p.alpha * (.65 + Math.sin(p.phase) * .35);
+
+      particleCtx.beginPath();
+      particleCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      particleCtx.fillStyle = `rgba(92,190,255,${glow})`;
+      particleCtx.shadowBlur = 9;
+      particleCtx.shadowColor = "rgba(54,220,255,.6)";
+      particleCtx.fill();
+    });
+
+    particleCtx.shadowBlur = 0;
+    particleAnimation = requestAnimationFrame(drawParticles);
+  }
+
+  resizeParticleCanvas();
+  drawParticles();
+
+  window.addEventListener("resize", resizeParticleCanvas);
+
+  /* CELEBRATION CONFETTI */
+  let confetti = [];
+  let confettiFrame = 0;
+  let confettiEnd = 0;
+
+  function stopCelebration() {
+    cancelAnimationFrame(confettiFrame);
+    confetti = [];
+    celebrationCtx.clearRect(0, 0, celebrationCanvas.width, celebrationCanvas.height);
+    celebrationCanvas.classList.remove("active");
+  }
+
+  function startCelebration() {
+    stopCelebration();
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    celebrationCanvas.width = Math.floor(window.innerWidth * dpr);
+    celebrationCanvas.height = Math.floor(window.innerHeight * dpr);
+    celebrationCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    celebrationCanvas.classList.add("active");
+
+    const colors = ["#36dcff", "#3987ff", "#8958ff", "#38e6a5", "#ffffff", "#ffcf5c", "#ff6b8a"];
+
+    confetti = Array.from({ length: 150 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: -Math.random() * window.innerHeight * .8,
+      w: Math.random() * 7 + 3,
+      h: Math.random() * 11 + 5,
+      vx: (Math.random() - .5) * 3.5,
+      vy: Math.random() * 3.5 + 2,
+      rotation: Math.random() * 6,
+      spin: (Math.random() - .5) * .18,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    }));
+
+    confettiEnd = performance.now() + 4800;
+
+    function animateConfetti(now) {
+      celebrationCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      confetti.forEach(piece => {
+        piece.x += piece.vx;
+        piece.y += piece.vy;
+        piece.rotation += piece.spin;
+        piece.vy += .018;
+
+        celebrationCtx.save();
+        celebrationCtx.translate(piece.x, piece.y);
+        celebrationCtx.rotate(piece.rotation);
+        celebrationCtx.fillStyle = piece.color;
+        celebrationCtx.fillRect(-piece.w / 2, -piece.h / 2, piece.w, piece.h);
+        celebrationCtx.restore();
+      });
+
+      if (now < confettiEnd) {
+        confettiFrame = requestAnimationFrame(animateConfetti);
+      } else {
+        stopCelebration();
+      }
+    }
+
+    confettiFrame = requestAnimationFrame(animateConfetti);
+  }
+
+  /* FORM HELPERS */
   function showMessage(message, type) {
     messageBox.textContent = message;
     messageBox.className = "message-box " + type;
@@ -1672,45 +1124,25 @@
     messageBox.className = "message-box";
   }
 
-  function setLoading(isLoading) {
-    verifyBtn.disabled = isLoading;
-    uidInput.disabled = isLoading;
-    regionSelect.disabled = isLoading;
-
-    if (isLoading) {
-      verifyBtn.textContent = "VERIFYING...";
-      loadingBox.classList.add("show");
-      clearMessage();
-    } else {
-      verifyBtn.textContent = "VERIFY PLAYER UID";
-      loadingBox.classList.remove("show");
-      uidInput.disabled = false;
-      regionSelect.disabled = false;
-    }
+  function setLoading(active) {
+    verifyBtn.disabled = active;
+    uidInput.disabled = active;
+    regionSelect.disabled = active;
+    verifyBtn.textContent = active ? "VERIFYING..." : "VERIFY PLAYER UID";
+    loadingBox.classList.toggle("show", active);
   }
 
-  /* =====================================
-     DATA FORMATTING
-  ===================================== */
-
   function safeText(value) {
-    if (value === null || value === undefined || value === "") {
-      return "—";
-    }
-
-    return String(value);
+    return value === null || value === undefined || value === ""
+      ? "—"
+      : String(value);
   }
 
   function formatLastLogin(value) {
-    if (value === null || value === undefined || value === "") {
-      return "—";
-    }
+    if (value === null || value === undefined || value === "") return "—";
 
     const date = new Date(value);
-
-    if (Number.isNaN(date.getTime())) {
-      return String(value);
-    }
+    if (Number.isNaN(date.getTime())) return String(value);
 
     return date.toLocaleString("en-IN", {
       day: "2-digit",
@@ -1721,126 +1153,51 @@
     });
   }
 
-  /* =====================================
-     SUCCESS RESULT POPUP
-  ===================================== */
-
+  /* RESULT MODAL */
   function fillResult(player) {
-    document.getElementById("resultGame").textContent =
-      "FREE FIRE";
-
-    document.getElementById("resultUsername").textContent =
-      safeText(player.username);
-
-    document.getElementById("resultUID").textContent =
-      safeText(player.user_id);
-
-    document.getElementById("resultLevel").textContent =
-      safeText(player.level);
-
-    document.getElementById("resultRegion").textContent =
-      safeText(player.region);
-
-    document.getElementById("resultLastLogin").textContent =
-      formatLastLogin(player.last_login);
-
-    // Show Likes only when the API actually provides the field.
-    document.getElementById("resultLikes").textContent =
-      safeText(player.likes);
-
-    document.getElementById("resultVerified").textContent =
-      "VERIFIED";
-
-    document.getElementById("resultStatus").textContent =
-      "UID VERIFIED";
-  }
-
-  function createCelebration() {
-    celebrationLayer.innerHTML = "";
-
-    const colors = [
-      "#36dcff",
-      "#3987ff",
-      "#8958ff",
-      "#38e6a5",
-      "#ffffff",
-      "#ffcf5c"
-    ];
-
-    for (let i = 0; i < 65; i++) {
-      const piece = document.createElement("span");
-
-      piece.className = "celebration-piece";
-      piece.style.left = Math.random() * 100 + "%";
-      piece.style.background =
-        colors[Math.floor(Math.random() * colors.length)];
-
-      piece.style.animationDelay =
-        (Math.random() * 1.1) + "s";
-
-      piece.style.setProperty(
-        "--drift",
-        (Math.random() * 240 - 120) + "px"
-      );
-
-      piece.style.transform =
-        "rotate(" + Math.random() * 360 + "deg)";
-
-      celebrationLayer.appendChild(piece);
-    }
-
-    window.setTimeout(() => {
-      celebrationLayer.innerHTML = "";
-    }, 4500);
+    $("resultGame").textContent = "FREE FIRE";
+    $("resultUsername").textContent = safeText(player.username);
+    $("resultUID").textContent = safeText(player.user_id);
+    $("resultLevel").textContent = safeText(player.level);
+    $("resultRegion").textContent = safeText(player.region);
+    $("resultLastLogin").textContent = formatLastLogin(player.last_login);
+    $("resultLikes").textContent = safeText(player.likes);
+    $("resultVerified").textContent = "VERIFIED";
+    $("resultStatus").textContent = "UID VERIFIED";
   }
 
   function openSuccessModal(player) {
     fillResult(player);
-
     successModal.classList.add("show");
     document.body.classList.add("menu-open");
-
-    createCelebration();
-
+    startCelebration();
     successClose.focus();
   }
 
   function closeSuccessModal() {
     successModal.classList.remove("show");
     document.body.classList.remove("menu-open");
-    celebrationLayer.innerHTML = "";
+    stopCelebration();
   }
 
   successClose.addEventListener("click", closeSuccessModal);
 
   successModal.addEventListener("click", event => {
-    if (event.target === successModal) {
-      closeSuccessModal();
-    }
+    if (event.target === successModal) closeSuccessModal();
   });
 
   proceedBtn.addEventListener("click", () => {
     closeSuccessModal();
-
-    document.getElementById("verify").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
+    $("verify").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  /* =====================================
-     UID INPUT VALIDATION
-  ===================================== */
-
+  /* UID INPUT */
   uidInput.addEventListener("input", () => {
-    uidInput.value = uidInput.value.replace(/\D/g, "");
+    uidInput.value = uidInput.value.replace(/\D/g, "").slice(0, 12);
     clearMessage();
   });
 
-  /* =====================================
-     PLAYER UID VERIFICATION API
-  ===================================== */
-
+  /* UID VERIFICATION */
   verifyForm.addEventListener("submit", async event => {
     event.preventDefault();
 
@@ -1848,36 +1205,24 @@
     const region = regionSelect.value;
 
     if (!/^\d{8,12}$/.test(uid)) {
-      showMessage(
-        "Please enter a valid UID containing 8 to 12 digits.",
-        "error"
-      );
-
+      showMessage("Please enter a valid UID containing 8 to 12 digits.", "error");
       uidInput.focus();
       return;
     }
 
     if (!["india", "global"].includes(region)) {
-      showMessage(
-        "Please select a valid player region.",
-        "error"
-      );
-
+      showMessage("Please select a valid player region.", "error");
       return;
     }
 
     setLoading(true);
+    clearMessage();
 
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          uid: uid,
-          region: region
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid, region })
       });
 
       let data;
@@ -1885,16 +1230,13 @@
       try {
         data = await response.json();
       } catch {
-        throw new Error(
-          "The verification service returned an invalid response. Please try again."
-        );
+        throw new Error("The verification service returned an invalid response.");
       }
 
       if (!response.ok || !data || data.ok !== true) {
         throw new Error(
-          data?.error ||
-          data?.message ||
-          "Player verification failed. Check your UID and region."
+          data?.error || data?.message ||
+          "Player verification failed. Check your UID and selected region."
         );
       }
 
@@ -1905,23 +1247,17 @@
         player.verified !== true ||
         String(player.user_id) !== uid
       ) {
-        throw new Error(
-          "Player information could not be verified. Please try again."
-        );
+        throw new Error("Player information could not be verified.");
       }
 
-      clearMessage();
       openSuccessModal(player);
 
     } catch (error) {
       console.error("NEXVORA UID verification:", error);
-
       showMessage(
-        error.message ||
-        "Unable to connect to the verification service. Please try again.",
+        error.message || "Unable to connect to the verification service. Please try again.",
         "error"
       );
-
     } finally {
       setLoading(false);
     }
@@ -1932,4 +1268,3 @@
 
 </body>
 </html>
-
