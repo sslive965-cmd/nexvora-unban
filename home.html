@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,22 +45,12 @@ button{cursor:pointer}
 
 /* PARTICLE BACKGROUND */
 #particleCanvas{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  opacity:.72;
+  position:fixed;inset:0;z-index:0;
+  width:100%;height:100%;pointer-events:none;opacity:.72;
 }
 .ambient-glow{
-  position:fixed;
-  width:320px;height:320px;
-  border-radius:50%;
-  filter:blur(110px);
-  opacity:.15;
-  pointer-events:none;
-  z-index:0;
+  position:fixed;width:320px;height:320px;border-radius:50%;
+  filter:blur(110px);opacity:.15;pointer-events:none;z-index:0;
 }
 .glow-one{top:12%;left:-190px;background:var(--blue)}
 .glow-two{right:-190px;top:55%;background:var(--purple)}
@@ -69,59 +58,43 @@ button{cursor:pointer}
 
 /* HEADER */
 .site-header{
-  position:sticky;top:0;z-index:100;
-  min-height:76px;
+  position:sticky;top:0;z-index:100;min-height:76px;
   display:flex;align-items:center;justify-content:space-between;
   padding:11px clamp(15px,5vw,64px);
   background:rgba(7,9,20,.88);
   border-bottom:1px solid var(--border);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
 }
 .brand{display:flex;align-items:center;gap:11px;min-width:0}
 .brand-logo-circle{
-  width:46px;height:46px;flex-shrink:0;
-  display:grid;place-items:center;
-  overflow:hidden;
-  border:1px solid rgba(54,220,255,.42);
-  border-radius:50%;
-  background:linear-gradient(145deg,#172b50,#0a1024);
+  width:46px;height:46px;flex-shrink:0;display:grid;place-items:center;
+  overflow:hidden;border:1px solid rgba(54,220,255,.42);
+  border-radius:50%;background:linear-gradient(145deg,#172b50,#0a1024);
   box-shadow:0 0 18px rgba(57,135,255,.23);
 }
-.brand-logo-circle img{
-  width:100%;height:100%;object-fit:contain;padding:5px;
-}
+.brand-logo-circle img{width:100%;height:100%;object-fit:contain;padding:5px}
 .brand-name{
-  font-family:Orbitron,sans-serif;
-  font-size:14px;font-weight:900;letter-spacing:1px;
-  white-space:nowrap;
+  font-family:Orbitron,sans-serif;font-size:14px;font-weight:900;
+  letter-spacing:1px;white-space:nowrap;
 }
 .brand-name span{color:var(--cyan)}
-.brand-subtitle{
-  margin-top:4px;color:var(--muted);
-  font-size:9px;letter-spacing:2px;
-}
+.brand-subtitle{margin-top:4px;color:var(--muted);font-size:9px;letter-spacing:2px}
 .header-actions{display:flex;align-items:center;gap:11px}
 .support-link{
-  width:43px;height:43px;
-  display:grid;place-items:center;
-  border:1px solid rgba(54,220,255,.35);
-  border-radius:13px;
-  background:rgba(54,220,255,.08);
-  color:var(--cyan);font-size:21px;
+  width:43px;height:43px;display:grid;place-items:center;
+  border:1px solid rgba(54,220,255,.35);border-radius:13px;
+  background:rgba(54,220,255,.08);color:var(--cyan);font-size:21px;
   transition:.25s;
 }
 .support-link:hover{
   background:rgba(54,220,255,.17);
-  box-shadow:0 0 22px rgba(54,220,255,.2);
-  transform:translateY(-2px);
+  box-shadow:0 0 22px rgba(54,220,255,.2);transform:translateY(-2px);
 }
 .menu-toggle{
-  width:43px;height:43px;
-  display:flex;flex-direction:column;
+  width:43px;height:43px;display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:5px;
-  border:1px solid var(--border);
-  border-radius:13px;background:rgba(255,255,255,.045);
+  border:1px solid var(--border);border-radius:13px;
+  background:rgba(255,255,255,.045);
 }
 .menu-toggle span{
   width:19px;height:2px;border-radius:5px;
@@ -133,18 +106,14 @@ button{cursor:pointer}
 
 /* HAMBURGER DRAWER */
 .menu-overlay{
-  position:fixed;inset:0;z-index:200;
-  background:rgba(0,0,0,.7);
-  opacity:0;visibility:hidden;transition:.3s;
-  backdrop-filter:blur(5px);
+  position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);
+  opacity:0;visibility:hidden;transition:.3s;backdrop-filter:blur(5px);
 }
 .menu-overlay.active{opacity:1;visibility:visible}
 .side-menu{
   position:fixed;top:0;right:0;z-index:201;
-  width:min(340px,88vw);height:100dvh;
-  padding:24px 20px;
-  display:flex;flex-direction:column;
-  overflow-y:auto;
+  width:min(340px,88vw);height:100dvh;padding:24px 20px;
+  display:flex;flex-direction:column;overflow-y:auto;
   background:radial-gradient(circle at 100% 0%,rgba(57,135,255,.18),transparent 38%),#101326;
   border-left:1px solid var(--border);
   box-shadow:-20px 0 70px rgba(0,0,0,.45);
@@ -156,7 +125,10 @@ button{cursor:pointer}
   display:flex;align-items:center;justify-content:space-between;
   padding-bottom:20px;border-bottom:1px solid var(--border);
 }
-.drawer-brand{display:flex;align-items:center;gap:10px;font-family:Orbitron,sans-serif;font-size:12px;font-weight:900}
+.drawer-brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:Orbitron,sans-serif;font-size:12px;font-weight:900;
+}
 .drawer-brand img{
   width:38px;height:38px;padding:4px;
   border:1px solid rgba(54,220,255,.3);border-radius:50%;
@@ -173,8 +145,7 @@ button{cursor:pointer}
 }
 .menu-links{display:flex;flex-direction:column;gap:8px}
 .menu-links a{
-  min-height:48px;padding:0 12px;
-  display:flex;align-items:center;gap:13px;
+  min-height:48px;padding:0 12px;display:flex;align-items:center;gap:13px;
   border:1px solid transparent;border-radius:12px;
   color:#dce3ff;font-size:12px;font-weight:700;transition:.2s;
 }
@@ -199,10 +170,10 @@ button{cursor:pointer}
 .page-container{width:min(1120px,calc(100% - 32px));margin:auto}
 .hero{text-align:center;padding:48px 0 23px}
 .hero-tag{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:8px 14px;border:1px solid rgba(54,220,255,.22);
-  border-radius:999px;background:rgba(54,220,255,.06);
-  color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:1.7px;
+  display:inline-flex;align-items:center;gap:8px;padding:8px 14px;
+  border:1px solid rgba(54,220,255,.22);border-radius:999px;
+  background:rgba(54,220,255,.06);color:var(--cyan);
+  font-size:10px;font-weight:800;letter-spacing:1.7px;
 }
 .hero h1{
   margin-top:18px;font-family:Orbitron,sans-serif;
@@ -221,15 +192,11 @@ button{cursor:pointer}
 /* FULL BANNER - NEVER CROP */
 .banner-area{margin:20px 0 24px}
 .banner-card{
-  width:100%;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
+  width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;
   border:1px solid var(--border);border-radius:17px;
   background:#0c1021;box-shadow:0 18px 55px rgba(0,0,0,.28);
 }
-.banner-card img{
-  display:block;width:100%;height:auto;
-  max-height:430px;object-fit:contain;
-}
+.banner-card img{display:block;width:100%;height:auto;max-height:430px;object-fit:contain}
 
 /* FREE FIRE BRAND LINE */
 .game-line{
@@ -254,8 +221,8 @@ button{cursor:pointer}
   gap:12px;margin:22px 0 34px;
 }
 .feature-card{
-  min-width:0;padding:17px 10px;
-  display:flex;align-items:center;justify-content:center;gap:10px;
+  min-width:0;padding:17px 10px;display:flex;
+  align-items:center;justify-content:center;gap:10px;
   border:1px solid var(--border);border-radius:14px;
   background:linear-gradient(145deg,rgba(19,26,49,.94),rgba(11,15,31,.94));
 }
@@ -266,15 +233,24 @@ button{cursor:pointer}
 /* SECTIONS */
 .section{padding:32px 0;scroll-margin-top:85px}
 .section-heading{text-align:center;margin-bottom:22px}
-.section-kicker{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
-.section-heading h2{margin-top:9px;font-family:Orbitron,sans-serif;font-size:clamp(20px,4vw,29px);font-weight:800}
-.section-heading p{max-width:590px;margin:10px auto 0;color:var(--muted);font-size:12px;line-height:1.7}
+.section-kicker{
+  color:var(--cyan);font-size:10px;font-weight:800;
+  letter-spacing:2.5px;text-transform:uppercase;
+}
+.section-heading h2{
+  margin-top:9px;font-family:Orbitron,sans-serif;
+  font-size:clamp(20px,4vw,29px);font-weight:800;
+}
+.section-heading p{
+  max-width:590px;margin:10px auto 0;
+  color:var(--muted);font-size:12px;line-height:1.7;
+}
 
 /* UID FORM */
 .verify-panel{
-  position:relative;max-width:690px;margin:auto;padding:clamp(20px,5vw,34px);
-  overflow:hidden;border:1px solid rgba(87,137,255,.28);
-  border-radius:21px;
+  position:relative;max-width:690px;margin:auto;
+  padding:clamp(20px,5vw,34px);overflow:hidden;
+  border:1px solid rgba(87,137,255,.28);border-radius:21px;
   background:radial-gradient(circle at 100% 0%,rgba(57,135,255,.14),transparent 42%),linear-gradient(145deg,#141a33,#0c1022);
   box-shadow:0 25px 75px rgba(0,0,0,.3);
 }
@@ -297,8 +273,7 @@ button{cursor:pointer}
 .form-control::placeholder{color:#68718d}
 select.form-control{color-scheme:dark}
 .verify-btn{
-  width:100%;min-height:52px;margin-top:22px;
-  border:0;border-radius:12px;
+  width:100%;min-height:52px;margin-top:22px;border:0;border-radius:12px;
   background:linear-gradient(100deg,#2879f4,#6559f5 65%,#8258ec);
   color:white;font-size:12px;font-weight:900;letter-spacing:1.2px;
   box-shadow:0 10px 30px rgba(57,105,255,.22);transition:.25s;
@@ -326,7 +301,10 @@ select.form-control{color-scheme:dark}
 
 /* HOW IT WORKS */
 .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
-.step-card{padding:19px 15px;border:1px solid var(--border);border-radius:15px;background:rgba(16,18,37,.8);transition:.25s}
+.step-card{
+  padding:19px 15px;border:1px solid var(--border);
+  border-radius:15px;background:rgba(16,18,37,.8);transition:.25s;
+}
 .step-card:hover{transform:translateY(-4px);border-color:rgba(54,220,255,.35)}
 .step-number{color:var(--cyan);font-family:Orbitron,sans-serif;font-size:23px;font-weight:900}
 .step-card h3{margin-top:11px;font-size:12px}
@@ -371,8 +349,7 @@ select.form-control{color-scheme:dark}
 .footer-logo-circle{
   width:54px;height:54px;flex-shrink:0;display:grid;place-items:center;
   overflow:hidden;border:1px solid rgba(54,220,255,.4);
-  border-radius:50%;background:#111b32;
-  box-shadow:0 0 18px rgba(57,135,255,.2);
+  border-radius:50%;background:#111b32;box-shadow:0 0 18px rgba(57,135,255,.2);
 }
 .footer-logo-circle img{width:100%;height:100%;padding:5px;object-fit:contain}
 .footer-brand-name{font-family:Orbitron,sans-serif;font-size:14px;font-weight:900;letter-spacing:.7px}
@@ -392,9 +369,9 @@ select.form-control{color-scheme:dark}
 
 /* SUCCESS MODAL */
 .success-modal{
-  position:fixed;inset:0;z-index:500;
-  display:none;align-items:center;justify-content:center;
-  padding:17px;background:rgba(2,4,13,.88);
+  position:fixed;inset:0;z-index:500;display:none;
+  align-items:center;justify-content:center;padding:17px;
+  background:rgba(2,4,13,.88);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
 }
 .success-modal.show{display:flex;animation:modalFade .3s ease both}
@@ -407,7 +384,10 @@ select.form-control{color-scheme:dark}
   box-shadow:0 0 70px rgba(57,135,255,.18),0 25px 90px rgba(0,0,0,.65);
   animation:cardEnter .55s cubic-bezier(.2,.8,.2,1) both;
 }
-@keyframes cardEnter{from{transform:translateY(35px) scale(.88);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+@keyframes cardEnter{
+  from{transform:translateY(35px) scale(.88);opacity:0}
+  to{transform:translateY(0) scale(1);opacity:1}
+}
 .success-close{
   position:absolute;top:12px;right:13px;width:34px;height:34px;
   border:1px solid var(--border);border-radius:50%;
@@ -419,9 +399,17 @@ select.form-control{color-scheme:dark}
   border-radius:50%;background:rgba(56,230,165,.1);
   box-shadow:0 0 35px rgba(56,230,165,.18);
   color:var(--success);font-size:38px;
-  animation:emblemPop .7s cubic-bezier(.2,.8,.2,1) both;
+  animation:emblemPop .7s cubic-bezier(.2,.8,.2,1) both,emblemGlow 2s ease-in-out 1s infinite;
 }
-@keyframes emblemPop{0%{transform:scale(.2) rotate(-40deg);opacity:0}70%{transform:scale(1.17) rotate(8deg)}100%{transform:scale(1);opacity:1}}
+@keyframes emblemPop{
+  0%{transform:scale(.2) rotate(-40deg);opacity:0}
+  70%{transform:scale(1.17) rotate(8deg)}
+  100%{transform:scale(1);opacity:1}
+}
+@keyframes emblemGlow{
+  0%,100%{box-shadow:0 0 22px rgba(56,230,165,.15)}
+  50%{box-shadow:0 0 42px rgba(56,230,165,.45)}
+}
 .success-heading{text-align:center}
 .success-label{color:var(--success);font-size:9px;font-weight:900;letter-spacing:2px}
 .success-heading h2{
@@ -429,6 +417,11 @@ select.form-control{color-scheme:dark}
   font-size:clamp(20px,5vw,27px);font-weight:900;
   background:linear-gradient(90deg,#fff,#70e5ff,#b18bff);
   background-clip:text;-webkit-background-clip:text;color:transparent;
+  animation:titleGlow 2.2s ease-in-out infinite;
+}
+@keyframes titleGlow{
+  0%,100%{filter:drop-shadow(0 0 3px rgba(54,220,255,.15))}
+  50%{filter:drop-shadow(0 0 13px rgba(54,220,255,.5))}
 }
 .success-heading p{margin-top:8px;color:var(--muted);font-size:11px;line-height:1.7}
 .result-status{display:flex;justify-content:center;margin:17px 0}
@@ -438,7 +431,10 @@ select.form-control{color-scheme:dark}
   background:rgba(56,230,165,.08);color:var(--success);
   font-size:10px;font-weight:800;
 }
-.result-status span:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--success);box-shadow:0 0 10px var(--success)}
+.result-status span:before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--success);box-shadow:0 0 10px var(--success);
+}
 .result-details{overflow:hidden;border:1px solid var(--border);border-radius:14px;background:rgba(4,7,18,.5)}
 .result-detail-row{
   min-height:42px;padding:10px 13px;
@@ -447,9 +443,16 @@ select.form-control{color-scheme:dark}
 }
 .result-detail-row:last-child{border-bottom:0}
 .result-detail-row span:first-child{color:var(--muted);font-size:10px}
-.result-detail-row span:last-child{max-width:62%;overflow-wrap:anywhere;color:#f0f3ff;text-align:right;font-size:11px;font-weight:700}
+.result-detail-row span:last-child{
+  max-width:62%;overflow-wrap:anywhere;color:#f0f3ff;
+  text-align:right;font-size:11px;font-weight:700;
+}
 .result-game{color:var(--cyan)!important;font-family:Orbitron,sans-serif;font-size:10px!important}
 .verified-tag{color:var(--success)!important}
+.connected-tag{
+  color:var(--success)!important;font-family:Orbitron,sans-serif;
+  letter-spacing:.7px;text-shadow:0 0 12px rgba(56,230,165,.35);
+}
 .proceed-btn{
   width:100%;min-height:49px;margin-top:18px;border:0;border-radius:11px;
   background:linear-gradient(100deg,#2879f4,#7654ef);
@@ -458,10 +461,40 @@ select.form-control{color-scheme:dark}
 }
 .success-note{margin-top:11px;color:#7983a2;text-align:center;font-size:9px;line-height:1.6}
 
-/* CELEBRATION */
-#celebrationCanvas{position:fixed;inset:0;z-index:490;width:100%;height:100%;pointer-events:none;display:none}
-#celebrationCanvas.active{display:block}
+/* UNIVERSAL NEON SHINE */
+button,.support-link,.drawer-support{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+button::after,.support-link::after,.drawer-support::after{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-85%;
+  width:55%;
+  height:220%;
+  pointer-events:none;
+  transform:rotate(24deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent);
+  animation:buttonShine 3.2s ease-in-out infinite;
+}
+@keyframes buttonShine{
+  0%,55%{left:-85%}
+  100%{left:145%}
+}
+button:hover,.support-link:hover,.drawer-support:hover{filter:brightness(1.13)}
+button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
+  outline:2px solid var(--cyan);
+  outline-offset:3px;
+}
 
+/* CELEBRATION */
+#celebrationCanvas{
+  position:fixed;inset:0;z-index:490;width:100%;height:100%;
+  pointer-events:none;display:none;
+}
+#celebrationCanvas.active{display:block}
 @media(max-width:760px){
   .feature-grid{grid-template-columns:repeat(2,1fr)}
   .steps-grid{grid-template-columns:repeat(2,1fr)}
@@ -490,16 +523,18 @@ select.form-control{color-scheme:dark}
   .footer-main{grid-template-columns:1fr 1fr;gap:22px 14px}
   .footer-brand-block{grid-column:1/-1}
   .footer-column h3{font-size:9px}
-  .footer-column a{font-size:10px}
+    .footer-column a{font-size:10px}
   .success-card{padding:24px 14px 18px}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!
-important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+  }
 }
 </style>
 </head>
-  
 <body>
 
 <canvas id="particleCanvas"></canvas>
@@ -807,7 +842,7 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
         </div>
 
         <p class="footer-description">
-          India’s premium Free Fire top-up destination.<br>
+          India’s premium Free Fire Unban destination.<br>
           Fast, secure and convenient player UID verification.
         </p>
 
@@ -841,8 +876,8 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     <div class="footer-bottom">
       <p>© <span id="currentYear">2026</span> NEXVORA UNBAN. All rights reserved.</p>
       <p class="disclaimer">
-        Disclaimer: NEXVORA UNBAN is an independent service and is not affiliated
-        with or endorsed by Garena. Free Fire and related trademarks belong to
+        Disclaimer: NEXVORA UNBAN is an independent service and is affiliated
+        with or dorsed by Garena. Free Fire and related trademarks belong to
         their respective owners.
       </p>
     </div>
@@ -867,7 +902,7 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     </div>
 
     <div class="result-status">
-      <span id="resultStatus">UID VERIFIED</span>
+      <span id="resultStatus">PLAYER CONNECTED</span>
     </div>
 
     <div class="result-details">
@@ -890,7 +925,7 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
         <span>Last Login</span><span id="resultLastLogin">—</span>
       </div>
       <div class="result-detail-row">
-        <span>Likes</span><span id="resultLikes">—</span>
+        <span>Status</span><span class="connected-tag" id="resultConnected">CONNECTED</span>
       </div>
       <div class="result-detail-row">
         <span>Verification</span><span class="verified-tag" id="resultVerified">VERIFIED</span>
@@ -901,7 +936,6 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     <p class="success-note">Player information is displayed according to the data returned by the verification provider.</p>
   </div>
 </div>
-
 <script>
 (() => {
   "use strict";
@@ -963,7 +997,10 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
       closeMenu();
-      if (successModal.classList.contains("show")) closeSuccessModal();
+
+      if (successModal.classList.contains("show")) {
+        closeSuccessModal();
+      }
     }
   });
 
@@ -975,7 +1012,8 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
 
       document.querySelectorAll(".faq-item").forEach(other => {
         other.classList.remove("open");
-        other.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+        other.querySelector(".faq-question")
+          .setAttribute("aria-expanded", "false");
       });
 
       if (!wasOpen) {
@@ -995,14 +1033,19 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
 
   function resizeParticleCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
     particleWidth = window.innerWidth;
     particleHeight = window.innerHeight;
 
     particleCanvas.width = Math.floor(particleWidth * dpr);
     particleCanvas.height = Math.floor(particleHeight * dpr);
+
     particleCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const count = Math.min(95, Math.max(35, Math.floor(particleWidth / 12)));
+    const count = Math.min(
+      95,
+      Math.max(35, Math.floor(particleWidth / 12))
+    );
 
     particles = Array.from({ length: count }, () => ({
       x: Math.random() * particleWidth,
@@ -1027,6 +1070,7 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
         p.y = particleHeight + 5;
         p.x = Math.random() * particleWidth;
       }
+
       if (p.x < -5) p.x = particleWidth + 5;
       if (p.x > particleWidth + 5) p.x = -5;
 
@@ -1056,8 +1100,16 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
 
   function stopCelebration() {
     cancelAnimationFrame(confettiFrame);
+
     confetti = [];
-    celebrationCtx.clearRect(0, 0, celebrationCanvas.width, celebrationCanvas.height);
+
+    celebrationCtx.clearRect(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight
+    );
+
     celebrationCanvas.classList.remove("active");
   }
 
@@ -1065,12 +1117,26 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     stopCelebration();
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    celebrationCanvas.width = Math.floor(window.innerWidth * dpr);
-    celebrationCanvas.height = Math.floor(window.innerHeight * dpr);
+
+    celebrationCanvas.width =
+      Math.floor(window.innerWidth * dpr);
+
+    celebrationCanvas.height =
+      Math.floor(window.innerHeight * dpr);
+
     celebrationCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
     celebrationCanvas.classList.add("active");
 
-    const colors = ["#36dcff", "#3987ff", "#8958ff", "#38e6a5", "#ffffff", "#ffcf5c", "#ff6b8a"];
+    const colors = [
+      "#36dcff",
+      "#3987ff",
+      "#8958ff",
+      "#38e6a5",
+      "#ffffff",
+      "#ffcf5c",
+      "#ff6b8a"
+    ];
 
     confetti = Array.from({ length: 150 }, () => ({
       x: Math.random() * window.innerWidth,
@@ -1087,7 +1153,12 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     confettiEnd = performance.now() + 4800;
 
     function animateConfetti(now) {
-      celebrationCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      celebrationCtx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+      );
 
       confetti.forEach(piece => {
         piece.x += piece.vx;
@@ -1096,10 +1167,18 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
         piece.vy += .018;
 
         celebrationCtx.save();
+
         celebrationCtx.translate(piece.x, piece.y);
         celebrationCtx.rotate(piece.rotation);
         celebrationCtx.fillStyle = piece.color;
-        celebrationCtx.fillRect(-piece.w / 2, -piece.h / 2, piece.w, piece.h);
+
+        celebrationCtx.fillRect(
+          -piece.w / 2,
+          -piece.h / 2,
+          piece.w,
+          piece.h
+        );
+
         celebrationCtx.restore();
       });
 
@@ -1128,7 +1207,11 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     verifyBtn.disabled = active;
     uidInput.disabled = active;
     regionSelect.disabled = active;
-    verifyBtn.textContent = active ? "VERIFYING..." : "VERIFY PLAYER UID";
+
+    verifyBtn.textContent = active
+      ? "VERIFYING..."
+      : "VERIFY PLAYER UID";
+
     loadingBox.classList.toggle("show", active);
   }
 
@@ -1139,10 +1222,15 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
   }
 
   function formatLastLogin(value) {
-    if (value === null || value === undefined || value === "") return "—";
+    if (value === null || value === undefined || value === "") {
+      return "—";
+    }
 
     const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return String(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return String(value);
+    }
 
     return date.toLocaleString("en-IN", {
       day: "2-digit",
@@ -1160,35 +1248,48 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     $("resultUID").textContent = safeText(player.user_id);
     $("resultLevel").textContent = safeText(player.level);
     $("resultRegion").textContent = safeText(player.region);
-    $("resultLastLogin").textContent = formatLastLogin(player.last_login);
-    $("resultLikes").textContent = safeText(player.likes);
+
+    $("resultLastLogin").textContent =
+      formatLastLogin(player.last_login);
+
+    $("resultConnected").textContent = "CONNECTED";
     $("resultVerified").textContent = "VERIFIED";
-    $("resultStatus").textContent = "UID VERIFIED";
+    $("resultStatus").textContent = "PLAYER CONNECTED";
   }
 
   function openSuccessModal(player) {
     fillResult(player);
+
     successModal.classList.add("show");
     document.body.classList.add("menu-open");
+
     startCelebration();
+
     successClose.focus();
   }
 
   function closeSuccessModal() {
     successModal.classList.remove("show");
     document.body.classList.remove("menu-open");
+
     stopCelebration();
   }
 
   successClose.addEventListener("click", closeSuccessModal);
 
   successModal.addEventListener("click", event => {
-    if (event.target === successModal) closeSuccessModal();
+    if (event.target === successModal) {
+      closeSuccessModal();
+    }
   });
 
   proceedBtn.addEventListener("click", () => {
     closeSuccessModal();
-    $("verify").scrollIntoView({ behavior: "smooth", block: "start" });
+
+    $("verify").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   });
 
   /* UID INPUT */
@@ -1205,13 +1306,21 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     const region = regionSelect.value;
 
     if (!/^\d{8,12}$/.test(uid)) {
-      showMessage("Please enter a valid UID containing 8 to 12 digits.", "error");
+      showMessage(
+        "Please enter a valid UID containing 8 to 12 digits.",
+        "error"
+      );
+
       uidInput.focus();
       return;
     }
 
     if (!["india", "global"].includes(region)) {
-      showMessage("Please select a valid player region.", "error");
+      showMessage(
+        "Please select a valid player region.",
+        "error"
+      );
+
       return;
     }
 
@@ -1221,8 +1330,13 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid, region })
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          uid,
+          region
+        })
       });
 
       let data;
@@ -1230,12 +1344,15 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
       try {
         data = await response.json();
       } catch {
-        throw new Error("The verification service returned an invalid response.");
+        throw new Error(
+          "The verification service returned an invalid response."
+        );
       }
 
       if (!response.ok || !data || data.ok !== true) {
         throw new Error(
-          data?.error || data?.message ||
+          data?.error ||
+          data?.message ||
           "Player verification failed. Check your UID and selected region."
         );
       }
@@ -1247,17 +1364,22 @@ important;animation-duration:.01ms!important;transition-duration:.01ms!important
         player.verified !== true ||
         String(player.user_id) !== uid
       ) {
-        throw new Error("Player information could not be verified.");
+        throw new Error(
+          "Player information could not be verified."
+        );
       }
 
       openSuccessModal(player);
 
     } catch (error) {
       console.error("NEXVORA UID verification:", error);
+
       showMessage(
-        error.message || "Unable to connect to the verification service. Please try again.",
+        error.message ||
+        "Unable to connect to the verification service. Please try again.",
         "error"
       );
+
     } finally {
       setLoading(false);
     }
