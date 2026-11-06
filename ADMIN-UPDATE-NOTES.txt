@@ -1,0 +1,15 @@
+NEXVORA UNBAN — ADMIN CONTROL UPDATE
+
+Included: original website files/assets preserved; unban-admin.html updated with owner-only user directory, Telegram bot status monitor, shared configuration editor, plan management, required Telegram chat toggles, website-side license key generation, license suspend/reactivate/revoke/delete, and existing payment/application/activity tools.
+
+Supabase backend: unban-admin-control deployed as version 3 (verify_jwt=true). Existing Telegram bot function and license verification function were not modified. No tables were dropped or reset.
+
+Important:
+- Website admin can now create a license key assigned to a Telegram user ID and selected active plan.
+- Telegram bot approval/request workflow remains separate and unchanged.
+- Suspend changes license status to `suspended`; license verification treats non-active licenses as inactive. Reactivation is allowed for suspended licenses only. Revoked keys remain revoked; delete is permanent.
+- Bot monitor checks Telegram getMe and reports reachability at check time; it is not a continuous uptime monitor.
+- User block/unblock changes the `bot_users.blocked` flag. This does not itself ban a user at Telegram platform level unless the bot's handler checks that flag.
+- Config editor updates bot_config; hardcoded website page constants may still need to be switched to read shared config before every public page reflects changes.
+
+Security: service-role key stays only in Supabase Edge Function secrets. Admin function requires valid Supabase Auth JWT and exact owner email.

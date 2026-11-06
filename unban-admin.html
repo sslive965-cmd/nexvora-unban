@@ -329,6 +329,8 @@ body {
 .detail-panel{margin-top:16px;}
 @media(max-width:520px){.detail-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.detail-item{padding:9px;}}
 
+
+.settings-form{display:grid;gap:10px;max-width:620px}.settings-form input,.settings-form textarea,.settings-form select{width:100%;padding:12px;border:1px solid rgba(70,190,255,.22);border-radius:10px;background:rgba(4,15,30,.8);color:inherit}.settings-form label{font-size:11px;letter-spacing:1px;color:#8fb6ce}.table-container table{min-width:680px}.status-suspended{color:#ffbf66}
 </style>
 </head>
 
@@ -444,9 +446,10 @@ body {
         <button class="nav-item" data-section="licenses" type="button">
           <span>⌘</span> License Keys
         </button>
-        <button class="nav-item" data-section="activity" type="button">
-          <span>◷</span> Activity
-        </button>
+        <button class="nav-item" data-section="users" type="button"><span>♙</span> Users</button>
+        <button class="nav-item" data-section="bot" type="button"><span>◉</span> Bot Monitor</button>
+        <button class="nav-item" data-section="settings" type="button"><span>⚙</span> Settings</button>
+        <button class="nav-item" data-section="activity" type="button"><span>◷</span> Activity</button>
       </nav>
 
       <div class="sidebar-bottom">
@@ -688,6 +691,29 @@ body {
             </button>
           </div>
         </div>
+      </section>
+
+      <!-- USER MANAGEMENT -->
+      <section id="section-users" class="admin-section" hidden>
+        <div class="section-heading"><div><div class="eyebrow">TELEGRAM USER DIRECTORY</div><h3>User Management</h3><p>Review bot users, linked licenses and request history. Bot admin commands remain on Telegram.</p></div><button id="refreshUsers" class="secondary-button" type="button">↻ Refresh</button></div>
+        <div class="filter-row"><input id="userSearch" type="search" placeholder="Search Telegram ID, username or name"></div>
+        <div class="panel"><div id="usersTable" class="table-container"><div class="empty-state">User records will appear here.</div></div></div>
+        <div id="userDetailPanel" class="panel detail-panel" hidden><div class="panel-heading"><h3>User Details</h3><button class="close-detail" data-close-detail type="button">✕</button></div><div id="userDetailContent"></div><div class="action-row"><button id="toggleUserBlock" class="danger-button" type="button">BLOCK USER</button></div></div>
+      </section>
+
+      <!-- BOT MONITOR -->
+      <section id="section-bot" class="admin-section" hidden>
+        <div class="section-heading"><div><div class="eyebrow">TELEGRAM CONNECTIVITY</div><h3>Bot Monitor</h3><p>Read-only operational monitoring. Bot approvals and admin commands stay in Telegram.</p></div><button id="refreshBot" class="secondary-button" type="button">↻ Check status</button></div>
+        <div class="stats-grid"><article class="stat-card"><span>Bot Status</span><strong id="botOnlineState">Checking…</strong><small>Telegram getMe response</small></article><article class="stat-card"><span>Bot Username</span><strong id="botUsername">—</strong><small>Configured bot identity</small></article><article class="stat-card"><span>Checked At</span><strong id="botCheckedAt">—</strong><small>Latest server check</small></article></div>
+        <div class="panel"><div class="panel-heading"><h3>Bot Features / System Components</h3></div><div id="botFeatures" class="detail-grid"></div></div>
+      </section>
+
+      <!-- WEBSITE SETTINGS -->
+      <section id="section-settings" class="admin-section" hidden>
+        <div class="section-heading"><div><div class="eyebrow">OWNER CONFIGURATION</div><h3>Website & System Settings</h3><p>Manage shared configuration and Telegram required-chat entries. These settings do not run Telegram admin workflows.</p></div><button id="refreshSettings" class="secondary-button" type="button">↻ Reload</button></div>
+        <div class="panel"><div class="panel-heading"><h3>Core Configuration</h3></div><form id="siteConfigForm" class="settings-form"><label>UPI ID</label><input id="cfgUpi" maxlength="120"><label>Support username</label><input id="cfgSupport" maxlength="120"><label>Bot username</label><input id="cfgBot" maxlength="120"><label>Welcome text</label><textarea id="cfgWelcome" rows="4" maxlength="2000"></textarea><button class="primary-button" type="submit">SAVE CONFIGURATION</button></form></div>
+        <div class="panel"><div class="panel-heading"><h3>License Plans</h3><p>Update title, price and availability.</p></div><div id="plansTable" class="table-container"></div></div>
+        <div class="panel"><div class="panel-heading"><h3>Required Telegram Chats</h3></div><div id="requiredChatsTable" class="table-container"></div></div>
       </section>
 
       <!-- ACTIVITY SECTION -->
@@ -1410,6 +1436,9 @@ function renderLicenses(){
 function showLicense(id){ selectedLicense=licenseRows.find(x=>x.id===id); if(!selectedLicense)return; const x=selectedLicense; $('licenseDetailPanel').hidden=false;
  $('licenseDetailContent').innerHTML=detailGrid(x,['license_key','telegram_user_id','plan_code','usage_limit','uses_count','status','issued_at','expires_at','last_used_at','revoked_at','request_id']);
  $('revokeLicense').hidden=x.status==='revoked';
+ let stateBtn=document.getElementById('licenseStateAction'); if(!stateBtn){stateBtn=document.createElement('button');stateBtn.id='licenseStateAction';stateBtn.className='secondary-button';$('licenseDetailPanel').querySelector('.action-row').prepend(stateBtn);}
+ stateBtn.hidden=x.status==='revoked';stateBtn.textContent=x.status==='suspended'?'REACTIVATE LICENSE':'SUSPEND LICENSE';
+ stateBtn.onclick=async()=>{const next=x.status==='suspended'?'active':'suspended';if(!confirm((next==='active'?'Reactivate':'Suspend')+' this license?'))return;try{await adminCall('set_license_status',{id:x.id,status:next});await loadLicenseRecords();showLicense(x.id);showNotice('License '+next+'.');}catch(e){showNotice(e.message,'error');}};
 }
 function detailGrid(x,keys){return `<div class="detail-grid">${keys.map(k=>`<div class="detail-item"><small>${esc(k.replaceAll('_',' ').toUpperCase())}</small><strong>${esc(k.endsWith('_at')||k==='created_at'||k==='ban_date'?fmtDate(x[k]):x[k])}</strong></div>`).join('')}</div>`;}
 function renderRecentActivity(rows){ $('dashboardRecent').innerHTML=rows.length?`<table><thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Created</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.order_id)}</td><td>${esc(x.full_name)}<br><small>${esc(x.player_uid)}</small></td><td>${esc(x.status)}</td><td>${esc(fmtDate(x.created_at))}</td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">No recent records.</div>'; }
@@ -1431,9 +1460,22 @@ function openEdit(type,row){if(!row)return;let fields='';if(type==='license'){fi
  $('editDialogTitle').textContent=type==='license'?'Update License Expiry':'Update '+type; $('editRecordFields').innerHTML=fields; $('editRecordDialog').hidden=false; $('editRecordForm').onsubmit=async ev=>{ev.preventDefault();try{if(type==='license'){const v=$('editExpiry').value;await saveRecord('update_license',row.id,{expires_at:v?new Date(v).toISOString():null});await loadLicenseRecords();}else{const patch={status:$('editStatus').value,admin_note:$('editNote').value};await saveRecord(type==='payment'?'update_payment':'update_application',row.id,patch);type==='payment'?await loadPaymentRecords():await loadApplicationRecords();} $('editRecordDialog').hidden=true;showNotice('Changes saved successfully.');}catch(e){$('editRecordError').textContent=e.message;}};
 }
 $('closeEditDialog').addEventListener('click',()=>$('editRecordDialog').hidden=true);
-document.querySelectorAll('[data-close-detail]').forEach(b=>b.addEventListener('click',()=>{['paymentDetailPanel','applicationDetailPanel','licenseDetailPanel'].forEach(id=>$(id).hidden=true);}));
-$('openGenerateLicense').textContent='KEYS ISSUED BY TELEGRAM BOT ONLY'; $('openGenerateLicense').disabled=true; $('openGenerateLicense').title='For security, license keys can only be issued by the Telegram bot.';
+document.querySelectorAll('[data-close-detail]').forEach(b=>b.addEventListener('click',()=>{['paymentDetailPanel','applicationDetailPanel','licenseDetailPanel','userDetailPanel'].forEach(id=>$(id).hidden=true);}));
+$('openGenerateLicense').addEventListener('click',async()=>{try{const r=await adminCall('list_licenses');const plans=r.plans||[];$('licensePlan').innerHTML='<option value="">Select a plan</option>'+plans.map(p=>`<option value="${esc(p.code)}">${esc(p.title)} — ₹${esc(p.price_inr)}</option>`).join('');$('generateLicenseDialog').hidden=false;}catch(e){showNotice(e.message,'error');}});
+$('closeGenerateLicense').addEventListener('click',()=>$('generateLicenseDialog').hidden=true);
+$('generateLicenseForm').addEventListener('submit',async ev=>{ev.preventDefault();$('generateLicenseError').textContent='';try{const payload={plan_code:$('licensePlan').value,telegram_user_id:$('licenseTelegramId').value.trim(),expires_at:$('licenseExpiry').value?new Date($('licenseExpiry').value).toISOString():null};const r=await adminCall('generate_license',payload);$('generateLicenseDialog').hidden=true;$('generateLicenseForm').reset();await loadLicenseRecords();showNotice('License created: '+r.license.license_key);showLicense(r.license.id);}catch(e){$('generateLicenseError').textContent=e.message;}});
 
+
+/* ===== EXTENDED OWNER CONTROLS ===== */
+let userRows=[], selectedUser=null, configData=null;
+async function loadUsers(){try{const r=await adminCall('list_users');userRows=r.users||[];renderUsers();}catch(e){showNotice(e.message,'error');}}
+function renderUsers(){const q=($('userSearch')?.value||'').toLowerCase();const rows=userRows.filter(u=>[u.telegram_user_id,u.username,u.first_name].some(v=>String(v??'').toLowerCase().includes(q)));$('usersTable').innerHTML=rows.length?`<table><thead><tr><th>Telegram ID</th><th>User</th><th>Last Seen</th><th>Licenses</th><th>Blocked</th><th>Action</th></tr></thead><tbody>${rows.map(u=>`<tr><td>${esc(u.telegram_user_id)}</td><td>${esc(u.first_name||'—')}<br><small>@${esc(u.username||'—')}</small></td><td>${esc(fmtDate(u.last_seen_at))}</td><td>${u.licenses.length}</td><td>${u.blocked?'YES':'NO'}</td><td><button class="secondary-button" data-user="${esc(u.telegram_user_id)}">DETAILS</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">No matching users.</div>';document.querySelectorAll('[data-user]').forEach(b=>b.onclick=()=>showUser(b.dataset.user));}
+function showUser(id){selectedUser=userRows.find(u=>String(u.telegram_user_id)===String(id));if(!selectedUser)return;const u=selectedUser;$('userDetailPanel').hidden=false;$('userDetailContent').innerHTML=detailGrid(u,['telegram_user_id','username','first_name','first_seen_at','last_seen_at','blocked'])+`<h4>LICENSE HISTORY</h4>`+(u.licenses.length?`<div class="table-container"><table><thead><tr><th>Key</th><th>Plan</th><th>Status</th></tr></thead><tbody>${u.licenses.map(k=>`<tr><td>${esc(k.license_key)}</td><td>${esc(k.plan_code)}</td><td>${esc(k.status)}</td></tr>`).join('')}</tbody></table></div>`:'<p>No license history.</p>')+`<h4>REQUEST HISTORY</h4>`+(u.requests.length?`<div class="table-container"><table><thead><tr><th>Plan</th><th>Status</th><th>Amount</th><th>Date</th></tr></thead><tbody>${u.requests.map(k=>`<tr><td>${esc(k.plan_code)}</td><td>${esc(k.status)}</td><td>₹${esc(k.amount_inr)}</td><td>${esc(fmtDate(k.created_at))}</td></tr>`).join('')}</tbody></table></div>`:'<p>No requests.</p>');$('toggleUserBlock').textContent=u.blocked?'UNBLOCK USER':'BLOCK USER';$('toggleUserBlock').onclick=async()=>{try{await adminCall('set_user_blocked',{telegram_user_id:Number(u.telegram_user_id),blocked:!u.blocked});await loadUsers();showUser(id);showNotice(u.blocked?'User unblocked.':'User blocked.');}catch(e){showNotice(e.message,'error');}};}
+async function loadBotStatus(){try{const r=await adminCall('bot_status');$('botOnlineState').textContent=r.online?'ONLINE':(r.configured?'OFFLINE':'NOT CONFIGURED');$('botUsername').textContent=r.bot?.username?'@'+r.bot.username:'—';$('botCheckedAt').textContent=fmtDate(r.checked_at);$('botFeatures').innerHTML=detailGrid({license_issue:'Telegram bot workflow',license_requests:'Telegram only',admin_approval:'Telegram only',website_license_control:'Enabled',website_monitoring:'Read-only status'},['license_issue','license_requests','admin_approval','website_license_control','website_monitoring']);}catch(e){$('botOnlineState').textContent='CHECK FAILED';showNotice(e.message,'error');}}
+async function loadSettings(){try{const r=await adminCall('list_config');configData=r;$('cfgUpi').value=r.config?.upi_id||'';$('cfgSupport').value=r.config?.support_username||'';$('cfgBot').value=r.config?.bot_username||'';$('cfgWelcome').value=r.config?.welcome_text||'';$('plansTable').innerHTML=(r.plans||[]).length?`<table><thead><tr><th>Code</th><th>Title</th><th>Price</th><th>Active</th><th>Action</th></tr></thead><tbody>${r.plans.map(p=>`<tr><td>${esc(p.code)}</td><td>${esc(p.title)}</td><td>₹${esc(p.price_inr)}</td><td>${p.active?'YES':'NO'}</td><td><button class="secondary-button" data-plan="${esc(p.code)}">EDIT</button></td></tr>`).join('')}</tbody></table>`:'No plans';$('requiredChatsTable').innerHTML=(r.required_chats||[]).length?`<table><thead><tr><th>Title</th><th>Link</th><th>Type</th><th>Active</th><th>Action</th></tr></thead><tbody>${r.required_chats.map(c=>`<tr><td>${esc(c.title)}</td><td>${esc(c.chat_link)}</td><td>${esc(c.chat_type)}</td><td>${c.active?'YES':'NO'}</td><td><button class="secondary-button" data-chat="${esc(c.id)}">TOGGLE</button></td></tr>`).join('')}</tbody></table>`:'No required chats';document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>editPlan(b.dataset.plan));document.querySelectorAll('[data-chat]').forEach(b=>b.onclick=async()=>{const c=r.required_chats.find(x=>String(x.id)===b.dataset.chat);try{await adminCall('update_required_chat',{id:c.id,patch:{active:!c.active}});await loadSettings();showNotice('Required chat updated.');}catch(e){showNotice(e.message,'error');}});}catch(e){showNotice(e.message,'error');}}
+async function editPlan(code){const p=(configData.plans||[]).find(x=>x.code===code);if(!p)return;const title=prompt('Plan title',p.title);if(title===null)return;const price=prompt('Price in INR',p.price_inr);if(price===null)return;const active=confirm('Keep this plan active? OK = active, Cancel = inactive');try{await adminCall('update_plan',{code,patch:{title,price_inr:Number(price),active}});await loadSettings();showNotice('Plan updated.');}catch(e){showNotice(e.message,'error');}}
+$('userSearch')?.addEventListener('input',renderUsers);$('refreshUsers')?.addEventListener('click',loadUsers);$('refreshBot')?.addEventListener('click',loadBotStatus);$('refreshSettings')?.addEventListener('click',loadSettings);
+$('siteConfigForm')?.addEventListener('submit',async e=>{e.preventDefault();try{await adminCall('update_site_config',{patch:{upi_id:$('cfgUpi').value.trim(),support_username:$('cfgSupport').value.trim(),bot_username:$('cfgBot').value.trim()||null,welcome_text:$('cfgWelcome').value}});showNotice('Configuration saved.');await loadSettings();}catch(err){showNotice(err.message,'error');}});
 
 /* ===== NAVIGATION ===== */
 const sectionNames = {
@@ -1441,6 +1483,9 @@ const sectionNames = {
   payments: "Payments",
   applications: "Unban Requests",
   licenses: "License Keys",
+  users: "Users",
+  bot: "Bot Monitor",
+  settings: "Settings",
   activity: "Activity"
 };
 
@@ -1462,6 +1507,9 @@ function openAdminSection(name) {
   if (name === "payments") loadPaymentRecords();
   if (name === "applications") loadApplicationRecords();
   if (name === "licenses") loadLicenseRecords();
+  if (name === "users") loadUsers();
+  if (name === "bot") loadBotStatus();
+  if (name === "settings") loadSettings();
   if (name === "activity") loadActivity();
 }
 
