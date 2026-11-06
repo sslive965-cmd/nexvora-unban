@@ -1,63 +1,1527 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050511"><title>NEXVORA UNBAN — Owner Console</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050511">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>NEXVORA UNBAN — Owner Console</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#050511;--panel:#0b1428;--blue:#28a8ff;--cyan:#36dcff;--purple:#a34cff;--white:#f2f7ff;--muted:#91a0ba;--line:#203b5d;--red:#ff5577;--green:#35d6a0}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0,#10294a 0,transparent 38%),radial-gradient(ellipse at 95% 100%,#24113e 0,transparent 35%),var(--bg);color:var(--white);font:16px Rajdhani, sans-serif;min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid #267bb0;background:#102b49;color:#eaf8ff;border-radius:8px;padding:9px 13px;font-weight:700}button:hover{filter:brightness(1.25)}button.danger{border-color:#8c304b;background:#40172b}button.good{border-color:#16866b;background:#0d3b35}button:disabled{opacity:.5;cursor:wait}.hidden{display:none!important}.top{height:70px;padding:12px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#050511dd;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}.brand{font:800 15px Orbitron;letter-spacing:2px}.brand small{display:block;color:var(--cyan);font:10px Orbitron;margin-top:5px}.owner{color:var(--cyan);font:10px Orbitron;border:1px solid var(--line);padding:8px;border-radius:5px}.login{max-width:430px;margin:12vh auto;padding:30px;background:#0b1428;border:1px solid #23608a;border-radius:16px;box-shadow:0 0 45px #168bff22}.login h1{font:700 21px Orbitron;color:var(--cyan)}.login input,.field,input,select,textarea{width:100%;padding:11px;background:#070e1d;border:1px solid #294765;border-radius:7px;color:white;margin:6px 0 12px}.login button{width:100%;margin-top:10px}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:calc(100vh - 70px)}aside{padding:18px 12px;border-right:1px solid var(--line);background:#070b18aa}nav button{display:block;width:100%;text-align:left;margin:5px 0;background:transparent;border-color:transparent;color:#b6c8df}nav button.active,nav button:hover{background:#102a46;border-color:#23618a;color:var(--cyan)}main{padding:24px;min-width:0}.heading{font:700 19px Orbitron;margin:0 0 18px}.muted{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:20px}.card,.panel{background:linear-gradient(145deg,#0d1a30,#080d1c);border:1px solid var(--line);border-radius:11px;padding:16px;box-shadow:0 10px 30px #0003}.card b{font:700 25px Orbitron;color:var(--cyan);display:block;margin-top:7px}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}.toolbar input,.toolbar select{max-width:240px;margin:0}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:9px}table{width:100%;border-collapse:collapse;min-width:720px;background:#080f1e}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #1b3049;vertical-align:top}th{font:10px Orbitron;color:var(--cyan);background:#0e1b30;letter-spacing:1px}td{font-size:15px}td small{display:block;color:var(--muted);word-break:break-all}.pill{display:inline-block;padding:3px 8px;border:1px solid #335777;border-radius:20px;font-size:12px;color:var(--cyan)}.actions{display:flex;gap:5px;flex-wrap:wrap}.notice{padding:12px;border:1px solid #30516e;border-radius:8px;color:#bcd1e8;margin:12px 0}.error{color:#ff8298}.ok{color:#5be2b5}.section{display:none}.section.active{display:block}.modal{position:fixed;inset:0;background:#000b;z-index:20;display:grid;place-items:center;padding:18px}.modalbox{width:min(560px,100%);max-height:85vh;overflow:auto;background:#0b1428;border:1px solid #2778a8;border-radius:13px;padding:20px}.modalbox h3{font:700 16px Orbitron;color:var(--cyan)}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:15px}.foot{color:#6f829e;font-size:12px;margin-top:22px}@media(max-width:760px){.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);padding:8px;overflow:auto}nav{display:flex;gap:5px;min-width:max-content}nav button{width:auto;margin:0;padding:8px 10px;font-size:13px}main{padding:14px}.top{padding:10px 14px}.owner{font-size:8px}}
-</style></head><body>
-<header class="top"><div class="brand">NEXVORA UNBAN<small>OWNER MANAGEMENT CONSOLE</small></div><div class="owner" id="ownerTag">OWNER ONLY</div></header>
-<section id="login" class="login"><h1>SECURE OWNER LOGIN</h1><p class="muted">Sign in with the authorized owner account.</p><form id="loginForm"><label>Email</label><input id="email" type="email" autocomplete="username" required value=""><label>Password</label><input id="password" type="password" autocomplete="current-password" required><button id="loginBtn">AUTHENTICATE</button></form><p id="loginMsg" class="error"></p></section>
-<div id="app" class="layout hidden"><aside><nav id="nav"><button class="active" data-tab="dashboard">▣ Dashboard</button><button data-tab="payments">₹ Payments</button><button data-tab="applications">▤ Unban Requests</button><button data-tab="licenses">⌁ License Keys</button><button data-tab="requests">▧ License Requests</button><button data-tab="plans">◇ License Plans</button><button data-tab="support">✉ Support</button><button data-tab="config">⚙ Bot Configuration</button><button data-tab="activity">◷ Activity Logs</button><button id="logout">↪ Logout</button></nav></aside><main>
-<section id="tab-dashboard" class="section active"><h1 class="heading">SYSTEM OVERVIEW</h1><div id="stats" class="cards"></div><div class="panel"><h3>Recent applications</h3><div id="recent"></div></div></section>
-<section id="tab-payments" class="section"><h1 class="heading">PAYMENT REVIEW</h1><div class="toolbar"><input id="paymentSearch" placeholder="Search order / UID / UTR"><select id="paymentFilter"><option value="all">All statuses</option><option>payment_pending</option><option>payment_verified</option><option>payment_rejected</option></select><button onclick="loadPayments()">Refresh</button></div><div id="payments"></div></section>
-<section id="tab-applications" class="section"><h1 class="heading">UNBAN APPLICATIONS</h1><div class="toolbar"><input id="appSearch" placeholder="Search order / UID / name"><select id="appFilter"><option value="all">All statuses</option><option>awaiting_payment</option><option>payment_pending</option><option>payment_verified</option><option>submitted</option><option>in_review</option><option>completed</option><option>rejected</option><option>cancelled</option></select><button onclick="loadApplications()">Refresh</button></div><div id="applications"></div></section>
-<section id="tab-licenses" class="section"><h1 class="heading">LICENSE KEYS</h1><div class="notice">Keys are issued only by the Telegram bot. This console cannot generate keys or alter usage counters, plan, or ownership.</div><div class="toolbar"><input id="licenseSearch" placeholder="Search key / Telegram ID"><select id="licenseFilter"><option value="all">All statuses</option><option>active</option><option>exhausted</option><option>revoked</option><option>inactive</option></select><button onclick="loadLicenses()">Refresh</button></div><div id="licenses"></div></section>
-<section id="tab-requests" class="section"><h1 class="heading">BOT LICENSE REQUESTS</h1><div class="notice">Read-only view. Approvals and SEND KEY / DECLINE actions remain exclusively in Telegram.</div><button onclick="loadRequests()">Refresh</button><div id="requests" style="margin-top:12px"></div></section>
-<section id="tab-plans" class="section"><h1 class="heading">LICENSE PLANS</h1><div class="notice">Plan usage limits and validity rules are protected to preserve bot issuance logic. Only display title, price and active status can be changed.</div><div id="plans"></div></section>
-<section id="tab-support" class="section"><h1 class="heading">SUPPORT REQUESTS</h1><button onclick="loadSupport()">Refresh</button><div id="support" style="margin-top:12px"></div></section>
-<section id="tab-config" class="section"><h1 class="heading">BOT CONFIGURATION</h1><div class="notice">Read-only snapshot. Changes here are disabled until customer website and bot settings are safely connected to a shared configuration contract.</div><div id="config"></div></section>
-<section id="tab-activity" class="section"><h1 class="heading">ADMIN AUDIT LOG</h1><button onclick="loadActivity()">Refresh</button><div id="activity" style="margin-top:12px"></div></section><p class="foot">NEXVORA UNBAN • Owner-only • All changes are sent to Supabase and logged where supported.</p>
-</main></div>
-<div id="modal" class="modal hidden"><div class="modalbox"><h3 id="modalTitle">Confirm action</h3><div id="modalBody"></div><div class="modal-actions"><button onclick="closeModal()">Cancel</button><button id="modalConfirm" class="danger">Confirm</button></div></div></div>
+:root {
+  --bg: #050511;
+  --panel: rgba(10, 18, 38, .88);
+  --blue: #28a8ff;
+  --cyan: #36dcff;
+  --purple: #a34cff;
+  --white: #f2f7ff;
+  --muted: #8797b3;
+  --border: rgba(40,168,255,.25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Rajdhani', sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+#particleCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambient {
+  position: fixed;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: .19;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient.one {
+  background: var(--blue);
+  top: -150px;
+  left: -100px;
+}
+
+.ambient.two {
+  background: var(--purple);
+  bottom: -170px;
+  right: -100px;
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  width: 100%;
+  min-height: 76px;
+  padding: 15px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(40,168,255,.14);
+  background: rgba(5,5,17,.62);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand img {
+  width: 43px;
+  height: 43px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(40,168,255,.55));
+}
+
+.brand-name {
+  font-family: Orbitron, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.brand-sub {
+  display: block;
+  color: var(--cyan);
+  font-family: Orbitron, sans-serif;
+  font-size: 8px;
+  letter-spacing: 2px;
+  margin-top: 5px;
+}
+
+.owner-tag {
+  border: 1px solid var(--border);
+  color: var(--cyan);
+  padding: 8px 13px;
+  border-radius: 5px;
+  font-family: Orbitron, sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  background: rgba(40,168,255,.06);
+}
+
+.welcome-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 55px 18px;
+}
+
+.welcome-card {
+  width: 100%;
+  max-width: 650px;
+  text-align: center;
+  padding: 48px 32px;
+  border: 1px solid rgba(40,168,255,.3);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(12,24,49,.88),
+    rgba(8,8,25,.92)
+  );
+  box-shadow:
+    0 0 45px rgba(40,168,255,.10),
+    inset 0 0 35px rgba(40,168,255,.035);
+  backdrop-filter: blur(18px);
+  animation: cardEnter 1.1s ease both;
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(35px) scale(.96);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.emblem {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(54,220,255,.65);
+  background: radial-gradient(
+    circle,
+    rgba(40,168,255,.22),
+    rgba(5,5,17,.2) 70%
+  );
+  box-shadow:
+    0 0 20px rgba(40,168,255,.28),
+    inset 0 0 20px rgba(40,168,255,.12);
+  animation: emblemPulse 3s ease-in-out infinite;
+}
+
+.emblem img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+@keyframes emblemPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(40,168,255,.2);
+  }
+  50% {
+    box-shadow: 0 0 38px rgba(40,168,255,.55);
+  }
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font-family: Orbitron, sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  margin-bottom: 17px;
+}
+
+.welcome-title {
+  font-family: Orbitron, sans-serif;
+  font-size: clamp(23px, 5vw, 37px);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 1px;
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    var(--cyan),
+    var(--blue)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.welcome-description {
+  max-width: 480px;
+  margin: 20px auto 30px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.security-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px;
+  border: 1px solid rgba(54,220,255,.2);
+  border-radius: 30px;
+  color: #a7eaff;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+}
+
+.security-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #39e6a5;
+  box-shadow: 0 0 10px #39e6a5;
+}
+
+.enter-button {
+  width: 100%;
+  max-width: 280px;
+  min-height: 54px;
+  border: 1px solid rgba(54,220,255,.8);
+  border-radius: 7px;
+  color: #03101d;
+  background: linear-gradient(100deg, var(--blue), var(--cyan));
+  font-family: Orbitron, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 0 24px rgba(40,168,255,.22);
+  transition: .3s ease;
+}
+
+.enter-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 35px rgba(40,168,255,.5);
+}
+
+.enter-button:active {
+  transform: scale(.97);
+}
+
+.footer {
+  padding: 18px;
+  text-align: center;
+  color: #64738e;
+  font-family: Orbitron, sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  border-top: 1px solid rgba(40,168,255,.12);
+}
+
+@media(max-width: 520px) {
+  .topbar {
+    padding: 13px 17px;
+  }
+
+  .welcome-card {
+    padding: 38px 20px;
+  }
+
+  .owner-tag {
+    font-size: 8px;
+    padding: 7px 9px;
+  }
+
+  .welcome-description {
+    font-size: 15px;
+  }
+}
+</style>
+</head>
+
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <!-- WELCOME SCREEN -->
+  <section id="welcomeScreen" class="page welcome-wrap">
+    <div class="welcome-card">
+      <div class="emblem">
+        <img src="assets/nexvora-logo.png" alt="NEXVORA Logo">
+      </div>
+
+      <div class="eyebrow">NEXVORA SECURITY SYSTEM</div>
+      <h1 class="welcome-title">OWNER CONSOLE</h1>
+      <p class="welcome-description">
+        Secure access to the NEXVORA UNBAN management system.
+        Authorized owner access only.
+      </p>
+
+      <div class="security-pill">
+        <span class="status-dot"></span>
+        ENCRYPTED OWNER ACCESS
+      </div>
+
+      <button id="enterConsole" class="enter-button" type="button">
+        ENTER CONTROL CENTER
+        <span>→</span>
+      </button>
+
+      <p class="welcome-footer">NEXVORA UNBAN · PRIVATE ADMINISTRATION</p>
+    </div>
+  </section>
+
+  <!-- OWNER LOGIN SCREEN -->
+  <section id="loginScreen" class="page login-wrap" hidden>
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="assets/nexvora-logo.png" alt="NEXVORA">
+      </div>
+
+      <div class="eyebrow">OWNER AUTHENTICATION</div>
+      <h1 class="login-title">VERIFY IDENTITY</h1>
+      <p class="login-description">
+        Sign in using the authorized owner account.
+      </p>
+
+      <form id="adminLoginForm">
+        <label for="adminEmail">OWNER EMAIL</label>
+        <input
+          id="adminEmail"
+          type="email"
+          placeholder="Enter owner email"
+          autocomplete="username"
+          required
+        >
+
+        <label for="adminPassword">PASSWORD</label>
+        <input
+          id="adminPassword"
+          type="password"
+          placeholder="Enter password"
+          autocomplete="current-password"
+          required
+        >
+
+        <p id="loginError" class="form-error" role="alert"></p>
+
+        <button id="adminLoginButton" class="enter-button" type="submit">
+          VERIFY & LOGIN
+          <span>→</span>
+        </button>
+      </form>
+
+      <button id="backToWelcome" class="back-button" type="button">
+        ← Back
+      </button>
+
+      <p class="welcome-footer">UNAUTHORIZED ACCESS IS PROHIBITED</p>
+    </div>
+  </section>
+
+  <!-- ADMIN DASHBOARD -->
+  <section id="dashboardScreen" class="admin-layout" hidden>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="adminSidebar">
+      <div class="sidebar-brand">
+        <img src="assets/nexvora-logo.png" alt="NEXVORA">
+        <div>
+          <strong>NEXVORA</strong>
+          <small>OWNER CONSOLE</small>
+        </div>
+      </div>
+
+      <div class="sidebar-owner">
+        <span class="status-dot"></span>
+        OWNER ACCESS ACTIVE
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-section="dashboard" type="button">
+          <span>◈</span> Dashboard
+        </button>
+        <button class="nav-item" data-section="payments" type="button">
+          <span>◇</span> Payments
+        </button>
+        <button class="nav-item" data-section="applications" type="button">
+          <span>▤</span> Unban Requests
+        </button>
+        <button class="nav-item" data-section="licenses" type="button">
+          <span>⌘</span> License Keys
+        </button>
+        <button class="nav-item" data-section="activity" type="button">
+          <span>◷</span> Activity
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-security">
+          <span class="status-dot"></span>
+          SECURE CONNECTION
+        </div>
+        <button id="adminLogout" class="logout-button" type="button">
+          ↪ LOG OUT
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <button id="mobileMenuButton" class="mobile-menu-button"
+          type="button" aria-label="Toggle menu">☰</button>
+
+        <div>
+          <div class="topbar-label">NEXVORA / ADMINISTRATION</div>
+          <h2 id="pageHeading">Dashboard</h2>
+        </div>
+
+        <div class="topbar-right">
+          <span class="live-indicator">
+            <span class="status-dot"></span> LIVE
+          </span>
+          <span class="owner-label">OWNER</span>
+        </div>
+      </header>
+
+      <div id="adminNotice" class="admin-notice" role="status"></div>
+
+      <!-- DASHBOARD SECTION -->
+      <section id="section-dashboard" class="admin-section">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">SYSTEM OVERVIEW</div>
+            <h3>Control Dashboard</h3>
+            <p>Live overview of NEXVORA UNBAN records.</p>
+          </div>
+          <button id="refreshDashboard" class="secondary-button" type="button">
+            ↻ Refresh
+          </button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Total Applications</span>
+            <strong id="statApplications">—</strong>
+            <small>All unban records</small>
+          </article>
+          <article class="stat-card">
+            <span>Pending Payments</span>
+            <strong id="statPendingPayments">—</strong>
+            <small>Awaiting review</small>
+          </article>
+          <article class="stat-card">
+            <span>Verified Payments</span>
+            <strong id="statVerifiedPayments">—</strong>
+            <small>Payment approved</small>
+          </article>
+          <article class="stat-card">
+            <span>Completed Requests</span>
+            <strong id="statCompleted">—</strong>
+            <small>Completed records</small>
+          </article>
+          <article class="stat-card">
+            <span>Active Licenses</span>
+            <strong id="statActiveLicenses">—</strong>
+            <small>Currently active</small>
+          </article>
+          <article class="stat-card">
+            <span>Rejected Records</span>
+            <strong id="statRejected">—</strong>
+            <small>Payments and requests</small>
+          </article>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <div>
+              <h3>Recent Activity</h3>
+              <p>Latest records from the database</p>
+            </div>
+          </div>
+          <div id="dashboardRecent" class="table-container">
+            <div class="empty-state">Dashboard data will load after authentication.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAYMENTS SECTION -->
+      <section id="section-payments" class="admin-section" hidden>
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">₹399 PAYMENT MANAGEMENT</div>
+            <h3>Payment Records</h3>
+            <p>Review and manage submitted payment details.</p>
+          </div>
+          <button id="refreshPayments" class="secondary-button" type="button">
+            ↻ Refresh
+          </button>
+        </div>
+
+        <div class="filter-row">
+          <input id="paymentSearch" type="search"
+            placeholder="Search order ID, UID, name or UTR">
+          <select id="paymentStatusFilter">
+            <option value="all">All payment statuses</option>
+            <option value="awaiting_payment">Awaiting Payment</option>
+            <option value="payment_pending">Pending Review</option>
+            <option value="payment_verified">Verified</option>
+            <option value="payment_rejected">Rejected</option>
+          </select>
+        </div>
+
+        <div class="panel">
+          <div id="paymentsTable" class="table-container">
+            <div class="empty-state">Payment records will appear here.</div>
+          </div>
+        </div>
+
+        <div id="paymentDetailPanel" class="panel detail-panel" hidden>
+          <div class="panel-heading">
+            <h3>Payment Details</h3>
+            <button class="close-detail" data-close-detail type="button">✕</button>
+          </div>
+          <div id="paymentDetailContent"></div>
+          <div class="action-row">
+            <button id="approvePayment" class="primary-button" type="button">
+              APPROVE PAYMENT
+            </button>
+            <button id="rejectPayment" class="danger-button" type="button">
+              REJECT PAYMENT
+            </button>
+            <button id="editPayment" class="secondary-button" type="button">
+              UPDATE
+            </button>
+            <button id="deletePayment" class="danger-outline-button" type="button">
+              DELETE RECORD
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPLICATIONS SECTION -->
+      <section id="section-applications" class="admin-section" hidden>
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">CUSTOMER APPLICATIONS</div>
+            <h3>Unban Requests</h3>
+            <p>View and manage submitted customer applications.</p>
+          </div>
+          <button id="refreshApplications" class="secondary-button" type="button">
+            ↻ Refresh
+          </button>
+        </div>
+
+        <div class="filter-row">
+          <input id="applicationSearch" type="search"
+            placeholder="Search UID, order ID or player name">
+          <select id="applicationStatusFilter">
+            <option value="all">All request statuses</option>
+            <option value="submitted">Submitted</option>
+            <option value="in_review">In Review</option>
+            <option value="completed">Completed</option>
+            <option value="rejected">Rejected</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="panel">
+          <div id="applicationsTable" class="table-container">
+            <div class="empty-state">Unban requests will appear here.</div>
+          </div>
+        </div>
+
+        <div id="applicationDetailPanel" class="panel detail-panel" hidden>
+          <div class="panel-heading">
+            <h3>Application Details</h3>
+            <button class="close-detail" data-close-detail type="button">✕</button>
+          </div>
+          <div id="applicationDetailContent"></div>
+          <div class="action-row">
+            <button id="updateApplication" class="primary-button" type="button">
+              UPDATE REQUEST
+            </button>
+            <button id="deleteApplication" class="danger-outline-button" type="button">
+              DELETE RECORD
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- LICENSE SECTION -->
+      <section id="section-licenses" class="admin-section" hidden>
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">LICENSE CONTROL SYSTEM</div>
+            <h3>License Management</h3>
+            <p>Manage keys connected to the existing license database.</p>
+          </div>
+          <button id="refreshLicenses" class="secondary-button" type="button">
+            ↻ Refresh
+          </button>
+        </div>
+
+        <div class="license-toolbar">
+          <input id="licenseSearch" type="search"
+            placeholder="Search license key or Telegram user ID">
+          <button id="openGenerateLicense" class="primary-button" type="button">
+            + GENERATE LICENSE
+          </button>
+        </div>
+
+        <div class="panel">
+          <div id="licensesTable" class="table-container">
+            <div class="empty-state">License records will appear here.</div>
+          </div>
+        </div>
+
+        <div id="licenseDetailPanel" class="panel detail-panel" hidden>
+          <div class="panel-heading">
+            <h3>License Details</h3>
+            <button class="close-detail" data-close-detail type="button">✕</button>
+          </div>
+          <div id="licenseDetailContent"></div>
+          <div class="action-row">
+            <button id="updateLicense" class="secondary-button" type="button">
+              UPDATE
+            </button>
+            <button id="revokeLicense" class="danger-button" type="button">
+              REVOKE
+            </button>
+            <button id="deleteLicense" class="danger-outline-button" type="button">
+              DELETE
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACTIVITY SECTION -->
+      <section id="section-activity" class="admin-section" hidden>
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">SYSTEM RECORDS</div>
+            <h3>Activity Center</h3>
+            <p>Administrative events and system information.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div id="activityContent" class="empty-state">
+            Activity information will appear here.
+          </div>
+        </div>
+      </section>
+
+      <footer class="admin-footer">
+        NEXVORA UNBAN · OWNER CONTROL CENTER
+        <span>AUTHORIZED ACCESS ONLY</span>
+      </footer>
+    </main>
+  </section>
+
+  <!-- GENERATE LICENSE DIALOG -->
+  <div id="generateLicenseDialog" class="modal-backdrop" hidden>
+    <div class="modal-card">
+      <div class="panel-heading">
+        <div>
+          <div class="eyebrow">LICENSE GENERATOR</div>
+          <h3>Generate New License</h3>
+        </div>
+        <button id="closeGenerateLicense" class="close-detail" type="button">✕</button>
+      </div>
+
+      <form id="generateLicenseForm">
+        <label for="licensePlan">LICENSE PLAN</label>
+        <select id="licensePlan" required>
+          <option value="">Select a plan</option>
+        </select>
+
+        <label for="licenseTelegramId">TELEGRAM USER ID</label>
+        <input id="licenseTelegramId" type="text"
+          placeholder="Enter Telegram user ID" required>
+
+        <label for="licenseUsageLimit">USAGE LIMIT</label>
+        <input id="licenseUsageLimit" type="number"
+          min="1" placeholder="Plan default if available">
+
+        <label for="licenseExpiry">EXPIRY DATE (OPTIONAL)</label>
+        <input id="licenseExpiry" type="datetime-local">
+
+        <p id="generateLicenseError" class="form-error" role="alert"></p>
+
+        <button class="primary-button full-button" type="submit">
+          GENERATE LICENSE KEY
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- UPDATE RECORD DIALOG -->
+  <div id="editRecordDialog" class="modal-backdrop" hidden>
+    <div class="modal-card">
+      <div class="panel-heading">
+        <div>
+          <div class="eyebrow">OWNER EDIT ACCESS</div>
+          <h3 id="editDialogTitle">Update Record</h3>
+        </div>
+        <button id="closeEditDialog" class="close-detail" type="button">✕</button>
+      </div>
+
+      <form id="editRecordForm">
+        <div id="editRecordFields"></div>
+        <p id="editRecordError" class="form-error" role="alert"></p>
+        <button class="primary-button full-button" type="submit">
+          SAVE DATABASE CHANGES
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CONFIRM ACTION DIALOG -->
+  <div id="confirmDialog" class="modal-backdrop" hidden>
+    <div class="modal-card confirm-card">
+      <div class="eyebrow">CONFIRM OWNER ACTION</div>
+      <h3 id="confirmTitle">Are you sure?</h3>
+      <p id="confirmMessage">
+        This action may permanently change database records.
+      </p>
+      <div class="action-row">
+        <button id="cancelConfirm" class="secondary-button" type="button">
+          CANCEL
+        </button>
+        <button id="acceptConfirm" class="danger-button" type="button">
+          CONFIRM
+        </button>
+      </div>
+    </div>
+  </div>
+
+<style>
+/* ===== NEXVORA ADMIN CONSOLE ===== */
+[hidden] { display: none !important; }
+
+:root {
+  --admin-bg: #050511;
+  --admin-panel: rgba(13, 19, 38, .88);
+  --admin-panel-2: #101a31;
+  --admin-blue: #28a8ff;
+  --admin-cyan: #36dcff;
+  --admin-purple: #a34cff;
+  --admin-text: #edf5ff;
+  --admin-muted: #91a4c2;
+  --admin-border: rgba(76, 155, 255, .2);
+  --admin-red: #ff526d;
+  --admin-green: #35e6a0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  font-family: "Rajdhani", sans-serif;
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+#particleCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .42;
+}
+
+.ambient {
+  position: fixed;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: .13;
+  pointer-events: none;
+  z-index: 0;
+}
+.ambient-one { background: var(--admin-blue); top: 5%; left: -130px; }
+.ambient-two { background: var(--admin-purple); bottom: 0; right: -130px; }
+
+.page, .admin-layout { position: relative; z-index: 1; }
+
+.login-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  animation: screenIn .55s ease both;
+}
+
+.login-card {
+  width: min(100%, 440px);
+  padding: 34px;
+  border: 1px solid var(--admin-border);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(15,25,49,.96), rgba(7,12,27,.96));
+  box-shadow: 0 25px 90px rgba(0,0,0,.45), 0 0 35px rgba(40,168,255,.08);
+}
+
+.login-logo {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 22px;
+}
+.login-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+.login-card .eyebrow, .login-card .login-title,
+.login-card .login-description { text-align: center; }
+
+.eyebrow {
+  color: var(--admin-cyan);
+  font: 700 11px "Orbitron", sans-serif;
+  letter-spacing: 2px;
+}
+
+.login-title {
+  margin: 13px 0 8px;
+  font: 800 clamp(22px, 5vw, 29px) "Orbitron", sans-serif;
+}
+.login-description { color: var(--admin-muted); margin-bottom: 27px; }
+
+.login-card label, .modal-card label {
+  display: block;
+  margin: 17px 0 7px;
+  color: #b7c8e4;
+  font: 700 11px "Orbitron", sans-serif;
+  letter-spacing: 1px;
+}
+
+.login-card input, .modal-card input, .modal-card select,
+.filter-row input, .filter-row select, .license-toolbar input,
+.edit-field input, .edit-field select, .edit-field textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 13px;
+  color: white;
+  background: rgba(3,8,20,.8);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--admin-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(54,220,255,.08);
+}
+
+input::placeholder, textarea::placeholder { color: #6f829f; }
+
+.enter-button, .primary-button, .secondary-button,
+.danger-button, .danger-outline-button, .logout-button,
+.back-button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 17px;
+  font: 700 12px "Orbitron", sans-serif;
+  letter-spacing: .7px;
+  transition: .2s ease;
+}
+
+.enter-button, .primary-button {
+  color: #00111d;
+  background: linear-gradient(100deg, var(--admin-blue), var(--admin-cyan));
+  box-shadow: 0 8px 25px rgba(40,168,255,.18);
+}
+.login-card .enter-button { width: 100%; margin-top: 22px; }
+.enter-button:hover, .primary-button:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+.secondary-button {
+  color: #c8e9ff;
+  background: rgba(40,168,255,.1);
+  border: 1px solid rgba(40,168,255,.32);
+}
+.danger-button {
+  color: white;
+  background: linear-gradient(100deg, #d92e53, #ff526d);
+}
+.danger-outline-button {
+  color: #ff8193;
+  background: rgba(255,82,109,.07);
+  border: 1px solid rgba(255,82,109,.35);
+}
+.back-button {
+  display: block;
+  margin: 17px auto 0;
+  color: var(--admin-muted);
+  background: transparent;
+}
+.form-error { color: #ff7185; min-height: 18px; font-size: 13px; }
+.welcome-footer {
+  color: #6f829f;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  margin-top: 25px;
+}
+
+/* ===== MAIN ADMIN LAYOUT ===== */
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+  width: 245px;
+  flex: 0 0 245px;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 22px 15px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(7,12,27,.96);
+  border-right: 1px solid var(--admin-border);
+  z-index: 5;
+}
+
+.sidebar-brand { display: flex; align-items: center; gap: 11px; padding: 5px 7px 22px; }
+.sidebar-brand img { width: 43px; height: 43px; object-fit: contain; }
+.sidebar-brand strong { display: block; font: 800 14px "Orbitron",sans-serif; }
+.sidebar-brand small { display: block; color: var(--admin-cyan); font-size: 9px; letter-spacing: 1.3px; margin-top: 5px; }
+
+.sidebar-owner, .sidebar-security {
+  padding: 10px;
+  border: 1px solid var(--admin-border);
+  border-radius: 9px;
+  color: var(--admin-muted);
+  font-size: 10px;
+  letter-spacing: .7px;
+}
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--admin-green);
+  box-shadow: 0 0 10px var(--admin-green);
+  margin-right: 7px;
+}
+
+.sidebar-nav { display: grid; gap: 7px; margin-top: 25px; }
+.nav-item {
+  width: 100%;
+  text-align: left;
+  padding: 13px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #9eafca;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 700;
+}
+.nav-item span { display: inline-block; width: 27px; color: var(--admin-cyan); }
+.nav-item:hover, .nav-item.active {
+  color: white;
+  background: linear-gradient(90deg, rgba(40,168,255,.17), rgba(163,76,255,.08));
+  border-color: rgba(40,168,255,.23);
+}
+
+.sidebar-bottom { margin-top: auto; display: grid; gap: 12px; }
+.logout-button { color: #ff8193; background: rgba(255,82,109,.08); border: 1px solid rgba(255,82,109,.25); }
+
+.admin-main { min-width: 0; flex: 1; padding: 0 26px 25px; }
+.admin-topbar {
+  min-height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 1px solid var(--admin-border);
+  margin-bottom: 26px;
+}
+.topbar-label { color: #7185a4; font: 10px "Orbitron",sans-serif; letter-spacing: 1.3px; }
+.admin-topbar h2 { margin: 7px 0 0; font: 700 21px "Orbitron",sans-serif; }
+.topbar-right { display: flex; align-items: center; gap: 15px; }
+.live-indicator, .owner-label { color: var(--admin-green); font: 10px "Orbitron",sans-serif; letter-spacing: 1px; }
+.owner-label { color: var(--admin-cyan); }
+.mobile-menu-button { display: none; color: white; background: transparent; border: 0; font-size: 22px; }
+
+.admin-section { animation: screenIn .3s ease both; }
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin: 15px 0 22px;
+}
+.section-heading h3 { margin: 8px 0 5px; font: 700 21px "Orbitron",sans-serif; }
+.section-heading p, .panel-heading p { color: var(--admin-muted); margin: 0; font-size: 13px; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.stat-card, .panel {
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+  background: var(--admin-panel);
+  box-shadow: 0 12px 35px rgba(0,0,0,.14);
+}
+.stat-card { padding: 19px; min-height: 120px; }
+.stat-card span { display: block; color: var(--admin-muted); font-size: 13px; }
+.stat-card strong { display: block; margin: 10px 0 4px; font: 800 27px "Orbitron",sans-serif; color: white; }
+.stat-card small { color: var(--admin-cyan); font-size: 11px; }
+
+.panel { padding: 18px; margin-bottom: 18px; min-width: 0; }
+.panel-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 15px; }
+.panel-heading h3 { margin: 0 0 5px; font: 700 15px "Orbitron",sans-serif; }
+.table-container { width: 100%; overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; min-width: 680px; font-size: 13px; }
+.admin-table th {
+  text-align: left;
+  padding: 12px 10px;
+  color: var(--admin-cyan);
+  font: 10px "Orbitron",sans-serif;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--admin-border);
+}
+.admin-table td { padding: 13px 10px; color: #c6d5eb; border-bottom: 1px solid rgba(76,155,255,.1); }
+.admin-table tr:hover td { background: rgba(40,168,255,.035); }
+.table-action {
+  padding: 7px 10px;
+  color: var(--admin-cyan);
+  border: 1px solid var(--admin-border);
+  background: rgba(40,168,255,.07);
+  border-radius: 7px;
+  font-size: 11px;
+}
+.status-badge {
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 20px;
+  color: var(--admin-cyan);
+  background: rgba(40,168,255,.1);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.status-badge.good { color: var(--admin-green); background: rgba(53,230,160,.1); }
+.status-badge.bad { color: #ff8193; background: rgba(255,82,109,.1); }
+.status-badge.wait { color: #ffd37a; background: rgba(255,211,122,.1); }
+
+.filter-row, .license-toolbar { display: flex; gap: 12px; margin-bottom: 15px; }
+.filter-row input, .license-toolbar input { flex: 1; min-width: 130px; }
+.filter-row select { width: min(240px, 42%); }
+.license-toolbar .primary-button { white-space: nowrap; }
+.detail-panel { border-color: rgba(54,220,255,.35); }
+.close-detail { color: #a9bad2; background: transparent; border: 0; font-size: 19px; }
+.action-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+.empty-state { color: var(--admin-muted); padding: 25px 12px; text-align: center; font-size: 13px; }
+.admin-notice { display: none; padding: 12px 15px; border-radius: 9px; margin-bottom: 15px; font-size: 13px; }
+.admin-notice.show { display: block; }
+.admin-notice.success { color: var(--admin-green); background: rgba(53,230,160,.09); border: 1px solid rgba(53,230,160,.25); }
+.admin-notice.error { color: #ff8193; background: rgba(255,82,109,.09); border: 1px solid rgba(255,82,109,.25); }
+.admin-footer { padding: 22px 0 5px; color: #657995; font-size: 10px; letter-spacing: 1px; display: flex; justify-content: space-between; gap: 10px; }
+.admin-footer span { color: var(--admin-cyan); }
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0,0,0,.78);
+  backdrop-filter: blur(8px);
+}
+.modal-card {
+  width: min(100%, 470px);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 23px;
+  border-radius: 16px;
+  border: 1px solid rgba(54,220,255,.3);
+  background: #0b1429;
+  box-shadow: 0 25px 90px rgba(0,0,0,.55);
+  animation: screenIn .2s ease both;
+}
+.modal-card h3 { font: 700 17px "Orbitron",sans-serif; margin: 8px 0; }
+.modal-card p { color: var(--admin-muted); font-size: 13px; }
+.full-button { width: 100%; margin-top: 20px; }
+.confirm-card { width: min(100%, 390px); }
+
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 850px) {
+  .sidebar { position: fixed; left: -260px; transition: left .25s ease; box-shadow: 20px 0 50px rgba(0,0,0,.4); }
+  .sidebar.open { left: 0; }
+  .admin-main { padding: 0 16px 22px; width: 100%; }
+  .mobile-menu-button { display: block; }
+  .stats-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 520px) {
+  .login-card { padding: 25px 19px; }
+  .admin-topbar { min-height: 72px; }
+  .admin-topbar h2 { font-size: 15px; }
+  .topbar-label { font-size: 8px; }
+  .topbar-right { gap: 8px; }
+  .owner-label { display: none; }
+  .section-heading { align-items: flex-start; flex-direction: column; }
+  .stats-grid { gap: 9px; }
+  .stat-card { padding: 13px; min-height: 105px; }
+  .stat-card strong { font-size: 21px; }
+  .filter-row { flex-direction: column; }
+  .filter-row select { width: 100%; }
+  .license-toolbar { flex-direction: column; }
+  .admin-footer { flex-direction: column; }
+}
+</style>
+
+<!-- Supabase JS client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-'use strict';
-const URL='https://sitgwrnvxaugresvlvfl.supabase.co', KEY='sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ', OWNER='jinwoosung40054@gmail.com', API=URL+'/functions/v1/unban-admin-control';
-const sb=window.supabase.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-const $=id=>document.getElementById(id);let session=null,cache={payments:[],apps:[],licenses:[],plans:[],requests:[],support:[]};
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-async function api(action,data={}){if(!session)throw Error('Session expired. Please sign in again.');const {data:sd}=await sb.auth.getSession();const token=sd.session?.access_token;if(!token)throw Error('Session expired. Please sign in again.');const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token,'apikey':KEY},body:JSON.stringify({action,...data})});const j=await r.json().catch(()=>({error:'Invalid server response'}));if(!r.ok||j.success===false)throw Error(j.error||'Request failed ('+r.status+')');return j;}
-function showMsg(el,msg,bad=true){$(el).innerHTML='<p class="'+(bad?'error':'ok')+'">'+esc(msg)+'</p>';}
-function table(target,heads,rows){$(target).innerHTML='<div class="tablewrap"><table><thead><tr>'+heads.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+(rows.length?rows.join(''):'<tr><td colspan="'+heads.length+'" class="muted">No records found.</td></tr>')+'</tbody></table></div>';}
-function row(cells){return '<tr>'+cells.map(x=>'<td>'+x+'</td>').join('')+'</tr>';}
-function status(v){return '<span class="pill">'+esc(v||'unknown')+'</span>';}
-function openModal(title,body,fn,label='Confirm'){ $('modalTitle').textContent=title;$('modalBody').innerHTML=body;$('modalConfirm').textContent=label;$('modal').classList.remove('hidden');$('modalConfirm').onclick=async()=>{const b=$('modalConfirm');b.disabled=true;try{await fn();closeModal();}catch(e){alert(e.message||String(e));}finally{b.disabled=false;}};}
-function closeModal(){$('modal').classList.add('hidden');}
-async function login(email,password){const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;if((data.user?.email||'').toLowerCase()!==OWNER){await sb.auth.signOut();throw Error('Owner access only.');}session=data.session;await enter();}
-async function enter(){ $('login').classList.add('hidden');$('app').classList.remove('hidden');$('ownerTag').textContent=OWNER;await loadDashboard();}
-async function restore(){const {data}=await sb.auth.getSession();if(data.session){session=data.session;if((data.session.user.email||'').toLowerCase()===OWNER)await enter();else await sb.auth.signOut();}}
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginBtn').disabled=true;try{await login($('email').value.trim(),$('password').value);}catch(e){showMsg('loginMsg',e.message);}finally{$('loginBtn').disabled=false;}});
-$('logout').onclick=async()=>{await sb.auth.signOut();session=null;$('app').classList.add('hidden');$('login').classList.remove('hidden');};
-$('nav').addEventListener('click',async e=>{const b=e.target.closest('[data-tab]');if(!b)return;document.querySelectorAll('nav [data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id==='tab-'+b.dataset.tab));const f={dashboard:loadDashboard,payments:loadPayments,applications:loadApplications,licenses:loadLicenses,requests:loadRequests,plans:loadPlans,support:loadSupport,config:loadConfig,activity:loadActivity}[b.dataset.tab];if(f)try{await f();}catch(err){alert(err.message);}});
-async function loadDashboard(){const j=await api('dashboard');const labels={applications:'Applications',pending_payments:'Pending payments',verified_payments:'Verified payments',completed:'Completed',rejected:'Rejected',active_licenses:'Active licenses',pending_license_requests:'Pending license requests',open_support:'Open support'};$('stats').innerHTML=Object.entries(labels).map(([k,v])=>'<div class="card">'+v+'<b>'+Number(j.stats[k]||0)+'</b></div>').join('');table('recent',['Order','UID','Customer','Status','Created'],(j.recent||[]).map(x=>row([esc(x.order_id),esc(x.player_uid),esc(x.full_name),status(x.status),esc(new Date(x.created_at).toLocaleString())])));}
-async function loadPayments(){const j=await api('list_payments');cache.payments=j.records||[];renderPayments();}
-function renderPayments(){const q=$('paymentSearch').value.toLowerCase(),f=$('paymentFilter').value;const a=cache.payments.filter(x=>(f==='all'||x.status===f)&&[x.order_id,x.player_uid,x.payment_utr,x.full_name].join(' ').toLowerCase().includes(q));table('payments',['Order / Customer','UID / UTR','Amount','Status','Actions'],a.map(x=>row(['<b>'+esc(x.order_id)+'</b><small>'+esc(x.full_name)+'</small>','<b>'+esc(x.player_uid)+'</b><small>UTR: '+esc(x.payment_utr)+'</small>','₹399',status(x.status),'<div class="actions">'+(x.status==='payment_pending'?'<button class="good" onclick="reviewPayment(\''+x.id+'\',\'approve\')">Approve</button><button class="danger" onclick="reviewPayment(\''+x.id+'\',\'reject\')">Reject</button>':'')+'<button onclick="viewRecord(\''+x.id+'\')">Details</button></div>'])));}
-async function reviewPayment(id,decision){openModal(decision==='approve'?'Approve payment?':'Reject payment?','<p>This updates the existing application record and notifies the configured Telegram admin chat.</p><label>Admin note</label><textarea id="reviewNote" rows="3" maxlength="1000"></textarea>',async()=>{await api('review_payment',{id,decision,admin_note:$('reviewNote').value});await loadPayments();await loadDashboard();},decision==='approve'?'Approve':'Reject');}
-async function loadApplications(){const j=await api('list_applications');cache.apps=j.records||[];renderApplications();}
-function renderApplications(){const q=$('appSearch').value.toLowerCase(),f=$('appFilter').value;const a=cache.apps.filter(x=>(f==='all'||x.status===f)&&[x.order_id,x.player_uid,x.full_name,x.game_name,x.payment_utr].join(' ').toLowerCase().includes(q));table('applications',['Order / Player','Details','Status','Created','Actions'],a.map(x=>row(['<b>'+esc(x.order_id)+'</b><small>'+esc(x.full_name)+'</small>','UID: '+esc(x.player_uid)+'<small>'+esc(x.game_name)+' • '+esc(x.region)+'</small>',status(x.status),esc(new Date(x.created_at).toLocaleString()),'<div class="actions"><button onclick="viewRecord(\''+x.id+'\')">View / Edit</button><button class="danger" onclick="deleteApplication(\''+x.id+'\')">Delete</button></div>'])));}
-function viewRecord(id){const x=cache.apps.find(r=>r.id===id)||cache.payments.find(r=>r.id===id);if(!x)return;openModal('Application details','<p><b>'+esc(x.order_id)+'</b> • '+esc(x.player_uid)+'</p><p>'+esc(x.full_name)+' • '+esc(x.game_name)+' • '+esc(x.region)+'</p><p>Device: '+esc(x.device)+' | Ban: '+esc(x.ban_type)+' | Level: '+esc(x.id_level)+'</p><p>UTR: '+esc(x.payment_utr)+'</p><p>Reason: '+esc(x.reason)+'</p><p>Screenshot: '+(x.ban_screenshot_path?'<button onclick="openProof(\''+x.id+'\')">View private screenshot</button>':'Not uploaded')+'</p><label>Status</label><select id="editStatus">'+['awaiting_payment','payment_pending','payment_verified','payment_rejected','submitted','in_review','completed','rejected','cancelled'].map(s=>'<option '+(x.status===s?'selected':'')+'>'+s+'</option>').join('')+'</select><label>Admin note</label><textarea id="editNote" rows="3">'+esc(x.admin_note)+'</textarea>',async()=>{await api('update_application',{id,patch:{status:$('editStatus').value,admin_note:$('editNote').value}});await loadApplications();await loadPayments();},'Save changes');}
-async function openProof(id){const x=cache.apps.find(r=>r.id===id)||cache.payments.find(r=>r.id===id);if(!x||!x.ban_screenshot_path)return;const {data,error}=await sb.storage.from('unban-appeal-screenshots').createSignedUrl(x.ban_screenshot_path,120);if(error)throw error;window.open(data.signedUrl,'_blank','noopener');}
-function deleteApplication(id){openModal('Permanently delete application?','<p class="error">This removes the application record. Screenshot cleanup will also be attempted. This cannot be undone.</p>',async()=>{const j=await api('delete_application',{id});if(j.warning)alert(j.warning);await loadApplications();await loadPayments();await loadDashboard();},'Delete');}
-async function loadLicenses(){const j=await api('list_licenses');cache.licenses=j.licenses||[];cache.plans=j.plans||[];renderLicenses();}
-function renderLicenses(){const q=$('licenseSearch').value.toLowerCase(),f=$('licenseFilter').value;const a=cache.licenses.filter(x=>(f==='all'||x.status===f)&&[x.license_key,x.telegram_user_id,x.plan_code].join(' ').toLowerCase().includes(q));table('licenses',['License / User','Plan','Usage','Status','Issued / Expiry','Actions'],a.map(x=>{const remaining=x.usage_limit===null?'Unlimited':Math.max(0,x.usage_limit-x.uses_count);return row(['<b>'+esc(x.license_key)+'</b><small>TG: '+esc(x.telegram_user_id)+'</small>',esc(x.plan_code),esc(x.uses_count)+' / '+(x.usage_limit===null?'∞':esc(x.usage_limit))+'<small>Remaining: '+esc(remaining)+'</small>',status(x.status),esc(new Date(x.issued_at).toLocaleDateString())+'<small>'+esc(x.expires_at||'No expiry')+'</small>','<div class="actions">'+(x.status!=='revoked'?'<button onclick="editExpiry(\''+x.id+'\')">Expiry</button><button class="danger" onclick="revokeLicense(\''+x.id+'\')">Revoke</button>':'')+'<button class="danger" onclick="deleteLicense(\''+x.id+'\')">Delete</button></div>']);}));}
-function editExpiry(id){const x=cache.licenses.find(z=>z.id===id);openModal('Edit license expiry','<p>Only expiry is editable. Usage count, plan and Telegram owner remain protected.</p><label>Expiry (blank = no expiry)</label><input id="expiry" type="datetime-local" value="'+(x.expires_at?new Date(x.expires_at).toISOString().slice(0,16):'')+'">',async()=>{const v=$('expiry').value;await api('update_license',{id,patch:{expires_at:v?new Date(v).toISOString():null}});await loadLicenses();},'Save');}
-function revokeLicense(id){openModal('Revoke license key?','<p class="error">This immediately blocks future website verification for this key.</p>',async()=>{await api('revoke_license',{id});await loadLicenses();},'Revoke');}
-function deleteLicense(id){openModal('Delete license permanently?','<p class="error">The key will be removed from the same table used by the verifier. This cannot be undone.</p>',async()=>{await api('delete_license',{id});await loadLicenses();},'Delete');}
-async function loadRequests(){const j=await api('list_license_requests');cache.requests=j.requests||[];table('requests',['User','Plan','Amount','Status','UTR','Created','Proof'],cache.requests.map(x=>row([esc(x.telegram_user_id),esc(x.plan_code),'₹'+esc(x.amount_inr),status(x.status),esc(x.utr),esc(new Date(x.created_at).toLocaleString()),x.payment_screenshot_path?'<button onclick="openLicenseProof(\''+x.id+'\')">View proof</button>':'—'])));}
-async function openLicenseProof(id){const x=cache.requests.find(r=>r.id===id);if(!x||!x.payment_screenshot_path)return;const {data,error}=await sb.storage.from('nexvora-unban-payment-proofs').createSignedUrl(x.payment_screenshot_path,120);if(error)throw error;window.open(data.signedUrl,'_blank','noopener');}
-async function loadPlans(){const j=await api('list_config');cache.plans=j.plans||[];table('plans',['Plan','Price','Usage limit','Validity','Active','Actions'],cache.plans.map(x=>row([esc(x.title)+'<small>'+esc(x.code)+'</small>','₹'+esc(x.price_inr),x.usage_limit===null?'Unlimited':esc(x.usage_limit),esc(x.validity_mode),status(x.active?'active':'inactive'),'<button onclick="editPlan(\''+esc(x.code)+'\')">Edit title / price / active</button>'])));}
-function editPlan(code){const p=cache.plans.find(x=>x.code===code);openModal('Edit plan display settings','<p>Usage and validity are locked to protect existing bot behavior.</p><label>Title</label><input id="planTitle" maxlength="60" value="'+esc(p.title)+'"><label>Price INR</label><input id="planPrice" type="number" min="0" max="1000000" value="'+p.price_inr+'"><label>Active</label><select id="planActive"><option value="true" '+(p.active?'selected':'')+'>Active</option><option value="false" '+(!p.active?'selected':'')+'>Inactive</option></select>',async()=>{await api('update_plan',{code,patch:{title:$('planTitle').value,price_inr:Number($('planPrice').value),active:$('planActive').value==='true'}});await loadPlans();},'Save');}
-async function loadSupport(){const j=await api('list_support');cache.support=j.requests||[];table('support',['User','Message','Status','Admin reply','Created','Actions'],cache.support.map(x=>row([esc(x.first_name)+'<small>@'+esc(x.username)+' • '+esc(x.telegram_user_id)+'</small>',esc(x.message),status(x.status),esc(x.admin_reply),esc(new Date(x.created_at).toLocaleString()),'<button onclick="replySupport(\''+x.id+'\')">Update / Reply</button>'])));}
-function replySupport(id){const x=cache.support.find(z=>z.id===id);openModal('Update support request','<label>Status</label><select id="supportStatus">'+['open','in_progress','resolved','closed'].map(s=>'<option '+(x.status===s?'selected':'')+'>'+s+'</option>').join('')+'</select><label>Reply</label><textarea id="supportReply" rows="4">'+esc(x.admin_reply)+'</textarea>',async()=>{await api('update_support',{id,patch:{status:$('supportStatus').value,admin_reply:$('supportReply').value}});await loadSupport();},'Save');}
-async function loadConfig(){const j=await api('list_config');const c=j.config||{};$('config').innerHTML='<div class="panel"><p>UPI ID: <b>'+esc(c.upi_id)+'</b></p><p>Support: <b>'+esc(c.support_username)+'</b></p><p>Bot username: <b>'+esc(c.bot_username||'Not set')+'</b></p><p>Admin Telegram ID: <b>'+esc(c.admin_telegram_id)+'</b></p><p>Updated: '+esc(c.updated_at)+'</p><hr><h3>Required Telegram chats</h3>'+j.required_chats.map(x=>'<p>'+esc(x.sort_order)+'. '+esc(x.title)+' • '+esc(x.chat_type)+' • '+status(x.active?'active':'inactive')+'<small>'+esc(x.chat_link)+'</small></p>').join('')+'</div>';}
-async function loadActivity(){const j=await api('list_activity');table('activity',['Time','Action','Target','Details'],(j.activity||[]).map(x=>row([esc(new Date(x.created_at).toLocaleString()),esc(x.action),esc(x.target_type)+' / '+esc(x.target_id),'<small>'+esc(JSON.stringify(x.details))+'</small>'])));}
-$('paymentSearch').addEventListener('input',renderPayments);$('paymentFilter').addEventListener('change',renderPayments);$('appSearch').addEventListener('input',renderApplications);$('appFilter').addEventListener('change',renderApplications);$('licenseSearch').addEventListener('input',renderLicenses);$('licenseFilter').addEventListener('change',renderLicenses);
-restore().catch(e=>console.error(e));
-</script></body></html>
+"use strict";
+
+/* ===== NEXVORA SUPABASE CONFIG ===== */
+const NEXVORA_SUPABASE_URL =
+  "https://sitgwrnvxaugresvlvfl.supabase.co";
+
+const NEXVORA_SUPABASE_PUBLIC_KEY =
+  "sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ";
+
+const ADMIN_FUNCTION_URL =
+  NEXVORA_SUPABASE_URL + "/functions/v1/unban-admin-control";
+
+const OWNER_EMAIL = "jinwoosung40054@gmail.com";
+
+const supabaseClient = window.supabase.createClient(
+  NEXVORA_SUPABASE_URL,
+  NEXVORA_SUPABASE_PUBLIC_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  }
+);
+
+/* ===== ELEMENT REFERENCES ===== */
+const $ = (id) => document.getElementById(id);
+
+const welcomeScreen = $("welcomeScreen");
+const loginScreen = $("loginScreen");
+const dashboardScreen = $("dashboardScreen");
+const loginForm = $("adminLoginForm");
+const loginError = $("loginError");
+const loginButton = $("adminLoginButton");
+const adminNotice = $("adminNotice");
+
+let adminSession = null;
+let noticeTimer = null;
+
+/* ===== SCREEN CONTROL ===== */
+function showScreen(screen) {
+  welcomeScreen.hidden = screen !== "welcome";
+  loginScreen.hidden = screen !== "login";
+  dashboardScreen.hidden = screen !== "dashboard";
+}
+
+function showNotice(message, type = "success") {
+  if (!adminNotice) return;
+  adminNotice.textContent = message;
+  adminNotice.className = "admin-notice show " + type;
+  clearTimeout(noticeTimer);
+  noticeTimer = setTimeout(() => {
+    adminNotice.className = "admin-notice";
+  }, 4500);
+}
+
+/* ===== WELCOME -> LOGIN ===== */
+$("enterConsole").addEventListener("click", () => {
+  welcomeScreen.style.animation = "screenIn .25s reverse";
+  setTimeout(() => {
+    showScreen("login");
+    $("adminEmail").focus();
+  }, 180);
+});
+
+$("backToWelcome").addEventListener("click", () => {
+  showScreen("welcome");
+});
+
+/* ===== SECURE EDGE FUNCTION CALL ===== */
+async function adminCall(action, payload = {}) {
+  const { data: sessionData, error: sessionError } =
+    await supabaseClient.auth.getSession();
+
+  if (sessionError || !sessionData.session) {
+    throw new Error("Session expired. Please login again.");
+  }
+
+  const token = sessionData.session.access_token;
+
+  const response = await fetch(ADMIN_FUNCTION_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": NEXVORA_SUPABASE_PUBLIC_KEY,
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({ action, ...payload })
+  });
+
+  let result;
+  try {
+    result = await response.json();
+  } catch {
+    throw new Error("Server returned an invalid response.");
+  }
+
+  if (!response.ok || result.error) {
+    if (response.status === 401 || response.status === 403) {
+      throw new Error(result.error || "Owner authorization failed.");
+    }
+    throw new Error(result.error || "Admin request failed.");
+  }
+
+  return result;
+}
+
+/* ===== OWNER LOGIN ===== */
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  loginError.textContent = "";
+
+  const email = $("adminEmail").value.trim().toLowerCase();
+  const password = $("adminPassword").value;
+
+  if (email !== OWNER_EMAIL) {
+    loginError.textContent = "This account is not authorized as owner.";
+    return;
+  }
+
+  loginButton.disabled = true;
+  loginButton.textContent = "VERIFYING...";
+
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+    if (!data.user || (data.user.email || "").toLowerCase() !== OWNER_EMAIL) {
+      await supabaseClient.auth.signOut();
+      throw new Error("Owner account verification failed.");
+    }
+
+    adminSession = data.session;
+
+    /* Verify owner access, but never erase a valid login because a dashboard
+       data request temporarily fails. Keep the session and show the real error. */
+    let dashboardReady = false;
+    try {
+      await adminCall("dashboard");
+      dashboardReady = true;
+    } catch (backendError) {
+      console.error("Admin backend verification:", backendError);
+      const msg = backendError.message || "Admin data service is unavailable.";
+      if (/owner access only|not authorized|authorization required|401|403/i.test(msg)) {
+        await supabaseClient.auth.signOut();
+        adminSession = null;
+        throw new Error(msg);
+      }
+      /* Keep owner session so a temporary database/API issue is recoverable. */
+      showScreen("dashboard");
+      $("adminPassword").value = "";
+      showNotice("Signed in. Dashboard data could not load: " + msg, "error");
+      return;
+    }
+
+    $("adminPassword").value = "";
+    showScreen("dashboard");
+    await loadAdminDashboard();
+    showNotice(dashboardReady ? "Owner authentication successful." : "Signed in.", "success");
+
+  } catch (error) {
+    /* Only sign out when the authenticated identity is not the owner. */
+    const message = error.message || "Login failed. Check your credentials.";
+    if (/owner account verification failed|owner access only|not authorized/i.test(message)) {
+      await supabaseClient.auth.signOut();
+      adminSession = null;
+    }
+    loginError.textContent = message;
+  } finally {
+    loginButton.disabled = false;
+    loginButton.innerHTML = "VERIFY & LOGIN <span>→</span>";
+  }
+});
+
+/* ===== NAVIGATION ===== */
+const sectionNames = {
+  dashboard: "Dashboard",
+  payments: "Payments",
+  applications: "Unban Requests",
+  licenses: "License Keys",
+  activity: "Activity"
+};
+
+function openAdminSection(name) {
+  if (!sectionNames[name]) return;
+
+  document.querySelectorAll(".admin-section").forEach(section => {
+    section.hidden = section.id !== "section-" + name;
+  });
+
+  document.querySelectorAll(".nav-item").forEach(button => {
+    button.classList.toggle("active", button.dataset.section === name);
+  });
+
+  $("pageHeading").textContent = sectionNames[name];
+  $("adminSidebar").classList.remove("open");
+
+  if (name === "dashboard") loadAdminDashboard();
+  if (name === "payments") loadPaymentRecords();
+  if (name === "applications") loadApplicationRecords();
+  if (name === "licenses") loadLicenseRecords();
+}
+
+document.querySelectorAll(".nav-item").forEach(button => {
+  button.addEventListener("click", () => {
+    openAdminSection(button.dataset.section);
+  });
+});
+
+$("mobileMenuButton").addEventListener("click", () => {
+  $("adminSidebar").classList.toggle("open");
+});
+
+/* ===== DASHBOARD DATA ===== */
+async function loadAdminDashboard() {
+  try {
+    const result = await adminCall("dashboard");
+    const stats = result.stats || {};
+
+    $("statApplications").textContent = stats.applications ?? 0;
+    $("statPendingPayments").textContent = stats.pending_payments ?? 0;
+    $("statVerifiedPayments").textContent = stats.verified_payments ?? 0;
+    $("statCompleted").textContent = stats.completed ?? 0;
+    $("statActiveLicenses").textContent = stats.active_licenses ?? 0;
+    $("statRejected").textContent = stats.rejected ?? 0;
+
+    if (typeof renderRecentActivity === "function") {
+      renderRecentActivity(result.recent || []);
+    }
+  } catch (error) {
+    showNotice(error.message, "error");
+  }
+}
+
+/* ===== REFRESH BUTTON ===== */
+$("refreshDashboard").addEventListener("click", loadAdminDashboard);
+
+$("refreshPayments").addEventListener("click", async () => {
+  if (typeof loadPaymentRecords === "function") await loadPaymentRecords();
+});
+
+$("refreshApplications").addEventListener("click", async () => {
+  if (typeof loadApplicationRecords === "function") await loadApplicationRecords();
+});
+
+$("refreshLicenses").addEventListener("click", async () => {
+  if (typeof loadLicenseRecords === "function") await loadLicenseRecords();
+});
+
+/* ===== LOGOUT ===== */
+$("adminLogout").addEventListener("click", async () => {
+  const { error } = await supabaseClient.auth.signOut();
+  adminSession = null;
+
+  if (error) {
+    showNotice("Logout request failed: " + error.message, "error");
+    return;
+  }
+
+  showScreen("welcome");
+  showNotice("You have been logged out.", "success");
+});
+
+/* ===== RESTORE SESSION SAFELY ===== */
+(async function restoreOwnerSession() {
+  try {
+    const { data, error } = await supabaseClient.auth.getSession();
+    if (error || !data.session) return;
+
+    const user = data.session.user;
+    if (!user || (user.email || "").toLowerCase() !== OWNER_EMAIL) {
+      await supabaseClient.auth.signOut();
+      return;
+    }
+
+    adminSession = data.session;
+
+    /* Restore valid owner session even if dashboard data is temporarily down. */
+    showScreen("dashboard");
+    try {
+      await adminCall("dashboard");
+      await loadAdminDashboard();
+    } catch (error) {
+      console.error("Session restore backend:", error);
+      showNotice("Session active, but dashboard data failed: " + (error.message || "Unknown error"), "error");
+    }
+  } catch (error) {
+    /* Do not silently discard an otherwise valid owner session. */
+    showScreen("login");
+    loginError.textContent = error.message || "Could not restore session.";
+    console.warn("Session restore:", error.message);
+  }
+})();
+
+/* ===== PARTICLE BACKGROUND ===== */
+(function startAdminParticles() {
+  const canvas = $("particleCanvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  let particles = [];
+
+  function resize() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    const count = Math.min(65, Math.floor(width / 17));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 1.7 + .4,
+      dx: (Math.random() - .5) * .35,
+      dy: (Math.random() - .5) * .35
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    particles.forEach(p => {
+      p.x += p.dx;
+      p.y += p.dy;
+
+      if (p.x < 0 || p.x > width) p.dx *= -1;
+      if (p.y < 0 || p.y > height) p.dy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(54,220,255,.65)";
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener("resize", resize);
+  resize();
+  draw();
+})();
+</script>
+</body>
+</html>
+            
