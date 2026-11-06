@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050914">
+  <title>My Orders | NEXVORA UNBAN</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050914;
+      --card: #0b1425;
+      --blue: #168cff;
+      --cyan: #00d9ff;
+      --text: #f2f7ff;
+      --muted: #91a4bd;
+      --border: rgba(0, 190, 255, .2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(0, 115, 255, .16), transparent 48%),
+        var(--bg);
+      font-family: Inter, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .top-glow {
+      position: fixed;
+      top: -180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 420px;
+      height: 300px;
+      background: rgba(0, 153, 255, .13);
+      filter: blur(90px);
+      pointer-events: none;
+    }
+
+    header {
+      position: relative;
+      z-index: 2;
+      min-height: 76px;
+      padding: 13px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(5, 9, 20, .85);
+      backdrop-filter: blur(15px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--cyan);
+      box-shadow: 0 0 15px rgba(0, 217, 255, .25);
+    }
+
+    .brand h1 {
+      font-family: Orbitron, sans-serif;
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+    .brand p {
+      margin-top: 4px;
+      color: var(--cyan);
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .header-btn {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #0b1729;
+      color: var(--cyan);
+      font-size: 19px;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .header-btn:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0, 217, 255, .2);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: min(920px, 91%);
+      margin: 0 auto;
+      padding: 42px 0 65px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 23px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .breadcrumb a {
+      color: var(--cyan);
+    }
+
+    .heading {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 13px;
+      margin-bottom: 15px;
+      color: var(--cyan);
+      background: rgba(0, 190, 255, .08);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .heading h2 {
+      font-family: Orbitron, sans-serif;
+      font-size: clamp(23px, 5vw, 36px);
+      line-height: 1.4;
+    }
+
+    .heading h2 span {
+      color: var(--cyan);
+      text-shadow: 0 0 20px rgba(0, 217, 255, .3);
+    }
+
+    .heading p {
+      max-width: 520px;
+      margin: 12px auto 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .orders-card {
+      padding: 24px;
+      background: linear-gradient(145deg, rgba(15, 31, 54, .95), rgba(7, 15, 29, .98));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, .25);
+    }
+
+    .orders-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 19px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .orders-top h3 {
+      font-size: 16px;
+    }
+
+    .order-count {
+      padding: 7px 11px;
+      color: var(--cyan);
+      background: rgba(0, 190, 255, .09);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .empty-state {
+      padding: 48px 15px 38px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 20px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(0, 217, 255, .3);
+      border-radius: 25px;
+      background: rgba(0, 153, 255, .08);
+      color: var(--cyan);
+      font-size: 39px;
+      box-shadow: 0 0 35px rgba(0, 153, 255, .1);
+    }
+
+    .empty-state h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .empty-state p {
+      max-width: 380px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .empty-state .small-note {
+      margin-top: 13px;
+      color: #6e849f;
+      font-size: 10px;
+    }
+
+    .primary-btn {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      margin-top: 24px;
+      padding: 14px 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 11px;
+      background: linear-gradient(100deg, #0877ed, #00bce9);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 0 22px rgba(0, 153, 255, .2);
+      transition: .25s;
+    }
+
+    .primary-btn::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -80%;
+      width: 45%;
+      height: 200%;
+      transform: rotate(25deg);
+      background: rgba(255, 255, 255, .3);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { left: -80%; }
+      65%, 100% { left: 150%; }
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(0, 190, 255, .35);
+    }
+
+    .info-strip {
+      margin-top: 20px;
+      padding: 17px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(0, 153, 255, .045);
+    }
+
+    .info-strip span {
+      color: var(--cyan);
+      font-size: 19px;
+    }
+
+    .info-strip p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 27px 5%;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      background: rgba(3, 8, 17, .8);
+    }
+
+    .footer-brand {
+      font-family: Orbitron, sans-serif;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+    }
+
+    .footer-brand span {
+      color: var(--cyan);
+    }
+
+    footer p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    .footer-links {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 17px;
+      font-size: 11px;
+      color: var(--cyan);
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding: 12px 4%;
+      }
+
+      .brand h1 {
+        font-size: 12px;
+      }
+
+      .brand img {
+        width: 39px;
+        height: 39px;
+      }
+
+      main {
+        padding-top: 30px;
+      }
+
+      .orders-card {
+        padding: 17px;
+      }
+
+      .empty-state {
+        padding-top: 38px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-glow"></div>
+
+  <header>
+    <a class="brand" href="home.html">
+      <img src="assets/nexvora-logo.png" alt="NEXVORA Logo">
+      <div>
+        <h1>NEXVORA UNBAN</h1>
+        <p>FAST • SAFE • RELIABLE</p>
+      </div>
+    </a>
+
+    <div class="header-actions">
+      <a class="header-btn" href="https://t.me/NEXVORA_X"
+         target="_blank" rel="noopener" aria-label="Support">🎧</a>
+      <a class="header-btn" href="home.html" aria-label="Home">⌂</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="breadcrumb">
+      <a href="home.html">Home</a> / My Orders
+    </div>
+
+    <section class="heading">
+      <div class="eyebrow">✦ CUSTOMER DASHBOARD</div>
+      <h2>MY <span>ORDERS</span></h2>
+      <p>
+        Track your NEXVORA UNBAN applications and check their
+        order details from one place.
+      </p>
+    </section>
+
+    <section class="orders-card">
+      <div class="orders-top">
+        <h3>Recent Orders</h3>
+        <span class="order-count" id="orderCount">0 ORDERS</span>
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">▤</div>
+        <h3>No Orders Found</h3>
+        <p>
+          You haven't submitted any applications yet.
+          Your order information will appear here when the
+          application and order system is connected.
+        </p>
+        <p class="small-note">
+          Your orders are not being fetched from a database yet.
+        </p>
+
+        <a class="primary-btn" href="home.html">
+          <span>VERIFY PLAYER UID</span>
+          <span>→</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="info-strip">
+      <span>ⓘ</span>
+      <p>
+        Need help with an existing request? Contact the official
+        NEXVORA support team. Never share your Free Fire password
+        or OTP with anyone.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-brand">NEXVORA <span>UNBAN</span></div>
+    <p>FAST • SAFE • RELIABLE</p>
+
+    <div class="footer-links">
+      <a href="home.html">Home</a>
+      <a href="application.html">Application</a>
+      <a href="https://t.me/NEXVORA_X" target="_blank" rel="noopener">Support</a>
+    </div>
+
+    <p>
+      © <span id="year">2026</span> NEXVORA UNBAN. All rights reserved.
+    </p>
+    <p>
+      Independent service. Not affiliated with or endorsed by Garena.
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+</body>
+</html>
