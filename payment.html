@@ -497,6 +497,26 @@ button {
 
 .timer-box{padding:24px 12px;margin:24px 0;background:linear-gradient(180deg,rgba(11,35,65,.48),rgba(5,16,32,.24));border:1px solid rgba(54,220,255,.25);border-radius:16px;box-shadow:inset 0 0 28px rgba(54,220,255,.035),0 0 28px rgba(54,220,255,.045);text-align:center}.timer-heading{color:var(--cyan);font:700 11px Orbitron,sans-serif;letter-spacing:2px}.timer-box strong.live-countdown{display:block;font:800 clamp(27px,7vw,48px) Orbitron,sans-serif;letter-spacing:1px;color:#eafaff;text-shadow:0 0 18px rgba(54,220,255,.28);margin:18px 0 8px;font-variant-numeric:tabular-nums}.timer-units{display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;margin:0 auto 17px;color:var(--muted);font:700 8px Orbitron,sans-serif;letter-spacing:1.3px}.timer-live-line{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--green);font:700 9px Orbitron,sans-serif;letter-spacing:.8px;margin:12px 0}.timer-live-line i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:timerPulse 1.2s infinite}@keyframes timerPulse{50%{opacity:.35;transform:scale(.75)}}.timer-sound-btn{padding:10px 15px;margin:4px auto 13px;border:1px solid rgba(54,220,255,.32);border-radius:9px;background:rgba(54,220,255,.07);color:var(--cyan);font:700 9px Orbitron,sans-serif;letter-spacing:.7px}.timer-sound-btn[aria-pressed="true"]{border-color:rgba(56,230,165,.45);color:var(--green);background:rgba(56,230,165,.07)}.timer-box small{display:block;max-width:540px;margin:0 auto;color:var(--muted);font-size:10px;line-height:1.7}
 @media(max-width:620px){.brand img{width:34px;height:34px}.brand-text strong{font-size:11px}.timer-box strong.live-countdown{font-size:clamp(23px,7vw,34px)}.timer-units{font-size:7px;letter-spacing:.7px}}
+
+/* ===== NEXVORA COMPACT PAYMENT UI — layout-only refinement ===== */
+.page-wrap,.main-container{width:min(610px,calc(100% - 30px));margin:18px auto 34px}
+.page-heading{margin:10px 0 16px}.page-heading h1{font-size:clamp(19px,4.6vw,26px);margin:7px 0}.page-heading p{font-size:12px;line-height:1.55;margin:5px auto}
+.content-panel{padding:14px 0!important;margin:10px 0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.content-panel h1{font-size:clamp(17px,4vw,22px)!important;margin:8px 0}.content-panel .subtitle{font-size:12px;line-height:1.55;margin:5px 0 13px}
+.step-label,.section-kicker{font-size:9px;letter-spacing:1.4px}.main-icon{width:36px!important;height:36px!important;font-size:18px!important;margin:9px auto!important}
+.details-grid{gap:7px}.detail-item{padding:9px 10px;border-radius:8px}.detail-item span,.detail-item small{font-size:9px;letter-spacing:.6px;margin-bottom:4px}.detail-item strong{font-size:12px;line-height:1.35}
+.notice{margin-top:11px;padding:10px 11px;border-radius:8px;font-size:10px;line-height:1.55}.notice p{margin:4px 0 0}
+.primary-btn,.success-btn,.secondary-btn,.danger-btn{width:auto;min-width:0;min-height:38px;padding:10px 15px!important;margin:9px 0 0!important;border-radius:8px!important;font-size:10px!important;letter-spacing:.55px!important;box-shadow:none!important;display:flex;align-items:center;justify-content:center}
+.content-panel>.primary-btn,.content-panel>.success-btn,.content-panel>.secondary-btn,.content-panel form>.primary-btn{width:100%}
+.field-label,.content-panel form label{font-size:11px;margin:11px 0 6px}.field,.content-panel form input{padding:11px 12px;border-radius:8px;font-size:12px}
+.amount-box,.payment-amount{padding:12px 10px!important;margin:11px 0!important;border-radius:9px!important}.amount,.payment-amount strong{font-size:29px!important;margin-top:4px}
+.qr-wrap{min-width:0;min-height:0;padding:8px;margin:12px auto}#qrcode,#qrcode img,#qrcode canvas{width:154px!important;height:154px!important}.qr-container{margin:10px auto}.qr-heading{font-size:10px!important;letter-spacing:1px}.qr-caption{font-size:10px!important;margin:7px 0}
+.upi-id,.upi-box{padding:9px 10px;border-radius:8px;font-size:11px}.copy-btn{padding:7px 10px!important;font-size:9px!important;border-radius:6px!important}
+.timer-box{padding:14px 10px;margin:13px 0;border-radius:10px}.timer-box strong.live-countdown{font-size:clamp(22px,6vw,34px);margin:10px 0 5px}.timer-units{margin-bottom:9px}.timer-sound-btn{padding:7px 10px;margin:2px auto 8px;font-size:8px}
+.center-panel{min-height:0!important;text-align:center}.center-panel .result-icon,.success-mark{width:56px;height:56px;font-size:30px;margin:8px auto 12px}.order-id-box{padding:12px!important;margin:12px 0!important}.order-id-box strong{font-size:16px!important}
+.page-footer,.footer-note{padding:13px 10px 18px;font-size:9px}.site-header,.top-header{height:58px;min-height:58px;padding:8px 15px}.brand img{width:32px;height:32px}.support-btn,.support-link{padding:7px 10px;border-radius:7px;font-size:9px}
+@media(max-width:480px){.page-wrap,.main-container{width:calc(100% - 26px);margin-top:12px}.details-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-item{padding:8px}.detail-item strong{font-size:11px}.content-panel{padding:10px 0!important}}
+
 </style>
 </head>
 <body>
