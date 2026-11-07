@@ -494,6 +494,9 @@ button {
     scroll-behavior:auto!important;
   }
 }
+
+.timer-box{padding:24px 12px;margin:24px 0;background:linear-gradient(180deg,rgba(11,35,65,.48),rgba(5,16,32,.24));border:1px solid rgba(54,220,255,.25);border-radius:16px;box-shadow:inset 0 0 28px rgba(54,220,255,.035),0 0 28px rgba(54,220,255,.045);text-align:center}.timer-heading{color:var(--cyan);font:700 11px Orbitron,sans-serif;letter-spacing:2px}.timer-box strong.live-countdown{display:block;font:800 clamp(27px,7vw,48px) Orbitron,sans-serif;letter-spacing:1px;color:#eafaff;text-shadow:0 0 18px rgba(54,220,255,.28);margin:18px 0 8px;font-variant-numeric:tabular-nums}.timer-units{display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;margin:0 auto 17px;color:var(--muted);font:700 8px Orbitron,sans-serif;letter-spacing:1.3px}.timer-live-line{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--green);font:700 9px Orbitron,sans-serif;letter-spacing:.8px;margin:12px 0}.timer-live-line i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:timerPulse 1.2s infinite}@keyframes timerPulse{50%{opacity:.35;transform:scale(.75)}}.timer-sound-btn{padding:10px 15px;margin:4px auto 13px;border:1px solid rgba(54,220,255,.32);border-radius:9px;background:rgba(54,220,255,.07);color:var(--cyan);font:700 9px Orbitron,sans-serif;letter-spacing:.7px}.timer-sound-btn[aria-pressed="true"]{border-color:rgba(56,230,165,.45);color:var(--green);background:rgba(56,230,165,.07)}.timer-box small{display:block;max-width:540px;margin:0 auto;color:var(--muted);font-size:10px;line-height:1.7}
+@media(max-width:620px){.brand img{width:34px;height:34px}.brand-text strong{font-size:11px}.timer-box strong.live-countdown{font-size:clamp(23px,7vw,34px)}.timer-units{font-size:7px;letter-spacing:.7px}}
 </style>
 </head>
 <body>
@@ -503,8 +506,8 @@ button {
     <div class="brand">
       <img src="assets/nexvora-logo.png" alt="NEXVORA Logo">
       <div class="brand-text">
-        <strong>NEXVORA</strong>
-        <span>UNBAN SERVICES</span>
+        <strong>NEXVORA UNBAN</strong>
+        <span>SECURE PAYMENT PORTAL</span>
       </div>
     </div>
     <a class="support-link" href="https://t.me/NEXVORA_X" target="_blank">
@@ -795,10 +798,13 @@ button {
           <button class="copy-btn" id="copyOrderId">COPY ORDER ID</button>
         </div>
 
-        <div class="timer-box">
-          <span>14-DAY REVIEW PERIOD</span>
-          <strong id="finalTimer">14d 00h 00m 00s</strong>
-          <small>Timer is based on your actual submission time.</small>
+        <div class="timer-box" id="orderTimerPanel" aria-live="off">
+          <div class="timer-heading">14-DAY REVIEW COUNTDOWN</div>
+          <strong id="finalTimer" class="live-countdown">14 : 00 : 00 : 00</strong>
+          <div class="timer-units"><span>DAYS</span><span>HOURS</span><span>MINUTES</span><span>SECONDS</span></div>
+          <div class="timer-live-line"><i></i> LIVE • SYNCHRONIZED WITH SERVER DEADLINE</div>
+          <button class="timer-sound-btn" id="timerSoundToggle" type="button" aria-pressed="false">♪ ENABLE TICK SOUND</button>
+          <small>Countdown starts from the server-recorded submission time and continues accurately after refresh.</small>
         </div>
 
         <div class="details-grid">
@@ -1372,69 +1378,6 @@ get("copyOrderId").addEventListener("click", async () => {
 });
 
 /* =========================================
-   REAL DATABASE-BASED 14 DAY TIMER
-========================================= */
-
-async function refreshOrderTimer() {
-  const orderId =
-    finalOrderId ||
-    sessionStorage.getItem("nexvora_final_order_id");
-
-  if (!orderId) return;
-
-  try {
-    const result = await callWorkflow({
-      action: "track",
-      order_id: orderId
-    });
-
-    if (typeof result.remaining_ms === "number") {
-      renderTimer(result.remaining_ms);
-    } else if (result.deadline) {
-      renderTimer(
-        new Date(result.deadline).getTime() - Date.now()
-      );
-    }
-  } catch (error) {
-    console.error("Order timer refresh failed:", error);
-  }
-}
-
-function renderTimer(remainingMs) {
-  const timer = get("finalTimer");
-
-  if (!timer) return;
-
-  const totalSeconds = Math.max(
-    0,
-    Math.floor(remainingMs / 1000)
-  );
-
-  const days = Math.floor(totalSeconds / 86400);
-  const hours = Math.floor((totalSeconds % 86400) / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-
-  timer.textContent =
-    String(days).padStart(2, "0") + "d " +
-    String(hours).padStart(2, "0") + "h " +
-    String(minutes).padStart(2, "0") + "m " +
-    String(seconds).padStart(2, "0") + "s";
-}
-
-function startRealOrderTimer() {
-  if (timerInterval) {
-    clearInterval(timerInterval);
-  }
-
-  refreshOrderTimer();
-
-  timerInterval = setInterval(() => {
-    refreshOrderTimer();
-  }, 1000);
-}
-
-/* =========================================
    PARTICLE BACKGROUND
 ========================================= */
 
@@ -1573,89 +1516,109 @@ function startRealOrderTimer() {
       showScreen("screenApplication");
     });
 })();
-    </script>
-   <script>
-/* =========================================
-   DATABASE-SYNCED 14 DAY TIMER
-   Server se deadline ek baar lo,
-   countdown browser mein chalao.
-========================================= */
+    
 
-let timerInterval = null;
+/* =========================================
+   SERVER-SYNCED COUNTDOWN + OPTIONAL TICK SOUND
+========================================= */
 let timerDeadline = null;
+let timerSoundEnabled = false;
+let timerAudioContext = null;
 
 async function refreshOrderTimer() {
-  const orderId =
-    finalOrderId ||
-    sessionStorage.getItem("nexvora_final_order_id");
-
+  const orderId = finalOrderId || sessionStorage.getItem("nexvora_final_order_id");
   if (!orderId) return;
-
   try {
-    const result = await callWorkflow({
-      action: "track",
-      order_id: orderId
-    });
-
-    if (result.deadline) {
-      timerDeadline = new Date(result.deadline).getTime();
-    } else if (typeof result.remaining_ms === "number") {
-      timerDeadline = Date.now() + result.remaining_ms;
-    } else {
-      throw new Error("Server did not return a valid deadline.");
-    }
-
+    const result = await callWorkflow({ action: "track", order_id: orderId });
+    if (result.deadline) timerDeadline = new Date(result.deadline).getTime();
+    else if (typeof result.remaining_ms === "number") timerDeadline = Date.now() + result.remaining_ms;
+    else throw new Error("Server did not return a valid deadline.");
+    if (!Number.isFinite(timerDeadline)) throw new Error("Invalid server deadline.");
     renderTimer();
     startLocalTimer();
-
   } catch (error) {
     console.error("Timer sync failed:", error);
-    setText("finalTimer", "TIMER SYNC UNAVAILABLE");
+    setText("finalTimer", "SYNC UNAVAILABLE");
+    const line = document.querySelector(".timer-live-line");
+    if (line) line.textContent = "SERVER CONNECTION REQUIRED TO SYNC TIMER";
   }
 }
 
 function renderTimer() {
   if (!timerDeadline) return;
-
-  const remainingMs = Math.max(
-    0,
-    timerDeadline - Date.now()
-  );
-
-  const totalSeconds = Math.floor(remainingMs / 1000);
-
+  const remainingMs = Math.max(0, timerDeadline - Date.now());
+  const totalSeconds = Math.ceil(remainingMs / 1000);
   const days = Math.floor(totalSeconds / 86400);
   const hours = Math.floor((totalSeconds % 86400) / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
+  setText("finalTimer", [days, hours, minutes, seconds].map(v => String(v).padStart(2, "0")).join(" : "));
+  if (remainingMs <= 0) {
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = null;
+    const line = document.querySelector(".timer-live-line");
+    if (line) line.textContent = "REVIEW PERIOD COMPLETED";
+  }
+}
 
-  setText(
-    "finalTimer",
-    String(days).padStart(2, "0") + "d " +
-    String(hours).padStart(2, "0") + "h " +
-    String(minutes).padStart(2, "0") + "m " +
-    String(seconds).padStart(2, "0") + "s"
-  );
+function playTimerTick() {
+  if (!timerSoundEnabled || document.hidden) return;
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    if (!timerAudioContext) timerAudioContext = new AudioContextClass();
+    if (timerAudioContext.state === "suspended") timerAudioContext.resume();
+    const oscillator = timerAudioContext.createOscillator();
+    const gain = timerAudioContext.createGain();
+    oscillator.type = "square";
+    oscillator.frequency.setValueAtTime(1150, timerAudioContext.currentTime);
+    gain.gain.setValueAtTime(0.0001, timerAudioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.035, timerAudioContext.currentTime + 0.003);
+    gain.gain.exponentialRampToValueAtTime(0.0001, timerAudioContext.currentTime + 0.028);
+    oscillator.connect(gain); gain.connect(timerAudioContext.destination);
+    oscillator.start(); oscillator.stop(timerAudioContext.currentTime + 0.03);
+  } catch (error) { console.warn("Timer tick audio unavailable:", error); }
 }
 
 function startLocalTimer() {
-  if (timerInterval) {
-    clearInterval(timerInterval);
-  }
-
+  if (timerInterval) clearInterval(timerInterval);
+  let lastSecond = Math.ceil(Math.max(0, timerDeadline - Date.now()) / 1000);
   timerInterval = setInterval(() => {
-    renderTimer();
-
-    if (timerDeadline && Date.now() >= timerDeadline) {
-      clearInterval(timerInterval);
-      timerInterval = null;
+    const currentSecond = Math.ceil(Math.max(0, timerDeadline - Date.now()) / 1000);
+    if (currentSecond !== lastSecond) {
+      renderTimer();
+      if (currentSecond > 0 && currentSecond < lastSecond) playTimerTick();
+      lastSecond = currentSecond;
     }
-  }, 1000);
+    if (currentSecond <= 0) { clearInterval(timerInterval); timerInterval = null; }
+  }, 100);
 }
 
-function startRealOrderTimer() {
-  refreshOrderTimer();
-}
-   </script> 
+const timerSoundButton = get("timerSoundToggle");
+if (timerSoundButton) timerSoundButton.addEventListener("click", async () => {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) { showError("This browser does not support timer audio."); return; }
+  timerSoundEnabled = !timerSoundEnabled;
+  if (timerSoundEnabled) {
+    try {
+      if (!timerAudioContext) timerAudioContext = new AudioContextClass();
+      await timerAudioContext.resume();
+      timerSoundButton.textContent = "♪ TICK SOUND ON";
+      timerSoundButton.setAttribute("aria-pressed", "true");
+      playTimerTick();
+    } catch {
+      timerSoundEnabled = false;
+      showError("Please allow audio playback in your browser.");
+    }
+  } else {
+    timerSoundButton.textContent = "♪ ENABLE TICK SOUND";
+    timerSoundButton.setAttribute("aria-pressed", "false");
+  }
+});
+
+function startRealOrderTimer() { refreshOrderTimer(); }
+
+</script>
+    
 </body>
 </html>
