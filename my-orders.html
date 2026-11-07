@@ -379,6 +379,19 @@
         padding-top: 38px;
       }
     }
+
+    .orders-card{padding:16px;border-radius:10px;background:rgba(8,19,36,.78);box-shadow:none}
+    .heading{margin-bottom:18px}.eyebrow{padding:6px 10px;margin-bottom:9px;border-radius:7px;font-size:9px}.heading h2{font-size:clamp(20px,4vw,28px)}.heading p{font-size:11px;line-height:1.6;margin-top:7px}
+    .orders-top{padding-bottom:11px}.orders-top h3{font-size:13px}.order-count{padding:5px 8px;font-size:9px;border-radius:6px}
+    .track-form{display:flex;gap:8px;margin:14px 0 5px}.track-form input{min-width:0;flex:1;padding:11px;border:1px solid var(--border);border-radius:7px;background:#071326;color:white;font-size:12px;outline:none}.track-form input:focus{border-color:var(--cyan)}
+    .track-form button{padding:0 15px;border:1px solid rgba(0,217,255,.35);border-radius:7px;background:linear-gradient(100deg,#1457a8,#087b9e);color:#fff;font-size:10px;font-weight:800;letter-spacing:.5px}
+    .track-hint{margin:7px 0 0;color:var(--muted);font-size:10px;line-height:1.5}
+    .track-message{margin-top:12px;padding:10px;border:1px solid var(--border);border-radius:7px;color:var(--muted);font-size:11px;line-height:1.5}
+    .track-result{margin-top:14px;border-top:1px solid var(--border);padding-top:13px}.track-result h3{font:700 12px Orbitron,sans-serif;color:var(--cyan);margin-bottom:10px}
+    .track-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.track-item{padding:9px;border:1px solid rgba(0,190,255,.13);border-radius:7px;background:rgba(3,11,23,.4);min-width:0}.track-item small{display:block;color:var(--muted);font-size:8px;letter-spacing:.6px;margin-bottom:5px;text-transform:uppercase}.track-item strong{display:block;font-size:11px;overflow-wrap:anywhere;line-height:1.45}.track-status{display:inline-block;padding:4px 7px;border:1px solid var(--border);border-radius:5px;color:var(--cyan);font-size:9px;font-weight:800}
+    .empty-state{padding:22px 10px 10px}.empty-icon{width:48px;height:48px;margin-bottom:10px;border-radius:12px;font-size:22px}.empty-state h3{font-size:14px;margin-bottom:6px}.empty-state p{font-size:10px}.empty-state .small-note{font-size:9px}.primary-btn{margin-top:13px;padding:10px 14px;font-size:10px;border-radius:7px}.info-strip{margin-top:13px;padding:11px;border-radius:8px}.info-strip p{font-size:10px}
+    @media(max-width:480px){.track-form{gap:6px}.track-form button{padding:0 10px}.track-grid{gap:6px}.track-item{padding:8px}}
+
   </style>
 </head>
 
@@ -417,29 +430,26 @@
 
     <section class="orders-card">
       <div class="orders-top">
-        <h3>Recent Orders</h3>
-        <span class="order-count" id="orderCount">0 ORDERS</span>
+        <h3>Track Your Order</h3>
+        <span class="order-count">LIVE STATUS</span>
       </div>
-
+      <form class="track-form" id="trackOrderForm">
+        <input id="orderIdInput" type="text" placeholder="Enter Order ID (e.g. NXU-XXXXXXXX)" autocomplete="off" required maxlength="60">
+        <button id="trackOrderButton" type="submit">TRACK</button>
+      </form>
+      <p class="track-hint">Enter the Order ID shown after your application was submitted.</p>
+      <div class="track-message" id="trackMessage" role="status">Your order status and available details will appear here.</div>
+      <section class="track-result" id="trackResult" hidden aria-live="polite">
+        <h3>ORDER DETAILS</h3>
+        <div class="track-grid" id="trackDetails"></div>
+      </section>
       <div class="empty-state" id="emptyState">
-        <div class="empty-icon">▤</div>
-        <h3>No Orders Found</h3>
-        <p>
-          You haven't submitted any applications yet.
-          Your order information will appear here when the
-          application and order system is connected.
-        </p>
-        <p class="small-note">
-          Your orders are not being fetched from a database yet.
-        </p>
-
-        <a class="primary-btn" href="home.html">
-          <span>VERIFY PLAYER UID</span>
-          <span>→</span>
-        </a>
+        <div class="empty-icon">⌕</div>
+        <h3>Have an existing order?</h3>
+        <p>Use the Order ID above to check its latest status and application details.</p>
+        <a class="primary-btn" href="home.html"><span>NEW APPLICATION</span> <span>→</span></a>
       </div>
     </section>
-
     <div class="info-strip">
       <span>ⓘ</span>
       <p>
@@ -469,8 +479,90 @@
   </footer>
 
   <script>
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+    "use strict";
+    const SUPABASE_URL = "https://sitgwrnvxaugresvlvfl.supabase.co";
+    const SUPABASE_PUBLIC_KEY = "sb_publishable_vrTWTdch4_6ZyH57htbWPQ_Bc0G1SEZ";
+    const PAYMENT_FUNCTION = SUPABASE_URL + "/functions/v1/unban-payment-workflow";
+    const $ = id => document.getElementById(id);
+    const safeText = value => String(value ?? "").trim();
+    const escapeHTML = value => safeText(value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+    const labelize = value => String(value).replace(/_/g," ").replace(/\b\w/g, ch => ch.toUpperCase());
+    const dateText = value => { if (!value) return "—"; const d = new Date(value); return Number.isNaN(d.getTime()) ? safeText(value) : d.toLocaleString(); };
+
+    async function trackOrder(orderId) {
+      const response = await fetch(PAYMENT_FUNCTION, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_PUBLIC_KEY,
+          "Authorization": "Bearer " + SUPABASE_PUBLIC_KEY
+        },
+        body: JSON.stringify({ action: "track", order_id: orderId })
+      });
+      let result;
+      try { result = await response.json(); }
+      catch { throw new Error("Server returned an invalid response. Please try again."); }
+      if (!response.ok || result.success === false || result.ok === false) {
+        throw new Error(result.error || result.message || "Order could not be found. Check the Order ID.");
+      }
+      return result;
+    }
+
+    function showOrder(data, searchedId) {
+      const record = data.order || data.record || data.application || data;
+      const status = safeText(record.status || data.status || "Status unavailable");
+      const fields = [
+        ["Order ID", record.order_id || data.order_id || searchedId],
+        ["Status", status],
+        ["Player UID", record.player_uid || record.uid],
+        ["Player Name", record.game_name || record.player_name || record.nickname || record.full_name],
+        ["Player Level", record.id_level || record.player_level || record.level],
+        ["Region", record.region],
+        ["Game", record.game_name],
+        ["Payment", record.payment_status || (record.payment_verified_at ? "Verified" : "As per order status")],
+        ["UTR", record.payment_utr || record.utr],
+        ["Submitted", record.submitted_at || record.created_at],
+        ["Last Updated", record.updated_at || record.reviewed_at],
+        ["Admin Note", record.admin_note]
+      ].filter(([label,value]) => value !== undefined && value !== null && String(value).trim() !== "");
+
+      $("trackDetails").innerHTML = fields.map(([label,value]) => {
+        const formatted = ["Submitted","Last Updated"].includes(label) ? dateText(value) : safeText(value);
+        const valueHtml = label === "Status"
+          ? `<span class="track-status">${escapeHTML(formatted.toUpperCase())}</span>`
+          : escapeHTML(formatted);
+        return `<div class="track-item"><small>${escapeHTML(label)}</small><strong>${valueHtml}</strong></div>`;
+      }).join("");
+      $("trackResult").hidden = false;
+      $("emptyState").hidden = true;
+      $("orderCount").textContent = "1 ORDER";
+      $("trackMessage").textContent = "Order details loaded. Status shown below is the latest information returned by the server.";
+    }
+
+    $("trackOrderForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      const orderId = $("orderIdInput").value.trim();
+      if (!orderId) return;
+      const button = $("trackOrderButton");
+      button.disabled = true;
+      button.textContent = "CHECKING…";
+      $("trackResult").hidden = true;
+      $("trackMessage").textContent = "Checking order securely…";
+      try {
+        const result = await trackOrder(orderId);
+        showOrder(result, orderId);
+      } catch (error) {
+        $("trackMessage").textContent = error.message || "Unable to check this order right now.";
+        $("emptyState").hidden = false;
+      } finally {
+        button.disabled = false;
+        button.textContent = "TRACK";
+      }
+    });
+
+    $("year").textContent = new Date().getFullYear();
+    const savedOrderId = sessionStorage.getItem("nexvora_final_order_id");
+    if (savedOrderId) $("orderIdInput").value = savedOrderId;
   </script>
 </body>
 </html>
