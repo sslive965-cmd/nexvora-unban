@@ -757,7 +757,10 @@ function showError(text) {
 function getErrorMessage(code) {
 
   const errors = {
+    INVALID_KEY: "Invalid license key format.",
     INVALID_KEY_FORMAT: "Invalid license key format.",
+    INVALID_REQUEST_ID: "Verification session expired. Please try again.",
+    REQUEST_CONFLICT: "This verification attempt cannot be reused. Please try again.",
     LICENSE_NOT_FOUND: "This license key does not exist.",
     LICENSE_REVOKED: "This license key has been revoked.",
     LICENSE_EXPIRED: "This license key has expired.",
@@ -832,7 +835,8 @@ form.addEventListener("submit", async function(event) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          license_key: licenseKey
+          license_key: licenseKey,
+          request_id: crypto.randomUUID()
         }),
         signal: controller.signal
       });
