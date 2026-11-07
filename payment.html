@@ -536,6 +536,18 @@ button {
 .center-screen{min-height:38vh}.loader-ring{width:48px;height:48px;margin:8px auto 15px}
 @media(max-width:480px){.main-container{width:calc(100% - 20px);margin:10px auto 22px}.content-panel{padding:13px 11px}.details-grid{gap:6px}.detail-item{padding:8px}.detail-item strong{font-size:10px}.brand img{width:32px;height:32px}.support-link{padding:7px 8px}.page-footer{font-size:8px}}
 
+
+/* Flat, page-integrated presentation: no floating/card containers. */
+.main-container{width:min(760px,calc(100% - 30px));margin:12px auto 24px}
+.content-panel,.content-panel.center-panel{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:15px 0!important;margin:0!important}
+.screen{border:0!important;background:transparent!important;box-shadow:none!important}
+.details-grid,.success-details{background:transparent!important}
+.detail-item,.success-details>div{background:transparent!important;border:0!important;border-bottom:1px solid rgba(94,165,226,.16)!important;border-radius:0!important;padding:9px 5px!important}
+.amount-box,.payment-amount,.upi-box,.order-id-box,.timer-box{background:transparent!important;box-shadow:none!important;border-radius:0!important;border-left:0!important;border-right:0!important}
+.primary-btn,.secondary-btn,.success-btn,.danger-btn{width:auto;min-width:160px;min-height:36px;padding:9px 16px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.content-panel label{margin-top:10px}
+@media(max-width:480px){.main-container{width:calc(100% - 24px)}.content-panel,.content-panel.center-panel{padding:12px 0!important}.primary-btn,.secondary-btn,.success-btn,.danger-btn{width:100%;min-width:0}}
+
 </style>
 </head>
 <body>
@@ -1569,17 +1581,37 @@ async function refreshOrderTimer() {
   if (!orderId) return;
   try {
     const result = await callWorkflow({ action: "track", order_id: orderId });
-    if (result.deadline) timerDeadline = new Date(result.deadline).getTime();
-    else if (typeof result.remaining_ms === "number") timerDeadline = Date.now() + result.remaining_ms;
-    else throw new Error("Server did not return a valid deadline.");
+    if (result.deadline) {
+      timerDeadline = new Date(result.deadline).getTime();
+    } else if (typeof result.remaining_ms === "number" && Number.isFinite(result.remaining_ms)) {
+      timerDeadline = Date.now() + result.remaining_ms;
+    } else {
+      const submittedAt = result.submitted_at || sessionStorage.getItem("nexvora_submitted_at");
+      const submittedAtMs = submittedAt ? new Date(submittedAt).getTime() : NaN;
+      if (!Number.isFinite(submittedAtMs)) {
+        throw new Error("The server has not provided a valid submission timestamp yet.");
+      }
+      timerDeadline = submittedAtMs + 14 * 24 * 60 * 60 * 1000;
+    }
     if (!Number.isFinite(timerDeadline)) throw new Error("Invalid server deadline.");
+    if (result.submitted_at) sessionStorage.setItem("nexvora_submitted_at", result.submitted_at);
     renderTimer();
     startLocalTimer();
   } catch (error) {
     console.error("Timer sync failed:", error);
-    setText("finalTimer", "SYNC UNAVAILABLE");
-    const line = document.querySelector(".timer-live-line");
-    if (line) line.textContent = "SERVER CONNECTION REQUIRED TO SYNC TIMER";
+    const submittedAt = sessionStorage.getItem("nexvora_submitted_at");
+    const submittedAtMs = submittedAt ? new Date(submittedAt).getTime() : NaN;
+    if (Number.isFinite(submittedAtMs)) {
+      timerDeadline = submittedAtMs + 14 * 24 * 60 * 60 * 1000;
+      renderTimer();
+      startLocalTimer();
+      const line = document.querySelector(".timer-live-line");
+      if (line) line.textContent = "COUNTDOWN BASED ON SAVED SUBMISSION TIME • SERVER SYNC RETRY NEEDED";
+    } else {
+      setText("finalTimer", "PENDING SYNC");
+      const line = document.querySelector(".timer-live-line");
+      if (line) line.textContent = "SUBMISSION TIME NOT YET AVAILABLE — PLEASE RELOAD";
+    }
   }
 }
 

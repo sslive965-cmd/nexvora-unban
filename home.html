@@ -1344,6 +1344,16 @@ button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
       return;
     }
 
+    // A new UID verification must never inherit a previous player's session.
+    // Clear stale application/payment references before contacting the API.
+    [
+      "nexvora_verified_player",
+      "nexvora_application_details",
+      "nexvora_request_id",
+      "nexvora_final_order_id",
+      "nexvora_submitted_at"
+    ].forEach(key => sessionStorage.removeItem(key));
+
     setLoading(true);
     clearMessage();
 
