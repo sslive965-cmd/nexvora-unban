@@ -546,54 +546,6 @@ button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
 .player-identity-banner small{font-size:10px;color:#a6c5df}
 @media(max-width:420px){.player-identity-mini{grid-template-columns:56px 1fr}.ff-logo-tile img{height:44px}}
 </style>
-
-<!-- NEXVORA clean white / black / blue theme override -->
-<style id="nexvora-clean-theme">
-:root{--bg:#f7f9fc!important;--panel:#ffffff!important;--panel2:#f1f5f9!important;--blue:#2563eb!important;--cyan:#2563eb!important;--purple:#2563eb!important;--text:#111827!important;--muted:#64748b!important;--border:#dbe3ee!important;--line:#dbe3ee!important;--success:#16a34a!important;--danger:#dc2626!important;--green:#16a34a!important;--admin-bg:#f7f9fc!important;--admin-blue:#2563eb!important;--admin-cyan:#2563eb!important;--admin-purple:#2563eb!important}
-html,body{background:#f7f9fc!important;color:#111827!important}
-body{background-image:none!important}
-/* Remove ambient, electrical, particle and glow effects only */
-#particleCanvas,.ambient-glow,.ambient,.glow-one,.glow-two,.top-glow,.ambient-one,.ambient-two{display:none!important;opacity:0!important;filter:none!important}
-*,*::before,*::after{box-shadow:none!important;text-shadow:none!important;filter:none!important}
-/* Main surfaces become white/light, with clean borders */
-.site-header,.top-header,header,nav,.menu-panel,.drawer,.sidebar,.site-footer,.footer,
-.card,.panel,.content-panel,.screen,.form-card,.success-card,.modal-card,.section-card,
-.feature-card,.step-card,.orders-card,.track-item,.detail-item,.player-item,.notice,
-.banner-card,.login-card,.admin-card,.settings-card,.table-container,table,tbody,tr,
-.form-control,.field,input,select,textarea,.track-form input,.settings-form input,
-.settings-form textarea,.settings-form select{
- background:#fff!important;color:#111827!important;border-color:#dbe3ee!important;
-}
-.site-header,.top-header,header,nav{background:#fff!important;border-bottom:1px solid #dbe3ee!important;backdrop-filter:none!important}
-main,section,.page-container,.content,.page-content,.site-main{background:transparent!important;color:#111827!important}
-button,.primary-btn,.verify-btn,.success-btn,.submit-btn,.cta-button,.menu-toggle{background:#2563eb!important;color:#fff!important;border-color:#2563eb!important}
-.secondary-btn,.copy-btn,.support-link,.menu-link,.nav-link{background:#eff6ff!important;color:#1d4ed8!important;border-color:#bfdbfe!important}
-a, a:not(.primary-btn):not(.verify-btn){color:#1d4ed8!important}
-input,select,textarea{background:#fff!important;color:#111827!important;border-color:#cbd5e1!important}
-input::placeholder,textarea::placeholder{color:#94a3b8!important}
-/* Keep player/avatar/banner previews out of the interface */
-.player-identity-mini,.player-compact-avatar,.player-compact-banner,.payment-player-mini,.ff-logo-tile{display:none!important}
-</style>
-
-<style id="nexvora-final-clean-theme">
-/* NEXVORA FINAL CLEAN THEME: solid white canvas, black text, blue headings/branding */
-:root{color-scheme:light!important;--bg:#fff!important;--panel:#fff!important;--panel2:#f8fafc!important;--blue:#2563eb!important;--cyan:#2563eb!important;--purple:#2563eb!important;--text:#111827!important;--muted:#4b5563!important;--border:#dbe3ee!important;--line:#dbe3ee!important;--admin-bg:#fff!important;--admin-blue:#2563eb!important;--admin-cyan:#2563eb!important;--admin-purple:#2563eb!important;font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif!important}
-html,body,body *{font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif!important}
-html,body,body>*,main,section,article,.page,.page-container,.content,.page-content,.site-main,.container,.wrapper{background-color:#fff!important;background-image:none!important;color:#111827!important}
-body{background:#fff!important;background-image:none!important}
-/* Remove visual-only lightning/ambient/electric glow without touching application logic */
-#particleCanvas,.ambient-glow,.ambient,.glow-one,.glow-two,.top-glow,.ambient-one,.ambient-two,.lightning,.lightning-effect,.electric-effect,.electric-glow,.neon-glow,.glow-effect,.shine-effect,.particle-effect{display:none!important;opacity:0!important;visibility:hidden!important}
-*,*::before,*::after{box-shadow:none!important;text-shadow:none!important;filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-*:not(img):not(svg):not(canvas):not(video):not(.primary-btn):not(.verify-btn):not(.success-btn):not(.submit-btn):not(.cta-button):not(button):not(.menu-toggle){background-image:none!important}
-/* Cards and surfaces: white with subtle neutral outlines */
-.card,.panel,.content-panel,.screen,.form-card,.success-card,.modal-card,.section-card,.feature-card,.step-card,.orders-card,.track-item,.detail-item,.player-item,.notice,.banner-card,.login-card,.admin-card,.settings-card,.table-container,table,tbody,tr,.form-control,.field,input,select,textarea,.track-form input,.settings-form input,.settings-form textarea,.settings-form select,.site-header,.top-header,header,nav,.menu-panel,.drawer,.sidebar,.site-footer,.footer{background:#fff!important;background-image:none!important;color:#111827!important;border-color:#dbe3ee!important}
-button,.primary-btn,.verify-btn,.success-btn,.submit-btn,.cta-button,.menu-toggle{background:#2563eb!important;background-image:none!important;color:#fff!important;border-color:#2563eb!important}
-.secondary-btn,.copy-btn,.support-link,.menu-link,.nav-link{background:#eff6ff!important;background-image:none!important;color:#2563eb!important;border-color:#bfdbfe!important}
-a,a:not(.primary-btn):not(.verify-btn){color:#2563eb!important}
-input,select,textarea{background:#fff!important;color:#111827!important;border-color:#cbd5e1!important}
-input::placeholder,textarea::placeholder{color:#6b7280!important}
-h1,h2,h3,h4,h5,h6,.brand-name,.brand,.brand-title,.brand-sub,.brand-subtitle,.logo-text,.footer-brand-name,.drawer-brand,.section-title,.page-title,.heading,.title{color:#2563eb!important}
-</style>
 </head>
 <body>
 
@@ -677,7 +629,7 @@ h1,h2,h3,h4,h5,h6,.brand-name,.brand,.brand-title,.brand-sub,.brand-subtitle,.lo
     <img src="assets/free-fire-logo.png" alt="Free Fire Logo">
     <div class="game-line-text">
       <span class="india">💫 FREE FIRE INDIA 🇮🇳</span>
-      &nbsp; <span class="garena">GARENA FREE FIRE </span>
+      &nbsp; <span class="garena">GARENA FREE FIRE ⚡</span>
       &nbsp; <span class="max">FREE FIRE MAX 🔥</span>
     </div>
   </section>
@@ -689,7 +641,7 @@ h1,h2,h3,h4,h5,h6,.brand-name,.brand,.brand-title,.brand-sub,.brand-subtitle,.lo
       <div><strong>UID Only</strong><small>No Login Needed</small></div>
     </article>
     <article class="feature-card">
-      <span class="feature-icon"></span>
+      <span class="feature-icon">⚡</span>
       <div><strong>Express Process</strong><small>Direct In-Game</small></div>
     </article>
     <article class="feature-card">
@@ -1499,58 +1451,6 @@ h1,h2,h3,h4,h5,h6,.brand-name,.brand,.brand-title,.brand-sub,.brand-subtitle,.lo
 
 })();
 </script>
-
-
-<!-- NEXVORA CLEAN PROFESSIONAL THEME (visual-only overrides) -->
-<style id="nexvora-clean-theme">
-:root{color-scheme:light!important;--bg:#fff!important;--background:#fff!important;--card:#fff!important;--panel:#fff!important;--surface:#fff!important;--text:#111827!important;--muted:#4b5563!important;--blue:#2563eb!important;--primary:#2563eb!important;--cyan:#2563eb!important;--border:#d1d5db!important}
-html,body{background:#fff!important;background-image:none!important;color:#111!important;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif!important}
-body{background:#fff!important}
-/* Flat white surfaces: includes UID details, Terms/Policy and ordinary cards */
-.result-details,.result-detail-row,.uid-details,.player-details,.player-details-card,.result-detail,.detail-row,.card,.panel,.content-panel,.info-card,.section-card,.feature-card,.step-card,.orders-card,.track-item,.detail-item,.player-item,.notice,.banner-card,.login-card,.admin-card,.settings-card,.table-container,table,tbody,tr,.form-card,.modal-card,.terms-card,.policy-card,.uid-card,.player-details-card,.verified-details,.track-result,.track-details,.application-card,.payment-card,.legal-card,section,article,.page-container,.content,.page-content,.site-main,.container,.wrapper,header,nav,footer{background-color:#fff!important;background-image:none!important;color:#111!important;border-color:#d1d5db!important}
-/* Text and branding hierarchy */
-p,h3,h4,h5,h6,label,small,li,td,th,span:not(.status-dot):not(.verified-tag):not(.connected-tag):not(.track-status):not(.success-badge):not(.result-status span),.description,.subtitle,.legal-text{color:#111!important}
-h1,h2,.brand,.branding,.logo-text,.site-title,.section-title,.page-title,.heading,.info-heading,.step-title{color:#2563eb!important}
-/* Flat blue controls; no shine/gradient */
-button,.primary-btn,.verify-btn,.success-btn,.submit-btn,.cta-button,.menu-toggle,.contact-btn,.track-form button{background:#2563eb!important;background-image:none!important;color:#fff!important;border-color:#2563eb!important;box-shadow:none!important;text-shadow:none!important}
-.secondary-btn,.copy-btn,.support-link,.menu-link,.nav-link{background:#eff6ff!important;background-image:none!important;color:#2563eb!important;border-color:#bfdbfe!important;box-shadow:none!important}
-input,select,textarea,.field,.form-control{background:#fff!important;background-image:none!important;color:#111!important;border-color:#cbd5e1!important;box-shadow:none!important}
-/* Remove decorative electricity, glow, shine, particles and shimmering only */
-#particleCanvas,.particle-area,.particles,.particle,.ambient-glow,.ambient,.glow-one,.glow-two,.top-glow,.ambient-one,.ambient-two,.lightning,.lightning-effect,.electric-effect,.electric-glow,.neon-glow,.glow-effect,.shine-effect,.particle-effect,.spark,.sparkle,.shimmer,.shine,.electric-line{display:none!important;visibility:hidden!important;opacity:0!important}
-*,*::before,*::after{box-shadow:none!important;text-shadow:none!important;filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-[style*="gradient"],[class*="gradient"]{background-image:none!important}
-/* Preserve verification/access states and their existing colors/text */
-.verified,.verified-tag,#resultVerified,.connected-tag,#resultConnected,.result-status span,.player-status,.status-dot,.success-badge,.track-status,.access-granted,.access-success{ }
-.verified,.verified-tag,#resultVerified{color:#16a34a!important}
-.connected-tag,#resultConnected,.access-granted,.access-success{color:#16a34a!important}
-.result-status span{color:#16a34a!important;background:#ecfdf5!important;border-color:#bbf7d0!important}
-.success h1{color:#16a34a!important}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-</style>
-
-
-<style id="nexvora-final-flat-white-red-timer">
-/* FINAL FLAT THEME: no grey, shine, glow, lightning, gradients or shimmer */
-:root{color-scheme:light!important;--bg:#fff!important;--background:#fff!important;--card:#fff!important;--panel:#fff!important;--panel2:#fff!important;--surface:#fff!important;--text:#000!important;--muted:#000!important;--blue:#2563eb!important;--primary:#2563eb!important;--cyan:#2563eb!important;--purple:#2563eb!important;--border:#2563eb!important;--line:#2563eb!important;--admin-bg:#fff!important;--admin-blue:#2563eb!important;--admin-cyan:#2563eb!important;--admin-purple:#2563eb!important;font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif!important}
-html,body,body>*{background:#fff!important;background-color:#fff!important;background-image:none!important;color:#000!important}
-*,*::before,*::after{box-shadow:none!important;text-shadow:none!important;filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;animation:none!important;transition:none!important;background-image:none!important}
-/* White surfaces, with blue/black borders instead of grey */
-.card,.panel,.content-panel,.screen,.form-card,.success-card,.modal-card,.section-card,.feature-card,.step-card,.orders-card,.track-item,.detail-item,.player-item,.notice,.banner-card,.login-card,.admin-card,.settings-card,.table-container,table,tbody,tr,.form-control,.field,input,select,textarea,.track-form input,.settings-form input,.settings-form textarea,.settings-form select,.site-header,.top-header,header,nav,.menu-panel,.drawer,.sidebar,.site-footer,.footer,section,article,.page-container,.content,.page-content,.site-main,.container,.wrapper,.terms-card,.policy-card,.uid-card,.verified-details,.track-result,.track-details,.application-card,.payment-card,.legal-card{background:#fff!important;background-color:#fff!important;background-image:none!important;color:#000!important;border-color:#2563eb!important}
-/* Plain buttons/options: primary blue, secondary white, no shine */
-button,button::before,button::after,.primary-btn,.verify-btn,.success-btn,.submit-btn,.cta-button,.menu-toggle,.timer-sound-btn{background:#2563eb!important;background-color:#2563eb!important;background-image:none!important;color:#fff!important;border-color:#2563eb!important;box-shadow:none!important;text-shadow:none!important;filter:none!important;animation:none!important;transition:none!important}
-.secondary-btn,.copy-btn,.support-link,.menu-link,.nav-link,.option-btn,.choice-btn,.tab-btn,.filter-btn{background:#fff!important;background-color:#fff!important;background-image:none!important;color:#2563eb!important;border:1px solid #2563eb!important;box-shadow:none!important;text-shadow:none!important;filter:none!important;animation:none!important;transition:none!important}
-input,select,textarea,input::placeholder,textarea::placeholder{background:#fff!important;background-image:none!important;color:#000!important;border-color:#2563eb!important}
-/* Black body copy; blue headings and brand; preserve verified/connected/access-granted green */
-p,h1,h2,h3,h4,h5,h6,label,small,li,td,th,span:not(.status-dot):not(.verified-tag):not(.connected-tag):not(.track-status):not(.success-badge):not(.result-status span),.description,.subtitle,.legal-text{color:#000!important}
-h1,h2,h3,h4,h5,h6,.brand-name,.brand,.brand-title,.brand-sub,.brand-subtitle,.logo-text,.footer-brand-name,.drawer-brand,.section-title,.page-title,.heading,.title{color:#2563eb!important}
-.verified,.verified-tag,#resultVerified,.connected-tag,#resultConnected,.access-granted,.access-success,.success-badge{color:#16a34a!important;background:#fff!important;background-color:#fff!important;border-color:#16a34a!important}
-/* Countdown and timer are red */
-.timer,.timer-box,.timer-heading,.live-countdown,.timer-box strong,.timer-units,.timer-live-line,.timer-box small,[id*="timer" i],[class*="timer" i],[id*="countdown" i],[class*="countdown" i]{color:#dc2626!important;background:#fff!important;background-color:#fff!important;background-image:none!important;border-color:#dc2626!important;box-shadow:none!important;text-shadow:none!important;animation:none!important}
-.timer-box strong.live-countdown{color:#dc2626!important}
-.timer-live-line i{background:#dc2626!important;color:#dc2626!important;box-shadow:none!important;animation:none!important}
-/* Remove button shine overlays and decorative spark effects without removing controls */
-button::before,button::after,.primary-btn::before,.primary-btn::after,.secondary-btn::before,.secondary-btn::after,.verify-btn::before,.verify-btn::after,.submit-btn::before,.submit-btn::after,.cta-button::before,.cta-button::after,.shine,.shine-effect,.shine-overlay,.shimmer,.shimmer-effect,.lightning,.lightning-effect,.electric-effect,.electric-glow,.neon-glow,.glow-effect,.ambient-glow,.ambient,.glow-one,.glow-two,.top-glow,.ambient-one,.ambient-two,.particle-effect{display:none!important;visibility:hidden!important;opacity:0!important}
-</style>
 
 </body>
 </html>
