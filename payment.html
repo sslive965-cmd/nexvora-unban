@@ -584,6 +584,35 @@ button {
 .payment-player-banner span b{font-size:11px;color:#fff}
 @media(max-width:420px){.payment-player-mini{grid-template-columns:62px 1fr}.payment-player-logo img{width:48px}}
 </style>
+
+<!-- NEXVORA clean white / black / blue theme override -->
+<style id="nexvora-clean-theme">
+:root{--bg:#f7f9fc!important;--panel:#ffffff!important;--panel2:#f1f5f9!important;--blue:#2563eb!important;--cyan:#2563eb!important;--purple:#2563eb!important;--text:#111827!important;--muted:#64748b!important;--border:#dbe3ee!important;--line:#dbe3ee!important;--success:#16a34a!important;--danger:#dc2626!important;--green:#16a34a!important;--admin-bg:#f7f9fc!important;--admin-blue:#2563eb!important;--admin-cyan:#2563eb!important;--admin-purple:#2563eb!important}
+html,body{background:#f7f9fc!important;color:#111827!important}
+body{background-image:none!important}
+/* Remove ambient, electrical, particle and glow effects only */
+#particleCanvas,.ambient-glow,.ambient,.glow-one,.glow-two,.top-glow,.ambient-one,.ambient-two{display:none!important;opacity:0!important;filter:none!important}
+*,*::before,*::after{box-shadow:none!important;text-shadow:none!important;filter:none!important}
+/* Main surfaces become white/light, with clean borders */
+.site-header,.top-header,header,nav,.menu-panel,.drawer,.sidebar,.site-footer,.footer,
+.card,.panel,.content-panel,.screen,.form-card,.success-card,.modal-card,.section-card,
+.feature-card,.step-card,.orders-card,.track-item,.detail-item,.player-item,.notice,
+.banner-card,.login-card,.admin-card,.settings-card,.table-container,table,tbody,tr,
+.form-control,.field,input,select,textarea,.track-form input,.settings-form input,
+.settings-form textarea,.settings-form select{
+ background:#fff!important;color:#111827!important;border-color:#dbe3ee!important;
+}
+.site-header,.top-header,header,nav{background:#fff!important;border-bottom:1px solid #dbe3ee!important;backdrop-filter:none!important}
+main,section,.page-container,.content,.page-content,.site-main{background:transparent!important;color:#111827!important}
+button,.primary-btn,.verify-btn,.success-btn,.submit-btn,.cta-button,.menu-toggle{background:#2563eb!important;color:#fff!important;border-color:#2563eb!important}
+.secondary-btn,.copy-btn,.support-link,.menu-link,.nav-link{background:#eff6ff!important;color:#1d4ed8!important;border-color:#bfdbfe!important}
+a, a:not(.primary-btn):not(.verify-btn){color:#1d4ed8!important}
+input,select,textarea{background:#fff!important;color:#111827!important;border-color:#cbd5e1!important}
+input::placeholder,textarea::placeholder{color:#94a3b8!important}
+/* Keep player/avatar/banner previews out of the interface */
+.player-identity-mini,.player-compact-avatar,.player-compact-banner,.payment-player-mini,.ff-logo-tile{display:none!important}
+</style>
+
 </head>
 <body>
   <canvas id="particleCanvas"></canvas>
