@@ -612,5 +612,33 @@ h1,h2,h3,h4,h5,h6,.brand-name,.brand,.brand-title,.brand-sub,.brand-subtitle,.lo
     const savedOrderId = sessionStorage.getItem("nexvora_final_order_id");
     if (savedOrderId) $("orderIdInput").value = savedOrderId;
   </script>
+
+<!-- NEXVORA CLEAN PROFESSIONAL THEME (visual-only overrides) -->
+<style id="nexvora-clean-theme">
+:root{color-scheme:light!important;--bg:#fff!important;--background:#fff!important;--card:#fff!important;--panel:#fff!important;--surface:#fff!important;--text:#111827!important;--muted:#4b5563!important;--blue:#2563eb!important;--primary:#2563eb!important;--cyan:#2563eb!important;--border:#d1d5db!important}
+html,body{background:#fff!important;background-image:none!important;color:#111!important;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif!important}
+body{background:#fff!important}
+/* Flat white surfaces: includes UID details, Terms/Policy and ordinary cards */
+.result-details,.result-detail-row,.uid-details,.player-details,.player-details-card,.result-detail,.detail-row,.card,.panel,.content-panel,.info-card,.section-card,.feature-card,.step-card,.orders-card,.track-item,.detail-item,.player-item,.notice,.banner-card,.login-card,.admin-card,.settings-card,.table-container,table,tbody,tr,.form-card,.modal-card,.terms-card,.policy-card,.uid-card,.player-details-card,.verified-details,.track-result,.track-details,.application-card,.payment-card,.legal-card,section,article,.page-container,.content,.page-content,.site-main,.container,.wrapper,header,nav,footer{background-color:#fff!important;background-image:none!important;color:#111!important;border-color:#d1d5db!important}
+/* Text and branding hierarchy */
+p,h3,h4,h5,h6,label,small,li,td,th,span:not(.status-dot):not(.verified-tag):not(.connected-tag):not(.track-status):not(.success-badge):not(.result-status span),.description,.subtitle,.legal-text{color:#111!important}
+h1,h2,.brand,.branding,.logo-text,.site-title,.section-title,.page-title,.heading,.info-heading,.step-title{color:#2563eb!important}
+/* Flat blue controls; no shine/gradient */
+button,.primary-btn,.verify-btn,.success-btn,.submit-btn,.cta-button,.menu-toggle,.contact-btn,.track-form button{background:#2563eb!important;background-image:none!important;color:#fff!important;border-color:#2563eb!important;box-shadow:none!important;text-shadow:none!important}
+.secondary-btn,.copy-btn,.support-link,.menu-link,.nav-link{background:#eff6ff!important;background-image:none!important;color:#2563eb!important;border-color:#bfdbfe!important;box-shadow:none!important}
+input,select,textarea,.field,.form-control{background:#fff!important;background-image:none!important;color:#111!important;border-color:#cbd5e1!important;box-shadow:none!important}
+/* Remove decorative electricity, glow, shine, particles and shimmering only */
+#particleCanvas,.particle-area,.particles,.particle,.ambient-glow,.ambient,.glow-one,.glow-two,.top-glow,.ambient-one,.ambient-two,.lightning,.lightning-effect,.electric-effect,.electric-glow,.neon-glow,.glow-effect,.shine-effect,.particle-effect,.spark,.sparkle,.shimmer,.shine,.electric-line{display:none!important;visibility:hidden!important;opacity:0!important}
+*,*::before,*::after{box-shadow:none!important;text-shadow:none!important;filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+[style*="gradient"],[class*="gradient"]{background-image:none!important}
+/* Preserve verification/access states and their existing colors/text */
+.verified,.verified-tag,#resultVerified,.connected-tag,#resultConnected,.result-status span,.player-status,.status-dot,.success-badge,.track-status,.access-granted,.access-success{ }
+.verified,.verified-tag,#resultVerified{color:#16a34a!important}
+.connected-tag,#resultConnected,.access-granted,.access-success{color:#16a34a!important}
+.result-status span{color:#16a34a!important;background:#ecfdf5!important;border-color:#bbf7d0!important}
+.success h1{color:#16a34a!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
 </body>
 </html>
