@@ -413,16 +413,17 @@ select.form-control{color-scheme:dark}
 .success-heading{text-align:center}
 .success-label{color:var(--success);font-size:9px;font-weight:900;letter-spacing:2px}
 .success-heading h2{
-  margin-top:9px;font-family:Orbitron,sans-serif;
-  font-size:clamp(20px,5vw,27px);font-weight:900;
-  background:linear-gradient(90deg,#fff,#70e5ff,#b18bff);
-  background-clip:text;-webkit-background-clip:text;color:transparent;
-  animation:titleGlow 2.2s ease-in-out infinite;
+  margin:10px 0 0;
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:clamp(24px,6vw,32px);
+  font-weight:900;
+  letter-spacing:-.4px;
+  color:#2563eb;
+  line-height:1.2;
+  text-shadow:none;
 }
-@keyframes titleGlow{
-  0%,100%{filter:drop-shadow(0 0 3px rgba(54,220,255,.15))}
-  50%{filter:drop-shadow(0 0 13px rgba(54,220,255,.5))}
-}
+.success-heading h2 .congrats-word{display:inline-block}
+.success-heading h2 .congrats-emoji{display:inline-block;margin-left:7px;font-size:1.08em;vertical-align:-2px;line-height:1;}
 .success-heading p{margin-top:8px;color:var(--muted);font-size:11px;line-height:1.7}
 .result-status{display:flex;justify-content:center;margin:17px 0}
 .result-status span{
@@ -536,15 +537,6 @@ button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
 
   .verified-game-logo{display:flex;justify-content:center;align-items:center;margin:8px auto 12px;}
 .verified-game-logo img{width:58px;height:42px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(54,220,255,.28));}
-.player-identity-mini{display:grid;grid-template-columns:1fr;gap:9px;margin:12px 0}
-.ff-logo-tile,.player-identity-banner{border:1px solid rgba(54,220,255,.22);border-radius:12px;background:linear-gradient(135deg,rgba(12,36,67,.95),rgba(6,14,28,.95));min-height:64px;overflow:hidden}
-.ff-logo-tile{display:grid;place-items:center;padding:6px}
-.ff-logo-tile img{width:100%;height:50px;object-fit:contain}
-.player-identity-banner{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:3px}
-.player-identity-banner span{font-size:8px;letter-spacing:1.4px;color:#64dfff}
-.player-identity-banner strong{font-size:13px;overflow-wrap:anywhere;color:#f0f9ff}
-.player-identity-banner small{font-size:10px;color:#a6c5df}
-@media(max-width:420px){.player-identity-mini{grid-template-columns:56px 1fr}.ff-logo-tile img{height:44px}}
 </style>
 </head>
 <body>
@@ -909,7 +901,7 @@ button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
 
     <div class="success-heading">
       <div class="success-label">NEXVORA VERIFICATION SYSTEM</div>
-      <h2 id="successTitle">Congratulations! 🎉</h2>
+      <h2 id="successTitle"><span class="congrats-word">Congratulations</span><span class="congrats-emoji" aria-hidden="true">🎉</span></h2>
       <p>Your player information has been successfully verified.</p>
       <div class="verified-game-logo"><img src="assets/free-fire-logo.png" alt="Free Fire logo"></div>
     </div>
@@ -918,9 +910,6 @@ button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
       <span id="resultStatus">PLAYER CONNECTED</span>
     </div>
 
-    <div class="player-identity-mini">
-      <div class="player-identity-banner"><span>PLAYER PROFILE</span><strong id="resultMiniNickname">—</strong><small>LEVEL <b id="resultMiniLevel">—</b></small></div>
-    </div>
     <div class="result-details">
       <div class="result-detail-row">
         <span>Game</span><span class="result-game" id="resultGame">FREE FIRE</span>
@@ -1279,8 +1268,6 @@ button:focus-visible,.support-link:focus-visible,.drawer-support:focus-visible{
     $("resultCreatedTime").textContent = formatLastLogin(player.created_time);
     $("resultAvatarId").textContent = safeText(player.avatar_id);
     $("resultBannerId").textContent = safeText(player.banner_id);
-    $("resultMiniNickname").textContent = safeText(player.username);
-    $("resultMiniLevel").textContent = safeText(player.level);
 
     $("resultConnected").textContent = "CONNECTED";
     $("resultVerified").textContent = "VERIFIED";

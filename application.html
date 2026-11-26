@@ -396,13 +396,6 @@ h2{
 .verified{
   color:var(--green)!important;
 }
-.player-compact-avatar,.player-compact-banner{min-height:74px;border:1px solid rgba(92,167,231,.22);border-radius:12px;background:linear-gradient(135deg,rgba(6,21,43,.95),rgba(8,12,24,.95));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;overflow:hidden;padding:9px;box-sizing:border-box}
-.player-compact-avatar img{width:54px;height:43px;object-fit:contain}
-.player-compact-avatar span,.player-compact-banner small,.player-compact-banner span{font-size:9px;letter-spacing:1px;color:#8bdcff}
-.player-compact-banner{align-items:flex-start}
-.player-compact-banner strong{font-size:13px;overflow-wrap:anywhere;color:#eefaff}
-.player-compact-banner span{letter-spacing:0}
-.player-compact-banner span b{color:#fff;font-size:11px}
 
 /* FORM */
 
@@ -956,17 +949,7 @@ footer a{
         <small>Account Created</small>
         <strong id="playerCreatedTime">—</strong>
       </div>
-      <div class="player-compact-avatar">
-        <img src="assets/free-fire-logo.png" alt="Free Fire logo">
-        <span>FREE FIRE</span>
-      </div>
-      <div class="player-compact-banner">
-        <small>PLAYER PROFILE</small>
-        <strong id="compactPlayerNickname">—</strong>
-        <span>LEVEL <b id="compactPlayerLevel">—</b></span>
-      </div>
-
-      <div class="player-item">
+<div class="player-item">
         <small>Verification</small>
         <strong
           class="verified"
@@ -1521,8 +1504,6 @@ function loadVerifiedPlayer() {
     fields.lastLogin.textContent = player.last_login || "Not available";
     fields.likes.textContent = player.likes ?? "Not available";
     fields.created.textContent = player.created_time || "Not available";
-    document.getElementById("compactPlayerNickname").textContent = player.username || player.nickname || "Not available";
-    document.getElementById("compactPlayerLevel").textContent = player.level ?? "—";
 
     fields.verified.textContent =
       player.verified === true ? "VERIFIED" : "NOT CONFIRMED";
